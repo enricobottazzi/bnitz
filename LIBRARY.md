@@ -23,7 +23,7 @@ Primitives are the agreed stopping points for reduction.
 | `SOMEONE("name")` | The person named in the sentence; their identity may remain unresolved. |
 | `NOW()` | The present moment in the sentence's context. |
 | `BEFORE(time)` | The period before the supplied time. |
-| `DIE(person, time)` | The person dies at the supplied moment or sometime within the supplied period. |
+| `DIE(person, time)` | The person dies at the supplied time |
 
 `NOW()` retains the sentence's context throughout reduction.
 
@@ -33,33 +33,58 @@ A derived concept is defined by rewrite rules using simpler concepts:
 
 ```text
 DIED(person)
-    → DIED(person, BEFORE(NOW()))
-
-DIED(person, time)
-    → DIE(person, time)
+    → DIE(person, BEFORE(NOW()))
 ```
-
-The first rule supplies the omitted time. The second expands `DIED`. Inputs matched on the left are substituted consistently on the right.
 
 The reducer applies the stored rules and records every step. An LLM does not invent new definitions during reduction.
 
-## 4. Scope
+Rewrite rules must preserve the result type. Here, both `DIED(person)` and its expansion have type `Claim`.
 
-Start with the “Alice died” example and the definitions above. Type checking, precise date forms, and broader language support can come later. The initial translation and the definitions must be reviewed for whether they preserve the intended meaning.
+## 4. Types and checking
+
+Types are metadata used to check calls. They are not additional semantic primitives or concepts to reduce.
+
+| Type | Represents |
+| --- | --- |
+| `Text` | Literal text, such as `"Alice"`. |
+| `Person` | A person reference. |
+| `Time` | A moment or a period. |
+| `Claim` | A call expressing a claim. |
+
+`Claim` classifies the call itself; it does not wrap it in another object or establish its truth.
+
+Each concept declares a signature:
+
+```text
+SOMEONE(name: Text) → Person
+NOW() → Time
+BEFORE(time: Time) → Time
+DIE(person: Person, time: Time) → Claim
+DIED(person: Person) → Claim
+```
+
+The checker looks up the signature, checks the number of arguments, recursively determines each argument's type, and compares it with the required type. The call's result type comes from its signature, not its name. Thus `NOW()` and `BEFORE(...)` both provide `Time` values.
+
+For example, `DIE(NOW(), SOMEONE("Alice"))` fails at argument 1: expected `Person`, received `Time`.
+
+In a rewrite definition, the inputs take their types from the concept's signature. Check that the replacement has the same result type as the original call.
+
+Start with the “Alice died” example and the definition above. Precise date forms and broader language support can come later. The initial translation and the definitions must still be reviewed for whether they preserve the intended meaning.
 
 ## 5. Reduction
 
-An LLM proposes a translation of the sentence into concept calls from the library. The reducer applies matching rewrite rules, including rules supplying omitted inputs, and repeats until every branch contains only declared primitives and literal data. The output shows the original sentence, its interpretation, and each rewrite. Missing definitions or circular rewrites produce `UNDEFINED`, identifying the call and the point where reduction stopped.
+An LLM proposes a translation of the sentence into concept calls from the library. Check that the complete call has type `Claim` and that each argument matches its signature. The reducer then applies matching rewrite rules, checks the resulting calls, and repeats until every branch contains only declared primitives and literal data. The output shows the original sentence, its interpretation, the type checks, and each rewrite. Missing definitions, incorrect arguments, or circular rewrites produce `UNDEFINED`, identifying the call and the point where reduction stopped.
 
 For “Alice died”:
 
 ```text
 DIED(SOMEONE("Alice"))
-    → DIED(SOMEONE("Alice"), BEFORE(NOW()))
     → DIE(SOMEONE("Alice"), BEFORE(NOW()))
 ```
 
-The reduction is complete because `DIE`, `SOMEONE`, `BEFORE`, and `NOW` are declared primitives. The result expresses Alice's death occurring in the past. It does not prove that Alice died.
+`SOMEONE("Alice")` has type `Person`; `NOW()` and `BEFORE(NOW())` have type `Time`. Both the original call and its expansion have type `Claim`.
+
+The reduction is complete because `DIE`, `SOMEONE`, `BEFORE`, and `NOW` are declared primitives. The result expresses Alice's death occurring in the past. Neither type checking nor reduction proves that Alice died.
 
 ## 6. Truth assessment
 
