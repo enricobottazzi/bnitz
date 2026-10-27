@@ -1,6 +1,6 @@
 # bnitz: minimal reduction demo
 
-The prototype takes a sentence, expresses it using concepts from a small library, and applies rewrite rules until only primitives remain.
+The prototype takes a sentence, expresses it using concepts from a supplied library, and applies rewrite rules until only primitives remain.
 
 ## 1. Concept calls
 
@@ -16,7 +16,7 @@ Calls can represent people, times, or claims. The last call expresses “Alice d
 
 ## 2. Primitives
 
-Primitives are the agreed stopping points for reduction.
+Primitives are the agreed stopping points for reduction. A maximum of 64 primitives are allowed.
 
 | Concept call | Meaning |
 | --- | --- |
@@ -24,8 +24,8 @@ Primitives are the agreed stopping points for reduction.
 | `NOW()` | The present moment in the sentence's context. |
 | `BEFORE(time)` | The period before the supplied time. |
 | `DIE(person, time)` | The person dies at the supplied time |
-
-`NOW()` retains the sentence's context throughout reduction.
+| `AND(left, right)` | Both claims hold. |
+| `NOT(claim)` | Negates the claim. |
 
 ## 3. Rewrite rules
 
@@ -36,7 +36,7 @@ DIED(person)
     → DIE(person, BEFORE(NOW()))
 ```
 
-The reducer applies the stored rules and records every step. An LLM does not invent new definitions during reduction.
+The reducer applies the stored rules and records every step.
 
 Rewrite rules must preserve the result type. Here, both `DIED(person)` and its expansion have type `Claim`.
 
@@ -53,7 +53,7 @@ Types are metadata used to check calls. They are not additional semantic primiti
 
 `Claim` classifies the call itself; it does not wrap it in another object or establish its truth.
 
-Each concept declares a signature:
+Each concept (primitive or derived) declares a signature:
 
 ```text
 SOMEONE(name: Text) → Person
@@ -61,6 +61,8 @@ NOW() → Time
 BEFORE(time: Time) → Time
 DIE(person: Person, time: Time) → Claim
 DIED(person: Person) → Claim
+AND(left: Claim, right: Claim) → Claim
+NOT(claim: Claim) → Claim
 ```
 
 The checker looks up the signature, checks the number of arguments, recursively determines each argument's type, and compares it with the required type. The call's result type comes from its signature, not its name. Thus `NOW()` and `BEFORE(...)` both provide `Time` values.
@@ -69,11 +71,11 @@ For example, `DIE(NOW(), SOMEONE("Alice"))` fails at argument 1: expected `Perso
 
 In a rewrite definition, the inputs take their types from the concept's signature. Check that the replacement has the same result type as the original call.
 
-Start with the “Alice died” example and the definition above. Precise date forms and broader language support can come later. The initial translation and the definitions must still be reviewed for whether they preserve the intended meaning.
-
 ## 5. Reduction
 
-An LLM proposes a translation of the sentence into concept calls from the library. Check that the complete call has type `Claim` and that each argument matches its signature. The reducer then applies matching rewrite rules, checks the resulting calls, and repeats until every branch contains only declared primitives and literal data. The output shows the original sentence, its interpretation, the type checks, and each rewrite. Missing definitions, incorrect arguments, or circular rewrites produce `UNDEFINED`, identifying the call and the point where reduction stopped.
+**The expression representing the whole input sentence must have type `Claim` before reduction and after every rewrite.**
+
+An LLM proposes a translation of the sentence into concept calls from the library. Before rewriting, recursively check the calls and their arguments against their signatures and confirm that the whole expression has type `Claim`. Apply one matching rewrite rule, check that the replacement preserves the replaced expression's type, and check that the updated whole expression still has type `Claim` before continuing. Nested calls retain their own types, such as `Person` or `Time`. Reduction is complete when all concept calls, at every nesting level, refer to declared primitives. No derived or unknown concept calls remain. The output shows the original sentence, its interpretation, the type checks, and each rewrite. Missing definitions, incorrect arguments, type mismatches, or circular rewrites produce `UNDEFINED`, identifying the call and the point where reduction stopped.
 
 For “Alice died”:
 
@@ -86,6 +88,31 @@ DIED(SOMEONE("Alice"))
 
 The reduction is complete because `DIE`, `SOMEONE`, `BEFORE`, and `NOW` are declared primitives. The result expresses Alice's death occurring in the past. Neither type checking nor reduction proves that Alice died.
 
+For “Alice died but Bob didn't,” the prototype uses `AND` for the truth conditions of “but.” Its additional contrast is not represented yet.
+
+```text
+AND(
+    DIED(SOMEONE("Alice")),
+    NOT(DIED(SOMEONE("Bob")))
+)
+    →
+AND(
+    DIE(SOMEONE("Alice"), BEFORE(NOW())),
+    NOT(DIED(SOMEONE("Bob")))
+)
+    →
+AND(
+    DIE(SOMEONE("Alice"), BEFORE(NOW())),
+    NOT(DIE(SOMEONE("Bob"), BEFORE(NOW())))
+)
+```
+
+Each `DIED` call and its expansion have type `Claim`. `NOT` takes and returns a `Claim`; `AND` combines two claims into a `Claim`. The outer `AND` expression has type `Claim` before and after each rewrite. Both clauses use the same contextual present and its preceding period. Negation applies to the whole claim that Bob died during that period.
+
 ## 6. Truth assessment
 
-After reduction, assess whether the reduced claim is valid, invalid, or undefined. The assessment procedure and the information it requires remain to be specified.
+After reduction, assess whether the reduced claim is valid, invalid, or undefined. The assessment procedure and the information it requires remain to be specified. In general, it should first check logical reasoning, and, next, external supplied facts.
+
+## 7. Truth generation
+
+Produce truth, combinatorially, using core primitives, logical reasoning and externally supplied facts.
