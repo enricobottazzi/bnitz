@@ -111,8 +111,36 @@ Each `DIED` call and its expansion have type `Claim`. `NOT` takes and returns a 
 
 ## 6. Truth assessment
 
-After reduction, assess whether the reduced claim is valid, invalid, or undefined. The assessment procedure and the information it requires remain to be specified. In general, it should first check logical reasoning, and, next, external supplied facts.
+Assess the reduced claim using logical rules and supplied facts. Return `VALID` when established, `INVALID` when its negation is established, or `UNDEFINED` when evidence is missing or conflicting. Include the reasoning and identify any unresolved or conflicting conditions; missing facts do not imply falsity.
+
+For “Alice died but Bob didn't,” suppose supplied facts establish Alice died before now and Bob did not:
+
+```text
+AND(
+    DIE(SOMEONE("Alice"), BEFORE(NOW())),
+    NOT(DIE(SOMEONE("Bob"), BEFORE(NOW())))
+)
+
+Assessment: AND(TRUE, NOT(FALSE)) → TRUE
+Result: VALID
+```
+
+Keeping Alice's fact fixed: if Bob also died, the result is `INVALID`; if Bob's history is unknown, it is `UNDEFINED` at `DIE(SOMEONE("Bob"), BEFORE(NOW()))`.
+
+For “Alice died and Alice did not die”:
+
+```text
+AND(
+    DIE(SOMEONE("Alice"), BEFORE(NOW())),
+    NOT(DIE(SOMEONE("Alice"), BEFORE(NOW())))
+)
+
+Assessment: a claim and its exact negation cannot both hold.
+Result: INVALID
+```
+
+Both parts concern the same person and period. No external facts are needed to establish this contradiction.
 
 ## 7. Truth generation
 
-Produce truth, combinatorially, using core primitives, logical reasoning and externally supplied facts.
+Produce new truth, combinatorially, using core primitives, logical reasoning and externally supplied facts.
