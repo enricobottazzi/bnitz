@@ -144,3 +144,7 @@ Both parts concern the same person and period. No external facts are needed to e
 ## 7. Truth generation
 
 Produce new truth, combinatorially, using core primitives, logical reasoning and externally supplied facts.
+
+## 8. Future applications
+
+- **Bullshit filter/detector:** Reduce statements to explicit claims to help expose vague language, empty jargon, and contradictions. Show what a statement commits to and what remains undefined or unsupported. Related discussion: [AI bullshit detector on Reddit](https://www.reddit.com/r/ArtificialInteligence/comments/1to4evf/heres_an_ai_bullshit_detector_i_use_it_daily_and/).
