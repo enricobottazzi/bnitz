@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BNITZ — language, meaning, and reasoning.">
+  <meta name="theme-color" content="#ffffff">
+  <title>BNITZ</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css?v=14">
+  <script src="script.js?v=4" defer></script>
+</head>
+<body>
+  <header class="sidebar">
+    <a class="wordmark" href="#" aria-label="BNITZ home">
+      <span>BNITZ</span>
+    </a>
+    <nav aria-label="Main menu">
+      <a href="#readings">readings</a>
+      <a href="#about">about</a>
+    </nav>
+  </header>
+  <main id="content" tabindex="-1">
+    <section id="readings" aria-label="readings" hidden>
+      <div class="readings-list">
+        <a class="reading" href="#readings/the-bitter-lesson"><span>The Bitter Lesson</span><span>Rich Sutton</span><time datetime="2019">2019</time></a>
+        <div class="reading"><span>Computing Machinery and Intelligence</span><span>Nora Vale</span><time datetime="2021">2021</time></div>
+        <div class="reading"><span>Programs with Common Sense</span><span>Elias Reed</span><time datetime="2018">2018</time></div>
+        <div class="reading"><span>The Unreasonable Effectiveness of Data</span><span>Maya Rowan</span><time datetime="2023">2023</time></div>
+        <div class="reading"><span>As We May Think</span><span>Theo Park</span><time datetime="2020">2020</time></div>
+      </div>
+    </section>
+    <section id="about" aria-label="about" hidden>
+      <p>BNITZ is a language to see reasoning.</p>
+      <p>Words sit beside a visual map. Select a shape to find the part of the text it refers to.</p>
+      <p>The aim is to make the steps of an argument easier to follow: what is claimed, how the claims connect, and what follows.</p>
+    </section>
+    <section id="reader" aria-label="The Bitter Lesson reader" hidden>
+      <header class="reader-heading">
+        <h1>The Bitter Lesson</h1>
+        <p>Rich Sutton <span aria-hidden="true">·</span> <time datetime="2019">2019</time></p>
+      </header>
+      <div class="reader-grid">
+        <article class="reader-text" tabindex="0" aria-label="The Bitter Lesson article text">
+          <p class="article-passage" id="passage-1"><mark class="highlight-primary">The biggest lesson that can be read from 70 years of AI research is that general methods that leverage computation are ultimately the most effective, and by a large margin.</mark><mark class="highlight-secondary"> The ultimate reason for this is Moore&#x27;s law, or rather its generalization of continued exponentially falling cost per unit of computation. Most AI research has been conducted as if the computation available to the agent were constant (in which case leveraging human knowledge would be one of the only ways to improve performance) but, over a slightly longer time than a typical research project, massively more computation inevitably becomes available. Seeking an improvement that makes a difference in the shorter term, researchers seek to leverage their human knowledge of the domain, but the only thing that matters in the long run is the leveraging of computation. These two need not run counter to each other, but in practice they tend to. Time spent on one is time not spent on the other. There are psychological commitments to investment in one approach or the other. And the human-knowledge approach tends to complicate methods in ways that make them less suited to taking advantage of general methods leveraging computation. There were many examples of AI researchers&#x27; belated learning of this bitter lesson, and it is instructive to review some of the most prominent.</mark></p>
+<p class="article-passage" id="passage-2"><mark class="highlight-primary">In computer chess, the methods that defeated the world champion, Kasparov, in 1997, were based on massive, deep search.</mark><mark class="highlight-secondary"> At the time, this was looked upon with dismay by the majority of computer-chess researchers who had pursued methods that leveraged human understanding of the special structure of chess. When a simpler, search-based approach with special hardware and software proved vastly more effective, these human-knowledge-based chess researchers were not good losers. They said that ``brute force&quot; search may have won this time, but it was not a general strategy, and anyway it was not how people played chess. These researchers wanted methods based on human input to win and were disappointed when they did not.</mark></p>
+<p class="article-passage" id="passage-3"><mark class="highlight-primary">A similar pattern of research progress was seen in computer Go, only delayed by a further 20 years.</mark><mark class="highlight-secondary"> Enormous initial efforts went into avoiding search by taking advantage of human knowledge, or of the special features of the game, but all those efforts proved irrelevant, or worse, once search was applied effectively at scale. Also important was the use of learning by self play to learn a value function (as it was in many other games and even in chess, although learning did not play a big role in the 1997 program that first beat a world champion). Learning by self play, and learning in general, is like search in that it enables massive computation to be brought to bear. Search and learning are the two most important classes of techniques for utilizing massive amounts of computation in AI research. In computer Go, as in computer chess, researchers&#x27; initial effort was directed towards utilizing human understanding (so that less search was needed) and only much later was much greater success had by embracing search and learning.</mark></p>
+<p class="article-passage" id="passage-4"><mark class="highlight-primary">In speech recognition, there was an early competition, sponsored by DARPA, in the 1970s.</mark><mark class="highlight-secondary"> Entrants included a host of special methods that took advantage of human knowledge---knowledge of words, of phonemes, of the human vocal tract, etc. On the other side were newer methods that were more statistical in nature and did much more computation, based on hidden Markov models (HMMs). Again, the statistical methods won out over the human-knowledge-based methods. This led to a major change in all of natural language processing, gradually over decades, where statistics and computation came to dominate the field. The recent rise of deep learning in speech recognition is the most recent step in this consistent direction. Deep learning methods rely even less on human knowledge, and use even more computation, together with learning on huge training sets, to produce dramatically better speech recognition systems. As in the games, researchers always tried to make systems that worked the way the researchers thought their own minds worked---they tried to put that knowledge in their systems---but it proved ultimately counterproductive, and a colossal waste of researcher&#x27;s time, when, through Moore&#x27;s law, massive computation became available and a means was found to put it to good use.</mark></p>
+<p class="article-passage" id="passage-5"><mark class="highlight-primary">In computer vision, there has been a similar pattern.</mark><mark class="highlight-secondary"> Early methods conceived of vision as searching for edges, or generalized cylinders, or in terms of SIFT features. But today all this is discarded. Modern deep-learning neural networks use only the notions of convolution and certain kinds of invariances, and perform much better.</mark></p>
+<p class="article-passage" id="passage-6"><mark class="highlight-primary">This is a big lesson.</mark><mark class="highlight-secondary"> As a field, we still have not thoroughly learned it, as we are continuing to make the same kind of mistakes. To see this, and to effectively resist it, we have to understand the appeal of these mistakes. We have to learn the bitter lesson that building in how we think we think does not work in the long run. The bitter lesson is based on the historical observations that 1) AI researchers have often tried to build knowledge into their agents, 2) this always helps in the short term, and is personally satisfying to the researcher, but 3) in the long run it plateaus and even inhibits further progress, and 4) breakthrough progress eventually arrives by an opposing approach based on scaling computation by search and learning. The eventual success is tinged with bitterness, and often incompletely digested, because it is success over a favored, human-centric approach.</mark></p>
+<p class="article-passage" id="passage-7"><mark class="highlight-primary">One thing that should be learned from the bitter lesson is the great power of general purpose methods, of methods that continue to scale with increased computation even as the available computation becomes very great.</mark><mark class="highlight-secondary"> The two methods that seem to scale arbitrarily in this way are search and learning.</mark></p>
+<p class="article-passage" id="passage-8"><mark class="highlight-primary">The second general point to be learned from the bitter lesson is that the actual contents of minds are tremendously, irredeemably complex; we should stop trying to find simple ways to think about the contents of minds, such as simple ways to think about space, objects, multiple agents, or symmetries.</mark><mark class="highlight-secondary"> All these are part of the arbitrary, intrinsically-complex, outside world. They are not what should be built in, as their complexity is endless; instead we should build in only the meta-methods that can find and capture this arbitrary complexity. Essential to these methods is that they can find good approximations, but the search for them should be by our methods, not by us. We want AI agents that can discover like we can, not which contain what we have discovered. Building in our discoveries only makes it harder to see how the discovering process can be done.</mark></p>
+        </article>
+        <div class="map-pane" aria-label="BNITZ language map">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 680" class="reading-map" fill="none" aria-labelledby="map-title map-description">
+  <title id="map-title">Reading map</title>
+  <desc id="map-description">An upright triangle, a circular ring with four peripheral nodes and a center, paired star markers, and a divided inverted triangle. Select a shape to highlight its related passage.</desc>
+  <g class="map-element" id="map-top" data-passage="passage-1" role="button" tabindex="0" aria-label="Top triangle" aria-pressed="false">
+    <polygon class="map-hit" points="230,33 143,139 317,139" fill="transparent" stroke="transparent" stroke-width="22" pointer-events="all"/>
+    <polygon class="map-ink" points="230,33 143,139 317,139" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+  <g class="map-element" id="map-ring" data-passage="passage-2" role="button" tabindex="0" aria-label="Circular ring" aria-pressed="false">
+    <circle class="map-hit" cx="230" cy="340" r="145" stroke="transparent" stroke-width="24" pointer-events="stroke"/>
+    <circle class="map-ink" cx="230" cy="340" r="145" stroke="currentColor" stroke-width="1.8"/>
+  </g>
+  <g class="map-element" id="map-northwest" data-passage="passage-3" role="button" tabindex="0" aria-label="Upper left node" aria-pressed="false">
+    <circle class="map-hit" cx="127.5" cy="237.5" r="19" fill="transparent" pointer-events="all"/>
+    <circle class="map-ink" cx="127.5" cy="237.5" r="12.5" stroke="currentColor" stroke-width="1.8"/>
+  </g>
+  <g class="map-element" id="map-northeast" data-passage="passage-4" role="button" tabindex="0" aria-label="Upper right node" aria-pressed="false">
+    <circle class="map-hit" cx="332.5" cy="237.5" r="19" fill="transparent" pointer-events="all"/>
+    <circle class="map-ink" cx="332.5" cy="237.5" r="12.5" stroke="currentColor" stroke-width="1.8"/>
+  </g>
+  <g class="map-element" id="map-southwest" data-passage="passage-5" role="button" tabindex="0" aria-label="Lower left node" aria-pressed="false">
+    <circle class="map-hit" cx="127.5" cy="442.5" r="19" fill="transparent" pointer-events="all"/>
+    <circle class="map-ink" cx="127.5" cy="442.5" r="12.5" stroke="currentColor" stroke-width="1.8"/>
+  </g>
+  <g class="map-element" id="map-southeast" data-passage="passage-6" role="button" tabindex="0" aria-label="Lower right node" aria-pressed="false">
+    <circle class="map-hit" cx="332.5" cy="442.5" r="19" fill="transparent" pointer-events="all"/>
+    <circle class="map-ink" cx="332.5" cy="442.5" r="12.5" stroke="currentColor" stroke-width="1.8"/>
+  </g>
+  <g class="map-element" id="map-center" data-passage="passage-7" role="button" tabindex="0" aria-label="Center circle" aria-pressed="false">
+    <circle class="map-hit" cx="230" cy="340" r="33" fill="transparent" pointer-events="all"/>
+    <circle class="map-ink" cx="230" cy="340" r="25" stroke="currentColor" stroke-width="1.8"/>
+  </g>
+  <g class="map-element" id="map-bottom-left" data-passage="passage-8" role="button" tabindex="0" aria-label="Bottom triangle left half" aria-pressed="false">
+    <polygon class="map-hit" points="143,541 230,541 230,647" fill="transparent" stroke="transparent" stroke-width="16" pointer-events="all"/>
+    <polygon class="map-ink" points="143,541 230,541 230,647" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+  <g class="map-element" id="map-bottom-right" data-passage="passage-8" role="button" tabindex="0" aria-label="Bottom triangle right half" aria-pressed="false">
+    <polygon class="map-hit" points="230,541 317,541 230,647" fill="transparent" stroke="transparent" stroke-width="16" pointer-events="all"/>
+    <polygon class="map-ink" points="230,541 317,541 230,647" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+  <g class="map-element" id="map-northwest-star-1" data-passage="passage-3" transform="translate(114 206)" role="button" tabindex="0" aria-label="Upper left star one" aria-pressed="false">
+    <circle class="map-hit" r="14" fill="transparent" pointer-events="all"/>
+    <path class="map-ink" d="M0-6 1.2-2.1 5.2-3 2.4 0 5.2 3 1.2 2.1 0 6-1.2 2.1-5.2 3-2.4 0-5.2-3-1.2-2.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+  </g>
+  <g class="map-element" id="map-northwest-star-2" data-passage="passage-3" transform="translate(91 243)" role="button" tabindex="0" aria-label="Upper left star two" aria-pressed="false">
+    <circle class="map-hit" r="14" fill="transparent" pointer-events="all"/>
+    <path class="map-ink" d="M0-6 1.2-2.1 5.2-3 2.4 0 5.2 3 1.2 2.1 0 6-1.2 2.1-5.2 3-2.4 0-5.2-3-1.2-2.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+  </g>
+  <g class="map-element" id="map-northeast-star-1" data-passage="passage-4" transform="translate(346 206)" role="button" tabindex="0" aria-label="Upper right star one" aria-pressed="false">
+    <circle class="map-hit" r="14" fill="transparent" pointer-events="all"/>
+    <path class="map-ink" d="M0-6 1.2-2.1 5.2-3 2.4 0 5.2 3 1.2 2.1 0 6-1.2 2.1-5.2 3-2.4 0-5.2-3-1.2-2.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+  </g>
+  <g class="map-element" id="map-northeast-star-2" data-passage="passage-4" transform="translate(369 243)" role="button" tabindex="0" aria-label="Upper right star two" aria-pressed="false">
+    <circle class="map-hit" r="14" fill="transparent" pointer-events="all"/>
+    <path class="map-ink" d="M0-6 1.2-2.1 5.2-3 2.4 0 5.2 3 1.2 2.1 0 6-1.2 2.1-5.2 3-2.4 0-5.2-3-1.2-2.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+  </g>
+  <g class="map-element" id="map-southwest-star-1" data-passage="passage-5" transform="translate(91 437)" role="button" tabindex="0" aria-label="Lower left star one" aria-pressed="false">
+    <circle class="map-hit" r="14" fill="transparent" pointer-events="all"/>
+    <path class="map-ink" d="M0-6 1.2-2.1 5.2-3 2.4 0 5.2 3 1.2 2.1 0 6-1.2 2.1-5.2 3-2.4 0-5.2-3-1.2-2.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+  </g>
+  <g class="map-element" id="map-southwest-star-2" data-passage="passage-5" transform="translate(114 474)" role="button" tabindex="0" aria-label="Lower left star two" aria-pressed="false">
+    <circle class="map-hit" r="14" fill="transparent" pointer-events="all"/>
+    <path class="map-ink" d="M0-6 1.2-2.1 5.2-3 2.4 0 5.2 3 1.2 2.1 0 6-1.2 2.1-5.2 3-2.4 0-5.2-3-1.2-2.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+  </g>
+  <g class="map-element" id="map-southeast-star-1" data-passage="passage-6" transform="translate(369 437)" role="button" tabindex="0" aria-label="Lower right star one" aria-pressed="false">
+    <circle class="map-hit" r="14" fill="transparent" pointer-events="all"/>
+    <path class="map-ink" d="M0-6 1.2-2.1 5.2-3 2.4 0 5.2 3 1.2 2.1 0 6-1.2 2.1-5.2 3-2.4 0-5.2-3-1.2-2.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+  </g>
+  <g class="map-element" id="map-southeast-star-2" data-passage="passage-6" transform="translate(346 474)" role="button" tabindex="0" aria-label="Lower right star two" aria-pressed="false">
+    <circle class="map-hit" r="14" fill="transparent" pointer-events="all"/>
+    <path class="map-ink" d="M0-6 1.2-2.1 5.2-3 2.4 0 5.2 3 1.2 2.1 0 6-1.2 2.1-5.2 3-2.4 0-5.2-3-1.2-2.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+  </g>
+</svg>
+
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
