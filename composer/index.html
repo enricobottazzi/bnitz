@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BNITZ — Composer</title><link rel="icon" href="data:,"><link rel="stylesheet" href="style.css"><script src="app.js" defer></script></head>
 <body>
-<header class="app-header"><div><a class="wordmark" href="#">BNITZ</a><span class="app-name">composer</span></div><div class="actions"><span id="draftState">Local draft</span><button id="newArticle">New</button><button id="openArticle">Open article</button><button id="importArticle">Import file</button><button id="downloadArticle">Download article</button><button id="previewButton">Preview</button><button id="exportArticle" class="primary">Export to library</button></div></header>
+<header class="app-header"><div><a class="wordmark" href="#">BNITZ</a><span class="app-name">composer</span></div><div class="actions"><span id="draftState">Local draft</span><button id="newArticle">New</button><button id="openArticle">Import from library</button><button id="importArticle">Import file</button><button id="downloadArticle">Export file</button><button id="previewButton">Preview</button><button id="exportArticle" class="primary">Export to library</button></div></header>
 <div id="status" role="status" aria-live="polite">Paste an article, then give its ideas a shape.</div>
 <div class="metadata"><label>Title<input id="title" placeholder="Article title"></label><label>Author<input id="author" placeholder="Author name"></label><label class="year">Year<input id="year" type="number" min="1" max="9999"></label></div>
 <main class="workspace">
@@ -39,6 +39,6 @@
  </aside>
 </main>
 <input id="fileInput" type="file" accept=".bnitz,application/json" hidden>
-<dialog id="libraryDialog"><div class="panel-heading"><h2>Open an article</h2><button id="closeLibrary" aria-label="Close article picker">×</button></div><div id="libraryList"></div></dialog>
+<dialog id="libraryDialog"><div class="panel-heading"><h2>Import from library</h2><button id="closeLibrary" aria-label="Close article picker">×</button></div><div id="libraryList"></div></dialog>
 <dialog id="confirmDialog"><h2 id="confirmTitle">Confirm</h2><p id="confirmMessage"></p><div class="actions"><button id="confirmNo">Cancel</button><button id="confirmYes" class="primary">Continue</button></div></dialog>
 </body></html>
