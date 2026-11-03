@@ -2,6 +2,7 @@
 import argparse
 import json
 import re
+import runpy
 import threading
 import unicodedata
 from functools import partial
@@ -9,9 +10,14 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
-from build import ROOT, SLUG, build, validate_article
+from build import ROOT, SLUG
 
 SAVE_LOCK = threading.Lock()
+BUILD_SOURCE = ROOT / 'build.py'
+
+
+def current_builder():
+    return runpy.run_path(str(BUILD_SOURCE))
 
 
 class ConflictError(ValueError):
@@ -29,7 +35,8 @@ def slugify(title):
 def save_article(root, payload):
     if not isinstance(payload, dict) or 'article' not in payload:
         raise ValueError('Choose an article to export.')
-    article = validate_article(payload['article'])
+    builder = current_builder()
+    article = builder['validate_article'](payload['article'])
     slug = payload.get('slug') or slugify(article['title'])
     if not isinstance(slug, str) or not SLUG.fullmatch(slug):
         raise ValueError('Invalid article destination.')
@@ -45,7 +52,7 @@ def save_article(root, payload):
         try:
             temporary.write_text(json.dumps(article, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
             temporary.replace(target)
-            build(root)
+            builder['build'](root)
         except Exception:
             if previous is not None:
                 target.write_bytes(previous)
@@ -81,6 +88,7 @@ class Handler(SimpleHTTPRequestHandler):
         if self.mode != 'composer' or not path.startswith('/api/'):
             return super().do_GET()
         try:
+            validate_article = current_builder()['validate_article']
             if path == '/api/articles':
                 articles = []
                 for file in sorted((self.root / 'articles').glob('*.bnitz')):
@@ -123,7 +131,7 @@ def main():
     parser.add_argument('--port', type=int)
     args = parser.parse_args()
     if args.mode == 'reader':
-        build()
+        current_builder()['build']()
     port = args.port or (4174 if args.mode == 'composer' else 4173)
     server = ThreadingHTTPServer(('127.0.0.1', port), partial(Handler, mode=args.mode))
     print(f'BNITZ {args.mode}: http://127.0.0.1:{port}/', flush=True)

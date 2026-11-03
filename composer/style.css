@@ -54,6 +54,7 @@ p { margin: 0; }
 #textPreview mark { background: var(--soft-lime); color: inherit; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 #textPreview mark.strong, #textPreview mark.primary, #textPreview mark.highlight-primary, #textPreview mark[data-grade="primary"] { background: var(--lime); }
 #textPreview mark.secondary, #textPreview mark.highlight-secondary, #textPreview mark[data-grade="secondary"] { background: var(--soft-lime); }
+#textPreview .article-citation { margin: 0; padding-left: 16px; border-left: 2px solid #d7d7d7; font: inherit; color: inherit; }
 .toolbar { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
 .toolbar button { padding: 5px 7px; font-size: 10px; }
 .canvas-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 10px; }
@@ -78,8 +79,14 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .field-pair, .button-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .field-pair .check-label { align-self: center; }
 .check-label { display: flex; align-items: center; gap: 6px; }
-#shapeSettings output { color: #888; font-size: 10px; }
-#polygonControls { display: grid; gap: 10px; }
+#shapeSettings output { color: #555; font-size: 11px; text-align: center; }
+.size-control { display: grid; grid-template-columns: 1fr 28px 36px 28px; gap: 5px; align-items: center; }
+.size-control button { padding: 3px; font-size: 16px; }
+.editable-size { grid-template-columns: 1fr 28px 62px 28px; }
+#shapeSize { text-align: center; padding: 5px 3px; }
+.appearance { margin-top: 6px; border-top: 1px solid var(--line); padding-top: 12px; }
+.appearance summary { margin-bottom: 8px; }
+.appearance-fields { display: grid; gap: 10px; }
 .button-pair button { font-size: 10px; padding: 5px; }
 .inspector-section { margin-top: 22px; padding-top: 14px; border-top: 1px solid #e9e9e9; }
 .inspector-section h3, .inspector-section summary { margin-bottom: 10px; color: #555; }

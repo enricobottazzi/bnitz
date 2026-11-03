@@ -43,6 +43,19 @@ def validate_article(value):
     if type(article.get('year')) is not int or not 1 <= article['year'] <= 9999:
         raise ValueError('Please enter a valid year.')
     boundaries = utf16_boundaries(article['text'])
+    if 'citations' in article:
+        citations = article['citations']
+        if not isinstance(citations, list) or len(citations) > 1000:
+            raise ValueError('Invalid article citations.')
+        for citation in citations:
+            if not isinstance(citation, dict):
+                raise ValueError('Invalid article citation.')
+            start, end = citation.get('start'), citation.get('end')
+            if type(start) is not int or type(end) is not int or start >= end or start not in boundaries or end not in boundaries:
+                raise ValueError('An article citation no longer matches the text. Select that text again.')
+        citations.sort(key=lambda citation: citation['start'])
+        if any(left['end'] > right['start'] for left, right in zip(citations, citations[1:])):
+            raise ValueError('Article citations cannot overlap.')
     canvas = article.get('canvas')
     if not isinstance(canvas, dict):
         raise ValueError('The map needs a canvas size.')
@@ -51,10 +64,12 @@ def validate_article(value):
     shapes = article.get('shapes')
     if not isinstance(shapes, list) or len(shapes) > 1000:
         raise ValueError('The map must contain at most 1000 shapes.')
+    shapes[:] = [shape for shape in shapes if not isinstance(shape, dict) or shape.get('type') != 'text']
     ids = set()
     for shape in shapes:
         if not isinstance(shape, dict):
             raise ValueError('Invalid map shape.')
+        shape.pop('tag', None)
         key = shape.get('id')
         if not isinstance(key, str) or not ID.fullmatch(key) or key in ids:
             raise ValueError('Map shapes need distinct valid identifiers.')
@@ -84,7 +99,9 @@ def validate_article(value):
             raise ValueError('Invalid shape name.')
         if 'dash' in shape and (not isinstance(shape['dash'], str) or not re.fullmatch(r'(?:\d+(?:\.\d+)?(?:[ ,]+\d+(?:\.\d+)?)*)?', shape['dash'])):
             raise ValueError('Invalid stroke dash pattern.')
-        if 'preset' in shape and shape['preset'] not in ('triangle', 'polygon', 'star'):
+        if 'lineStyle' in shape and (shape['lineStyle'] not in ('zigzag', 'star-ends') or kind not in ('polyline', 'curve', 'freehand')):
+            raise ValueError('Line styles are only available for open lines.')
+        if 'preset' in shape and shape['preset'] not in ('triangle', 'right-triangle', 'polygon', 'star'):
             raise ValueError('Invalid shape preset.')
         if 'sides' in shape:
             if type(shape['sides']) is not int or not 3 <= shape['sides'] <= 24:
@@ -122,6 +139,67 @@ def n(value):
     return format(value, '.10g')
 
 
+def line_samples(shape):
+    points = shape['points']
+    if shape['type'] != 'curve':
+        return [point[:] for point in points]
+    if all(point == points[0] for point in points):
+        return [points[0][:] for _ in range(65)]
+    result = []
+    for index in range(65):
+        t = index / 64
+        u = 1 - t
+        result.append([u ** 3 * points[0][axis] + 3 * u ** 2 * t * points[1][axis] + 3 * u * t ** 2 * points[2][axis] + t ** 3 * points[3][axis] for axis in (0, 1)])
+    return result
+
+
+def zigzag_points(shape):
+    normalized = line_samples(shape)
+    points = []
+    for x, y in normalized:
+        world = [x * shape['width'], y * shape['height']]
+        if not points or world != points[-1]:
+            points.append(world)
+    lengths, cumulative = [], [0]
+    for start, end in zip(points, points[1:]):
+        length = math.hypot(end[0] - start[0], end[1] - start[1])
+        lengths.append(length)
+        cumulative.append(cumulative[-1] + length)
+    total = cumulative[-1]
+    if not total:
+        return normalized
+    count = min(512, 2 * max(1, math.floor(total / 24 + .5)))
+    amplitude = min(6, total / 6)
+    result, segment = [], 0
+    for index in range(count + 1):
+        distance = total * index / count
+        while segment < len(lengths) - 1 and distance > cumulative[segment + 1]:
+            segment += 1
+        start, end, length = points[segment], points[segment + 1], lengths[segment]
+        dx, dy = end[0] - start[0], end[1] - start[1]
+        fraction = (distance - cumulative[segment]) / length
+        offset = 0 if index in (0, count) else amplitude * (1 if index % 2 else -1)
+        result.append([(start[0] + dx * fraction - dy / length * offset) / shape['width'], (start[1] + dy * fraction + dx / length * offset) / shape['height']])
+    result[0], result[-1] = shape['points'][0][:], shape['points'][-1][:]
+    return result
+
+
+def star_segments(shape):
+    segments = []
+    points = shape['points']
+    for index, endpoint in enumerate((points[0], points[-1])):
+        candidates = points[1:] if index == 0 else reversed(points[:-1])
+        neighbor = next((point for point in candidates if point != endpoint), None)
+        angle = math.atan2((endpoint[1] - neighbor[1]) * shape['height'], (endpoint[0] - neighbor[0]) * shape['width']) if neighbor else (math.pi if index == 0 else 0)
+        radius = 5
+        center = [endpoint[0] - radius * math.cos(angle) / shape['width'], endpoint[1] - radius * math.sin(angle) / shape['height']]
+        for spoke in range(3):
+            direction = angle + spoke * math.pi / 3
+            dx, dy = radius * math.cos(direction) / shape['width'], radius * math.sin(direction) / shape['height']
+            segments.append([[center[0] - dx, center[1] - dy], [center[0] + dx, center[1] + dy]])
+    return segments
+
+
 def map_svg(article, slug):
     canvas = article['canvas']
     parts = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {n(canvas["width"])} {n(canvas["height"])}" class="reading-map" fill="none" aria-label="Reading map">']
@@ -129,9 +207,15 @@ def map_svg(article, slug):
         kind = shape['type']
         name = shape.get('name') or kind.capitalize()
         transform = f'translate({n(shape["x"])} {n(shape["y"])}) rotate({n(shape["rotation"])} {n(shape["width"]/2)} {n(shape["height"]/2)}) scale({n(shape["width"])} {n(shape["height"])})'
-        attributes = {'id': f'{slug}-{shape["id"]}', 'class': 'map-element', 'role': 'button', 'tabindex': '0', 'aria-label': name, 'aria-pressed': 'false', 'aria-controls': f'{slug}-text', 'data-ranges': json.dumps(shape['ranges'], separators=(',', ':')), 'data-outline': str(shape['outline']).lower(), 'transform': transform}
+        outline = shape['outline'] or kind in ('polyline', 'curve', 'freehand')
+        connector = kind in ('polyline', 'curve', 'freehand') or (kind == 'path' and shape['outline'])
+        attributes = {'id': f'{slug}-{shape["id"]}', 'class': 'map-element', 'aria-label': name, 'transform': transform, 'role': 'button', 'tabindex': '0', 'aria-pressed': 'false', 'aria-controls': f'{slug}-text', 'data-ranges': json.dumps(shape['ranges'], separators=(',', ':')), 'data-outline': str(outline).lower(), 'data-connector': str(connector).lower()}
         parts.append('<g ' + ' '.join(f'{key}="{html.escape(value, quote=True)}"' for key, value in attributes.items()) + '>')
-        if kind == 'ellipse':
+        line_style = shape.get('lineStyle')
+        if line_style == 'zigzag':
+            tag = 'polyline'
+            geometry = 'points="' + ' '.join(f'{n(x)},{n(y)}' for x, y in zigzag_points(shape)) + '"'
+        elif kind == 'ellipse':
             tag, geometry = 'ellipse', 'cx="0.5" cy="0.5" rx="0.5" ry="0.5"'
         elif kind in ('polygon', 'polyline', 'freehand'):
             tag = 'polygon' if kind == 'polygon' else 'polyline'
@@ -145,8 +229,14 @@ def map_svg(article, slug):
                 path = shape['path']
             geometry = f'd="{html.escape(path, quote=True)}"'
         parts.append(f'<{tag} class="map-hit" {geometry} fill="transparent" stroke="transparent" stroke-width="22" vector-effect="non-scaling-stroke" pointer-events="{"stroke" if shape["outline"] or kind in ("polyline", "freehand", "curve") else "all"}"/>')
-        dash = f' stroke-dasharray="{shape["dash"]}"' if shape.get('dash') else ''
-        parts.append(f'<{tag} class="map-ink" {geometry} fill="{shape["fill"]}" stroke="{shape["stroke"]}" stroke-width="{n(shape["strokeWidth"])}" opacity="{n(shape["opacity"])}" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"{dash}/></g>')
+        dash = f' stroke-dasharray="{shape["dash"]}"' if shape.get('dash') and not line_style else ''
+        fill = 'none' if line_style else shape['fill']
+        parts.append(f'<{tag} class="map-ink" {geometry} fill="{fill}" stroke="{shape["stroke"]}" stroke-width="{n(shape["strokeWidth"])}" opacity="{n(shape["opacity"])}" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"{dash}/>')
+        if line_style == 'star-ends':
+            path = ' '.join(f'M{n(start[0])} {n(start[1])} L{n(end[0])} {n(end[1])}' for start, end in star_segments(shape))
+            parts.append(f'<path class="map-endcap-hit" d="{path}" fill="none" stroke="transparent" stroke-width="22" vector-effect="non-scaling-stroke" pointer-events="stroke"/>')
+            parts.append(f'<path class="map-endcap" d="{path}" fill="none" stroke="{shape["stroke"]}" stroke-width="{n(shape["strokeWidth"])}" opacity="{n(shape["opacity"])}" vector-effect="non-scaling-stroke" stroke-linecap="round"/>')
+        parts.append('</g>')
     parts.append('</svg>')
     return ''.join(parts)
 
@@ -161,15 +251,45 @@ def render_text(article):
     for delimiter in list(re.finditer(r'(?:\r?\n)[ \t]*(?:\r?\n)+', text)) + [None]:
         end = delimiter.start() if delimiter else len(text)
         if text[start:end].strip():
-            edges = sorted({reverse[start], reverse[end]} | {value for value in cuts if reverse[start] < value < reverse[end]})
+            paragraphs.append((reverse[start], reverse[end]))
+        if delimiter:
+            start = delimiter.end()
+
+    regions = []
+    start = 0
+    for citation in article.get('citations', []):
+        if start < citation['start']:
+            regions.append((start, citation['start'], False))
+        regions.append((citation['start'], citation['end'], True))
+        start = citation['end']
+    if start < reverse[len(text)]:
+        regions.append((start, reverse[len(text)], False))
+
+    output = []
+    paragraph_index = 0
+    for region_start, region_end, cited in regions:
+        rendered = []
+        while paragraph_index < len(paragraphs):
+            paragraph_start, paragraph_end = paragraphs[paragraph_index]
+            if paragraph_end <= region_start:
+                paragraph_index += 1
+                continue
+            if paragraph_start >= region_end:
+                break
+            start, end = max(paragraph_start, region_start), min(paragraph_end, region_end)
+            edges = sorted({start, end} | {value for value in cuts if start < value < end})
             fragments = []
             for left, right in zip(edges, edges[1:]):
                 content = html.escape(text[boundaries[left]:boundaries[right]])
                 fragments.append(f'<mark class="article-fragment" data-start="{left}" data-end="{right}">{content}</mark>')
-            paragraphs.append('<p>' + ''.join(fragments) + '</p>')
-        if delimiter:
-            start = delimiter.end()
-    return ''.join(paragraphs)
+            rendered.append('<p>' + ''.join(fragments) + '</p>')
+            if paragraph_end > region_end:
+                break
+            paragraph_index += 1
+        if rendered:
+            content = ''.join(rendered)
+            output.append(f'<blockquote class="article-citation">{content}</blockquote>' if cited else content)
+    return ''.join(output)
 
 
 def render_article(article, slug):

@@ -15,7 +15,7 @@ function showSection() {
   activeArticle = articles.find(article => location.hash === `#readings/${article.dataset.article}`) || null;
   articles.forEach(article => { article.hidden = article !== activeArticle; });
   readingsSection.hidden = Boolean(activeArticle);
-  document.title = activeArticle ? `${activeArticle.querySelector('h1').textContent} — BNITZ` : 'BNITZ';
+  document.title = activeArticle ? `BNITZ - ${activeArticle.querySelector('h1').textContent}` : 'BNITZ';
   if (activeArticle !== previous) {
     clearSelection();
     articles.forEach(article => { article.querySelector('.reader-text').scrollTop = 0; });
@@ -51,8 +51,17 @@ function selectElement(element) {
   }
 }
 
+function pickMapElement(event) {
+  const svg = event.target.closest('svg.reading-map');
+  if (!svg) return null;
+  const elements = document.elementsFromPoint(event.clientX, event.clientY)
+    .map(node => node.closest('.map-element'))
+    .filter(element => element && element.closest('svg') === svg);
+  return elements.find(element => element.dataset.connector !== 'true') || elements[0] || null;
+}
+
 document.addEventListener('click', event => {
-  const element = event.target.closest('.map-element');
+  const element = pickMapElement(event);
   if (element) selectElement(element);
 });
 document.addEventListener('keydown', event => {

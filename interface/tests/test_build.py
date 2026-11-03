@@ -1,12 +1,16 @@
 import copy
+import html
 import importlib.util
 import json
+import math
 from pathlib import Path
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -93,6 +97,238 @@ class ArticleBuildTests(unittest.TestCase):
         self.assertIn('opacity="0.4"', svg)
         self.assertIn('fill="#eeeeee"', svg)
 
+    def test_right_triangle_export_preserves_geometry_and_connections(self):
+        shape = self.data['shapes'][0]
+        shape.update(type='polygon', preset='right-triangle', points=[[0, 0], [0, 1], [1, 1]], width=133.7, height=84.25, rotation=45)
+        serve.save_article(self.root, {'article': self.data, 'slug': 'an-example', 'overwrite': True})
+        saved = json.loads(self.path.read_text())
+        self.assertEqual(saved['shapes'][0], shape)
+        output = (self.root / 'dist/index.html').read_text()
+        svg = ET.fromstring(re.search(r'<svg .*?</svg>', output, re.S).group(0))
+        owner = svg.find('{*}g')
+        polygon = owner.find('{*}polygon[@class="map-ink"]')
+        points = [[float(value) for value in point.split(',')] for point in polygon.get('points').split()]
+        self.assertEqual(points, [[0, 0], [0, 1], [1, 1]])
+        self.assertIn('rotate(45 66.85 42.125) scale(133.7 84.25)', owner.get('transform'))
+        self.assertEqual(json.loads(owner.get('data-ranges')), shape['ranges'])
+
+    def test_line_styles_validate_only_supported_open_shapes(self):
+        for kind in ('polyline', 'curve', 'freehand'):
+            for style in ('zigzag', 'star-ends'):
+                data = example()
+                data['shapes'][0].update(type=kind, points=[[0, 0], [.3, .2], [.6, .8], [1, 1]], lineStyle=style)
+                builder.validate_article(data)
+        for kind, style in [('ellipse', 'zigzag'), ('polygon', 'star-ends'), ('path', 'zigzag'), ('polyline', 'unknown'), ('polyline', None), ('polyline', True)]:
+            with self.subTest(kind=kind, style=style):
+                data = example()
+                data['shapes'][0].update(type=kind, lineStyle=style)
+                with self.assertRaisesRegex(ValueError, 'Line styles'):
+                    builder.validate_article(data)
+
+    def test_zigzag_respects_world_spacing_amplitude_exact_ends_and_limits(self):
+        shape = {'type': 'polyline', 'width': 120, 'height': 60, 'points': [[0, .5], [0, .5], [1, .5]]}
+        original = copy.deepcopy(shape)
+        points = builder.zigzag_points(shape)
+        self.assertEqual(len(points), 11)
+        self.assertEqual((points[0], points[-1]), (shape['points'][0], shape['points'][-1]))
+        for index, point in enumerate(points[1:-1], 1):
+            self.assertAlmostEqual(point[0], index / 10)
+            self.assertAlmostEqual(point[1], .5 + (.1 if index % 2 else -.1))
+        self.assertEqual(shape, original)
+        short = builder.zigzag_points(dict(shape, width=6))
+        self.assertEqual(len(short), 3)
+        self.assertAlmostEqual((short[1][1] - .5) * shape['height'], 1)
+        self.assertEqual(len(builder.zigzag_points(dict(shape, width=98000))), 513)
+        stationary = {'type': 'curve', 'width': 180, 'height': 90, 'points': [[.2, .3]] * 4}
+        self.assertEqual(builder.zigzag_points(stationary), [[.2, .3]] * 65)
+
+    def test_asterisks_align_with_curve_tangents_without_extending_past_endpoints(self):
+        shape = {'type': 'curve', 'width': 200, 'height': 80, 'points': [[0, .5], [.2, .1], [.7, .9], [1, .25]]}
+        segments = builder.star_segments(shape)
+        self.assertEqual(len(segments), 6)
+        for index, (start, end) in enumerate(segments):
+            endpoint = shape['points'][0 if index < 3 else -1]
+            neighbor = shape['points'][1 if index < 3 else -2]
+            tangent = [(endpoint[0] - neighbor[0]) * shape['width'], (endpoint[1] - neighbor[1]) * shape['height']]
+            magnitude = math.hypot(*tangent)
+            outward = [value / magnitude for value in tangent]
+            center = [(start[axis] + end[axis]) / 2 for axis in (0, 1)]
+            self.assertAlmostEqual(center[0], endpoint[0] - 5 * outward[0] / shape['width'])
+            self.assertAlmostEqual(center[1], endpoint[1] - 5 * outward[1] / shape['height'])
+            for point in (start, end):
+                self.assertAlmostEqual(math.hypot((point[0] - center[0]) * shape['width'], (point[1] - center[1]) * shape['height']), 5)
+                projection = (point[0] - endpoint[0]) * shape['width'] * outward[0] + (point[1] - endpoint[1]) * shape['height'] * outward[1]
+                self.assertLessEqual(projection, 1e-10)
+            if index % 3 == 0:
+                for axis in (0, 1):
+                    self.assertAlmostEqual(end[axis], endpoint[axis])
+                spoke = [(end[0] - start[0]) * shape['width'], (end[1] - start[1]) * shape['height']]
+                self.assertAlmostEqual(spoke[0] * tangent[1] - spoke[1] * tangent[0], 0)
+                self.assertGreater(spoke[0] * tangent[0] + spoke[1] * tangent[1], 0)
+
+    def test_star_alignment_skips_duplicate_neighbors_and_handles_stationary_lines(self):
+        shape = {'type': 'polyline', 'width': 200, 'height': 80, 'points': [[0, 0], [0, 0], [0, 1], [0, 1]]}
+        segments = builder.star_segments(shape)
+        start, end = segments[0][0], segments[3][0]
+        self.assertAlmostEqual(start[0], 0)
+        self.assertAlmostEqual(start[1], 10 / 80)
+        self.assertAlmostEqual(end[0], 0)
+        self.assertAlmostEqual(end[1], 1 - 10 / 80)
+        shape['points'] = [[.2, .3]] * 4
+        segments = builder.star_segments(shape)
+        start, end = segments[0][0], segments[3][0]
+        self.assertAlmostEqual(start[0], .2 + 10 / 200)
+        self.assertAlmostEqual(end[0], .2 - 10 / 200)
+        self.assertAlmostEqual(start[1], .3)
+        self.assertAlmostEqual(end[1], .3)
+
+    def test_line_styles_export_solid_strokes_and_endcaps_share_owner_selection(self):
+        for style in ('zigzag', 'star-ends'):
+            with self.subTest(style=style):
+                shape = self.data['shapes'][0]
+                shape.update(type='curve', lineStyle=style, points=[[.1, .2], [.2, 1], [.8, 0], [.9, .8]], width=200, height=80, rotation=45, outline=False, dash='6 4', fill='#eeeeee', stroke='#123456', opacity=.4)
+                serve.save_article(self.root, {'article': self.data, 'slug': 'an-example', 'overwrite': True})
+                saved = builder.validate_article(json.loads(self.path.read_text()))
+                self.assertEqual(saved['shapes'][0], shape)
+                svg_text = builder.map_svg(saved, 'an-example')
+                svg = ET.fromstring(svg_text)
+                group = svg.find('{*}g')
+                ink = group.find('{*}*[@class="map-ink"]')
+                self.assertEqual(ink.get('fill'), 'none')
+                self.assertEqual(group.get('data-outline'), 'true')
+                self.assertEqual(group.get('data-connector'), 'true')
+                self.assertEqual(json.loads(group.get('data-ranges')), shape['ranges'])
+                self.assertNotIn('stroke-dasharray', svg_text)
+                self.assertEqual(len(svg.findall('.//*[@role="button"]')), 1)
+                self.assertIn('rotate(45 100 40)', group.get('transform'))
+                if style == 'zigzag':
+                    points = [[float(value) for value in point.split(',')] for point in ink.get('points').split()]
+                    self.assertEqual((points[0], points[-1]), (shape['points'][0], shape['points'][-1]))
+                else:
+                    cap = group.find('{*}path[@class="map-endcap"]')
+                    hit = group.find('{*}path[@class="map-endcap-hit"]')
+                    self.assertEqual(cap.get('d'), hit.get('d'))
+                    self.assertEqual(cap.get('d').count('M'), 6)
+                    self.assertEqual(cap.get('d').count('L'), 6)
+                    self.assertNotIn('Z', cap.get('d'))
+                    self.assertEqual(cap.get('stroke'), '#123456')
+                    self.assertEqual(cap.get('stroke-width'), '2')
+                    self.assertEqual(cap.get('opacity'), '0.4')
+                    self.assertEqual(cap.get('fill'), 'none')
+                    self.assertEqual(cap.get('vector-effect'), 'non-scaling-stroke')
+                    self.assertEqual(cap.get('stroke-linecap'), 'round')
+                    self.assertEqual(hit.get('stroke'), 'transparent')
+                    self.assertEqual(hit.get('fill'), 'none')
+                    self.assertEqual(hit.get('pointer-events'), 'stroke')
+                    self.assertIn('class="map-endcap"', (self.root / 'dist/index.html').read_text())
+
+    @unittest.skipUnless(shutil.which('node'), 'Node is needed to compare Composer geometry')
+    def test_line_geometry_matches_composer(self):
+        shapes = [
+            {'type': 'polyline', 'width': 120, 'height': 60, 'points': [[0, .5], [0, .5], [1, .5]]},
+            {'type': 'freehand', 'width': 173, 'height': 219, 'points': [[.1, .3], [.2, .6], [.9, .8], [.3, .1]]},
+            {'type': 'curve', 'width': 190, 'height': 84, 'points': [[0, 0], [.3, .9], [.6, .1], [1, 1]]},
+            {'type': 'curve', 'width': 180, 'height': 90, 'points': [[.2, .3]] * 4},
+        ]
+        script = "const fs=require('node:fs'), styles=require(process.argv[1]); process.stdout.write(JSON.stringify(JSON.parse(fs.readFileSync(0,'utf8')).map(shape=>({zigzag:styles.zigzag(shape),stars:styles.starSegments(shape)}))));"
+        result = subprocess.run([shutil.which('node'), '-e', script, str(ROOT.parent / 'composer/line-style.js')], input=json.dumps(shapes), capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        for shape, rendered in zip(shapes, json.loads(result.stdout)):
+            python_points = builder.zigzag_points(shape)
+            self.assertEqual(len(python_points), len(rendered['zigzag']))
+            for point, expected in zip(python_points, rendered['zigzag']):
+                for value, target in zip(point, expected):
+                    self.assertAlmostEqual(value, target, places=10)
+            for segment, expected in zip(builder.star_segments(shape), rendered['stars']):
+                self.assertEqual(len(segment), len(expected))
+                for point, target in zip(segment, expected):
+                    for value, coordinate in zip(point, target):
+                        self.assertAlmostEqual(value, coordinate, places=10)
+
+    def test_legacy_export_drops_labels_and_tags_without_changing_geometric_shapes(self):
+        geometry = copy.deepcopy(self.data['shapes'][0])
+        self.data['shapes'][0]['tag'] = 'Abandoned attached tag'
+        label = copy.deepcopy(geometry)
+        label.update(id='legacy-label', type='text', text='Abandoned standalone label')
+        self.data['shapes'].append(label)
+        original = copy.deepcopy(self.data)
+        self.path.write_text(json.dumps(self.data))
+        source = self.path.read_bytes()
+
+        normalized = builder.validate_article(self.data)
+        self.assertEqual(normalized['shapes'], [geometry])
+        self.assertEqual(self.data, original)
+        self.assertEqual(builder.build(self.root), 1)
+        self.assertEqual(self.path.read_bytes(), source)
+        output = (self.root / 'dist/index.html').read_text()
+        self.assertNotIn('Abandoned attached tag', output)
+        self.assertNotIn('Abandoned standalone label', output)
+        svg = ET.fromstring(builder.map_svg(normalized, 'an-example'))
+        self.assertEqual(len(svg.findall('{*}g')), 1)
+        self.assertIsNone(svg.find('.//{*}text'))
+        self.assertEqual(json.loads(svg.find('{*}g').get('data-ranges')), geometry['ranges'])
+
+        serve.save_article(self.root, {'article': self.data, 'slug': 'an-example', 'overwrite': True})
+        self.assertEqual(json.loads(self.path.read_text())['shapes'], [geometry])
+        self.assertEqual(self.data, original)
+
+    def test_connector_classification_preserves_interactive_shape_ranges(self):
+        cases = [('ellipse', False, False), ('ellipse', True, False), ('polygon', False, False), ('polyline', False, True), ('curve', False, True), ('freehand', False, True), ('path', False, False), ('path', True, True)]
+        for kind, outline, connector in cases:
+            with self.subTest(kind=kind, outline=outline):
+                data = example()
+                shape = data['shapes'][0]
+                shape.update(type=kind, outline=outline, points=[[0, 0], [.3, .2], [.6, .8], [1, 1]], path='M0 0 L1 1')
+                group = ET.fromstring(builder.map_svg(builder.validate_article(data), 'an-example')).find('{*}g')
+                self.assertEqual(group.get('data-connector'), str(connector).lower())
+                self.assertEqual(group.get('class'), 'map-element')
+                self.assertEqual(group.get('role'), 'button')
+                self.assertEqual(json.loads(group.get('data-ranges')), shape['ranges'])
+
+    def test_open_shapes_render_outline_highlighting_without_rewriting_saved_choice(self):
+        for kind in ('polyline', 'curve', 'freehand'):
+            with self.subTest(kind=kind):
+                data = example()
+                data['shapes'][0].update(type=kind, outline=False, points=[[0, 0], [.3, .2], [.6, .8], [1, 1]])
+                valid = builder.validate_article(data)
+                group = ET.fromstring(builder.map_svg(valid, 'an-example')).find('{*}g')
+                self.assertEqual(group.get('data-outline'), 'true')
+                self.assertEqual(group.find('{*}*[@class="map-hit"]').get('pointer-events'), 'stroke')
+                self.assertIs(valid['shapes'][0]['outline'], False)
+                self.assertIs(data['shapes'][0]['outline'], False)
+
+    @unittest.skipUnless(shutil.which('node'), 'Node is needed to test reader pointer selection')
+    def test_reader_picks_shapes_under_connectors_within_the_same_map(self):
+        script = r'''
+const assert = require('node:assert/strict'), fs = require('node:fs'), vm = require('node:vm');
+const listeners = {}, svg = {}, otherSvg = {};
+let hits = [], selected = null;
+const context = {
+  document: {
+    querySelector: () => ({hidden: false}), querySelectorAll: () => [],
+    addEventListener: (type, listener) => { listeners[type] = listener; },
+    elementsFromPoint: (x, y) => { assert.equal(x, 12); assert.equal(y, 24); return hits; },
+  },
+  window: {addEventListener() {}, scrollTo() {}}, location: {hash: ''},
+};
+vm.runInNewContext(fs.readFileSync(process.argv[1], 'utf8'), context);
+context.selectElement = element => { selected = element; };
+const group = (connector, owner = svg) => ({dataset: {connector}, closest: selector => selector === 'svg' ? owner : null});
+const node = element => ({closest: () => element});
+const circle = group('false'), line = group('true'), foreignCircle = group('false', otherSvg);
+const event = {target: {closest: () => svg}, clientX: 12, clientY: 24};
+hits = [node(line), node(foreignCircle), node(circle), node(line)];
+listeners.click(event); assert.equal(selected, circle);
+hits = [node(line), node(foreignCircle)]; selected = null;
+listeners.click(event); assert.equal(selected, line);
+hits = [node(null)]; selected = null;
+listeners.click(event); assert.equal(selected, null);
+listeners.keydown({target: {closest: () => line}, key: 'Enter', preventDefault() {}});
+assert.equal(selected, line);
+'''
+        result = subprocess.run([shutil.which('node'), '-e', script, str(ROOT / 'src/script.js')], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_unsupported_shapes_and_unsafe_values_are_rejected(self):
         changes = [('type', 'rect'), ('type', 'arrow'), ('stroke', 'url(https://example.com)'), ('width', float('nan')), ('ranges', [{'start': 0, 'end': 1, 'grade': 'unknown'}])]
         for key, value in changes:
@@ -108,6 +344,79 @@ class ArticleBuildTests(unittest.TestCase):
         output = builder.render_text(builder.validate_article(self.data))
         self.assertIn('&lt;script&gt;', output)
         self.assertNotIn('<script>', output)
+
+    def test_legacy_article_without_citations_keeps_plain_paragraphs(self):
+        data = builder.validate_article(example())
+        self.assertNotIn('citations', data)
+        output = builder.render_text(data)
+        self.assertNotIn('<blockquote', output)
+        self.assertEqual(output.count('<p>'), 2)
+
+    def test_citations_round_trip_through_save_and_build(self):
+        self.data['citations'] = [{'start': 12, 'end': 25}, {'start': 2, 'end': 4}]
+        serve.save_article(self.root, {'article': self.data, 'slug': 'an-example', 'overwrite': True})
+        saved = json.loads(self.path.read_text())
+        self.assertEqual(saved['citations'], [{'start': 2, 'end': 4}, {'start': 12, 'end': 25}])
+        self.assertEqual(saved['text'], self.data['text'])
+        output = (self.root / 'dist/index.html').read_text()
+        self.assertEqual(output.count('<blockquote class="article-citation">'), 2)
+        self.assertIn('data-start="2" data-end="4">🌍</mark>', output)
+
+    def test_citation_spans_multiple_paragraphs_and_escapes_text(self):
+        data = example()
+        data['text'] = 'Before.\n\n<script>one</script>\n\nTwo & three.\n\nAfter.'
+        data['shapes'] = []
+        data['citations'] = [{'start': 9, 'end': data['text'].index('\n\nAfter.')}]
+        output = builder.render_text(builder.validate_article(data))
+        blocks = re.findall(r'<blockquote class="article-citation">(.*?)</blockquote>', output, re.S)
+        self.assertEqual(len(blocks), 1)
+        self.assertEqual(blocks[0].count('<p>'), 2)
+        self.assertIn('&lt;script&gt;one&lt;/script&gt;', blocks[0])
+        self.assertIn('Two &amp; three.', blocks[0])
+        self.assertNotIn('<script>', output)
+        self.assertEqual(output.count('<p>'), 4)
+
+    def test_citation_boundaries_preserve_crossing_map_fragments(self):
+        data = example()
+        data['text'] = 'Before quoted words after'
+        data['citations'] = [{'start': 7, 'end': 19}]
+        data['shapes'][0]['ranges'] = [
+            {'start': 0, 'end': 13, 'grade': 'primary'},
+            {'start': 9, 'end': 25, 'grade': 'secondary'},
+        ]
+        valid = builder.validate_article(data)
+        output = builder.render_text(valid)
+        fragments = re.findall(r'data-start="(\d+)" data-end="(\d+)">(.*?)</mark>', output, re.S)
+        self.assertEqual([(int(start), int(end)) for start, end, _ in fragments], [(0, 7), (7, 9), (9, 13), (13, 19), (19, 25)])
+        self.assertEqual(''.join(html.unescape(content) for _, _, content in fragments), data['text'])
+        for start, end, content in fragments:
+            self.assertEqual(html.unescape(content), data['text'][int(start):int(end)])
+        quoted = re.search(r'<blockquote class="article-citation">(.*?)</blockquote>', output).group(1)
+        self.assertIn('data-start="7"', quoted)
+        self.assertIn('data-end="19"', quoted)
+        self.assertEqual(valid['shapes'][0]['ranges'], data['shapes'][0]['ranges'])
+
+    def test_invalid_citations_are_rejected(self):
+        invalid = [
+            None, {}, [None], [{'start': True, 'end': 2}], [{'start': 0.0, 'end': 2}],
+            [{'start': 2, 'end': 3}], [{'start': 3, 'end': 4}],
+            [{'start': -1, 'end': 2}], [{'start': 0, 'end': 999}],
+            [{'start': 4, 'end': 4}], [{'start': 4, 'end': 2}],
+            [{'start': 0, 'end': 4}, {'start': 2, 'end': 10}],
+        ]
+        for citations in invalid:
+            with self.subTest(citations=citations):
+                data = example()
+                data['citations'] = citations
+                with self.assertRaisesRegex(ValueError, '[Cc]itation'):
+                    builder.validate_article(data)
+
+    def test_touching_citations_are_valid_and_preserve_unicode(self):
+        data = example()
+        data['citations'] = [{'start': 0, 'end': 2}, {'start': 2, 'end': 4}]
+        output = builder.render_text(builder.validate_article(data))
+        self.assertEqual(output.count('<blockquote class="article-citation">'), 2)
+        self.assertIn('data-start="2" data-end="4">🌍</mark>', output)
 
     def test_save_conflict_and_explicit_replacement(self):
         with self.assertRaises(serve.ConflictError):
@@ -131,16 +440,21 @@ class ArticleBuildTests(unittest.TestCase):
             serve.save_article(self.root, {'article': self.data, 'slug': 'an-example', 'overwrite': True})
         self.assertEqual(previous, self.path.read_bytes())
 
-    def test_migrated_article_has_original_geometry_and_connections(self):
-        data = builder.validate_article(json.loads((ROOT / 'articles/the-bitter-lesson.bnitz').read_text()))
-        self.assertEqual(len(data['shapes']), 17)
-        self.assertEqual(len(data['text'].split('\n\n')), 8)
-        self.assertEqual(data['title'], 'The Bitter Lesson')
-        top = next(shape for shape in data['shapes'] if shape['id'] == 'map-top')
-        bottom = next(shape for shape in data['shapes'] if shape['id'] == 'map-bottom-left')
-        self.assertEqual((top['x'], top['y'], top['width'], top['height']), (143, 33, 174, 106))
-        self.assertEqual((bottom['x'], bottom['y'], bottom['height']), (143, 541, 106))
-        self.assertTrue(all({r['grade'] for r in shape['ranges']} == {'primary', 'secondary'} for shape in data['shapes']))
+    def test_saved_library_remains_readable_and_builds(self):
+        self.path.unlink()
+        sources = sorted((ROOT / 'articles').glob('*.bnitz'))
+        for path in sources:
+            shutil.copyfile(path, self.root / 'articles' / path.name)
+        self.assertEqual(builder.build(self.root), len(sources))
+        output = (self.root / 'dist/index.html').read_text(encoding='utf-8')
+        for path in sources:
+            with self.subTest(article=path.name):
+                data = builder.validate_article(json.loads(path.read_text(encoding='utf-8')))
+                self.assertIn(f'href="#readings/{path.stem}"', output)
+                self.assertIn(f'data-article="{path.stem}"', output)
+                self.assertIn(html.escape(data['title']), output)
+                for shape in data['shapes']:
+                    self.assertIn(f'id="{path.stem}-{shape["id"]}"', output)
 
 
 if __name__ == '__main__':

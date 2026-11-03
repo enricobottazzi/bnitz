@@ -1,0 +1,240 @@
+{
+  "version": 1,
+  "title": "Society for the Preservation of Gaps in the Literature",
+  "author": "Roger Koenker",
+  "year": 2001,
+  "text": "Gaps in the literature constitute the essential breathing spaces of academic life. The research and publication process poses an increasing threat to the well being of disciplines by gradually filling these gaps with meritless interpolation of existing results. The Society for the Preservation of Gaps in the Literature is dedicated to the preservation of the \"intellectual green space\" afforded by these gaps. For the moment the society is composed of a small number of completely independent cells modeled after the Cathar heresy of 14th century France. For a brief account of the origin of the sublimely evocative phrase \"...this paper fills a much needed gap in the literature\" see Allyn Jackson's historical review in Math Reviews. An amusing exercise is to type \"fills a much needed gap in the literature\" into your favorite search engine and note how many publishers use this phrase as a token of esteem, rather than dismissal. My long term favorite is the blurb for The Tel Quel Reader. Quoting from the Amazon.UK web entry:\n\nThe work of the French literary review, intellectual grouping and publishing team, Tel Quel, had a profound impact on literary and cultural debate in the 1960s and '70s. From its beginning in 1960 to its closure in 1982, it published some of the key essays of major poststructuralist thinkers from Roland Barthes to Michel Foucault and Julia Kristeva. The Tel Quel Reader presents for the first time in English many of the key essays written by the Tel Quel group. It fills a much needed gap in the literature available on the poststructuralist movement. Essays by Michel Foucault, Julia Kristeva, a member of Tel Quel's editorial board, and a fascinating interview with Roland Barthes are all here made available for the first time in English. It provides a unique insight into the poststructuralist movement and presents some of the pioneering essays on literature and culture, film, semiotics and psychoanalysis.\n\nCloser to the realm of probability and statistics is the opening sentences of Judea Pearl's introduction to an important recent book on semiparametric methods:\n\n\"Targeted Learning, by Mark J. van der Laan and Sherri Rose, fills a much needed gap in statistical and causal inference. It protects us from wasting computational, analytical, and data resources on irrelevant aspects of a problem and teaches us how to focus on what is relevant – answering questions that researchers truly care about.\"\n\nRather than filling gaps in the literature one of the great accomplishments of serious research is to create gaps in the literature by debunking the nonsense of the past. No where is this objective better formulated than in the introduction to the bibliography of Keynes' (1921) Treatise on Probability:\n\nI have not read all these books myself, but I have read more of them than it would be good for any one to read again. There are here enumerated many dead treatises and ghostly memoirs. The list is too long, and I have not always successfully resisted the impulse to add to it in the spirit of a collector. There are not above a hundred of these which it would be worth while to preserve,--if only it were securely ascertained which these hundred are. At present a bibliographer takes pride in numerous entries; but he would be a more useful fellow, and the labours of research would be lightened, if he could practise deletion and bring into existence an accredited Index Expurgatorius. But this can only be accomplished by the slow mills of the collective judgement of the learned; and I have already indicated my own favorite authors in copious footnotes to the main body of the text.",
+  "canvas": {
+    "width": 460,
+    "height": 680
+  },
+  "shapes": [
+    {
+      "id": "s-266bd39c-bd55-45de-9478-58a918165626",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 196,
+      "y": 308,
+      "width": 56,
+      "height": 56,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 0,
+          "end": 81,
+          "grade": "primary"
+        }
+      ],
+      "centerDot": false
+    },
+    {
+      "id": "s-2a939844-4a39-4e52-8384-2ed7cb497b75",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 308,
+      "y": 308,
+      "width": 56,
+      "height": 56,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 262,
+          "end": 411,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-3a55f126-5f04-4919-bed9-450a291d067c",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 84,
+      "y": 308,
+      "width": 56,
+      "height": 56,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 82,
+          "end": 262,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-105a49b9-8ad0-4f3a-9255-f9b0fe7152d3",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 28,
+      "y": 252,
+      "width": 168,
+      "height": 168,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": true,
+      "ranges": [
+        {
+          "start": 738,
+          "end": 935,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-f603b00f-a73d-4eb5-82b8-08abbb99a0b2",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 98,
+      "y": 238,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 2030,
+          "end": 2110,
+          "grade": "primary"
+        },
+        {
+          "start": 2174,
+          "end": 2197,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-f52c5f72-623f-4208-8d37-323d2b9a3aba",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 98,
+      "y": 406,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 961,
+          "end": 994,
+          "grade": "primary"
+        },
+        {
+          "start": 1503,
+          "end": 1544,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-b12a3965-64d3-4406-83c4-5e711c307582",
+      "name": "Line",
+      "type": "polyline",
+      "x": 166.31005050633885,
+      "y": 279.3,
+      "width": 117.60000000000001,
+      "height": 117.60000000000001,
+      "rotation": 135,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": true,
+      "ranges": [
+        {
+          "start": 2451,
+          "end": 2621,
+          "grade": "primary"
+        }
+      ],
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "lineStyle": "star-ends"
+    },
+    {
+      "id": "s-8395fd2d-2b00-424f-84ca-65a29d2be8fb",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 322,
+      "y": 294,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 2679,
+          "end": 2754,
+          "grade": "primary"
+        },
+        {
+          "start": 3218,
+          "end": 3234,
+          "grade": "primary"
+        },
+        {
+          "start": 3274,
+          "end": 3303,
+          "grade": "primary"
+        },
+        {
+          "start": 3353,
+          "end": 3441,
+          "grade": "primary"
+        }
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "start": 1035,
+      "end": 1950
+    },
+    {
+      "start": 2113,
+      "end": 2449
+    },
+    {
+      "start": 2756,
+      "end": 3642
+    }
+  ]
+}
