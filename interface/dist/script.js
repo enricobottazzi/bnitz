@@ -7,7 +7,7 @@ function clearSelection() {
     element.classList.remove('is-selected');
     element.setAttribute('aria-pressed', 'false');
   });
-  document.querySelectorAll('.article-passage').forEach(passage => passage.classList.remove('is-highlighted'));
+  document.querySelectorAll('.article-fragment').forEach(fragment => fragment.classList.remove('highlight-primary', 'highlight-secondary'));
 }
 
 function showSection() {
@@ -32,14 +32,23 @@ function selectElement(element) {
   const selected = element.classList.contains('is-selected');
   clearSelection();
   if (selected) return;
-  const passages = element.dataset.passages.split(' ').map(id => document.getElementById(id));
+  const ranges = JSON.parse(element.dataset.ranges);
   element.classList.add('is-selected');
   element.setAttribute('aria-pressed', 'true');
-  passages.forEach(passage => passage.classList.add('is-highlighted'));
   const reader = element.closest('[data-article]').querySelector('.reader-text');
-  const passage = passages[0];
-  reader.scrollTo({ top: passage.offsetTop - (reader.clientHeight - Math.min(passage.offsetHeight, reader.clientHeight)) / 2, behavior: 'auto' });
-  if (matchMedia('(max-width: 600px)').matches) reader.scrollIntoView({ block: 'start', behavior: 'auto' });
+  let first = null;
+  reader.querySelectorAll('.article-fragment').forEach(fragment => {
+    const start = Number(fragment.dataset.start);
+    const end = Number(fragment.dataset.end);
+    const matches = ranges.filter(range => range.start < end && range.end > start);
+    if (!matches.length) return;
+    fragment.classList.add(matches.some(range => range.grade === 'primary') ? 'highlight-primary' : 'highlight-secondary');
+    if (!first) first = fragment;
+  });
+  if (first) {
+    reader.scrollTo({ top: Math.max(0, first.offsetTop - reader.clientHeight / 4), behavior: 'auto' });
+    if (matchMedia('(max-width: 600px)').matches) reader.scrollIntoView({ block: 'start', behavior: 'auto' });
+  }
 }
 
 document.addEventListener('click', event => {

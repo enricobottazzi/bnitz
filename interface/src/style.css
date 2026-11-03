@@ -34,15 +34,15 @@ p { margin: 0; max-width: 290px; }
 .reader-text { position: relative; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 3px var(--reader-inset) 20px 0; line-height: 1.7; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
 .reader-text:focus-visible { outline: 1px solid #ccc; outline-offset: 8px; }
 .reader-text p { max-width: none; margin: 0 0 20px; }
-.reader-text mark { color: inherit; background: transparent; box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: 2px 0; }
-.reader-text .is-highlighted mark { background: #eff6c4; }
-.reader-text .is-highlighted .highlight-primary { background: #deff00; }
+.reader-text mark { color: inherit; background: transparent; box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: 2px 0; white-space: pre-wrap; }
+.reader-text mark.highlight-secondary { background: #eff6c4; }
+.reader-text mark.highlight-primary { background: #deff00; }
 .map-pane { min-width: 0; min-height: 0; display: flex; align-items: center; justify-content: center; background-image: radial-gradient(#dedede .8px, transparent .8px); background-size: 28px 28px; }
 .reading-map { display: block; width: 100%; height: 100%; max-width: 460px; overflow: visible; }
 .map-element { cursor: pointer; outline: none; }
 .map-ink { pointer-events: none; vector-effect: non-scaling-stroke; }
-.map-element:hover .map-ink, .map-element:focus-visible .map-ink { stroke-width: 2.8px; }
-.map-element.is-selected .map-ink { fill: #deff00; stroke: #333; }
+.map-element:focus-visible .map-ink { filter: drop-shadow(0 0 2px #888); }
+.map-element.is-selected .map-ink { fill: #deff00; }
 .map-element[data-outline="true"].is-selected .map-ink { fill: none; stroke: #deff00; stroke-width: 5px; }
 @media (max-width: 900px) {
   body { --reader-gap: 36px; }
