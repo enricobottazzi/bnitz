@@ -10,17 +10,11 @@ Requires Python 3.9 or newer. From the repository root:
 python3 interface/serve.py composer
 ```
 
-Open [the composer](http://127.0.0.1:4174). Enter the title, author and year, then paste the article text.
-
-Draw the map using ellipses, triangles, polygons, stars, lines, curves and freehand strokes. Select a shape to customize it or use **Delete shape** to remove it; **Undo** restores it. To connect a shape to the article, select the relevant text and choose **Strong highlight** or **Soft highlight**. Repeat to connect more passages to the same shape.
-
-Use **Open article** to edit an existing reading. **Download article** saves a portable copy; **Import file** opens one again.
+Open [the composer](http://127.0.0.1:4174).
 
 ## Export an article to the codebase
 
-Click **Export to library** in the composer. It saves the article into this repository and rebuilds the reader automatically. An article opened from the library is updated when you export it again.
-
-Refresh the reader to see the exported article. No files need to be written or edited by hand.
+Click **Export to library** in the composer. It saves the article into this repository and rebuilds the reader automatically.
 
 ## Run the reader locally
 

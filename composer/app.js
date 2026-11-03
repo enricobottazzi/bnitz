@@ -207,14 +207,24 @@ $('canvas').addEventListener('keydown',event=> {
 });
 function captureSelection() {
   const selection=window.getSelection();if(!selection.rangeCount||selection.isCollapsed)return;
-  const range=selection.getRangeAt(0),container=$('textPreview');
-  if(!container.contains(range.startContainer)||!container.contains(range.endContainer))return;
-  const prefix=range.cloneRange();prefix.selectNodeContents(container);prefix.setEnd(range.startContainer,range.startOffset);
-  pendingRange={start:prefix.toString().length,end:prefix.toString().length+range.toString().length};
+  const range=selection.getRangeAt(0).cloneRange(),container=$('textPreview');
+  if(preview||$('linkPanel').hidden)return;
+  const contents=document.createRange();contents.selectNodeContents(container);
+  // A drag can finish outside the panel, especially after the final paragraph.
+  if(!range.intersectsNode(container))return;
+  if(range.compareBoundaryPoints(Range.START_TO_START,contents)<0)range.setStart(contents.startContainer,contents.startOffset);
+  if(range.compareBoundaryPoints(Range.END_TO_END,contents)>0)range.setEnd(contents.endContainer,contents.endOffset);
+  if(range.collapsed||!range.toString().trim())return;
+  const prefix=contents.cloneRange();prefix.setEnd(range.startContainer,range.startOffset);
+  const start=prefix.toString().length;
+  pendingRange={start,end:start+range.toString().length};
   $('selectionHint').textContent=`${pendingRange.end-pendingRange.start} characters selected`;
   $('linkStrong').disabled=$('linkSoft').disabled=!selected();
 }
-$('textPreview').addEventListener('mouseup',captureSelection);$('textPreview').addEventListener('keyup',captureSelection);
+// Keep captured offsets when clicking a highlight button collapses the selection.
+document.addEventListener('selectionchange',captureSelection);
+document.addEventListener('pointerup',captureSelection);
+$('textPreview').addEventListener('keyup',captureSelection);
 function link(grade) {if(!selected()||!pendingRange)return;selected().ranges.push({...pendingRange,grade});pendingRange=null;window.getSelection().removeAllRanges();commit();status('Text connected. Select another passage or another shape.');}
 $('linkStrong').onclick=()=>link('primary');$('linkSoft').onclick=()=>link('secondary');
 $('textInput').addEventListener('input',()=>{textDraft=$('textInput').value;persist();});
