@@ -8,6 +8,7 @@ let textDraft = '', editingText = true;
 let preview = false, gesture = null, fitScale = 1, history = [], historyIndex = -1;
 let copiedShape = null, copiedText = '', pasteCount = 0;
 const selected = () => article.shapes.find(shape => shape.id === selectedId);
+const coordinateValue = (shape,key) => key==='y'?article.canvas.height-shape.height-shape.y:shape[key];
 const status = (message, error=false) => { $('status').textContent=message; $('status').classList.toggle('error',error); };
 const el = (tag, attrs={}) => { const node=document.createElementNS(NS,tag); Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v)); return node; };
 const clamp = (n,min,max) => Math.max(min,Math.min(max,n));
@@ -123,13 +124,14 @@ function renderCanvas() {
   $('canvas').style.width=`${article.canvas.width*scale}px`; $('canvas').style.height=`${article.canvas.height*scale}px`;
   $('canvasBackground').setAttribute('fill',$('grid').checked?'url(#dots)':'#fff');
   $('shapes').replaceChildren();$('handles').replaceChildren();
+  let highlight=null;
   for(const shape of article.shapes) {
     const connector=['polyline','curve','freehand'].includes(shape.type)||(shape.type==='path'&&shape.outline&&!/[zZ]\s*$/.test(shape.path));
     const group=el('g',{'data-shape':shape.id,'data-connector':String(connector),transform:shapeTransform(shape),'aria-label':shape.name||'Shape',role:'button',tabindex:0,'aria-pressed':shape.id===selectedId?'true':'false'});
     const highlighted=preview && shape.id===selectedId;
     const ink=geometry(shape); if(!ink)continue;
     const outline=shape.outline || ['polyline','curve','freehand'].includes(shape.type);
-    const hit=ink.cloneNode();hit.setAttribute('fill','transparent');hit.setAttribute('stroke','transparent');hit.setAttribute('stroke-width','16');hit.setAttribute('vector-effect','non-scaling-stroke');hit.setAttribute('pointer-events',connector?'stroke':'all');
+    const hit=ink.cloneNode();hit.setAttribute('class','shape-hit');hit.setAttribute('fill','transparent');hit.setAttribute('stroke','transparent');hit.setAttribute('stroke-width','16');hit.setAttribute('vector-effect','non-scaling-stroke');hit.setAttribute('pointer-events',connector?'stroke':'all');
     ink.setAttribute('class','shape-ink'); ink.setAttribute('fill',highlighted?(outline?'none':'#deff00'):shape.lineStyle?'none':shape.fill||'none');
     ink.setAttribute('stroke',highlighted&&outline?'#deff00':shape.stroke||'#333333');ink.setAttribute('stroke-width',highlighted&&outline?Math.max(5,shape.strokeWidth):shape.strokeWidth);
     ink.setAttribute('vector-effect','non-scaling-stroke');ink.setAttribute('stroke-linejoin','round');ink.setAttribute('stroke-linecap','round');ink.setAttribute('pointer-events','none');
@@ -141,8 +143,14 @@ function renderCanvas() {
       const capHit=el('path',{d,fill:'none',stroke:'transparent','stroke-width':16,'vector-effect':'non-scaling-stroke','pointer-events':'stroke'});
       group.append(capHit,caps);
     }
+    if(highlighted&&!outline) {
+      highlight=el('g',{class:'shape-highlight',transform:shapeTransform(shape),'pointer-events':'none','aria-hidden':'true'});
+      const overlay=ink.cloneNode(true);overlay.setAttribute('opacity','1');
+      highlight.append(overlay);ink.setAttribute('visibility','hidden');
+    }
     $('shapes').append(group);
   }
+  if(highlight)$('shapes').append(highlight);
   const shape=selected(); if(shape&&!preview) {
     const corners=[[0,0],[1,0],[1,1],[0,1]].map(p=>worldPoint(shape,p));
     $('handles').append(el('polygon',{points:corners.map(p=>`${p.x},${p.y}`).join(' '),class:'selected-outline',fill:'none',stroke:'#999','stroke-dasharray':'3 4','stroke-width':.8,'pointer-events':'none'}));
@@ -160,8 +168,10 @@ function renderInspector() {
   $('highlightModeControl').hidden=['polyline','curve','freehand'].includes(shape?.type);
   $('shapeDash').querySelectorAll('[data-open-line]').forEach(option=>option.disabled=!shape||!LineStyles.supports(shape));
   if(shape) {
-    const values={shapeName:shape.name||'',shapeX:shape.x,shapeY:shape.y,shapeStroke:shape.stroke,shapeWeight:shape.strokeWidth,shapeDash:shape.lineStyle||shape.dash||'',shapeFill:shape.fill==='none'?'#ffffff':shape.fill,shapeOpacity:shape.opacity??1};
+    const values={shapeName:shape.name||'',shapeX:shape.x,shapeY:coordinateValue(shape,'y'),shapeStroke:shape.stroke,shapeWeight:shape.strokeWidth,shapeDash:shape.lineStyle||shape.dash||'',shapeFill:shape.fill==='none'?'#ffffff':shape.fill,shapeOpacity:shape.opacity??1};
     Object.entries(values).forEach(([id,value])=>{if(document.activeElement!==$(id))$(id).value=value;});
+    const baseline=article.canvas.height-shape.height;
+    $('shapeY').min=baseline-100000;$('shapeY').max=baseline+100000;
     const units=Math.max(shape.width,shape.height)/MapGrid.step;
     $('shapeSize').value=Number(units.toPrecision(12));
     $('smaller').disabled=units<=1;
@@ -208,7 +218,15 @@ $('tools').onclick=event=> {
 function canvasPoint(event) {const point=new DOMPoint(event.clientX,event.clientY).matrixTransform($('canvas').getScreenCTM().inverse());return {x:point.x,y:point.y};}
 function pickShape(event) {
   const hits=[...new Set(document.elementsFromPoint(event.clientX,event.clientY).map(element=>element.closest('[data-shape]')).filter(element=>element&&element.ownerSVGElement===$('canvas')&&element.getAttribute('role')==='button'))];
-  const closed=hits.filter(element=>element.dataset.connector!=='true');
+  let closed=hits.filter(element=>element.dataset.connector!=='true');
+  // Border padding on a small shape must not steal a larger shape's interior.
+  const interiors=closed.filter(element=>{
+    const hit=element.querySelector('.shape-hit');
+    if(typeof DOMPoint==='undefined'||typeof hit?.isPointInFill!=='function'||typeof hit.getScreenCTM!=='function')return false;
+    const matrix=hit.getScreenCTM();
+    return matrix?hit.isPointInFill(new DOMPoint(event.clientX,event.clientY).matrixTransform(matrix.inverse())):false;
+  });
+  if(interiors.length)closed=interiors;
   // An empty outline must not cover smaller shapes inside it or across its border.
   let chosen=closed[0];
   for(const candidate of closed.slice(1)) {
@@ -307,8 +325,8 @@ for(const [id,key] of [['shapeX','x'],['shapeY','y']]) {
   const apply=()=>{
     const shape=selected();if(!shape||preview)return;
     const input=$(id),value=input.valueAsNumber;
-    if(!Number.isFinite(value)||!input.checkValidity()){input.value=shape[key];return;}
-    shape[key]=value;input.value=value;commit();
+    if(!Number.isFinite(value)||!input.checkValidity()){input.value=coordinateValue(shape,key);return;}
+    shape[key]=key==='y'?article.canvas.height-shape.height-value:value;input.value=value;commit();
   };
   $(id).onchange=apply;
   $(id).onkeydown=event=>{if(event.key==='Enter'){event.preventDefault();apply();$(id).blur();}};

@@ -16,7 +16,7 @@ Build maps from fixed forms, moving and scaling them in dot-grid steps without f
 
 Type a decimal in **Size**, such as **2.5**, for a precise size in grid units. Proportions stay fixed.
 
-Set **X** and **Y** for an exact position in canvas units, measured from the shape’s upper-left corner before rotation. Decimals are allowed. Dragging and arrow keys still snap to the grid.
+Set **X** and **Y** for an exact position in canvas units, measured from the canvas’s bottom-left corner to the shape’s bottom-left corner before rotation. Larger **Y** values move the shape upward. Decimals are allowed. Dragging and arrow keys still snap to the grid.
 
 Circle centers stay aligned to the dots when moved or resized with grid controls.
 

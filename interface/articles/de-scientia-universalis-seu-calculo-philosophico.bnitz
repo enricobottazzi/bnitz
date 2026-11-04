@@ -1,0 +1,239 @@
+{
+  "version": 1,
+  "title": "De Scientia Universalis seu Calculo Philosophico",
+  "author": "Gottfried Leibniz",
+  "year": 1680,
+  "source": "https://archive.org/details/diephilosophisc04gerhgoog/page/4/mode/2up",
+  "text": "All human argument is carried out by means of certain signs or characters. Not only things themselves but also the ideas which those things produce neither can nor should always be amenable to distinct observation: therefore, in place of them, for reasons of economy we use signs. If, for example, every time that a geometer wished to name a hyperbole or a spiral or a quadratrix in the course of a proof, he needed to hold present in his mind their exact definitions or manner in which they were generated, and then, once again, the exact definitions of each of the terms used in his proof, he would be likely to be very tardy in arriving at his conclusions [...]. For this reason, it is evident that names are assigned to the contracts, to the figures and to various other types of things, and signs to the numbers in arithmetic and to magnitudes in algebra [...]. In the list of signs, therefore, I include words, letters, the figures in chemistry and astronomy, Chinese characters, hieroglyphics, musical notes, steganographic signs, and the signs in arithmetic, algebra, and in every other place where they serve us in place of things in our arguments. Where they are written, designed, or sculpted, signs are called characters (...). Natural languages are useful to reason, but are subject to innumerable equivocations, nor can be used for calculus, since they cannot be used in a manner which allows us to discover the errors in an argument by retracing our steps to the beginning and to the construction of our words - as if errors were simply due to solecisms or barbarisms. The admirable advantages [of the calculus] are only possible when we use arithmetical or algebraic signs and arguments are entirely set out in characters: for here every mental error is exactly equivalent to a mistake in calculation. Profoundly meditating on this state of affairs, it immediately appeared as clear to me that all human thoughts might be entirely resolvable into a small number of thoughts considered as primitive. If then we assign to each primitive a character, it is possible to form other characters for the deriving notions, and we would be able to extract infallibly from them their prerequisites and the primitive notions composing them; to put it in a word, we could always infer their definitions and their values, and thereby the modifications to be derived from their definitions. Once this had been done, whoever uses such characters in their reasoning and in their writing, would either never make an error, or, at least, would have the possibility of immediately recognizing his own (or other people's) mistakes, by using the simplest of tests.",
+  "canvas": {
+    "width": 460,
+    "height": 680
+  },
+  "shapes": [
+    {
+      "id": "s-88a727d5-d9f7-4b2b-8efd-1f87d35760d6",
+      "name": "Triangle",
+      "type": "polygon",
+      "x": 179,
+      "y": 112,
+      "width": 112,
+      "height": 112,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 0,
+          "end": 75,
+          "grade": "primary"
+        },
+        {
+          "start": 244,
+          "end": 279,
+          "grade": "primary"
+        }
+      ],
+      "preset": "triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "s-76ea7a8d-436e-42ad-949c-82c632b79cf8",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 167,
+      "y": 207,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 1046,
+          "end": 1074,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-b0123cf1-8c6f-45c3-888e-e19380bdb483",
+      "name": "Circle copy",
+      "type": "ellipse",
+      "x": 275,
+      "y": 210,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 910,
+          "end": 924,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-8f2f7e09-01fe-43cd-a4af-22ba5864329c",
+      "name": "Line",
+      "type": "polyline",
+      "x": 196,
+      "y": 252,
+      "width": 84,
+      "height": 84,
+      "rotation": 135,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": true,
+      "ranges": [
+        {
+          "start": 1240,
+          "end": 1447,
+          "grade": "primary"
+        },
+        {
+          "start": 1584,
+          "end": 1818,
+          "grade": "secondary"
+        }
+      ],
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "lineStyle": "zigzag"
+    },
+    {
+      "id": "s-a8275ee6-c6ea-4e7f-be4e-be5fc8899656",
+      "name": "Wide triangle high",
+      "type": "polygon",
+      "x": 179,
+      "y": 336,
+      "width": 112,
+      "height": 112,
+      "rotation": -180,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 0,
+          "end": 75,
+          "grade": "primary"
+        },
+        {
+          "start": 244,
+          "end": 279,
+          "grade": "primary"
+        },
+        {
+          "start": 2392,
+          "end": 2658,
+          "grade": "primary"
+        }
+      ],
+      "preset": "triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "s-3ea076f2-6f3a-479e-b8ae-43b97929a86b",
+      "name": "Wide triangle copy copy",
+      "type": "polygon",
+      "x": 208,
+      "y": 336,
+      "width": 56,
+      "height": 56,
+      "rotation": -180,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 0,
+          "end": 75,
+          "grade": "primary"
+        },
+        {
+          "start": 244,
+          "end": 279,
+          "grade": "primary"
+        },
+        {
+          "start": 1866,
+          "end": 2245,
+          "grade": "primary"
+        }
+      ],
+      "preset": "triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    }
+  ],
+  "citations": []
+}

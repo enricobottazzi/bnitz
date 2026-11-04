@@ -32,10 +32,10 @@ p { margin: 0; max-width: 290px; }
 .reader-heading p { max-width: none; }
 .reader-heading a { text-decoration: underline; }
 .reader-grid { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) calc((min(100%, 720px) - var(--reader-gap)) / 2); gap: var(--reader-gap); height: max(280px, calc(100svh - var(--content-top) - 90px)); }
-.reader-text { position: relative; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 3px var(--reader-inset) 20px 0; line-height: 1.7; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
+.reader-text { position: relative; min-width: 0; min-height: 0; overflow-x: hidden; overflow-y: auto; overflow-wrap: anywhere; overscroll-behavior: contain; padding: 3px var(--reader-inset) 20px 0; line-height: 1.7; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
 .reader-text:focus-visible { outline: 1px solid #ccc; outline-offset: 8px; }
-.reader-text p { max-width: none; margin: 0 0 20px; }
-.reader-text .article-citation { margin: 0 0 20px; padding-left: 16px; border-left: 2px solid #d7d7d7; font: inherit; color: inherit; }
+.reader-text p { min-width: 0; max-width: 100%; margin: 0 0 20px; }
+.reader-text .article-citation { min-width: 0; max-width: 100%; margin: 0 0 20px; padding-left: 16px; border-left: 2px solid #d7d7d7; font: inherit; color: inherit; }
 .reader-text .article-citation p:last-child { margin-bottom: 0; }
 .reader-text mark { color: inherit; background: transparent; box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: 2px 0; white-space: pre-wrap; }
 .reader-text mark.highlight-secondary { background: #eff6c4; }

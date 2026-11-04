@@ -1,8 +1,16 @@
 const readingsSection = document.querySelector('#readings');
 const articles = [...document.querySelectorAll('[data-article]')];
 let activeArticle = null;
+let selectionOverlay = null;
 
 function clearSelection() {
+  if (selectionOverlay) {
+    const {overlay, ink, visibility} = selectionOverlay;
+    overlay.remove();
+    if (visibility === null) ink.removeAttribute('visibility');
+    else ink.setAttribute('visibility', visibility);
+    selectionOverlay = null;
+  }
   document.querySelectorAll('.map-element').forEach(element => {
     element.classList.remove('is-selected');
     element.setAttribute('aria-pressed', 'false');
@@ -35,6 +43,22 @@ function selectElement(element) {
   const ranges = JSON.parse(element.dataset.ranges);
   element.classList.add('is-selected');
   element.setAttribute('aria-pressed', 'true');
+  const ink = element.querySelector('.map-ink'), svg = element.closest('svg');
+  if (element.dataset.outline !== 'true' && ink && svg) {
+    const overlay = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    overlay.setAttribute('class', 'map-selection-overlay');
+    overlay.setAttribute('transform', element.getAttribute('transform') || '');
+    overlay.setAttribute('pointer-events', 'none');
+    overlay.setAttribute('aria-hidden', 'true');
+    const copy = ink.cloneNode(true);
+    copy.removeAttribute('id');
+    copy.setAttribute('fill', '#deff00');
+    copy.setAttribute('opacity', '1');
+    overlay.append(copy);
+    selectionOverlay = {overlay, ink, visibility: ink.getAttribute('visibility')};
+    ink.setAttribute('visibility', 'hidden');
+    svg.append(overlay);
+  }
   const reader = element.closest('[data-article]').querySelector('.reader-text');
   let first = null;
   reader.querySelectorAll('.article-fragment').forEach(fragment => {
@@ -58,10 +82,18 @@ function pickMapElement(event) {
     .map(node => node.closest('.map-element'))
     .filter(element => element && element.closest('svg') === svg))];
   const closed = elements.filter(element => element.dataset.connector !== 'true');
-  let chosen = closed[0];
+  // Prefer the actual surface over a neighboring shape's padded border target.
+  const interiors = closed.filter(element => {
+    const hit = element.querySelector?.('.map-hit');
+    if (typeof DOMPoint === 'undefined' || typeof hit?.isPointInFill !== 'function' || typeof hit.getScreenCTM !== 'function') return false;
+    const matrix = hit.getScreenCTM();
+    return matrix ? hit.isPointInFill(new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse())) : false;
+  });
+  const targets = interiors.length ? interiors : closed;
+  let chosen = targets[0];
   while (chosen?.dataset.outline === 'true' && chosen.querySelector('.map-ink')?.getAttribute('fill') === 'none') {
     const outer = chosen.getBoundingClientRect();
-    const nested = closed.slice(closed.indexOf(chosen) + 1).find(element => {
+    const nested = targets.slice(targets.indexOf(chosen) + 1).find(element => {
       const inner = element.getBoundingClientRect();
       return inner.width * inner.height < outer.width * outer.height;
     });

@@ -414,6 +414,126 @@ assert.equal(selected, line);
         self.assertEqual(result.returncode, 0, result.stderr)
 
     @unittest.skipUnless(shutil.which('node'), 'Node is needed to test reader pointer selection')
+    def test_reader_full_highlight_covers_inner_profiles_without_changing_hit_order(self):
+        script = r'''
+const assert = require('node:assert/strict'), fs = require('node:fs'), vm = require('node:vm');
+class Node {
+  constructor(attrs = {}, children = []) {
+    this.attrs = {...attrs}; this.children = []; this.parent = null;
+    const classes = new Set((attrs.class || '').split(' ').filter(Boolean));
+    this.classList = {contains: value => classes.has(value), add: value => classes.add(value), remove: (...values) => values.forEach(value => classes.delete(value))};
+    children.forEach(child => this.append(child));
+  }
+  setAttribute(key, value) { this.attrs[key] = String(value); }
+  getAttribute(key) { return this.attrs[key] ?? null; }
+  removeAttribute(key) { delete this.attrs[key]; }
+  append(child) { child.parent = this; this.children.push(child); }
+  remove() { this.parent.children = this.parent.children.filter(child => child !== this); this.parent = null; }
+  cloneNode(deep) { return new Node(this.attrs, deep ? this.children.map(child => child.cloneNode(true)) : []); }
+}
+const svg = new Node(), reader = {querySelectorAll: () => []}, article = {querySelector: () => reader};
+const group = (id, outline = false, opacity = 1) => {
+  const hit = new Node({class: 'map-hit'});
+  const ink = new Node({id: id + '-ink', class: 'map-ink', fill: 'none', stroke: '#123456', 'stroke-width': '2', opacity: String(opacity), 'vector-effect': 'non-scaling-stroke'});
+  const node = new Node({id, class: 'map-element', transform: 'translate(10 20) rotate(180 50 50) scale(100 100)', role: 'button', tabindex: '0'}, [hit, ink]);
+  node.dataset = {outline: String(outline), ranges: '[]'};
+  node.querySelector = selector => selector === '.map-ink' ? ink : hit;
+  node.closest = selector => selector === 'svg' ? svg : selector === '[data-article]' ? article : null;
+  svg.append(node);
+  return node;
+};
+const outer = group('outer', false, .4), inner = group('inner'), ring = group('ring', true);
+const groups = [...svg.children], listeners = {};
+const context = {
+  document: {
+    querySelector: () => ({hidden: false}),
+    querySelectorAll: selector => selector === '.map-element' ? groups : [],
+    addEventListener: (type, listener) => { listeners[type] = listener; },
+    createElementNS: () => new Node(),
+  },
+  window: {addEventListener() {}, scrollTo() {}}, location: {hash: ''},
+};
+vm.runInNewContext(fs.readFileSync(process.argv[1], 'utf8'), context);
+const assertHitOrder = () => assert.deepEqual(svg.children.filter(node => node.getAttribute('class') === 'map-element'), groups);
+context.selectElement(outer);
+let overlay = svg.children.at(-1), copy = overlay.children[0];
+assertHitOrder();
+assert.equal(overlay.getAttribute('pointer-events'), 'none', 'the visual cover does not intercept clicks on the inner shape');
+assert.equal(overlay.getAttribute('aria-hidden'), 'true');
+for (const attr of ['id', 'role', 'tabindex']) assert.equal(overlay.getAttribute(attr), null);
+assert.equal(copy.getAttribute('id'), null, 'cloning ink does not duplicate an identifier');
+assert.equal(overlay.getAttribute('transform'), outer.getAttribute('transform'));
+assert.equal(copy.getAttribute('fill'), '#deff00');
+assert.equal(copy.getAttribute('opacity'), '1', 'the highlight fully covers profiles even for translucent shapes');
+assert.equal(copy.getAttribute('stroke'), '#123456');
+assert.equal(copy.getAttribute('stroke-width'), '2');
+assert.equal(outer.querySelector('.map-ink').getAttribute('visibility'), 'hidden');
+assert.equal(outer.querySelector('.map-ink').getAttribute('opacity'), '0.4', 'ordinary ink appearance stays intact');
+assert.equal(outer.querySelector('.map-hit').getAttribute('visibility'), null, 'original hit geometry stays available');
+context.selectElement(inner);
+assert.equal(overlay.parent, null, 'switching selection removes the old cover');
+assert.equal(outer.querySelector('.map-ink').getAttribute('visibility'), null);
+assert.equal(inner.getAttribute('aria-pressed'), 'true');
+assert.equal(svg.children.length, groups.length + 1);
+assertHitOrder();
+listeners.keydown({target: {closest: () => null}, key: 'Escape'});
+assert.deepEqual(svg.children, groups, 'Escape removes visual covers');
+assert.equal(inner.querySelector('.map-ink').getAttribute('visibility'), null);
+assert.ok(groups.every(node => node.getAttribute('aria-pressed') === 'false'));
+context.selectElement(ring);
+assert.deepEqual(svg.children, groups, 'outline-only highlights do not receive a solid cover');
+assert.equal(ring.querySelector('.map-ink').getAttribute('visibility'), null);
+outer.querySelector('.map-ink').setAttribute('visibility', 'visible');
+context.selectElement(outer);
+context.selectElement(outer);
+assert.deepEqual(svg.children, groups, 'clicking the selected shape again removes its cover');
+assert.equal(outer.querySelector('.map-ink').getAttribute('visibility'), 'visible', 'prior visibility is restored exactly');
+'''
+        result = subprocess.run([shutil.which('node'), '-e', script, str(ROOT / 'src/script.js')], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    @unittest.skipUnless(shutil.which('node'), 'Node is needed to test reader pointer selection')
+    def test_reader_prefers_triangle_surface_over_another_shapes_padded_border(self):
+        script = r'''
+const assert = require('node:assert/strict'), fs = require('node:fs'), vm = require('node:vm');
+const svg = {};
+let hits = [];
+const context = {
+  document: {
+    querySelector: () => ({hidden: false}), querySelectorAll: () => [],
+    addEventListener() {}, elementsFromPoint: () => hits,
+  },
+  window: {addEventListener() {}, scrollTo() {}}, location: {hash: ''},
+  DOMPoint: class {
+    constructor(x, y) { this.x = x; this.y = y; }
+    matrixTransform(m) { return {x: m.a * this.x + m.c * this.y + m.e, y: m.b * this.x + m.d * this.y + m.f}; }
+  },
+};
+vm.runInNewContext(fs.readFileSync(process.argv[1], 'utf8'), context);
+const triangle = (left, top, width, height) => {
+  const hit = {
+    getScreenCTM: () => ({inverse: () => ({a: 1 / width, b: 0, c: 0, d: 1 / height, e: -left / width, f: -top / height})}),
+    isPointInFill: p => p.y >= 0 && p.y <= 1 && p.x >= p.y / 2 && p.x <= 1 - p.y / 2,
+  };
+  return {dataset: {connector: 'false', outline: 'false'}, closest: () => svg, querySelector: () => hit};
+};
+const outer = triangle(10, 20, 100, 100), inner = triangle(35, 20, 50, 50);
+const pick = (x, y, ...elements) => {
+  hits = elements.map(element => ({closest: () => element}));
+  return context.pickMapElement({target: {closest: () => svg}, clientX: x, clientY: y});
+};
+assert.equal(pick(60, 75, inner, outer), outer, 'the larger triangle surface wins over the smaller triangle padded stroke');
+assert.equal(pick(60, 45, inner, outer), inner, 'the smaller triangle remains selectable inside its own surface');
+assert.equal(pick(60, 15, inner, outer), inner, 'border padding stays clickable when neither surface contains the point');
+const hidden = {dataset: {connector: 'false'}, closest: () => svg, querySelector: () => ({isPointInFill() { throw Error('hidden geometry'); }, getScreenCTM: () => null})};
+assert.equal(pick(60, 75, hidden, outer), outer, 'unavailable screen geometry is safely skipped');
+context.DOMPoint = undefined;
+assert.equal(pick(60, 75, inner, outer), inner, 'missing native geometry support preserves the existing hit fallback');
+'''
+        result = subprocess.run([shutil.which('node'), '-e', script, str(ROOT / 'src/script.js')], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    @unittest.skipUnless(shutil.which('node'), 'Node is needed to test reader pointer selection')
     def test_reader_small_shapes_crossing_outlines_remain_clickable(self):
         script = r'''
 const assert = require('node:assert/strict'), fs = require('node:fs'), vm = require('node:vm');
