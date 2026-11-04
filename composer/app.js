@@ -45,7 +45,7 @@ function requireAppliedText() { if(textDraft!==article.text)throw Error('Choose 
 function selectShape(id) { selectedId=id;pendingRange=null; render();$('canvas').focus({preventScroll:true}); }
 
 function updateTextControls() {
-  $('selectionHint').textContent=pendingRange?`${pendingRange.end-pendingRange.start} characters selected`:'Select wording to format it or connect it to a shape.';
+  $('selectionHint').textContent=pendingRange?`${pendingRange.end-pendingRange.start} characters selected`:'Select text to format or connect.';
   $('linkStrong').disabled=$('linkSoft').disabled=!selected()||!pendingRange;
   $('citationBlock').disabled=!pendingRange;
   $('normalText').disabled=!pendingRange||!(article.citations||[]).some(c=>c.start<pendingRange.end&&c.end>pendingRange.start);
@@ -98,7 +98,7 @@ function formatCitation(add) {
     else merged.push(citation);
   }
   article.citations=merged;pendingRange=null;window.getSelection().removeAllRanges();commit();
-  status(add?'Citation block added. You can connect its text to map shapes.':'Citation formatting removed.');
+  status(add?'Citation block added. You can connect its text to layout shapes.':'Citation formatting removed.');
 }
 $('citationBlock').onclick=()=>formatCitation(true);
 $('normalText').onclick=()=>formatCitation(false);
@@ -178,7 +178,6 @@ function render() {
   renderCanvas();renderText();renderInspector();
   $('undo').disabled=historyIndex<=0;$('redo').disabled=historyIndex>=history.length-1;
   $('tools').querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',button.dataset.tool==='select'?'true':'false'));
-  $('canvasHint').textContent=preview?'Select a shape to read its connections.':`${selected()?.type==='ellipse'?'The circle’s center snaps to a dot.':'Drag a shape to a dot.'} Drag the lime handle to resize in grid steps.`;
 }
 function fit() {
   fitScale=Math.min(($('canvasViewport').clientWidth-32)/article.canvas.width,($('canvasViewport').clientHeight-32)/article.canvas.height);
@@ -365,7 +364,7 @@ $('importArticle').onclick=()=>$('fileInput').click();
 $('fileInput').onchange=async()=>{const file=$('fileInput').files[0];if(!file)return;try{const data=JSON.parse(await file.text());validate(data);if(hasDraftContent()&&!await confirmAction('Open another article?','Your current draft will be replaced. Export to the library or a file first if you want to keep it.','Open article'))return;loadArticle(data);}catch(error){status(error.message,true);}finally{$('fileInput').value='';}};
 $('openArticle').onclick=async()=>{try{const result=await api('/api/articles');$('libraryList').replaceChildren();if(!result.articles.length)$('libraryList').textContent='Your library is empty. Export your first article to add it.';for(const item of result.articles){const button=document.createElement('button');button.className='library-item';button.textContent=`${item.title} — ${item.author}, ${item.year}`;button.onclick=async()=>{try{if(hasDraftContent()&&!await confirmAction('Import from library?','Your current draft will be replaced. Export to the library or a file first if you want to keep it.','Import from library'))return;const data=await api('/api/articles/'+encodeURIComponent(item.slug));loadArticle(data.article,data.slug);$('libraryDialog').close();}catch(error){status(error.message,true);}};$('libraryList').append(button);}$('libraryDialog').showModal();}catch{status('Start the local composer to open your library.',true);}};
 $('closeLibrary').onclick=()=>$('libraryDialog').close();
-$('newArticle').onclick=async()=>{if(hasDraftContent()&&!await confirmAction('Start a new article?','Your current draft will be replaced. Export to the library or a file first if you want to keep it.','New article'))return;article=blank();textDraft='';slug=null;selectedId=null;pendingRange=null;preview=false;document.body.classList.remove('preview');$('previewButton').textContent='Preview';syncFields();textMode(true);resetHistory();fit();status('Paste an article, then give its ideas a shape.');};
+$('newArticle').onclick=async()=>{if(hasDraftContent()&&!await confirmAction('Start a new article?','Your current draft will be replaced. Export to the library or a file first if you want to keep it.','New article'))return;article=blank();textDraft='';slug=null;selectedId=null;pendingRange=null;preview=false;document.body.classList.remove('preview');$('previewButton').textContent='Preview';syncFields();textMode(true);resetHistory();fit();status('');};
 document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){event.preventDefault();undo(event.shiftKey?1:-1);}if(event.key==='Escape'&&!$('confirmDialog').open&&!$('libraryDialog').open){selectedId=null;pendingRange=null;render();}});
 try{const stored=JSON.parse(localStorage.getItem(DRAFT));if(stored?.article){validate(stored.article,false);article=stored.article;slug=typeof stored.slug==='string'?stored.slug:null;textDraft=typeof stored.textDraft==='string'?stored.textDraft:article.text;editingText=textDraft!==article.text||!article.text||(typeof stored.editingText==='boolean'?stored.editingText:false);}}catch{status('The previous draft could not be restored.',true);}
 syncFields();textMode(editingText);resetHistory();requestAnimationFrame(fit);

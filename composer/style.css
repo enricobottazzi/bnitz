@@ -33,11 +33,12 @@ p { margin: 0; }
 .app-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .app-header > div:first-child { display: flex; align-items: baseline; gap: 18px; flex: none; }
 .wordmark { font: 400 32px/1.2 Arial, Helvetica, sans-serif; color: #111; }
-.app-name { color: #666; }
+.page-title { margin-top: 20px; color: #111; }
 .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
 .app-header .actions { justify-content: flex-end; }
 #draftState { color: #888; font-size: 10px; margin-right: 5px; }
-#status { min-height: 17px; margin-top: 20px; color: #666; }
+#status { margin-top: 8px; color: #666; }
+#status:empty { display: none; }
 .metadata { display: grid; grid-template-columns: minmax(220px, 1.8fr) minmax(160px, 1fr) 88px; gap: 20px; margin: 22px 0 30px; max-width: 850px; }
 .workspace { display: grid; grid-template-columns: minmax(240px, 1.6fr) minmax(330px, 1fr) 230px; align-items: start; gap: 24px; }
 .workspace > * { min-width: 0; }
@@ -68,7 +69,6 @@ p { margin: 0; }
 #canvas .handle:hover { fill: var(--lime); }
 #canvas .handle:active { cursor: grabbing; }
 #canvas .selected-outline { fill: none; stroke: #999; stroke-width: 1px; stroke-dasharray: 3 4; vector-effect: non-scaling-stroke; pointer-events: none; }
-#canvasHint { margin-top: 10px; }
 #status.error { color: #a22424; }
 .inspector { max-height: calc(var(--canvas-height) + 130px); overflow-y: auto; padding: 0 8px 12px 18px; border-left: 1px solid #e9e9e9; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
 #noShape { margin-bottom: 14px; }
@@ -104,7 +104,7 @@ dialog p { line-height: 1.7; }
 dialog .actions { justify-content: flex-end; margin-top: 22px; }
 #libraryList { display: grid; gap: 7px; }
 #libraryList > button { display: block; width: 100%; padding: 10px; text-align: left; }
-body.preview #tools, body.preview .canvas-controls, body.preview .inspector, body.preview #editText, body.preview .link-toolbar, body.preview #canvasHint, body.preview #removeShape, body.preview #undo, body.preview #redo { display: none; }
+body.preview #tools, body.preview .canvas-controls, body.preview .inspector, body.preview #editText, body.preview .link-toolbar, body.preview #removeShape, body.preview #undo, body.preview #redo { display: none; }
 body.preview .workspace { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 48px; }
 body.preview #textPreview { height: var(--canvas-height); }
 body.preview #canvasViewport { height: var(--canvas-height); border-color: transparent; background: #fff; padding: 0; }
