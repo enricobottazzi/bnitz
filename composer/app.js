@@ -2,10 +2,11 @@ const $ = id => document.getElementById(id);
 const NS = 'http://www.w3.org/2000/svg';
 const DRAFT = 'bnitz-composer-v1';
 const clone = value => JSON.parse(JSON.stringify(value));
-const blank = () => ({version:1,title:'',author:'',year:new Date().getFullYear(),text:'',canvas:{width:460,height:680},shapes:[]});
+const blank = () => ({version:1,title:'',author:'',year:new Date().getFullYear(),source:'',text:'',canvas:{width:460,height:680},shapes:[]});
 let article = blank(), slug = null, selectedId = null, pendingRange = null;
 let textDraft = '', editingText = true;
 let preview = false, gesture = null, fitScale = 1, history = [], historyIndex = -1;
+let copiedShape = null, copiedText = '', pasteCount = 0;
 const selected = () => article.shapes.find(shape => shape.id === selectedId);
 const status = (message, error=false) => { $('status').textContent=message; $('status').classList.toggle('error',error); };
 const el = (tag, attrs={}) => { const node=document.createElementNS(NS,tag); Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v)); return node; };
@@ -36,11 +37,11 @@ function undo(direction) {
   historyIndex=next;article=JSON.parse(history[next]);if(!keepText)textDraft=article.text;pendingRange=null;syncFields();persist();render();
 }
 function syncFields() {
-  for(const key of ['title','author','year'])$(key).value=article[key];
+  for(const key of ['title','author','year','source'])$(key).value=article[key]??'';
   $('textInput').value=textDraft; $('canvasWidth').value=article.canvas.width; $('canvasHeight').value=article.canvas.height;
 }
 function textMode(edit) { editingText=edit; $('pastePanel').hidden=!edit; $('linkPanel').hidden=edit; $('editText').textContent=edit?'Cancel editing':'Edit text'; }
-function hasDraftContent() { return Boolean(article.text.trim()||textDraft.trim()||article.title.trim()||article.author.trim()||article.shapes.length||article.year!==blank().year||article.canvas.width!==460||article.canvas.height!==680); }
+function hasDraftContent() { return Boolean(article.text.trim()||textDraft.trim()||article.title.trim()||article.author.trim()||article.source?.trim()||article.shapes.length||article.year!==blank().year||article.canvas.width!==460||article.canvas.height!==680); }
 function requireAppliedText() { if(textDraft!==article.text)throw Error('Choose “Use this text” to apply your text changes first.'); }
 function selectShape(id) { selectedId=id;pendingRange=null; render();$('canvas').focus({preventScroll:true}); }
 
@@ -123,12 +124,12 @@ function renderCanvas() {
   $('canvasBackground').setAttribute('fill',$('grid').checked?'url(#dots)':'#fff');
   $('shapes').replaceChildren();$('handles').replaceChildren();
   for(const shape of article.shapes) {
-    const connector=['polyline','curve','freehand'].includes(shape.type)||(shape.type==='path'&&shape.outline);
+    const connector=['polyline','curve','freehand'].includes(shape.type)||(shape.type==='path'&&shape.outline&&!/[zZ]\s*$/.test(shape.path));
     const group=el('g',{'data-shape':shape.id,'data-connector':String(connector),transform:shapeTransform(shape),'aria-label':shape.name||'Shape',role:'button',tabindex:0,'aria-pressed':shape.id===selectedId?'true':'false'});
     const highlighted=preview && shape.id===selectedId;
     const ink=geometry(shape); if(!ink)continue;
     const outline=shape.outline || ['polyline','curve','freehand'].includes(shape.type);
-    const hit=ink.cloneNode();hit.setAttribute('fill',outline?'none':'transparent');hit.setAttribute('stroke','transparent');hit.setAttribute('stroke-width','16');hit.setAttribute('vector-effect','non-scaling-stroke');hit.setAttribute('pointer-events',outline?'stroke':'all');
+    const hit=ink.cloneNode();hit.setAttribute('fill','transparent');hit.setAttribute('stroke','transparent');hit.setAttribute('stroke-width','16');hit.setAttribute('vector-effect','non-scaling-stroke');hit.setAttribute('pointer-events',connector?'stroke':'all');
     ink.setAttribute('class','shape-ink'); ink.setAttribute('fill',highlighted?(outline?'none':'#deff00'):shape.lineStyle?'none':shape.fill||'none');
     ink.setAttribute('stroke',highlighted&&outline?'#deff00':shape.stroke||'#333333');ink.setAttribute('stroke-width',highlighted&&outline?Math.max(5,shape.strokeWidth):shape.strokeWidth);
     ink.setAttribute('vector-effect','non-scaling-stroke');ink.setAttribute('stroke-linejoin','round');ink.setAttribute('stroke-linecap','round');ink.setAttribute('pointer-events','none');
@@ -152,17 +153,20 @@ function renderCanvas() {
 }
 function renderInspector() {
   const shape=selected();$('shapeSettings').disabled=!shape; $('noShape').hidden=Boolean(shape);
+  const triangle=shape?.type==='polygon'&&['triangle','right-triangle','wide-triangle'].includes(shape.preset);
+  $('triangleVariantControl').hidden=!triangle;
+  if(triangle)$('triangleVariant').value=shape.preset;
   $('removeShape').disabled=!shape||preview;
   $('highlightModeControl').hidden=['polyline','curve','freehand'].includes(shape?.type);
   $('shapeDash').querySelectorAll('[data-open-line]').forEach(option=>option.disabled=!shape||!LineStyles.supports(shape));
   if(shape) {
-    const values={shapeName:shape.name||'',shapeStroke:shape.stroke,shapeWeight:shape.strokeWidth,shapeDash:shape.lineStyle||shape.dash||'',shapeFill:shape.fill==='none'?'#ffffff':shape.fill,shapeOpacity:shape.opacity??1};
+    const values={shapeName:shape.name||'',shapeX:shape.x,shapeY:shape.y,shapeStroke:shape.stroke,shapeWeight:shape.strokeWidth,shapeDash:shape.lineStyle||shape.dash||'',shapeFill:shape.fill==='none'?'#ffffff':shape.fill,shapeOpacity:shape.opacity??1};
     Object.entries(values).forEach(([id,value])=>{if(document.activeElement!==$(id))$(id).value=value;});
     const units=Math.max(shape.width,shape.height)/MapGrid.step;
     $('shapeSize').value=Number(units.toPrecision(12));
     $('smaller').disabled=units<=1;
     $('rotationValue').textContent=`${Math.round(shape.rotation||0)}°`;$('noFill').checked=shape.fill==='none';$('highlightMode').value=shape.outline?'outline':'full';
-  } else {$('shapeSize').value='';}
+  } else {for(const id of ['shapeSize','shapeX','shapeY'])$(id).value='';}
   $('connections').replaceChildren();
   if(!shape || !shape.ranges.length) {const p=document.createElement('p');p.className='hint';p.textContent=shape?'No text connected yet.':'No shape selected.';$('connections').append(p);}
   else shape.ranges.forEach((range,index)=> {
@@ -177,7 +181,6 @@ function render() {
   if(!selected())selectedId=null;
   renderCanvas();renderText();renderInspector();
   $('undo').disabled=historyIndex<=0;$('redo').disabled=historyIndex>=history.length-1;
-  $('tools').querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',button.dataset.tool==='select'?'true':'false'));
 }
 function fit() {
   fitScale=Math.min(($('canvasViewport').clientWidth-32)/article.canvas.width,($('canvasViewport').clientHeight-32)/article.canvas.height);
@@ -189,24 +192,32 @@ function polygonPoints(sides,inner=null) {
 }
 function createShape(kind) {
   const size=(kind==='star'?2:4)*MapGrid.step;
-  const shape={id:'s-'+crypto.randomUUID(),name:kind==='ellipse'?'Circle':kind==='right-triangle'?'Right triangle':kind[0].toUpperCase()+kind.slice(1),type:kind,x:(article.canvas.width-size)/2,y:(article.canvas.height-size)/2,width:size,height:size,rotation:0,stroke:'#333333',strokeWidth:1.8,fill:'none',opacity:1,outline:false,ranges:[]};
+  const shape={id:'s-'+crypto.randomUUID(),name:kind==='ellipse'?'Circle':kind[0].toUpperCase()+kind.slice(1),type:kind,x:(article.canvas.width-size)/2,y:(article.canvas.height-size)/2,width:size,height:size,rotation:0,stroke:'#333333',strokeWidth:1.8,fill:'none',opacity:1,outline:false,ranges:[]};
   Object.assign(shape,MapGrid.position(shape));
-  if(['triangle','right-triangle','polygon','star'].includes(kind)) {shape.type='polygon';shape.preset=kind;shape.sides=kind.includes('triangle')?3:kind==='star'?6:5;shape.innerRatio=.45;shape.points=kind==='triangle'?[[.5,0],[1,1],[0,1]]:kind==='right-triangle'?[[0,0],[0,1],[1,1]]:polygonPoints(shape.sides,kind==='star'?.45:null);}
+  if(['triangle','polygon','star'].includes(kind)) {shape.type='polygon';shape.preset=kind;shape.sides=kind==='triangle'?3:kind==='star'?6:5;shape.innerRatio=.45;shape.points=kind==='triangle'?[[.5,0],[1,1],[0,1]]:polygonPoints(shape.sides,kind==='star'?.45:null);}
   if(kind==='line'){shape.type='polyline';shape.points=[[0,0],[1,1]];shape.outline=true;}
   if(kind==='curve'){shape.points=[[0,1],[0,0],[1,0],[1,1]];shape.outline=true;}
   return shape;
 }
 $('tools').onclick=event=> {
   const kind=event.target.closest('[data-tool]')?.dataset.tool;if(!kind)return;
-  if(kind==='select'){render();return;}
-  if(!['ellipse','triangle','right-triangle','polygon','star','line','curve'].includes(kind))return;
+  if(!['ellipse','triangle','polygon','star','line','curve'].includes(kind))return;
   const shape=createShape(kind);article.shapes.push(shape);selectedId=shape.id;commit();
   $('canvas').focus({preventScroll:true});
 };
 function canvasPoint(event) {const point=new DOMPoint(event.clientX,event.clientY).matrixTransform($('canvas').getScreenCTM().inverse());return {x:point.x,y:point.y};}
 function pickShape(event) {
   const hits=[...new Set(document.elementsFromPoint(event.clientX,event.clientY).map(element=>element.closest('[data-shape]')).filter(element=>element&&element.ownerSVGElement===$('canvas')&&element.getAttribute('role')==='button'))];
-  return (hits.find(element=>element.dataset.connector!=='true')||hits[0])?.dataset.shape;
+  const closed=hits.filter(element=>element.dataset.connector!=='true');
+  // An empty outline must not cover smaller shapes inside it or across its border.
+  let chosen=closed[0];
+  for(const candidate of closed.slice(1)) {
+    const shape=article.shapes.find(s=>s.id===chosen.dataset.shape);
+    if(!shape.outline||shape.fill!=='none')break;
+    const outer=chosen.getBoundingClientRect(),inner=candidate.getBoundingClientRect();
+    if(inner.width*inner.height<outer.width*outer.height)chosen=candidate;
+  }
+  return (chosen||hits[0])?.dataset.shape;
 }
 $('canvas').addEventListener('pointerdown',event=> {
   if(event.button!==0)return;
@@ -276,7 +287,7 @@ $('applyText').onclick=async()=> {
   if(text!==article.text&&(article.shapes.some(s=>s.ranges.length)||article.citations?.length)&&!await confirmAction('Update the text?','Your shapes will stay. Text connections and citation formatting will be cleared so you can apply them to the updated text.','Update text'))return;
   if(text!==article.text){article.shapes.forEach(shape=>{shape.ranges=[];});article.citations=[];}article.text=text;textDraft=text;pendingRange=null;textMode(false);commit();status('Select quoted paragraphs to format them, or add a shape to connect ideas.');
 };
-for(const key of ['title','author','year']) {
+for(const key of ['title','author','year','source']) {
   const update=()=>{article[key]=key==='year'?Number($(key).value):$(key).value;};
   $(key).addEventListener('input',()=>{update();persist();});
   $(key).addEventListener('change',()=>{update();commit();});
@@ -292,6 +303,16 @@ $('shapeDash').onchange=()=>{
   commit();
 };
 Object.entries(fields).forEach(([id,[key,parse]])=>$(id).addEventListener('change',()=>{const shape=selected();if(!shape)return;const value=parse($(id).value);if(typeof value==='number'&&!Number.isFinite(value))return;shape[key]=value;if(key==='fill')$('noFill').checked=false;commit();}));
+for(const [id,key] of [['shapeX','x'],['shapeY','y']]) {
+  const apply=()=>{
+    const shape=selected();if(!shape||preview)return;
+    const input=$(id),value=input.valueAsNumber;
+    if(!Number.isFinite(value)||!input.checkValidity()){input.value=shape[key];return;}
+    shape[key]=value;input.value=value;commit();
+  };
+  $(id).onchange=apply;
+  $(id).onkeydown=event=>{if(event.key==='Enter'){event.preventDefault();apply();$(id).blur();}};
+}
 function changeSize(direction){const shape=selected();if(!shape)return;Object.assign(shape,MapGrid.stepSize(shape,direction));commit();}
 $('smaller').onclick=()=>changeSize(-1);$('larger').onclick=()=>changeSize(1);
 function applyShapeSize(){
@@ -306,6 +327,16 @@ function rotate(direction){const shape=selected();if(!shape)return;const angle=(
 $('rotateLeft').onclick=()=>rotate(-1);$('rotateRight').onclick=()=>rotate(1);
 $('noFill').onchange=()=>{if(selected()){selected().fill=$('noFill').checked?'none':$('shapeFill').value;commit();}};
 $('highlightMode').onchange=()=>{if(selected()){selected().outline=$('highlightMode').value==='outline';commit();}};
+$('triangleVariant').onchange=()=>{
+  const shape=selected(),preset=$('triangleVariant').value;
+  if(shape?.type!=='polygon'||!['triangle','right-triangle','wide-triangle'].includes(shape.preset))return;
+  const names={'triangle':'Triangle','right-triangle':'Right triangle','wide-triangle':'Wide triangle'};
+  if(shape.name===names[shape.preset])shape.name=names[preset];
+  const width=shape.height*(preset==='wide-triangle'?2:1);
+  shape.x+=(shape.width-width)/2;shape.width=width;shape.preset=preset;
+  shape.points=preset==='right-triangle'?[[0,0],[0,1],[1,1]]:[[.5,0],[1,1],[0,1]];
+  Object.assign(shape,MapGrid.position(shape));commit();
+};
 function deleteSelected() {if(!selected()||preview)return;article.shapes=article.shapes.filter(s=>s.id!==selectedId);selectedId=null;pendingRange=null;commit();$('canvas').focus({preventScroll:true});status('Shape deleted. Use Undo to restore it.');}
 $('removeShape').onclick=deleteSelected;
 document.addEventListener('keydown',event=>{
@@ -313,7 +344,26 @@ document.addEventListener('keydown',event=>{
   if(event.target.closest('input,textarea,select,[contenteditable="true"],dialog,#textPreview')||document.querySelector('dialog[open]')||!window.getSelection().isCollapsed)return;
   event.preventDefault();deleteSelected();
 });
-$('duplicate').onclick=()=>{if(!selected())return;const shape=clone(selected());shape.id='s-'+crypto.randomUUID();shape.name+=' copy';Object.assign(shape,MapGrid.position(shape,shape.x+MapGrid.step,shape.y+MapGrid.step));article.shapes.push(shape);selectedId=shape.id;commit();};
+function insertCopy(original,offset=1) {
+  const shape=clone(original);shape.id='s-'+crypto.randomUUID();shape.name=(shape.name||'Shape')+' copy';
+  Object.assign(shape,MapGrid.position(shape,shape.x+offset*MapGrid.step,shape.y+offset*MapGrid.step));
+  article.shapes.push(shape);selectedId=shape.id;pendingRange=null;commit();$('canvas').focus({preventScroll:true});
+}
+$('duplicate').onclick=()=>{if(selected())insertCopy(selected());};
+function shapeClipboardAllowed(event) {
+  return !preview&&!event.target.closest('input,textarea,select,[contenteditable="true"],dialog,#textPreview')&&!document.querySelector('dialog[open]')&&window.getSelection().isCollapsed;
+}
+document.addEventListener('copy',event=>{
+  if(!selected()||!event.clipboardData||!shapeClipboardAllowed(event))return;
+  copiedShape=clone(selected());copiedText=article.text;pasteCount=0;
+  event.clipboardData.setData('text/plain',JSON.stringify({bnitzShape:copiedShape}));event.preventDefault();status('Shape copied. Paste with Ctrl/Cmd+V.');
+});
+document.addEventListener('paste',event=>{
+  if(!copiedShape||!event.clipboardData||!shapeClipboardAllowed(event))return;
+  if(event.clipboardData.getData('text/plain')!==JSON.stringify({bnitzShape:copiedShape}))return;
+  event.preventDefault();const shape=clone(copiedShape);if(copiedText!==article.text)shape.ranges=[];
+  insertCopy(shape,++pasteCount);status('Shape pasted.');
+});
 function flip(axis) {const shape=selected();if(!shape)return;if(shape.points)shape.points=shape.points.map(p=>axis==='x'?[1-p[0],p[1]]:[p[0],1-p[1]]);else if(shape.type==='path'){status('Use rotation for this imported shape.');return;}commit();}
 $('flipH').onclick=()=>flip('x');$('flipV').onclick=()=>flip('y');
 function layer(direction) {const i=article.shapes.findIndex(s=>s.id===selectedId),j=i+direction;if(i<0||j<0||j>=article.shapes.length)return;[article.shapes[i],article.shapes[j]]=[article.shapes[j],article.shapes[i]];commit();}
@@ -325,6 +375,15 @@ $('previewButton').onclick=()=>{try{requireAppliedText();preview=!preview;docume
 function validate(data,complete=true) {
   if(data?.version!==1||!data.canvas||!Array.isArray(data.shapes)||typeof data.text!=='string'||typeof data.title!=='string'||typeof data.author!=='string'||!Number.isFinite(data.year))throw Error('This file could not be opened as an article.');
   if(complete&&(!data.title.trim()||!data.author.trim()||!Number.isInteger(data.year)||data.year<1||data.year>9999||!data.text.trim()))throw Error('Add a title, author, year and article text before exporting.');
+  if(data.source!==undefined) {
+    if(typeof data.source!=='string')throw Error('Enter a valid source link beginning with http:// or https://.');
+    const source=data.source.trim();
+    if(source&&complete) {
+      let url;try{url=new URL(source);}catch{}
+      if(!url||!/^https?:\/\/[^/?#\\]/i.test(source)||!['http:','https:'].includes(url.protocol)||!url.hostname||source.length>4096||/[\s\\\u0000-\u001f\u007f]/.test(source))throw Error('Enter a valid source link beginning with http:// or https://.');
+    }
+    if(complete)data.source=source;
+  }
   if(!Number.isFinite(data.canvas.width)||!Number.isFinite(data.canvas.height)||data.canvas.width<200||data.canvas.height<200)throw Error('Invalid canvas size.');
   if(data.citations!==undefined) {
     if(!Array.isArray(data.citations))throw Error('This article contains invalid citation blocks.');

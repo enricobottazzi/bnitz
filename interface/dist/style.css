@@ -30,6 +30,7 @@ p { margin: 0; max-width: 290px; }
 .reader-heading h1 { margin: 0 0 7px; font-size: 11px; font-weight: 400; }
 .reader-heading h1:focus { outline: none; }
 .reader-heading p { max-width: none; }
+.reader-heading a { text-decoration: underline; }
 .reader-grid { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) calc((min(100%, 720px) - var(--reader-gap)) / 2); gap: var(--reader-gap); height: max(280px, calc(100svh - var(--content-top) - 90px)); }
 .reader-text { position: relative; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 3px var(--reader-inset) 20px 0; line-height: 1.7; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
 .reader-text:focus-visible { outline: 1px solid #ccc; outline-offset: 8px; }

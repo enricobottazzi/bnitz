@@ -54,10 +54,21 @@ function selectElement(element) {
 function pickMapElement(event) {
   const svg = event.target.closest('svg.reading-map');
   if (!svg) return null;
-  const elements = document.elementsFromPoint(event.clientX, event.clientY)
+  const elements = [...new Set(document.elementsFromPoint(event.clientX, event.clientY)
     .map(node => node.closest('.map-element'))
-    .filter(element => element && element.closest('svg') === svg);
-  return elements.find(element => element.dataset.connector !== 'true') || elements[0] || null;
+    .filter(element => element && element.closest('svg') === svg))];
+  const closed = elements.filter(element => element.dataset.connector !== 'true');
+  let chosen = closed[0];
+  while (chosen?.dataset.outline === 'true' && chosen.querySelector('.map-ink')?.getAttribute('fill') === 'none') {
+    const outer = chosen.getBoundingClientRect();
+    const nested = closed.slice(closed.indexOf(chosen) + 1).find(element => {
+      const inner = element.getBoundingClientRect();
+      return inner.width * inner.height < outer.width * outer.height;
+    });
+    if (!nested) break;
+    chosen = nested;
+  }
+  return chosen || elements[0] || null;
 }
 
 document.addEventListener('click', event => {

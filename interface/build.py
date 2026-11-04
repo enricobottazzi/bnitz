@@ -6,6 +6,7 @@ import math
 import re
 import shutil
 from pathlib import Path
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent
 ID = re.compile(r"[a-zA-Z][a-zA-Z0-9_-]{0,99}\Z")
@@ -42,6 +43,20 @@ def validate_article(value):
         raise ValueError('The article is too large.')
     if type(article.get('year')) is not int or not 1 <= article['year'] <= 9999:
         raise ValueError('Please enter a valid year.')
+    if 'source' in article:
+        source = article['source']
+        if not isinstance(source, str):
+            raise ValueError('Please enter a valid source link (http or https).')
+        source = source.strip()
+        try:
+            url = urlsplit(source)
+            valid = not source or (len(source) <= 4096 and url.scheme in ('http', 'https') and url.hostname and not re.search(r'[\s\\\x00-\x1f\x7f]', source))
+            url.port
+        except ValueError:
+            valid = False
+        if not valid:
+            raise ValueError('Please enter a valid source link (http or https).')
+        article['source'] = source
     boundaries = utf16_boundaries(article['text'])
     if 'citations' in article:
         citations = article['citations']
@@ -101,7 +116,7 @@ def validate_article(value):
             raise ValueError('Invalid stroke dash pattern.')
         if 'lineStyle' in shape and (shape['lineStyle'] not in ('zigzag', 'star-ends') or kind not in ('polyline', 'curve', 'freehand')):
             raise ValueError('Line styles are only available for open lines.')
-        if 'preset' in shape and shape['preset'] not in ('triangle', 'right-triangle', 'polygon', 'star'):
+        if 'preset' in shape and shape['preset'] not in ('triangle', 'right-triangle', 'wide-triangle', 'polygon', 'star'):
             raise ValueError('Invalid shape preset.')
         if 'sides' in shape:
             if type(shape['sides']) is not int or not 3 <= shape['sides'] <= 24:
@@ -172,7 +187,8 @@ def zigzag_points(shape):
     amplitude = min(6, total / 6)
     result, segment = [], 0
     for index in range(count + 1):
-        distance = total * index / count
+        # Endpoints have half the lateral change, so give their legs half the run.
+        distance = 0 if index == 0 else total if index == count else total * (index - .5) / (count - 1)
         while segment < len(lengths) - 1 and distance > cumulative[segment + 1]:
             segment += 1
         start, end, length = points[segment], points[segment + 1], lengths[segment]
@@ -208,7 +224,8 @@ def map_svg(article, slug):
         name = shape.get('name') or kind.capitalize()
         transform = f'translate({n(shape["x"])} {n(shape["y"])}) rotate({n(shape["rotation"])} {n(shape["width"]/2)} {n(shape["height"]/2)}) scale({n(shape["width"])} {n(shape["height"])})'
         outline = shape['outline'] or kind in ('polyline', 'curve', 'freehand')
-        connector = kind in ('polyline', 'curve', 'freehand') or (kind == 'path' and shape['outline'])
+        closed_path = kind == 'path' and shape['path'].rstrip().endswith(('Z', 'z'))
+        connector = kind in ('polyline', 'curve', 'freehand') or (kind == 'path' and shape['outline'] and not closed_path)
         attributes = {'id': f'{slug}-{shape["id"]}', 'class': 'map-element', 'aria-label': name, 'transform': transform, 'role': 'button', 'tabindex': '0', 'aria-pressed': 'false', 'aria-controls': f'{slug}-text', 'data-ranges': json.dumps(shape['ranges'], separators=(',', ':')), 'data-outline': str(outline).lower(), 'data-connector': str(connector).lower()}
         parts.append('<g ' + ' '.join(f'{key}="{html.escape(value, quote=True)}"' for key, value in attributes.items()) + '>')
         line_style = shape.get('lineStyle')
@@ -228,7 +245,7 @@ def map_svg(article, slug):
             else:
                 path = shape['path']
             geometry = f'd="{html.escape(path, quote=True)}"'
-        parts.append(f'<{tag} class="map-hit" {geometry} fill="transparent" stroke="transparent" stroke-width="22" vector-effect="non-scaling-stroke" pointer-events="{"stroke" if shape["outline"] or kind in ("polyline", "freehand", "curve") else "all"}"/>')
+        parts.append(f'<{tag} class="map-hit" {geometry} fill="transparent" stroke="transparent" stroke-width="22" vector-effect="non-scaling-stroke" pointer-events="{"stroke" if connector else "all"}"/>')
         dash = f' stroke-dasharray="{shape["dash"]}"' if shape.get('dash') and not line_style else ''
         fill = 'none' if line_style else shape['fill']
         parts.append(f'<{tag} class="map-ink" {geometry} fill="{fill}" stroke="{shape["stroke"]}" stroke-width="{n(shape["strokeWidth"])}" opacity="{n(shape["opacity"])}" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"{dash}/>')
@@ -296,25 +313,30 @@ def render_article(article, slug):
     if not SLUG.fullmatch(slug):
         raise ValueError('Invalid article filename.')
     title, author, year = html.escape(article['title']), html.escape(article['author']), article['year']
+    source = f' · <a href="{html.escape(article["source"], quote=True)}" target="_blank" rel="noopener noreferrer">source</a>' if article.get('source') else ''
     row = f'<a class="reading" href="#readings/{slug}"><span>{title}</span><span>{author}</span><time datetime="{year}">{year}</time></a>'
     view = f'''<section class="article-reader" data-article="{slug}" aria-labelledby="{slug}-title" hidden>
-      <header class="reader-heading"><h1 id="{slug}-title" tabindex="-1">{title}</h1><p>{author} · <time datetime="{year}">{year}</time></p></header>
+      <header class="reader-heading"><h1 id="{slug}-title" tabindex="-1">{title}</h1><p>{author} · <time datetime="{year}">{year}</time>{source}</p></header>
       <div class="reader-grid"><article class="reader-text" id="{slug}-text" tabindex="0" aria-label="{html.escape(article['title'], quote=True)} article text">{render_text(article)}</article><div class="map-pane" aria-label="BNITZ language map">{map_svg(article, slug)}</div></div>
     </section>'''
     return row, view
 
 
 def article(path):
-    return render_article(validate_article(json.loads(path.read_text(encoding='utf-8'))), path.stem)
+    data = validate_article(json.loads(path.read_text(encoding='utf-8')))
+    row, view = render_article(data, path.stem)
+    return data['year'], row, view
 
 
 def build(root=ROOT):
-    rows, views = [], []
+    articles, rows, views = [], [], []
     for path in sorted((root / 'articles').glob('*.bnitz')):
         try:
-            row, view = article(path)
+            year, row, view = article(path)
         except (ValueError, TypeError, KeyError) as error:
             raise ValueError(f'{path.name}: {error}') from error
+        articles.append((year, path.stem, row, view))
+    for _, _, row, view in sorted(articles):
         rows.append(row)
         views.append(view)
     template = (root / 'src/index.html').read_text(encoding='utf-8')

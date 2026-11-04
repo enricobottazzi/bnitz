@@ -32,7 +32,8 @@ const LineStyles = (() => {
     const result = [];
     let segment = 0;
     for (let index = 0; index <= count; index++) {
-      const distance = total * index / count;
+      // Ends travel from the centerline to one peak, half an interior leg.
+      const distance = index === 0 ? 0 : index === count ? total : total * (index - .5) / (count - 1);
       while (segment < lengths.length - 1 && distance > cumulative[segment + 1]) segment++;
       const start = points[segment], end = points[segment + 1], length = lengths[segment];
       const dx = end[0] - start[0], dy = end[1] - start[1];

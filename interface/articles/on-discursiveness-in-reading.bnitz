@@ -1,0 +1,311 @@
+{
+  "version": 1,
+  "title": "On Discursiveness in Reading",
+  "author": "Seneca",
+  "year": 62,
+  "text": "1. Judging by what you write me, and by what I hear, I am forming a good opinion regarding your future. You do not run hither and thither and distract yourself by changing your abode; for such restlessness is the sign of a disordered spirit. The primary indication, to my thinking, of a well-ordered mind is a man’s ability to remain in one place and linger in his own company. 2. Be careful, however, lest this reading of many authors and books of every sort may tend to make you discursive and unsteady. You must linger among a limited number of master-thinkers, and digest their works, if you would derive ideas which shall win firm hold in your mind. Everywhere means nowhere. When a person spends all his time in foreign travel, he ends by having many acquaintances, but no friends. And the same thing must hold true of men who seek intimate acquaintance with no single author, but visit them all in a hasty and hurried manner. 3. Food does no good and is not assimilated into the body if it leaves the stomach as soon as it is eaten; nothing hinders a cure so much as frequent change of medicine; no wound will heal when one salve is tried after another; a plant which is often moved can never grow strong. There is nothing so efficacious that it can be helpful while it is being shifted about. And in reading of many books is distraction.\n\nAccordingly, since you cannot read all the books which you may possess, it is enough to possess only as many books as you can read. 4. “But,” you reply, “I wish to dip first into one book and then into another.” I tell you that it is the sign of an overnice appetite to toy with many dishes; for when they are manifold and varied, they cloy but do not nourish. So you should always read standard authors; and when you crave a change, fall back upon those whom you read before. Each day acquire something that will fortify you against poverty, against death, indeed against other misfortunes as well; and after you have run over many thoughts, select one to be thoroughly digested that day. 5. This is my own custom; from the many things which I have read, I claim some one part for myself.\n\nThe thought for to-day is one which I discovered in Epicurus; for I am wont to cross over even into the enemy’s camp,—not as a deserter, but as a scout. 6. He says: “Contented poverty is an honourable estate.” Indeed, if it be contented, it is not poverty at all. It is not the man who has too little, but the man who craves more, that is poor. What does it matter how much a man has laid up in his safe, or in his warehouse, how large are his flocks and how fat his dividends, if he covets his neighbour’s property, and reckons, not his past gains, but his hopes of gains to come? Do you ask what is the proper limit to wealth? It is, first, to have what is necessary, and, second, to have what is enough. Farewell.\n\n",
+  "canvas": {
+    "width": 460,
+    "height": 680
+  },
+  "shapes": [
+    {
+      "id": "s-1fae0634-579b-43e8-a356-a951b1bcd4e0",
+      "name": "Triangle",
+      "type": "polygon",
+      "x": 168,
+      "y": 28,
+      "width": 112,
+      "height": 112,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 242,
+          "end": 377,
+          "grade": "primary"
+        }
+      ],
+      "preset": "triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "s-093a47aa-f6d1-40da-a91a-037b03e77ef0",
+      "name": "conclusion",
+      "type": "polygon",
+      "x": 168,
+      "y": 532,
+      "width": 112,
+      "height": 112,
+      "rotation": -180,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 2720,
+          "end": 2844,
+          "grade": "primary"
+        },
+        {
+          "start": 2303,
+          "end": 2347,
+          "grade": "secondary"
+        }
+      ],
+      "preset": "triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "s-14703bda-99fd-4ebc-a0ee-424d003590ed",
+      "name": "Triangle",
+      "type": "polygon",
+      "x": 196,
+      "y": 532,
+      "width": 56,
+      "height": 56,
+      "rotation": -180,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 1419,
+          "end": 1477,
+          "grade": "primary"
+        },
+        {
+          "start": 506,
+          "end": 655,
+          "grade": "primary"
+        },
+        {
+          "start": 1708,
+          "end": 1822,
+          "grade": "secondary"
+        }
+      ],
+      "preset": "triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "s-94b7a3ed-f7b0-4f6f-80b8-4c10a5522d80",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 196,
+      "y": 308,
+      "width": 56,
+      "height": 56,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 1308,
+          "end": 1346,
+          "grade": "primary"
+        },
+        {
+          "start": 381,
+          "end": 505,
+          "grade": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "s-7056774d-d0c5-4e0d-ace7-36228d361483",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 84,
+      "y": 196,
+      "width": 280,
+      "height": 280,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": true,
+      "ranges": [
+        {
+          "start": 655,
+          "end": 680,
+          "grade": "primary"
+        },
+        {
+          "start": 1213,
+          "end": 1300,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-869da527-a90a-4f54-b91d-fe0063153203",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 210,
+      "y": 182,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 681,
+          "end": 787,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-310efb50-fe05-4f3f-b8a6-11d587c57bcd",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 350,
+      "y": 294,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 788,
+          "end": 933,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-4def0a47-d3f6-49e4-a39d-fcc95857151f",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 294,
+      "y": 434,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 935,
+          "end": 1040,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-33ee948f-40f7-408e-9165-afb73c96dfdc",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 126,
+      "y": 434,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 1103,
+          "end": 1160,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-d59fcdb3-3264-4278-9086-cf1838c3ae5e",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 70,
+      "y": 294,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 1161,
+          "end": 1213,
+          "grade": "primary"
+        }
+      ]
+    }
+  ],
+  "citations": [],
+  "source": "https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_2"
+}

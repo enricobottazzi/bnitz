@@ -33,55 +33,11 @@
       "centerDot": false
     },
     {
-      "id": "s-2a939844-4a39-4e52-8384-2ed7cb497b75",
-      "name": "Circle",
-      "type": "ellipse",
-      "x": 308,
-      "y": 308,
-      "width": 56,
-      "height": 56,
-      "rotation": 0,
-      "stroke": "#333333",
-      "strokeWidth": 1.8,
-      "fill": "none",
-      "opacity": 1,
-      "outline": false,
-      "ranges": [
-        {
-          "start": 262,
-          "end": 411,
-          "grade": "primary"
-        }
-      ]
-    },
-    {
-      "id": "s-3a55f126-5f04-4919-bed9-450a291d067c",
-      "name": "Circle",
-      "type": "ellipse",
-      "x": 84,
-      "y": 308,
-      "width": 56,
-      "height": 56,
-      "rotation": 0,
-      "stroke": "#333333",
-      "strokeWidth": 1.8,
-      "fill": "none",
-      "opacity": 1,
-      "outline": false,
-      "ranges": [
-        {
-          "start": 82,
-          "end": 262,
-          "grade": "primary"
-        }
-      ]
-    },
-    {
       "id": "s-105a49b9-8ad0-4f3a-9255-f9b0fe7152d3",
       "name": "Circle",
       "type": "ellipse",
-      "x": 28,
-      "y": 252,
+      "x": 140,
+      "y": 56,
       "width": 168,
       "height": 168,
       "rotation": 0,
@@ -102,8 +58,8 @@
       "id": "s-f603b00f-a73d-4eb5-82b8-08abbb99a0b2",
       "name": "Circle",
       "type": "ellipse",
-      "x": 98,
-      "y": 238,
+      "x": 210,
+      "y": 42,
       "width": 28,
       "height": 28,
       "rotation": 0,
@@ -129,8 +85,8 @@
       "id": "s-f52c5f72-623f-4208-8d37-323d2b9a3aba",
       "name": "Circle",
       "type": "ellipse",
-      "x": 98,
-      "y": 406,
+      "x": 210,
+      "y": 210,
       "width": 28,
       "height": 28,
       "rotation": 0,
@@ -153,44 +109,11 @@
       ]
     },
     {
-      "id": "s-b12a3965-64d3-4406-83c4-5e711c307582",
-      "name": "Line",
-      "type": "polyline",
-      "x": 166.31005050633885,
-      "y": 279.3,
-      "width": 117.60000000000001,
-      "height": 117.60000000000001,
-      "rotation": 135,
-      "stroke": "#333333",
-      "strokeWidth": 1.8,
-      "fill": "none",
-      "opacity": 1,
-      "outline": true,
-      "ranges": [
-        {
-          "start": 2451,
-          "end": 2621,
-          "grade": "primary"
-        }
-      ],
-      "points": [
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          1
-        ]
-      ],
-      "lineStyle": "star-ends"
-    },
-    {
       "id": "s-8395fd2d-2b00-424f-84ca-65a29d2be8fb",
       "name": "Circle",
       "type": "ellipse",
-      "x": 322,
-      "y": 294,
+      "x": 210,
+      "y": 490,
       "width": 28,
       "height": 28,
       "rotation": 0,
@@ -221,6 +144,84 @@
           "grade": "primary"
         }
       ]
+    },
+    {
+      "id": "s-081031b8-2ceb-4915-b111-3322fce2e239",
+      "name": "Triangle",
+      "type": "polygon",
+      "x": 196,
+      "y": 108,
+      "width": 56,
+      "height": 56,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 83,
+          "end": 262,
+          "grade": "primary"
+        }
+      ],
+      "preset": "triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "s-6816e6cc-6ed7-474b-9165-1877b2e35fed",
+      "name": "Triangle copy",
+      "type": "polygon",
+      "x": 196,
+      "y": 448,
+      "width": 56,
+      "height": 56,
+      "rotation": -180,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 262,
+          "end": 411,
+          "grade": "primary"
+        }
+      ],
+      "preset": "triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     }
   ],
   "citations": [
@@ -236,5 +237,6 @@
       "start": 2756,
       "end": 3642
     }
-  ]
+  ],
+  "source": "http://www.econ.uiuc.edu/~roger/gaps.html"
 }

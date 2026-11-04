@@ -50,6 +50,37 @@ class ArticleBuildTests(unittest.TestCase):
         self.assertIn('aria-controls="an-example-text"', output)
         self.assertIn('data-ranges=', output)
 
+    def test_source_link_round_trips_and_renders_beside_author_and_year(self):
+        self.data['source'] = ' https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_2?x=1&y=2 '
+        serve.save_article(self.root, {'article': self.data, 'slug': 'an-example', 'overwrite': True})
+        saved = json.loads(self.path.read_text())
+        self.assertEqual(saved['source'], self.data['source'].strip())
+        output = (self.root / 'dist/index.html').read_text()
+        heading = re.search(r'<header class="reader-heading">.*?</header>', output, re.S).group(0)
+        self.assertIn('A writer · <time datetime="2026">2026</time> · <a ', heading)
+        self.assertIn('href="https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_2?x=1&amp;y=2"', heading)
+        self.assertIn('target="_blank" rel="noopener noreferrer">source</a>', heading)
+
+    def test_missing_and_empty_sources_keep_legacy_metadata(self):
+        for source in (None, '', '  '):
+            with self.subTest(source=source):
+                data = example()
+                if source is not None:
+                    data['source'] = source
+                valid = builder.validate_article(data)
+                _, view = builder.render_article(valid, 'an-example')
+                self.assertIn('A writer · <time datetime="2026">2026</time></p>', view)
+                self.assertNotIn('>source</a>', view)
+
+    def test_source_rejects_unsafe_or_invalid_urls(self):
+        invalid = [None, 42, True, 'javascript:alert(1)', 'data:text/html,test', '//example.com', '/article', 'https://', 'https:///example.com', 'https://[invalid', 'https://example.com:bad', 'https://example.com/a\\b', 'https://example.com/a\nb', 'https://example.com/a b', 'https://example.com/\x00', 'https://example.com/' + 'a' * 4096]
+        for source in invalid:
+            with self.subTest(source=source):
+                data = example()
+                data['source'] = source
+                with self.assertRaisesRegex(ValueError, 'source link'):
+                    builder.validate_article(data)
+
     def test_range_cannot_split_unicode_surrogate_or_leave_text(self):
         for start, end in [(2, 3), (3, 4), (-1, 2), (0, 999), (4, 4)]:
             with self.subTest(start=start, end=end):
@@ -112,6 +143,17 @@ class ArticleBuildTests(unittest.TestCase):
         self.assertIn('rotate(45 66.85 42.125) scale(133.7 84.25)', owner.get('transform'))
         self.assertEqual(json.loads(owner.get('data-ranges')), shape['ranges'])
 
+    def test_wide_triangle_export_preserves_ratio_and_connections(self):
+        shape = self.data['shapes'][0]
+        shape.update(type='polygon', preset='wide-triangle', points=[[.5, 0], [1, 1], [0, 1]], width=224, height=112)
+        serve.save_article(self.root, {'article': self.data, 'slug': 'an-example', 'overwrite': True})
+        saved = json.loads(self.path.read_text())
+        self.assertEqual(saved['shapes'][0], shape)
+        group = ET.fromstring(builder.map_svg(saved, 'an-example')).find('{*}g')
+        self.assertIn('scale(224 112)', group.get('transform'))
+        self.assertEqual(group.find('{*}polygon[@class="map-ink"]').get('points'), '0.5,0 1,1 0,1')
+        self.assertEqual(json.loads(group.get('data-ranges')), shape['ranges'])
+
     def test_line_styles_validate_only_supported_open_shapes(self):
         for kind in ('polyline', 'curve', 'freehand'):
             for style in ('zigzag', 'star-ends'):
@@ -132,7 +174,7 @@ class ArticleBuildTests(unittest.TestCase):
         self.assertEqual(len(points), 11)
         self.assertEqual((points[0], points[-1]), (shape['points'][0], shape['points'][-1]))
         for index, point in enumerate(points[1:-1], 1):
-            self.assertAlmostEqual(point[0], index / 10)
+            self.assertAlmostEqual(point[0], (index - .5) / 9)
             self.assertAlmostEqual(point[1], .5 + (.1 if index % 2 else -.1))
         self.assertEqual(shape, original)
         short = builder.zigzag_points(dict(shape, width=6))
@@ -141,6 +183,32 @@ class ArticleBuildTests(unittest.TestCase):
         self.assertEqual(len(builder.zigzag_points(dict(shape, width=98000))), 513)
         stationary = {'type': 'curve', 'width': 180, 'height': 90, 'points': [[.2, .3]] * 4}
         self.assertEqual(builder.zigzag_points(stationary), [[.2, .3]] * 65)
+
+    def test_zigzag_terminal_legs_match_interior_angles_in_any_direction(self):
+        shapes = [
+            {'width': 96, 'height': 48, 'points': [[0, .5], [1, .5]]},
+            {'width': 48, 'height': 96, 'points': [[.5, 1], [.5, 0]]},
+            {'width': 280, 'height': 280, 'points': [[0, 0], [1, 1]]},
+            {'width': 127, 'height': 53, 'points': [[.9, .1], [.1, .8]]},
+        ]
+        for shape in shapes:
+            with self.subTest(shape=shape):
+                shape = dict(shape, type='polyline')
+                points = [[x * shape['width'], y * shape['height']] for x, y in builder.zigzag_points(shape)]
+                dx, dy = points[-1][0] - points[0][0], points[-1][1] - points[0][1]
+                length = math.hypot(dx, dy)
+                runs, slopes = [], []
+                for start, end in zip(points, points[1:]):
+                    sx, sy = end[0] - start[0], end[1] - start[1]
+                    run = (sx * dx + sy * dy) / length
+                    rise = (sy * dx - sx * dy) / length
+                    self.assertGreater(run, 0)
+                    runs.append(run)
+                    slopes.append(abs(rise / run))
+                for slope in slopes:
+                    self.assertAlmostEqual(slope, slopes[1])
+                self.assertAlmostEqual(runs[0] * 2, runs[1])
+                self.assertAlmostEqual(runs[-1] * 2, runs[-2])
 
     def test_asterisks_align_with_curve_tangents_without_extending_past_endpoints(self):
         shape = {'type': 'curve', 'width': 200, 'height': 80, 'points': [[0, .5], [.2, .1], [.7, .9], [1, .25]]}
@@ -297,6 +365,22 @@ class ArticleBuildTests(unittest.TestCase):
                 self.assertIs(valid['shapes'][0]['outline'], False)
                 self.assertIs(data['shapes'][0]['outline'], False)
 
+    def test_outline_closed_shapes_accept_interior_clicks_while_connectors_keep_stroke_hits(self):
+        cases = [('ellipse', None, 'all'), ('polygon', None, 'all'), ('path', 'M0 0 L1 0 L1 1 Z', 'all'), ('path', 'M0 0 L1 0 L1 1 z ', 'all'), ('path', 'M0 0 L1 1', 'stroke'), ('polyline', None, 'stroke'), ('curve', None, 'stroke'), ('freehand', None, 'stroke')]
+        for kind, path, events in cases:
+            with self.subTest(kind=kind, path=path):
+                data = example()
+                shape = data['shapes'][0]
+                shape.update(type=kind, outline=True, points=[[0, 0], [.3, .2], [.6, .8], [1, 1]])
+                if path is not None:
+                    shape['path'] = path
+                group = ET.fromstring(builder.map_svg(builder.validate_article(data), 'an-example')).find('{*}g')
+                hit = group.find('{*}*[@class="map-hit"]')
+                self.assertEqual(hit.get('pointer-events'), events)
+                self.assertEqual(hit.get('fill'), 'transparent')
+                self.assertEqual(group.get('data-outline'), 'true')
+                self.assertEqual(group.get('data-connector'), str(events == 'stroke').lower())
+
     @unittest.skipUnless(shutil.which('node'), 'Node is needed to test reader pointer selection')
     def test_reader_picks_shapes_under_connectors_within_the_same_map(self):
         script = r'''
@@ -325,6 +409,55 @@ hits = [node(null)]; selected = null;
 listeners.click(event); assert.equal(selected, null);
 listeners.keydown({target: {closest: () => line}, key: 'Enter', preventDefault() {}});
 assert.equal(selected, line);
+'''
+        result = subprocess.run([shutil.which('node'), '-e', script, str(ROOT / 'src/script.js')], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    @unittest.skipUnless(shutil.which('node'), 'Node is needed to test reader pointer selection')
+    def test_reader_small_shapes_crossing_outlines_remain_clickable(self):
+        script = r'''
+const assert = require('node:assert/strict'), fs = require('node:fs'), vm = require('node:vm');
+const svg = {};
+let hits = [];
+const context = {
+  document: {
+    querySelector: () => ({hidden: false}), querySelectorAll: () => [],
+    addEventListener() {}, elementsFromPoint: () => hits,
+  },
+  window: {addEventListener() {}, scrollTo() {}}, location: {hash: ''},
+};
+vm.runInNewContext(fs.readFileSync(process.argv[1], 'utf8'), context);
+const group = (left, top, width, height, outline = true, fill = 'none', connector = false) => ({
+  dataset: {outline: String(outline), connector: String(connector)},
+  closest: () => svg,
+  querySelector: () => ({getAttribute: () => fill}),
+  getBoundingClientRect: () => ({left, top, width, height, right: left + width, bottom: top + height}),
+});
+const node = element => ({closest: () => element});
+const event = {target: {closest: () => svg}, clientX: 50, clientY: 50};
+const pick = (...elements) => { hits = elements.map(node); return context.pickMapElement(event); };
+const outer = group(0, 0, 100, 100), middle = group(20, 20, 60, 60), inner = group(40, 40, 20, 20);
+assert.equal(pick(outer, outer, inner), inner, 'an enclosing outline does not cover an inner circle');
+assert.equal(pick(outer, middle, inner), inner, 'nested outlines are skipped recursively');
+const left = group(-10, 40, 20, 20), right = group(90, 40, 20, 20), top = group(40, -10, 20, 20);
+assert.equal(pick(outer, left), left, 'a small circle crossing the left border remains clickable');
+assert.equal(pick(outer, right), right, 'a small circle crossing the right border remains clickable');
+assert.equal(pick(outer, top), top, 'a small circle crossing the top border remains clickable');
+assert.equal(pick(outer, outer), outer, 'the large outline remains clickable in its empty interior');
+const filled = group(0, 0, 100, 100, true, '#ffffff');
+assert.equal(pick(filled, inner), filled, 'a filled foreground shape retains priority');
+assert.equal(pick(filled, right), filled, 'a filled foreground shape retains priority at its border');
+const fullHighlight = group(0, 0, 100, 100, false);
+assert.equal(pick(fullHighlight, inner), fullHighlight, 'normal shape layer order is unchanged');
+const overlap = group(40, 40, 80, 80);
+assert.equal(pick(outer, overlap), overlap, 'a smaller shape partially overlapping an outline remains clickable');
+const larger = group(-10, -10, 140, 140);
+assert.equal(pick(outer, larger), outer, 'a larger overlapping shape does not replace foreground priority');
+const equal = group(0, 0, 100, 100);
+assert.equal(pick(outer, equal), outer, 'equal bounds retain foreground priority');
+const line = group(0, 0, 100, 100, true, 'none', true);
+assert.equal(pick(line, outer, inner), inner, 'connectors do not cover nested closed shapes');
+assert.equal(pick(line, line), line, 'a connector alone remains clickable');
 '''
         result = subprocess.run([shutil.which('node'), '-e', script, str(ROOT / 'src/script.js')], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)

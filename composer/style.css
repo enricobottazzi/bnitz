@@ -40,6 +40,7 @@ p { margin: 0; }
 #status { margin-top: 8px; color: #666; }
 #status:empty { display: none; }
 .metadata { display: grid; grid-template-columns: minmax(220px, 1.8fr) minmax(160px, 1fr) 88px; gap: 20px; margin: 22px 0 30px; max-width: 850px; }
+.metadata .source { grid-column: 1 / -1; }
 .workspace { display: grid; grid-template-columns: minmax(240px, 1.6fr) minmax(330px, 1fr) 230px; align-items: start; gap: 24px; }
 .workspace > * { min-width: 0; }
 .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 34px; margin-bottom: 12px; }

@@ -16,9 +16,17 @@ Build maps from fixed forms, moving and scaling them in dot-grid steps without f
 
 Type a decimal in **Size**, such as **2.5**, for a precise size in grid units. Proportions stay fixed.
 
-Circle centers stay aligned to the dots when moved or resized.
+Set **X** and **Y** for an exact position in canvas units, measured from the shape’s upper-left corner before rotation. Decimals are allowed. Dragging and arrow keys still snap to the grid.
+
+Circle centers stay aligned to the dots when moved or resized with grid controls.
 
 Select a shape and set **Highlight** to **Full shape** or **Outline only** to choose whether its interior or just its perimeter turns lime.
+
+Copy and paste a selected shape with **Ctrl/Cmd+C** and **Ctrl/Cmd+V**. Each paste creates a separate shape with the same appearance and text connections.
+
+Add a **Triangle**, then choose **Default triangle**, **Right triangle**, or **Wide triangle** in its **Variant** setting. The wide triangle joins the outline of two right triangles into one shape.
+
+The optional **Source** link appears beside the author and year in the reader.
 
 For lines and curves, **Appearance → Line style** also offers **Zigzag** and **Asterisk ends**.
 

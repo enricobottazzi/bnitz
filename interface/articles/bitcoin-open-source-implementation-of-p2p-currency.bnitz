@@ -1,0 +1,339 @@
+{
+  "version": 1,
+  "title": "Bitcoin Open Source Implementation of P2P Currency",
+  "author": "Satoshi Nakamoto",
+  "year": 2009,
+  "source": "https://satoshi.nakamotoinstitute.org/posts/p2pfoundation/1/",
+  "text": "I've developed a new open source P2P e-cash system called Bitcoin. It's completely decentralized, with no central server or trusted parties, because everything is based on crypto proof instead of trust. Give it a try, or take a look at the screenshots and design paper:\n\nDownload Bitcoin v0.1 at http://www.bitcoin.org\n\nThe root problem with conventional currency is all the trust that's required to make it work. The central bank must be trusted not to debase the currency, but the history of fiat currencies is full of breaches of that trust. Banks must be trusted to hold our money and transfer it electronically, but they lend it out in waves of credit bubbles with barely a fraction in reserve. We have to trust them with our privacy, trust them not to let identity thieves drain our accounts. Their massive overhead costs make micropayments impossible.\n\nA generation ago, multi-user time-sharing computer systems had a similar problem. Before strong encryption, users had to rely on password protection to secure their files, placing trust in the system administrator to keep their information private. Privacy could always be overridden by the admin based on his judgment call weighing the principle of privacy against other concerns, or at the behest of his superiors. Then strong encryption became available to the masses, and trust was no longer required. Data could be secured in a way that was physically impossible for others to access, no matter for what reason, no matter how good the excuse, no matter what.\n\nIt's time we had the same thing for money. With e-currency based on cryptographic proof, without the need to trust a third party middleman, money can be secure and transactions effortless.\n\nOne of the fundamental building blocks for such a system is digital signatures. A digital coin contains the public key of its owner. To transfer it, the owner signs the coin together with the public key of the next owner. Anyone can check the signatures to verify the chain of ownership. It works well to secure ownership, but leaves one big problem unsolved: double-spending. Any owner could try to re-spend an already spent coin by signing it again to another owner. The usual solution is for a trusted company with a central database to check for double-spending, but that just gets back to the trust model. In its central position, the company can override the users, and the fees needed to support the company make micropayments impractical.\n\nBitcoin's solution is to use a peer-to-peer network to check for double-spending. In a nutshell, the network works like a distributed timestamp server, stamping the first transaction to spend a coin. It takes advantage of the nature of information being easy to spread but hard to stifle. For details on how it works, see the design paper at http://www.bitcoin.org/bitcoin.pdf\n\nThe result is a distributed system with no single point of failure. Users hold the crypto keys to their own money and transact directly with each other, with the help of the P2P network to check for double-spending.\n",
+  "canvas": {
+    "width": 460,
+    "height": 680
+  },
+  "shapes": [
+    {
+      "id": "s-7caaafbf-cb0e-414b-9457-4d6b1008922d",
+      "name": "Line",
+      "type": "polyline",
+      "x": 84.00000000000001,
+      "y": 118.79393923933998,
+      "width": 280,
+      "height": 280,
+      "rotation": 45,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": true,
+      "ranges": [
+        {
+          "start": 375,
+          "end": 380,
+          "grade": "primary"
+        }
+      ],
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "lineStyle": "zigzag"
+    },
+    {
+      "id": "s-e069edf5-f6c5-412b-a567-61d7f14a96b9",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 105,
+      "y": 105,
+      "width": 14,
+      "height": 14,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 860,
+          "end": 1276,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-8cdc8113-01cb-493e-b0fe-6bac1f995009",
+      "name": "Wide triangle",
+      "type": "polygon",
+      "x": 268,
+      "y": 93,
+      "width": 70,
+      "height": 35,
+      "rotation": 90,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 1282,
+          "end": 1299,
+          "grade": "primary"
+        }
+      ],
+      "preset": "wide-triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "s-0e718d98-3408-46b4-bc12-c0d55c4e766e",
+      "name": "Circle copy",
+      "type": "ellipse",
+      "x": 313,
+      "y": 104,
+      "width": 14,
+      "height": 14,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 1336,
+          "end": 1524,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-8646b221-fcd6-4110-8b87-0973f8802651",
+      "name": "Circle copy",
+      "type": "ellipse",
+      "x": 98,
+      "y": 266,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 414,
+          "end": 544,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-aeecf81a-e916-4cb0-8915-649e1797dfbe",
+      "name": "Circle copy copy",
+      "type": "ellipse",
+      "x": 154,
+      "y": 350,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 545,
+          "end": 699,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-02b6208b-5b97-4e46-a178-6db95ec75ac1",
+      "name": "Circle copy copy copy",
+      "type": "ellipse",
+      "x": 42,
+      "y": 350,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 700,
+          "end": 799,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-c8719951-aca5-4a7a-8f84-4516ee460031",
+      "name": "Circle",
+      "type": "ellipse",
+      "x": 56,
+      "y": 280,
+      "width": 112,
+      "height": 112,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": true,
+      "ranges": [
+        {
+          "start": 418,
+          "end": 430,
+          "grade": "primary"
+        }
+      ]
+    },
+    {
+      "id": "s-b6c089ca-810c-423d-bddd-973bddeead68",
+      "name": "Right triangle",
+      "type": "polygon",
+      "x": 287,
+      "y": 275,
+      "width": 67.2,
+      "height": 67.2,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 1775,
+          "end": 1793,
+          "grade": "primary"
+        },
+        {
+          "start": 1795,
+          "end": 2002,
+          "grade": "secondary"
+        }
+      ],
+      "preset": "right-triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "s-fce563a7-21db-4a37-b436-09f8bfb799a6",
+      "name": "Right triangle copy",
+      "type": "polygon",
+      "x": 287,
+      "y": 342,
+      "width": 67.2,
+      "height": 67.2,
+      "rotation": 90,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 2494,
+          "end": 2543,
+          "grade": "primary"
+        },
+        {
+          "start": 2545,
+          "end": 2752,
+          "grade": "secondary"
+        }
+      ],
+      "preset": "right-triangle",
+      "sides": 3,
+      "innerRatio": 0.45,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "s-c2c3a82f-ff5a-4687-9e1f-314e6bb9c3f4",
+      "name": "Circle copy copy",
+      "type": "ellipse",
+      "x": 339,
+      "y": 328,
+      "width": 28,
+      "height": 28,
+      "rotation": 0,
+      "stroke": "#333333",
+      "strokeWidth": 1.8,
+      "fill": "none",
+      "opacity": 1,
+      "outline": false,
+      "ranges": [
+        {
+          "start": 17,
+          "end": 65,
+          "grade": "primary"
+        },
+        {
+          "start": 2856,
+          "end": 3056,
+          "grade": "secondary"
+        },
+        {
+          "start": 149,
+          "end": 201,
+          "grade": "secondary"
+        }
+      ]
+    }
+  ],
+  "citations": []
+}

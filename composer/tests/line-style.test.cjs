@@ -24,10 +24,37 @@ test('zigzags retain exact endpoints and alternate by six world units with unequ
   assert.deepEqual(points[0], line.points[0]);
   assert.deepEqual(points.at(-1), line.points.at(-1));
   for (let index = 1; index < points.length - 1; index++) {
-    close(points[index][0] * line.width, index * 12);
+    close(points[index][0] * line.width, line.width * (index - .5) / (points.length - 2));
     close(points[index][1] * line.height, index % 2 ? 6 : -6);
   }
   assert.deepEqual(line, original);
+});
+
+test('straight zigzags keep the same leg angle through both endpoints', () => {
+  for (const shape of [
+    line,
+    {...line, width: 6},
+    {...line, width: 84, height: 84, rotation: -45, points: [[0, 0], [1, 1]]},
+    {...line, width: 280, height: 100, rotation: 137, points: [[.9, .8], [.1, .2]]},
+    {...line, width: 100000},
+  ]) {
+    const points = LineStyles.zigzag(shape).map(point => world(shape, point));
+    const start = world(shape, shape.points[0]), end = world(shape, shape.points.at(-1));
+    const dx = end[0] - start[0], dy = end[1] - start[1], total = Math.hypot(dx, dy);
+    const legs = points.slice(1).map((point, index) => {
+      const x = point[0] - points[index][0], y = point[1] - points[index][1];
+      return {run: (x * dx + y * dy) / total, rise: Math.abs((y * dx - x * dy) / total), length: Math.hypot(x, y)};
+    });
+    for (const leg of legs) {
+      assert.ok(leg.run > 0);
+      close(leg.rise / leg.run, legs[0].rise / legs[0].run);
+    }
+    close(legs[0].length, legs.at(-1).length);
+    if (legs.length > 2) {
+      close(2 * legs[0].length, legs[1].length);
+      close(2 * legs.at(-1).length, legs.at(-2).length);
+    }
+  }
 });
 
 test('rotation preserves the zigzag amplitude perpendicular to its line', () => {
