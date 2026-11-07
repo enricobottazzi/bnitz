@@ -6,16 +6,16 @@ SPST is a BNITZ adaptation of Rhetorical Structure Theory (RST) for scientific p
 
 | Relation | Function |
 |---|---|
-| **Problem–Response** | States the research question or practical problem the parent span addresses. |
-| **Background** | Gives context for understanding the parent span. |
-| **Method** | Describes the procedures used to produce the contribution or planned for the research. |
-| **Evidence** | Gives observations or analyses that strengthen or weaken confidence in the parent claim. |
-| **Comparison** | Shows how the parent claim or contribution agrees with or differs from another. |
-| **Explanation** | Proposes a cause or mechanism for what the parent span describes. |
-| **Interpretation** | Explains what the parent span means or what can be inferred from it, typically through qualitative reasoning. |
-| **Evaluation** | Assesses the parent claim or contribution against an explicit criterion, often using quantitative measures. |
-| **Scope** | Specifies the conditions under which the parent claim or contribution applies. |
-| **Implication** | Draws a consequence for practice, prediction, or further research. |
+| **Problem–Response** (130 up) 10 | States the research question or practical problem the parent span addresses. |
+| **Background** (88) 9 | Gives context for understanding the parent span. |
+| **Method** (85) 1 | Describes the procedures used to produce the contribution or planned for the research. |
+| **Evidence** (207) 6| Gives observations or analyses that strengthen or weaken confidence in the parent claim. |
+| **Comparison** (110 red ext) 8 | Shows how the parent claim or contribution agrees with or differs from another. |
+| **Explanation** (102) 4 | Proposes a cause or mechanism for what the parent span describes. |
+| **Interpretation** (213) 3 | Explains what the parent span means or what can be inferred from it, typically through qualitative reasoning. |
+| **Evaluation** (168) 7 | Assesses the parent claim or contribution against an explicit criterion, often using quantitative measures. |
+| **Scope** (170) 2 | Specifies the conditions under which the parent claim or contribution applies. |
+| **Implication** (130 down) 5 | Draws a consequence for practice, prediction, or further research. |
 
 **Counterevidence** is a subtype of Evidence that weakens confidence in the span it attaches to.
 
