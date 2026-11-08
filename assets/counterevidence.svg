@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <title>Counterevidence circular motif</title>
+  <circle cx="50" cy="50" r="43.5" fill="#fff" stroke="#000" stroke-width="13"/>
+  <path d="M39.61 39.61 A11 11 0 1 1 60.39 39.61
+           A11 11 0 1 1 60.39 60.39 A11 11 0 1 1 39.61 60.39
+           A11 11 0 1 1 39.61 39.61Z"
+        fill="none" stroke="#000" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="50" cy="50" r="7.5" fill="#000"/>
+</svg>

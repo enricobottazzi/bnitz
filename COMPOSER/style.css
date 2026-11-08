@@ -1,0 +1,38 @@
+body { margin: 0; padding: 32px 36px 48px; --canvas-height: clamp(340px, calc(100dvh - 380px), 780px); }
+.app-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+.page-title { margin-top: 20px; }
+.metadata { display: grid; grid-template-columns: 1.8fr 1fr 88px; gap: 16px 20px; max-width: 850px; margin: 22px 0 30px; }
+.metadata .source { grid-column: 1 / -1; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 230px; gap: 24px; align-items: start; }
+.panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 34px; margin-bottom: 12px; }
+.workspace h2 { color: #111; }
+.highlight-tools { margin-bottom: 10px; }
+#add:disabled { border-color: var(--line); background: #fafafa; color: #aaa; }
+.check { display: flex; align-items: center; gap: 4px; }
+.check input { width: auto; margin: 0; accent-color: #333; }
+#abstract, #article-preview { height: var(--canvas-height); padding: 12px; font-size: 13px; line-height: 1.75; }
+#abstract { display: block; resize: vertical; }
+#article-preview { overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; cursor: text; scrollbar-width: thin; }
+::placeholder { color: #999; }
+#map { height: var(--canvas-height); padding: 18px; border: 1px solid #e9e9e9; background: #fafafa; }
+#map svg, #map:empty::before { width: 100%; height: 100%; background: var(--dots), #fff; }
+#map:empty::before { content: ""; }
+.inspector { min-width: 0; padding-left: 18px; border-left: 1px solid #e9e9e9; }
+#annotation { display: grid; gap: 10px; }
+@media (max-width: 1100px) {
+  body { padding: 26px 24px 40px; }
+  .workspace { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) 200px; gap: 18px; }
+}
+@media (max-width: 900px) {
+  .workspace { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; }
+  .inspector { grid-column: 1 / -1; padding: 12px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+}
+@media (max-width: 600px) {
+  body { padding: 22px 18px 36px; }
+  .metadata { grid-template-columns: 1fr 82px; gap: 12px; }
+  .metadata label:first-child { grid-column: 1 / -1; }
+  .workspace { grid-template-columns: minmax(0, 1fr); }
+  .inspector { grid-row: 2; }
+  #abstract, #article-preview { height: 340px; }
+  #map { height: 480px; }
+}

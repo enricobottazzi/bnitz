@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BNITZ — Composer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../bnitz.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="../bnitz.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <span class="wordmark">BNITZ</span>
+    <div class="actions">
+      <button type="button" id="open">Import file</button>
+      <input id="file" type="file" accept=".bnitz" hidden>
+      <button type="button" id="save" class="primary">Export file</button>
+    </div>
+  </header>
+  <h1 class="page-title">Composer</h1>
+  <p id="status" class="status" role="status"></p>
+  <div class="metadata">
+    <label>Title <input id="title" placeholder="Article title"></label>
+    <label>Author <input id="author" placeholder="Author name"></label>
+    <label>Year <input id="year" type="number" min="1" max="9999" step="1"></label>
+    <label class="source">Source <input id="source" type="url" pattern="[Hh][Tt][Tt][Pp][Ss]?://.+" placeholder="https://…"></label>
+  </div>
+  <main class="workspace">
+    <section>
+      <div class="panel-heading">
+        <h2><label for="abstract">Article</label></h2>
+        <button type="button" id="edit-text">Done editing</button>
+      </div>
+      <div class="actions highlight-tools">
+        <button type="button" id="strong" disabled>Strong highlight</button>
+        <button type="button" id="soft" disabled>Soft highlight</button>
+        <button type="button" id="clear-highlights" hidden>Clear pending highlights</button>
+        <label class="check"><input type="checkbox" id="show-all"> Show all highlights</label>
+      </div>
+      <textarea id="abstract" placeholder="Paste an abstract, then select the main contribution."></textarea>
+      <div id="article-preview" aria-label="Article" tabindex="0" hidden></div>
+    </section>
+    <section>
+      <div class="panel-heading">
+        <h2>Layout</h2>
+        <button type="button" id="remove" hidden>Remove planet</button>
+      </div>
+      <div id="map" class="map"></div>
+    </section>
+    <aside class="inspector" aria-label="Planet settings">
+      <form id="annotation">
+        <label>Relation <select id="relation" required></select></label>
+        <label>Attaches to <select id="parent"></select></label>
+        <button type="submit" id="add" class="primary" disabled>Add planet</button>
+      </form>
+    </aside>
+  </main>
+</body>
+</html>

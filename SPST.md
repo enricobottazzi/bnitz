@@ -19,7 +19,7 @@ Positions follow a ten-hour clock. Position 10 is at the top, followed clockwise
 | **Scope** | Specifies the conditions under which the parent claim or contribution applies. | <img src="assets/scope.svg" alt="Scope motif" width="32"> (170) · 2 |
 | **Implication** | Draws a consequence for practice, prediction, or further research. | <img src="assets/implication.svg" alt="Six-petal rosette" width="32"> · 5 |
 
-**Counterevidence** is a subtype of Evidence that weakens confidence in the span it attaches to.
+**Counterevidence** is a subtype of Evidence that weakens confidence in the span it attaches to. It shares position 6 with Evidence and has its own icon. <img src="assets/counterevidence.svg" alt="Outlined flower with a black center" width="32">
 
 ## Nesting
 

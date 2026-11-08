@@ -1,0 +1,7 @@
+# BNITZ reading list
+
+1. **SciDTB: Discourse Dependency TreeBank for Scientific Abstracts** — An Yang and Sujian Li (2018). Represents discourse as labeled links between passages. Compare its relation inventory with SPST’s ten relations. [Paper](https://aclanthology.org/P18-2071.pdf)
+2. **Corpora for the Conceptualisation and Zoning of Scientific Papers** — Maria Liakata, Simone Teufel, Advaith Siddharthan, and Colin Batchelor (2010). Separates what a passage is from what it does. A result can be a passage type and serve as Evidence for a particular claim. [Paper](https://aclanthology.org/L10-1440.pdf)
+3. **A Pragmatic Structure for Research Articles** — Anita de Waard (2007). Proposes machine-readable markup for scientific arguments. Its examples help distinguish what the authors observed from what they inferred. [Paper](https://www.researchgate.net/publication/220984203_A_pragmatic_structure_for_research_articles)
+4. **An Annotation Scheme for Discourse-Level Argumentation in Research Articles** — Simone Teufel, Jean Carletta, and Marc Moens (1999). Distinguishes prior work that supplies a method, supports a claim, or provides a contrast. Use those cases to test Method, Evidence, and Comparison. [Paper](https://aclanthology.org/E99-1015.pdf)
+5. **Writing Without Conviction? Hedging in Science Research Articles** — Ken Hyland (1996). Studies how scientists qualify claims. Use it to test whether BNITZ preserves the difference between “causes” and “may cause.” [Paper](https://doi.org/10.1093/applin/17.4.433)
