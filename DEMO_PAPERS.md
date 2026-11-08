@@ -1,0 +1,16 @@
+# BNITZ demo papers
+
+1. **Bitcoin: A Peer-to-Peer Electronic Cash System** — Satoshi Nakamoto (2008). [Abstract on page 1](https://bitcoin.org/bitcoin.pdf)
+2. **Finding Structure in Time** — Jeffrey L. Elman (1990). [Abstract](https://onlinelibrary.wiley.com/doi/10.1207/s15516709cog1402_1)
+3. **Prediction and Entropy of Printed English** — Claude E. Shannon (1951). [Abstract](https://onlinelibrary.wiley.com/doi/10.1002/j.1538-7305.1951.tb01366.x/full)
+4. **Attention Is All You Need** — Ashish Vaswani et al. (2017). [Abstract](https://arxiv.org/abs/1706.03762)
+5. **What Is the Sapir–Whorf Hypothesis?** — Paul Kay and Willett Kempton (1984). [Abstract](https://anthrosource.onlinelibrary.wiley.com/doi/10.1525/aa.1984.86.1.02a00050)
+6. **Rhetorical Structure Theory: Toward a Functional Theory of Text Organization** — William C. Mann and Sandra A. Thompson (1988). [Abstract on page 1](https://www.cs-135.org/wp-content/uploads/2019/11/Mann_Thompson_1988.pdf)
+7. **The Geometry of Truth: Emergent Linear Structure in LLM Representations of True/False Datasets** — Samuel Marks and Max Tegmark (2024). [Abstract on page 1](https://openreview.net/pdf/372a4a95ef42ca531f36556076b0e4bc5a14bbba.pdf)
+8. **Universality and Complexity in Cellular Automata** — Stephen Wolfram (1984). [Abstract on page 1](https://content.wolfram.com/sw-publications/2020/07/universality-complexity-cellular-automata.pdf)
+9. **Three Models for the Description of Language** — Noam Chomsky (1956). [Abstract on page 1](https://chomsky.info/wp-content/uploads/195609-.pdf)
+10. **Syntax vs. Semantics** — Anna Wierzbicka (1978). [Abstract](https://researchportalplus.anu.edu.au/en/publications/syntax-vs-semantics/)
+11. **New Directions in Cryptography** — Whitfield Diffie and Martin E. Hellman (1976). [Abstract on page 1](https://ee.stanford.edu/~hellman/publications/24.pdf)
+12. **The Anatomy of a Large-Scale Hypertextual Web Search Engine** — Sergey Brin and Lawrence Page (1998). [Abstract](https://research.google/pubs/the-anatomy-of-a-large-scale-hypertextual-web-search-engine/)
+13. **Collective Dynamics of ‘Small-World’ Networks** — Duncan J. Watts and Steven H. Strogatz (1998). [Abstract on page 1](https://www.cs.cornell.edu/courses/cs6241/2020sp/readings/Watts-1998-smallworld.pdf)
+14. **Three Approaches to the Quantitative Definition of Information** — Andrey N. Kolmogorov (1965). [English abstract on page 1 of the 1968 reprint](https://www.karlin.mff.cuni.cz/~krajicek/kolmogorov65.pdf)

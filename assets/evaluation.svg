@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <title>Evaluation circular motif</title>
+  <circle cx="50" cy="50" r="43.5" fill="none" stroke="#000" stroke-width="13"/>
+  <g fill="#000">
+    <circle cx="30" cy="30" r="11.5"/>
+    <circle cx="70" cy="30" r="11.5"/>
+    <circle cx="70" cy="70" r="11.5"/>
+    <circle cx="30" cy="70" r="11.5"/>
+  </g>
+</svg>

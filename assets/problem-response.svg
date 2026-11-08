@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <title>Problem–Response circular motif</title>
+  <circle cx="50" cy="50" r="43.5" fill="#fff" stroke="#000" stroke-width="13"/>
+  <defs>
+    <path id="leaf" d="M50 7
+                       C49 16 42.5 21 42.5 29
+                       C42.5 34 46 38 50 40
+                       C54 38 57.5 34 57.5 29
+                       C57.5 21 51 16 50 7Z"/>
+  </defs>
+  <g fill="#000">
+    <use href="#leaf"/>
+    <use href="#leaf" transform="rotate(90 50 50)"/>
+    <use href="#leaf" transform="rotate(180 50 50)"/>
+    <use href="#leaf" transform="rotate(270 50 50)"/>
+  </g>
+</svg>
