@@ -4,7 +4,7 @@ Bnitz is a visual language for mapping scientific papers.
 
 A `.bnitz` file stores the text, highlights, and map together.
 
-The **Composer** lets you build a BNITZ map for a text.
+The **Composer** lets you build a BNITZ map for a text. [Open the live Composer](https://bnitz.org/composer).
 
 ```sh
 open COMPOSER/index.html
