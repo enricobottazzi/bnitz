@@ -1,6 +1,6 @@
 # BNITZ
 
-A visual language for mapping scientific arguments.
+Bnitz is a visual language for mapping scientific papers.
 
 A `.bnitz` file stores the text, highlights, and map together.
 
