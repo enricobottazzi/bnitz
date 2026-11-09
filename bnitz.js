@@ -50,6 +50,7 @@ const BNITZ = (() => {
   }
 
   const label = span => relations[span.relation]?.[0] ?? 'Nucleus';
+  const iconUrl = icon => `../assets/${icon}.svg?v=0.0.2`;
   const highlights = span => span.highlights ?? [{start: span.start, end: span.end, grade: 'strong'}];
 
   function paintText(container, text, ranges, onMark) {
@@ -110,7 +111,7 @@ const BNITZ = (() => {
       const symbol = document.createElement(icon ? 'img' : 'span');
       symbol.className = 'legend-symbol';
       if (icon) {
-        symbol.src = `../assets/${icon}.svg`;
+        symbol.src = iconUrl(icon);
         symbol.alt = '';
       } else {
         symbol.classList.add('legend-nucleus');
@@ -226,7 +227,7 @@ const BNITZ = (() => {
       tooltip.textContent = name;
       node.append(tooltip, svg('circle', {r: r * .98, class: 'planet-face'}));
       if (icon) {
-        node.append(svg('image', {href: `../assets/${icon}.svg`, x: -r, y: -r, width: r * 2, height: r * 2}));
+        node.append(svg('image', {href: iconUrl(icon), x: -r, y: -r, width: r * 2, height: r * 2}));
       } else {
         const strokeWidth = planetRadius * .26;
         node.append(svg('circle', {r: r - strokeWidth / 2, 'stroke-width': strokeWidth, class: 'nucleus'}));

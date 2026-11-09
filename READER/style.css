@@ -31,6 +31,7 @@ main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); ou
 .map-pane { display: flex; align-items: center; justify-content: center; height: clamp(240px, 30svh, 300px); background: var(--dots); }
 .map-pane svg { max-width: 460px; overflow: visible; }
 .reader-footer { display: flex; justify-content: center; padding: 20px 0 16px; }
+.readings-list:empty + .reader-footer { display: none; }
 .reader-footer a { display: flex; padding: 4px; }
 .reader-footer img { object-fit: contain; }
 @media (hover: hover) {
