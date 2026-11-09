@@ -5,6 +5,7 @@ const title = document.querySelector('#title');
 const metadata = document.querySelector('#metadata');
 const abstract = document.querySelector('#abstract');
 const map = document.querySelector('#map');
+const showLegendRelation = BNITZ.legend(document.querySelector('#legend'));
 const status = document.querySelector('#status');
 const library = new Map();
 const links = new Map();
@@ -74,6 +75,7 @@ function hoverText(mark) {
 function selectPlanet(planet) {
   hovered = null;
   selectedId = planet && planet.id !== selectedId ? planet.id : null;
+  if (planet) showLegendRelation(planet.relation ?? 'nucleus');
   highlight();
   const first = abstract.querySelector('mark.strong, mark.soft');
   if (!first) return;

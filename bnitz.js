@@ -2,7 +2,7 @@ const BNITZ = (() => {
   const relations = {
     problem: ['Problem', 6, 'problem-response', 'States the question, gap, or practical problem the parent addresses.'],
     background: ['Background', 1, 'circular-motif', 'Gives prior work, definitions, or other context needed to understand the parent.'],
-    method: ['Method', 2, 'interpretation', 'Describes how the work was done or how it is planned.'],
+    method: ['Method', 2, 'interpretation', 'Describes how the parent’s result was obtained or how its proposed work would be carried out.'],
     implication: ['Implication', 3, 'implication', 'States what follows from the parent, such as a prediction, an application, or a next step.'],
     evidence: ['Evidence', 4, 'evidence', 'Uses results, analyses, or comparisons to support, challenge, or assess the parent.'],
     scope: ['Scope', 5, 'explanation', 'Specifies where, when, or under what conditions the parent applies.'],
@@ -77,6 +77,59 @@ const BNITZ = (() => {
   const slotCount = Object.keys(relations).length;
   const slotAngle = turn / slotCount;
   const relationDirection = slot => point((slot % slotCount) * slotAngle);
+
+  function legend(container, onSelect) {
+    container.insertAdjacentHTML('beforeend', `
+      <div id="relation-clock"></div>
+      <p id="relation-definition" aria-live="polite"></p>
+    `);
+    const clock = container.querySelector('#relation-clock');
+    const definition = container.querySelector('#relation-definition');
+    const buttons = new Map();
+
+    function showRelation(key) {
+      const entry = buttons.get(key);
+      if (!entry || entry.button.getAttribute('aria-pressed') === 'true') return;
+      clock.querySelector('[aria-pressed="true"]')?.setAttribute('aria-pressed', 'false');
+      entry.button.setAttribute('aria-pressed', 'true');
+      definition.textContent = entry.description;
+    }
+
+    const entries = {
+      nucleus: ['Nucleus', null, null, 'The paper’s main contribution. It can be a finding, theorem, argument, synthesis, artifact, guideline, or research plan.'],
+      ...relations,
+    };
+    for (const [key, [label, slot, icon, description]] of Object.entries(entries)) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.setAttribute('aria-pressed', 'false');
+      button.setAttribute('aria-controls', definition.id);
+      const [x, y] = slot == null ? [0, 0] : relationDirection(slot);
+      button.style.setProperty('--clock-x', `${50 + x * 35.5}%`);
+      button.style.setProperty('--clock-y', `${50 + y * 35.5}%`);
+      const symbol = document.createElement(icon ? 'img' : 'span');
+      symbol.className = 'legend-symbol';
+      if (icon) {
+        symbol.src = `../assets/${icon}.svg`;
+        symbol.alt = '';
+      } else {
+        symbol.classList.add('legend-nucleus');
+        symbol.setAttribute('aria-hidden', 'true');
+      }
+      const name = document.createElement('span');
+      name.textContent = label;
+      button.append(symbol, name);
+      button.addEventListener('click', () => {
+        onSelect?.(key);
+        showRelation(key);
+      });
+      buttons.set(key, {button, description: `${label} — ${description}`});
+      clock.append(button);
+    }
+    showRelation('nucleus');
+    return showRelation;
+  }
+
   const planetRadius = 24;
   const gap = 12;
 
@@ -196,5 +249,5 @@ const BNITZ = (() => {
     }
   }
 
-  return {relations, relationDirection, validRange, validate, label, highlights, paintText, layout, map, select};
+  return {relations, legend, validRange, validate, label, highlights, paintText, layout, map, select};
 })();

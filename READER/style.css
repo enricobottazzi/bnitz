@@ -1,5 +1,5 @@
 :root { font-family: Arial, Helvetica, sans-serif; color: #111; }
-body { margin: 0; min-height: 100svh; --reader-gap: 64px; --reader-inset: 18px; }
+body { display: flex; flex-direction: column; margin: 0; min-height: 100svh; --reader-gap: 64px; --reader-inset: 18px; }
 a:hover { color: #777; }
 a:focus-visible { outline: 1px solid currentColor; outline-offset: 5px; }
 .sidebar { position: absolute; top: 64px; left: 72px; }
@@ -7,27 +7,33 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 5px; }
 .wordmark:hover, .wordmark:active { color: #111; background: transparent; }
 .tagline, main { font: 400 xx-small/135% Verdana, Geneva, Helvetica, Arial, sans-serif; color: #333; }
 .tagline { margin-top: 2px; }
-main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); outline: none; }
+main { flex: 1; --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); outline: none; }
 #readings, .article-reader { width: min(100%, 1040px); }
 .readings-list { display: grid; gap: 6px; }
-.reading { display: grid; grid-template-columns: minmax(0, 1fr) 12ch 4ch; gap: 24px; align-items: baseline; padding: 1px 0; }
-.reading > :first-child { min-width: 0; white-space: nowrap; }
-.reading > :nth-child(2) { white-space: nowrap; }
+.reading { display: grid; grid-template-columns: minmax(0, 1fr) min(30ch, 35%) 4ch; gap: 24px; align-items: baseline; padding: 1px 0; }
+.reading > span { overflow-wrap: anywhere; }
 .reading > :last-child { text-align: right; white-space: nowrap; }
 .reading:hover, .reading:focus-visible { color: inherit; background: var(--lime); }
 .reader-heading { margin-bottom: 25px; }
 .reader-heading h1 { margin: 0 0 7px; }
 .reader-heading h1:focus { outline: none; }
 .reader-heading a { text-decoration: underline; }
-.reader-grid { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) calc((min(100%, 720px) - var(--reader-gap)) / 2); gap: var(--reader-gap); height: max(280px, calc(100svh - var(--content-top) - 90px)); }
-.reader-text { position: relative; min-width: 0; min-height: 0; overflow-x: hidden; overflow-y: auto; overflow-wrap: anywhere; overscroll-behavior: contain; padding: 3px var(--reader-inset) 20px 0; line-height: 1.7; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
+.reader-legend { width: min(100%, 212px); margin: 10px 0 0 auto; }
+.reader-legend summary { width: fit-content; margin-inline-start: auto; cursor: pointer; }
+.reader-legend-panel { margin-top: 6px; padding: 12px; border: 1px solid var(--line); }
+.reader-grid { display: grid; grid-template-columns: minmax(0, 1fr) calc((min(100%, 720px) - var(--reader-gap)) / 2); gap: var(--reader-gap); }
+.reader-text { position: relative; min-width: 0; height: max(280px, calc(100svh - var(--content-top) - 100px)); overflow-x: hidden; overflow-y: auto; overflow-wrap: anywhere; overscroll-behavior: contain; padding: 3px var(--reader-inset) 20px 0; line-height: 1.7; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
 .reader-text:focus-visible { outline: 1px solid #ccc; outline-offset: 8px; }
 .reader-text p { margin: 0 0 20px; white-space: pre-wrap; }
 .reader-text mark { padding: 2px 0; background: transparent; }
 .reader-text mark.strong { background: var(--lime); }
 .reader-text mark.soft { background: var(--soft-lime); }
-.map-pane { display: flex; align-self: start; align-items: center; justify-content: center; height: min(100%, clamp(240px, 30svh, 300px)); background: var(--dots); }
+.reader-layout { min-width: 0; min-height: 0; }
+.map-pane { display: flex; align-items: center; justify-content: center; height: clamp(240px, 30svh, 300px); background: var(--dots); }
 .map-pane svg { max-width: 460px; overflow: visible; }
+.reader-footer { display: flex; justify-content: center; padding: 8px 0; }
+.reader-footer a { display: grid; place-items: center; width: 24px; height: 24px; }
+.reader-footer img { object-fit: contain; }
 @media (max-width: 900px) {
   body { --reader-gap: 36px; }
 }
@@ -38,10 +44,7 @@ main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); ou
   main { --content-top: 148px; margin: 0 28px; }
   #readings, .article-reader { width: 100%; }
   .reading { gap: 14px; }
-  .reader-grid { grid-template-columns: 1fr; height: auto; }
-  .reader-text { max-height: 38svh; }
+  .reader-grid { grid-template-columns: 1fr; }
+  .reader-text { height: auto; max-height: 38svh; }
   .map-pane { height: 300px; }
-}
-@media (max-width: 360px) {
-  .reading > :first-child { white-space: normal; }
 }

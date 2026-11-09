@@ -9,6 +9,12 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="/bnitz.css">
   <link rel="stylesheet" href="/reader.css">
+  <link rel="preload" as="image" href="/assets/problem-response.svg">
+  <link rel="preload" as="image" href="/assets/circular-motif.svg">
+  <link rel="preload" as="image" href="/assets/interpretation.svg">
+  <link rel="preload" as="image" href="/assets/implication.svg">
+  <link rel="preload" as="image" href="/assets/evidence.svg">
+  <link rel="preload" as="image" href="/assets/explanation.svg">
   <script defer src="/bnitz.js"></script>
   <script defer src="/reader.js"></script>
 </head>
@@ -29,9 +35,21 @@
       </header>
       <div class="reader-grid">
         <article id="abstract" class="reader-text" aria-label="Abstract" tabindex="0"></article>
-        <div id="map" class="map map-pane" aria-label="BNITZ language map"></div>
+        <div class="reader-layout">
+          <div id="map" class="map map-pane" aria-label="BNITZ language map"></div>
+          <details class="reader-legend">
+            <summary>Legend</summary>
+            <div id="legend" class="reader-legend-panel"></div>
+          </details>
+        </div>
       </div>
     </section>
   </main>
+  <footer class="reader-footer">
+    <a href="https://github.com/enricobottazzi/bnitz" aria-label="BNITZ on GitHub">
+      <!-- GitHub Invertocat from https://brand.github.com/foundations/logo -->
+      <img src="/assets/github.svg" alt="" width="14" height="14">
+    </a>
+  </footer>
 </body>
 </html>

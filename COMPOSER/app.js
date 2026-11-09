@@ -371,7 +371,8 @@ document.querySelector('#save').addEventListener('click', () => {
     const url = URL.createObjectURL(new Blob([JSON.stringify(result, null, 2) + '\n'], {type: 'application/json'}));
     const link = document.createElement('a');
     link.href = url;
-    link.download = (result.title.replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '').slice(0, 90) || 'abstract') + '.bnitz';
+    const filename = result.title.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_/, '').slice(0, 90).replace(/_$/, '');
+    link.download = (filename || 'abstract') + '.bnitz';
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     status.textContent = '';
@@ -380,55 +381,12 @@ document.querySelector('#save').addEventListener('click', () => {
   }
 });
 
-const relationClock = document.querySelector('#relation-clock');
-const relationDefinition = document.querySelector('#relation-definition');
-const legendButtons = new Map();
-
-function showLegendRelation(key) {
-  const entry = legendButtons.get(key);
-  if (!entry) return;
-  const {button, description} = entry;
-  if (button.getAttribute('aria-pressed') === 'true') return;
-  relationClock.querySelector('[aria-pressed="true"]')?.setAttribute('aria-pressed', 'false');
-  button.setAttribute('aria-pressed', 'true');
-  relationDefinition.textContent = description;
-}
-
-const legend = {
-  nucleus: ['Nucleus', null, null, 'The paper’s main contribution. It can be a finding, theorem, argument, synthesis, artifact, guideline, or research plan.'],
-  ...BNITZ.relations,
-};
-for (const [key, [label, slot, icon, definition]] of Object.entries(legend)) {
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.setAttribute('aria-pressed', 'false');
-  button.setAttribute('aria-controls', relationDefinition.id);
-  const [x, y] = slot == null ? [0, 0] : BNITZ.relationDirection(slot);
-  button.style.setProperty('--clock-x', `${50 + x * 35.5}%`);
-  button.style.setProperty('--clock-y', `${50 + y * 35.5}%`);
-  const symbol = document.createElement(icon ? 'img' : 'span');
-  symbol.className = 'legend-symbol';
-  if (icon) {
-    symbol.src = `../assets/${icon}.svg`;
-    symbol.alt = '';
-  } else {
-    symbol.classList.add('legend-nucleus');
-    symbol.setAttribute('aria-hidden', 'true');
-  }
-  const name = document.createElement('span');
-  name.textContent = label;
-  button.append(symbol, name);
-  button.addEventListener('click', () => {
-    const option = [...relation.options].find(option => option.value === key);
-    if (!relation.disabled && option && !option.disabled) relation.value = key;
-    showLegendRelation(key);
-  });
-  legendButtons.set(key, {button, description: `${label} — ${definition}`});
-  relationClock.append(button);
-}
+const showLegendRelation = BNITZ.legend(document.querySelector('#legend'), key => {
+  const option = [...relation.options].find(option => option.value === key);
+  if (!relation.disabled && option && !option.disabled) relation.value = key;
+});
 for (const event of ['click', 'change']) {
   relation.addEventListener(event, () => showLegendRelation(relation.value));
 }
-showLegendRelation('nucleus');
 
 controls();
