@@ -5,6 +5,7 @@ const title = document.querySelector('#title');
 const metadata = document.querySelector('#metadata');
 const abstract = document.querySelector('#abstract');
 const map = document.querySelector('#map');
+const legend = document.querySelector('.reader-legend');
 const showLegendRelation = BNITZ.legend(document.querySelector('#legend'));
 const status = document.querySelector('#status');
 const library = new Map();
@@ -143,6 +144,9 @@ async function load() {
 }
 
 window.addEventListener('hashchange', show);
+legend.addEventListener('toggle', () => {
+  if (legend.open) legend.scrollIntoView({block: 'nearest'});
+});
 abstract.addEventListener('pointerover', event => {
   if (event.pointerType !== 'touch') hoverText(event.target.closest('mark'));
 });

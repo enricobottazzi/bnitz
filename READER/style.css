@@ -1,19 +1,18 @@
 :root { font-family: Arial, Helvetica, sans-serif; color: #111; }
-body { display: flex; flex-direction: column; margin: 0; min-height: 100svh; --reader-gap: 64px; --reader-inset: 18px; }
-a:hover { color: #777; }
+body { margin: 0; min-height: 100svh; --reader-gap: 64px; --reader-inset: 18px; }
 a:focus-visible { outline: 1px solid currentColor; outline-offset: 5px; }
 .sidebar { position: absolute; top: 64px; left: 72px; }
 .wordmark { display: block; width: fit-content; height: 45px; }
 .wordmark:hover, .wordmark:active { color: #111; background: transparent; }
 .tagline, main { font: 400 xx-small/135% Verdana, Geneva, Helvetica, Arial, sans-serif; color: #333; }
 .tagline { margin-top: 2px; }
-main { flex: 1; --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); outline: none; }
+main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); outline: none; }
 #readings, .article-reader { width: min(100%, 1040px); }
 .readings-list { display: grid; gap: 6px; }
-.reading { display: grid; grid-template-columns: minmax(0, 1fr) min(30ch, 35%) 4ch; gap: 24px; align-items: baseline; padding: 1px 0; }
-.reading > span { overflow-wrap: anywhere; }
+.reading { display: grid; grid-template-columns: minmax(0, 1fr) min(30ch, 35%) minmax(4ch, max-content); gap: 24px; align-items: baseline; padding: 1px 0; }
+.reading > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .reading > :last-child { text-align: right; white-space: nowrap; }
-.reading:hover, .reading:focus-visible { color: inherit; background: var(--lime); }
+.reading:focus-visible { color: inherit; background: var(--lime); }
 .reader-heading { margin-bottom: 25px; }
 .reader-heading h1 { margin: 0 0 7px; }
 .reader-heading h1:focus { outline: none; }
@@ -31,9 +30,13 @@ main { flex: 1; --content-top: 190px; margin: 0 72px; padding-top: var(--content
 .reader-layout { min-width: 0; min-height: 0; }
 .map-pane { display: flex; align-items: center; justify-content: center; height: clamp(240px, 30svh, 300px); background: var(--dots); }
 .map-pane svg { max-width: 460px; overflow: visible; }
-.reader-footer { display: flex; justify-content: center; padding: 8px 0; }
-.reader-footer a { display: grid; place-items: center; width: 24px; height: 24px; }
+.reader-footer { display: flex; justify-content: center; padding: 12px 0 16px; }
+.reader-footer a { display: flex; padding: 4px; }
 .reader-footer img { object-fit: contain; }
+@media (hover: hover) {
+  a:hover { color: #777; }
+  .reading:hover { color: inherit; background: var(--lime); }
+}
 @media (max-width: 900px) {
   body { --reader-gap: 36px; }
 }
