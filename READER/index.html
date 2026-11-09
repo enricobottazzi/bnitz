@@ -9,12 +9,12 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="/bnitz.css">
   <link rel="stylesheet" href="/reader.css">
-  <link rel="preload" as="image" href="/assets/problem-response.svg">
-  <link rel="preload" as="image" href="/assets/circular-motif.svg">
-  <link rel="preload" as="image" href="/assets/interpretation.svg">
+  <link rel="preload" as="image" href="/assets/problem.svg">
+  <link rel="preload" as="image" href="/assets/background.svg">
+  <link rel="preload" as="image" href="/assets/method.svg">
   <link rel="preload" as="image" href="/assets/implication.svg">
   <link rel="preload" as="image" href="/assets/evidence.svg">
-  <link rel="preload" as="image" href="/assets/explanation.svg">
+  <link rel="preload" as="image" href="/assets/scope.svg">
   <script defer src="/bnitz.js"></script>
   <script defer src="/reader.js"></script>
 </head>
@@ -25,8 +25,14 @@
   </header>
   <main id="content" tabindex="-1">
     <p id="status" class="status" role="status" hidden></p>
-    <section id="readings" aria-label="Readings">
+    <section id="readings" aria-label="Readings" hidden>
       <div id="papers" class="readings-list"></div>
+      <footer class="reader-footer">
+        <a href="https://github.com/enricobottazzi/bnitz" aria-label="BNITZ on GitHub">
+          <!-- GitHub Invertocat from https://brand.github.com/foundations/logo -->
+          <img src="/assets/github.svg" alt="" width="14" height="14">
+        </a>
+      </footer>
     </section>
     <section id="reading" class="article-reader" aria-labelledby="title" hidden>
       <header class="reader-heading">
@@ -45,11 +51,5 @@
       </div>
     </section>
   </main>
-  <footer class="reader-footer">
-    <a href="https://github.com/enricobottazzi/bnitz" aria-label="BNITZ on GitHub">
-      <!-- GitHub Invertocat from https://brand.github.com/foundations/logo -->
-      <img src="/assets/github.svg" alt="" width="14" height="14">
-    </a>
-  </footer>
 </body>
 </html>

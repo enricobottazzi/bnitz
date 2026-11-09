@@ -1,11 +1,11 @@
 const BNITZ = (() => {
   const relations = {
-    problem: ['Problem', 6, 'problem-response', 'States the question, gap, or practical problem the parent addresses.'],
-    background: ['Background', 1, 'circular-motif', 'Gives prior work, definitions, or other context needed to understand the parent.'],
-    method: ['Method', 2, 'interpretation', 'Describes how the parent’s result was obtained or how its proposed work would be carried out.'],
+    problem: ['Problem', 6, 'problem', 'States the question, gap, or practical problem the parent addresses.'],
+    background: ['Background', 1, 'background', 'Gives prior work, definitions, or other context needed to understand the parent.'],
+    method: ['Method', 2, 'method', 'Describes how the parent’s result was obtained or how its proposed work would be carried out.'],
     implication: ['Implication', 3, 'implication', 'States what follows from the parent, such as a prediction, an application, or a next step.'],
     evidence: ['Evidence', 4, 'evidence', 'Uses results, analyses, or comparisons to support, challenge, or assess the parent.'],
-    scope: ['Scope', 5, 'explanation', 'Specifies where, when, or under what conditions the parent applies.'],
+    scope: ['Scope', 5, 'scope', 'Specifies where, when, or under what conditions the parent applies.'],
   };
 
   function validRange(text, start, end) {

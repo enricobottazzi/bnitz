@@ -17,8 +17,8 @@ main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); ou
 .reader-heading h1 { margin: 0 0 7px; }
 .reader-heading h1:focus { outline: none; }
 .reader-heading a { text-decoration: underline; }
-.reader-legend { width: min(100%, 212px); margin: 10px 0 0 auto; }
-.reader-legend summary { width: fit-content; margin-inline-start: auto; cursor: pointer; }
+.reader-legend { width: min(100%, 212px); margin-top: 10px; }
+.reader-legend summary { width: fit-content; cursor: pointer; }
 .reader-legend-panel { margin-top: 6px; padding: 12px; border: 1px solid var(--line); }
 .reader-grid { display: grid; grid-template-columns: minmax(0, 1fr) calc((min(100%, 720px) - var(--reader-gap)) / 2); gap: var(--reader-gap); }
 .reader-text { position: relative; min-width: 0; height: max(280px, calc(100svh - var(--content-top) - 100px)); overflow-x: hidden; overflow-y: auto; overflow-wrap: anywhere; overscroll-behavior: contain; padding: 3px var(--reader-inset) 20px 0; line-height: 1.7; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
@@ -30,7 +30,7 @@ main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); ou
 .reader-layout { min-width: 0; min-height: 0; }
 .map-pane { display: flex; align-items: center; justify-content: center; height: clamp(240px, 30svh, 300px); background: var(--dots); }
 .map-pane svg { max-width: 460px; overflow: visible; }
-.reader-footer { display: flex; justify-content: center; padding: 12px 0 16px; }
+.reader-footer { display: flex; justify-content: center; padding: 20px 0 16px; }
 .reader-footer a { display: flex; padding: 4px; }
 .reader-footer img { object-fit: contain; }
 @media (hover: hover) {

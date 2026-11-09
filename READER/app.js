@@ -87,10 +87,10 @@ function selectPlanet(planet) {
 function show() {
   const previous = active;
   active = library.get(location.hash);
-  if (active === previous) return;
-  selectedId = hovered = null;
   reading.hidden = !active;
   readings.hidden = Boolean(active);
+  if (active === previous) return;
+  selectedId = hovered = null;
   document.title = active ? `BNITZ - ${active.article.title}` : 'BNITZ';
   if (active) {
     const {article, author, year} = active;
@@ -140,10 +140,10 @@ async function load() {
   if (!fromFolder && entries.length && !location.href.includes('#')) {
     history.replaceState(null, '', entries[0].row.hash);
   }
+  window.addEventListener('hashchange', show);
   show();
 }
 
-window.addEventListener('hashchange', show);
 legend.addEventListener('toggle', () => {
   if (legend.open) legend.scrollIntoView({block: 'nearest'});
 });
