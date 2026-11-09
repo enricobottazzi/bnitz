@@ -1,0 +1,135 @@
+{
+  "version": 2,
+  "title": "Three Models for the Description of Language",
+  "text": "We investigate several conceptions of linguistic structure to determine whether or not they can provide simple and \"revealing\" grammars that generate all of the sentences of English and only these. We find that no finite-state Markov process that produces symbols with transition from state to state can serve as an English grammar. Furthermore, the particular subclass of such processes that produce n-order statistical approximations to English do not come closer, with increasing n, to matching the output of an English grammar. We formalize the notions of \"phrase structure\" and show that this gives us a method for describing language which is essentially more powerful, though still representable as a rather elementary type of finite-state process. Nevertheless, it is successful only when limited to a small subset of simple sentences. We study the formal properties of a set of grammatical transformations that carry sentences with phrase structure into new sentences with derived phrase structure, showing that transformational grammars are processes of the same elementary type as phrase-structure grammars; that the grammar of English is materially simplified if phrase structure description is limited to a kernel of simple sentences from which all other sentences are constructed by repeated transformations; and that this view of linguistic structure gives a certain insight into the use and understanding of language. ",
+  "nucleus": "s5",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 532,
+      "end": 756,
+      "highlights": [
+        {
+          "start": 532,
+          "end": 756,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s7",
+      "relation": "evidence"
+    },
+    {
+      "id": "s2",
+      "start": 756,
+      "end": 844,
+      "highlights": [
+        {
+          "start": 756,
+          "end": 844,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "scope"
+    },
+    {
+      "id": "s3",
+      "start": 844,
+      "end": 1008,
+      "highlights": [
+        {
+          "start": 844,
+          "end": 1008,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s5",
+      "relation": "method"
+    },
+    {
+      "id": "s4",
+      "start": 1016,
+      "end": 1118,
+      "highlights": [
+        {
+          "start": 1016,
+          "end": 1118,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s3",
+      "relation": "evidence"
+    },
+    {
+      "id": "s5",
+      "start": 1124,
+      "end": 1323,
+      "highlights": [
+        {
+          "start": 1124,
+          "end": 1323,
+          "grade": "strong"
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "start": 1323,
+      "end": 1432,
+      "highlights": [
+        {
+          "start": 1323,
+          "end": 1432,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s5",
+      "relation": "implication"
+    },
+    {
+      "id": "s7",
+      "start": 0,
+      "end": 198,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 198,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s5",
+      "relation": "problem"
+    },
+    {
+      "id": "s8",
+      "start": 198,
+      "end": 333,
+      "highlights": [
+        {
+          "start": 198,
+          "end": 333,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s7",
+      "relation": "evidence"
+    },
+    {
+      "id": "s9",
+      "start": 333,
+      "end": 532,
+      "highlights": [
+        {
+          "start": 333,
+          "end": 532,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s7",
+      "relation": "evidence"
+    }
+  ],
+  "author": "Noam Chomsky",
+  "year": 1956,
+  "source": "https://ieeexplore.ieee.org/document/1056813"
+}

@@ -1,0 +1,42 @@
+{
+  "version": 2,
+  "title": "Prediction and Entropy of Printed English",
+  "text": "A new method of estimating the entropy and redundancy of a language is described. This method exploits the knowledge of the language statistics possessed by those who speak the language, and depends on experimental results in prediction of the next letter when the preceding text is known. Results of experiments in prediction are given, and some properties of an ideal predictor are developed.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 0,
+      "end": 81,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 81,
+          "grade": "strong"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 187,
+      "end": 289,
+      "highlights": [
+        {
+          "start": 82,
+          "end": 187,
+          "grade": "soft"
+        },
+        {
+          "start": 187,
+          "end": 289,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    }
+  ],
+  "author": "Claude Shannon",
+  "year": 1951,
+  "source": "https://onlinelibrary.wiley.com/doi/abs/10.1002/j.1538-7305.1951.tb01366.x"
+}

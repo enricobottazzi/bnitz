@@ -1,0 +1,97 @@
+{
+  "version": 2,
+  "title": "Collective Dynamics of ‘Small-World’ Networks",
+  "text": "Networks of coupled dynamical systems have been used to model biological oscillators, Josephson junction arrays, excitable media, neural networks, spatial games, genetic control networks and many other self-organizing systems. Ordinarily, the connection topology is assumed to be either completely regular or completely random. But many biological, technological and social networks lie somewhere between these two extremes. Here we explore simple models of networks that can be tuned through this middle ground: regular networks ‘rewired’ to introduce increasing amounts of disorder. We find that these systems can be highly clustered, like regular lattices, yet have small characteristic path lengths, like random graphs. We call them ‘small-world’ networks, by analogy with the small-world phenomenon (popularly known as six degrees of separation). The neural network of the worm Caenorhabditis elegans, the power grid of the western United States, and the collaboration graph of film actors are shown to be small-world networks. Models of dynamical systems with small-world coupling display enhanced signal-propagation speed, computational power, and synchronizability. In particular, infectious diseases spread more easily in small-world networks than in regular lattices.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 585,
+      "end": 723,
+      "highlights": [
+        {
+          "start": 585,
+          "end": 723,
+          "grade": "strong"
+        },
+        {
+          "start": 724,
+          "end": 851,
+          "grade": "soft"
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "start": 425,
+      "end": 584,
+      "highlights": [
+        {
+          "start": 425,
+          "end": 584,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s2",
+      "start": 852,
+      "end": 1033,
+      "highlights": [
+        {
+          "start": 852,
+          "end": 1033,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "evidence"
+    },
+    {
+      "id": "s3",
+      "start": 1033,
+      "end": 1277,
+      "highlights": [
+        {
+          "start": 1033,
+          "end": 1277,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    },
+    {
+      "id": "s4",
+      "start": 0,
+      "end": 226,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 226,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "background"
+    },
+    {
+      "id": "s5",
+      "start": 227,
+      "end": 425,
+      "highlights": [
+        {
+          "start": 227,
+          "end": 425,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "problem"
+    }
+  ],
+  "author": "Watts and Strogatz",
+  "year": 1998
+}

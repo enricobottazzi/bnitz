@@ -1,16 +1,11 @@
 const BNITZ = (() => {
   const relations = {
-    'problem-response': ['Problem–Response', 10],
-    method: ['Method', 1],
-    scope: ['Scope', 2],
-    interpretation: ['Interpretation', 3],
-    explanation: ['Explanation', 4],
-    implication: ['Implication', 5],
-    evidence: ['Evidence', 6],
-    counterevidence: ['Counterevidence', 6],
-    evaluation: ['Evaluation', 7],
-    comparison: ['Comparison', 8],
-    background: ['Background', 9, 'circular-motif'],
+    problem: ['Problem', 6, 'problem-response', 'States the question, gap, or practical problem the parent addresses.'],
+    background: ['Background', 1, 'circular-motif', 'Gives prior work, definitions, or other context needed to understand the parent.'],
+    method: ['Method', 2, 'interpretation', 'Describes how the work was done or how it is planned.'],
+    implication: ['Implication', 3, 'implication', 'States what follows from the parent, such as a prediction, an application, or a next step.'],
+    evidence: ['Evidence', 4, 'evidence', 'Uses results, analyses, or comparisons to support, challenge, or assess the parent.'],
+    scope: ['Scope', 5, 'explanation', 'Specifies where, when, or under what conditions the parent applies.'],
   };
 
   function validRange(text, start, end) {
@@ -79,6 +74,9 @@ const BNITZ = (() => {
 
   const point = angle => [Math.sin(angle), -Math.cos(angle)];
   const turn = 2 * Math.PI;
+  const slotCount = Object.keys(relations).length;
+  const slotAngle = turn / slotCount;
+  const relationDirection = slot => point((slot % slotCount) * slotAngle);
   const planetRadius = 24;
   const gap = 12;
 
@@ -112,13 +110,13 @@ const BNITZ = (() => {
         slots.get(hour).push(branch(child));
       }
       const parts = [...slots].map(([hour, branches]) => ({
-        hour, branch: group(branches), scale, direction: point(hour % 10 * turn / 10),
+        hour, branch: group(branches), scale, direction: relationDirection(hour),
       }));
       const largest = Math.max(0, ...parts.map(part => part.branch.radius * scale));
       let orbit = size + largest + gap;
       for (const [index, a] of parts.entries()) {
         for (const b of parts.slice(index + 1)) {
-          const separation = 2 * Math.abs(Math.sin((a.hour - b.hour) * turn / 20));
+          const separation = 2 * Math.abs(Math.sin((a.hour - b.hour) * slotAngle / 2));
           orbit = Math.max(orbit, ((a.branch.radius + b.branch.radius) * scale + gap) / separation);
         }
       }
@@ -165,7 +163,7 @@ const BNITZ = (() => {
     }
     for (const {span, x, y, radius: r} of planets) {
       const name = label(span);
-      const icon = span.relation && (relations[span.relation][2] ?? span.relation);
+      const icon = relations[span.relation]?.[2];
       const node = svg('g', {
         transform: `translate(${x} ${y})`, class: 'planet', tabindex: 0, role: 'button',
         'aria-label': `${name}: ${article.text.slice(span.start, span.end).trim()}`, 'aria-pressed': 'false',
@@ -173,8 +171,7 @@ const BNITZ = (() => {
       node.dataset.id = span.id;
       const tooltip = svg('title', {});
       tooltip.textContent = name;
-      const face = icon === 'scope' ? .92 : .98;
-      node.append(tooltip, svg('circle', {r: r * face, class: 'planet-face'}));
+      node.append(tooltip, svg('circle', {r: r * .98, class: 'planet-face'}));
       if (icon) {
         node.append(svg('image', {href: `../assets/${icon}.svg`, x: -r, y: -r, width: r * 2, height: r * 2}));
       } else {
@@ -199,5 +196,5 @@ const BNITZ = (() => {
     }
   }
 
-  return {relations, validRange, validate, label, highlights, paintText, layout, map, select};
+  return {relations, relationDirection, validRange, validate, label, highlights, paintText, layout, map, select};
 })();

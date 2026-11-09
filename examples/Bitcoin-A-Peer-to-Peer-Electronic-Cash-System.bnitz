@@ -6,60 +6,107 @@
   "spans": [
     {
       "id": "s1",
-      "start": 632,
-      "end": 671,
+      "start": 321,
+      "end": 403,
       "highlights": [
         {
-          "start": 632,
-          "end": 671,
+          "start": 321,
+          "end": 403,
           "grade": "strong"
         }
       ]
     },
     {
       "id": "s2",
-      "start": 714,
-      "end": 920,
+      "start": 0,
+      "end": 169,
       "highlights": [
         {
-          "start": 714,
-          "end": 920,
-          "grade": "soft"
+          "start": 0,
+          "end": 169,
+          "grade": "strong"
         }
       ],
       "parent": "s1",
-      "relation": "counterevidence"
+      "relation": "implication"
     },
     {
       "id": "s3",
-      "start": 932,
-      "end": 940,
+      "start": 404,
+      "end": 721,
       "highlights": [
         {
-          "start": 932,
-          "end": 940,
-          "grade": "soft"
-        }
-      ],
-      "parent": "s2",
-      "relation": "evaluation"
-    },
-    {
-      "id": "s4",
-      "start": 366,
-      "end": 402,
-      "highlights": [
-        {
-          "start": 366,
-          "end": 402,
-          "grade": "soft"
+          "start": 404,
+          "end": 721,
+          "grade": "strong"
         }
       ],
       "parent": "s1",
       "relation": "method"
+    },
+    {
+      "id": "s4",
+      "start": 721,
+      "end": 883,
+      "highlights": [
+        {
+          "start": 721,
+          "end": 883,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s3",
+      "relation": "scope"
+    },
+    {
+      "id": "s6",
+      "start": 223,
+      "end": 319,
+      "highlights": [
+        {
+          "start": 223,
+          "end": 319,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "problem"
+    },
+    {
+      "id": "s7",
+      "start": 170,
+      "end": 218,
+      "highlights": [
+        {
+          "start": 170,
+          "end": 218,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s6",
+      "relation": "background"
+    },
+    {
+      "id": "s8",
+      "start": 983,
+      "end": 1120,
+      "highlights": [
+        {
+          "start": 885,
+          "end": 977,
+          "grade": "soft"
+        },
+        {
+          "start": 983,
+          "end": 1120,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s3",
+      "relation": "implication"
     }
   ],
   "author": "Satoshi Nakamoto",
-  "year": 2012,
+  "year": 2008,
   "source": "https://bitcoin.org/bitcoin.pdf"
 }

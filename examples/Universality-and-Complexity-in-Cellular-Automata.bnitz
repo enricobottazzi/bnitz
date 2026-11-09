@@ -1,0 +1,84 @@
+{
+  "version": 2,
+  "title": "Universality and Complexity in Cellular Automata",
+  "text": "Cellular automata are discrete dynamical systems with simple construction but complex self-organizing behaviour. Evidence is presented that all one-dimensional cellular automata fall into four distinct universality classes. Characterizations of the structures generated in these classes are discussed. Three classes exhibit behaviour analogous to limit points, limit cycles and chaotic attractors. The fourth class is probably capable of universal computation, so that properties of its infinite time behaviour are undecidable.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 140,
+      "end": 222,
+      "highlights": [
+        {
+          "start": 113,
+          "end": 139,
+          "grade": "soft"
+        },
+        {
+          "start": 140,
+          "end": 222,
+          "grade": "strong"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 398,
+      "end": 461,
+      "highlights": [
+        {
+          "start": 398,
+          "end": 461,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "evidence"
+    },
+    {
+      "id": "s5",
+      "start": 302,
+      "end": 398,
+      "highlights": [
+        {
+          "start": 302,
+          "end": 398,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "evidence"
+    },
+    {
+      "id": "s6",
+      "start": 461,
+      "end": 527,
+      "highlights": [
+        {
+          "start": 461,
+          "end": 527,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s2",
+      "relation": "implication"
+    },
+    {
+      "id": "s7",
+      "start": 0,
+      "end": 113,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 113,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "background"
+    }
+  ],
+  "author": "Stephen Wolfram",
+  "year": 1984,
+  "source": "https://content.wolfram.com/sw-publications/2020/07/universality-complexity-cellular-automata.pdf"
+}

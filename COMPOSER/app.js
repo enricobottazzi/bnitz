@@ -9,6 +9,8 @@ const clearHighlights = document.querySelector('#clear-highlights');
 const add = document.querySelector('#add');
 const relation = document.querySelector('#relation');
 const parent = document.querySelector('#parent');
+const editPlanet = document.querySelector('#edit-planet');
+const cancelEdit = document.querySelector('#cancel-edit');
 const remove = document.querySelector('#remove');
 const status = document.querySelector('#status');
 const map = document.querySelector('#map');
@@ -18,36 +20,59 @@ let article = {version: 2, title: '', text: '', nucleus: null, spans: []};
 let selectedId = null;
 let pendingRange = null;
 let draftHighlights = [];
+let originalHighlights = null;
 
 function describe(planet) {
   const text = article.text.slice(planet.start, planet.end).trim().replace(/\s+/g, ' ');
   return `${BNITZ.label(planet)} · ${text.length > 42 ? text.slice(0, 42) + '…' : text}`;
 }
 
+function possibleParents(planet) {
+  if (!planet) return article.spans;
+  const byId = new Map(article.spans.map(span => [span.id, span]));
+  return article.spans.filter(candidate => {
+    for (let ancestor = candidate; ancestor; ancestor = byId.get(ancestor.parent)) {
+      if (ancestor.id === planet.id) return false;
+    }
+    return true;
+  });
+}
+
 function controls() {
   const previous = parent.value;
   const hasNucleus = Boolean(article.nucleus);
+  const editing = Boolean(originalHighlights);
+  const planet = editing ? article.spans.find(item => item.id === selectedId) : null;
+  const editingNucleus = planet?.id === article.nucleus;
   const options = Object.entries(BNITZ.relations).map(([key, [label]]) => {
     const option = new Option(label, key);
     option.disabled = !hasNucleus;
     return option;
   });
   const nucleus = new Option('Nucleus', 'nucleus');
-  nucleus.disabled = hasNucleus;
+  nucleus.disabled = hasNucleus && !editingNucleus;
   relation.replaceChildren(new Option('Choose a relation', ''), nucleus, ...options);
-  relation.value = hasNucleus ? '' : 'nucleus';
-  parent.disabled = !hasNucleus;
-  parent.replaceChildren(...(hasNucleus
-    ? article.spans.map(planet => new Option(describe(planet), planet.id))
+  relation.value = planet?.relation ?? (hasNucleus && !editingNucleus ? '' : 'nucleus');
+  relation.disabled = editingNucleus;
+  parent.disabled = !hasNucleus || editingNucleus;
+  parent.replaceChildren(...(!parent.disabled
+    ? possibleParents(planet).map(candidate => new Option(describe(candidate), candidate.id))
     : [new Option('—', '')]));
-  parent.value = article.spans.some(planet => planet.id === previous) ? previous : article.nucleus ?? '';
+  if (planet) parent.value = planet.parent ?? '';
+  else parent.value = article.spans.some(planet => planet.id === previous) ? previous : article.nucleus ?? '';
+  add.textContent = editing ? 'Save changes' : 'Add planet';
+  clearHighlights.textContent = editing ? 'Clear highlights' : 'Clear pending highlights';
+  cancelEdit.hidden = !editing;
+  editText.disabled = map.inert = editing;
 }
 
 function renderArticle() {
-  const planets = showAll.checked ? article.spans : article.spans.filter(planet => planet.id === selectedId);
+  const planets = article.spans.filter(planet => planet.id === selectedId ? !originalHighlights : showAll.checked);
   BNITZ.paintText(preview, article.text, [...planets.flatMap(BNITZ.highlights), ...draftHighlights]);
-  remove.hidden = !selectedId;
-  add.disabled = clearHighlights.hidden = !draftHighlights.length;
+  remove.hidden = editPlanet.hidden = !selectedId || Boolean(originalHighlights);
+  editPlanet.disabled = Boolean(draftHighlights.length);
+  clearHighlights.hidden = !draftHighlights.length;
+  add.disabled = !draftHighlights.length && (!originalHighlights || Boolean(originalHighlights.length));
   updateHighlightButtons();
 }
 
@@ -56,12 +81,23 @@ function captureSelection() {
   const selection = window.getSelection();
   if (!selection.rangeCount || selection.isCollapsed) return;
   const range = selection.getRangeAt(0);
-  if (!preview.contains(range.startContainer) || !preview.contains(range.endContainer)) return;
+  const startsInside = preview.contains(range.startContainer);
+  const endsInside = preview.contains(range.endContainer);
+  if (!startsInside && !endsInside) {
+    pendingRange = null;
+    return;
+  }
+  // A drag past the text can place one endpoint outside the preview.
   const prefix = document.createRange();
   prefix.selectNodeContents(preview);
-  prefix.setEnd(range.startContainer, range.startOffset);
-  const start = prefix.toString().length;
-  pendingRange = {start, end: start + range.toString().length};
+  const offsetInPreview = (node, offset) => {
+    prefix.setEnd(node, offset);
+    return prefix.toString().length;
+  };
+  pendingRange = {
+    start: startsInside ? offsetInPreview(range.startContainer, range.startOffset) : 0,
+    end: endsInside ? offsetInPreview(range.endContainer, range.endOffset) : article.text.length,
+  };
 }
 
 function selectedRange() {
@@ -89,9 +125,10 @@ function editMode(editing) {
   }
 }
 
-function selectPlanet(id) {
-  selectedId = id;
-  BNITZ.select(map, id);
+function selectPlanet(planet) {
+  selectedId = planet.id;
+  BNITZ.select(map, selectedId);
+  showLegendRelation(planet.relation ?? 'nucleus');
   if (preview.hidden) editMode(false);
   else renderArticle();
   pendingRange = null;
@@ -100,11 +137,36 @@ function selectPlanet(id) {
 }
 
 function redraw() {
-  if (article.nucleus) BNITZ.map(map, article, planet => selectPlanet(planet.id));
+  if (article.nucleus) BNITZ.map(map, article, selectPlanet);
   else map.replaceChildren();
   BNITZ.select(map, selectedId);
   renderArticle();
 }
+
+function resetDraft() {
+  originalHighlights = pendingRange = null;
+  draftHighlights = [];
+}
+
+editPlanet.addEventListener('click', () => {
+  const planet = article.spans.find(item => item.id === selectedId);
+  if (!planet || draftHighlights.length) return;
+  if (preview.hidden) editMode(false);
+  pendingRange = null;
+  originalHighlights = draftHighlights = BNITZ.highlights(planet);
+  controls();
+  renderArticle();
+  (relation.disabled ? preview : relation).focus();
+});
+
+cancelEdit.addEventListener('click', () => {
+  resetDraft();
+  controls();
+  parent.value = article.nucleus;
+  renderArticle();
+  status.textContent = '';
+  editPlanet.focus();
+});
 
 document.addEventListener('selectionchange', updateHighlightButtons);
 abstract.addEventListener('select', updateHighlightButtons);
@@ -135,15 +197,19 @@ function setHighlight(grade) {
     return parts.filter(part => BNITZ.validRange(article.text, part.start, part.end));
   });
   draftHighlights.push({start, end, grade});
-  selectedId = null;
+  if (!originalHighlights) selectedId = null;
   BNITZ.select(map, selectedId);
+  window.getSelection().removeAllRanges();
   if (preview.hidden) editMode(false);
   pendingRange = null;
   renderArticle();
   status.textContent = '';
 }
-strong.addEventListener('click', () => setHighlight('strong'));
-soft.addEventListener('click', () => setHighlight('soft'));
+for (const [button, grade] of [[strong, 'strong'], [soft, 'soft']]) {
+  // Keep the article selection intact until the click applies it.
+  button.addEventListener('pointerdown', event => event.preventDefault());
+  button.addEventListener('click', () => setHighlight(grade));
+}
 clearHighlights.addEventListener('click', () => {
   draftHighlights = [];
   renderArticle();
@@ -206,31 +272,48 @@ abstract.addEventListener('input', () => {
 
 document.querySelector('#annotation').addEventListener('submit', event => {
   event.preventDefault();
-  if (!draftHighlights.length) {
-    status.textContent = 'Highlight text before adding a planet.';
+  if (add.disabled) {
+    status.textContent = 'Highlight text before saving the planet.';
     return;
   }
-  draftHighlights.sort((a, b) => a.start - b.start);
-  const {start, end} = draftHighlights[0];
-  let nextId = article.spans.length + 1;
-  while (article.spans.some(planet => planet.id === `s${nextId}`)) nextId++;
-  const id = `s${nextId}`;
-  const planet = {id, start, end, highlights: draftHighlights};
-  if (article.nucleus) {
-    planet.parent = parent.value;
-    planet.relation = relation.value;
+  const editing = Boolean(originalHighlights);
+  if (draftHighlights !== originalHighlights) draftHighlights.sort((a, b) => a.start - b.start);
+  const first = draftHighlights[0];
+  if (editing) {
+    const planet = article.spans.find(item => item.id === selectedId);
+    if (planet.id !== article.nucleus) {
+      planet.parent = parent.value;
+      planet.relation = relation.value;
+    }
+    if (draftHighlights !== originalHighlights) {
+      planet.highlights = draftHighlights;
+      if (first) {
+        planet.start = first.start;
+        planet.end = first.end;
+      }
+    }
   } else {
-    article.nucleus = id;
+    let nextId = article.spans.length + 1;
+    while (article.spans.some(planet => planet.id === `s${nextId}`)) nextId++;
+    const id = `s${nextId}`;
+    const planet = {id, start: first.start, end: first.end, highlights: draftHighlights};
+    if (article.nucleus) {
+      planet.parent = parent.value;
+      planet.relation = relation.value;
+    } else {
+      article.nucleus = id;
+    }
+    article.spans.push(planet);
+    selectedId = id;
   }
-  article.spans.push(planet);
-  draftHighlights = [];
-  selectedId = id;
+  resetDraft();
   if (preview.hidden) editMode(false);
   pendingRange = null;
   controls();
   parent.value = article.nucleus;
   redraw();
   status.textContent = '';
+  if (editing) editPlanet.focus();
 });
 
 remove.addEventListener('click', () => {
@@ -258,10 +341,10 @@ file.addEventListener('change', async () => {
     const opened = BNITZ.validate(JSON.parse(await selected.text()));
     if ((abstract.value || metadata.some(field => field.value)) && !window.confirm('Replace the current draft?')) return;
     article = opened;
-    draftHighlights = [];
+    resetDraft();
     for (const field of metadata) field.value = article[field.id] ?? '';
     abstract.value = article.text;
-    selectedId = pendingRange = null;
+    selectedId = null;
     abstract.hidden = true;
     preview.hidden = false;
     editText.textContent = 'Edit text';
@@ -275,6 +358,7 @@ file.addEventListener('change', async () => {
 
 document.querySelector('#save').addEventListener('click', () => {
   try {
+    if (originalHighlights) throw new Error('Save or cancel the planet changes before exporting.');
     if (draftHighlights.length) throw new Error('Add a planet or clear the pending highlights before exporting.');
     const result = {...article};
     for (const field of metadata) {
@@ -295,5 +379,56 @@ document.querySelector('#save').addEventListener('click', () => {
     status.textContent = error.message;
   }
 });
+
+const relationClock = document.querySelector('#relation-clock');
+const relationDefinition = document.querySelector('#relation-definition');
+const legendButtons = new Map();
+
+function showLegendRelation(key) {
+  const entry = legendButtons.get(key);
+  if (!entry) return;
+  const {button, description} = entry;
+  if (button.getAttribute('aria-pressed') === 'true') return;
+  relationClock.querySelector('[aria-pressed="true"]')?.setAttribute('aria-pressed', 'false');
+  button.setAttribute('aria-pressed', 'true');
+  relationDefinition.textContent = description;
+}
+
+const legend = {
+  nucleus: ['Nucleus', null, null, 'The paper’s main contribution. It can be a finding, theorem, argument, synthesis, artifact, guideline, or research plan.'],
+  ...BNITZ.relations,
+};
+for (const [key, [label, slot, icon, definition]] of Object.entries(legend)) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.setAttribute('aria-pressed', 'false');
+  button.setAttribute('aria-controls', relationDefinition.id);
+  const [x, y] = slot == null ? [0, 0] : BNITZ.relationDirection(slot);
+  button.style.setProperty('--clock-x', `${50 + x * 35.5}%`);
+  button.style.setProperty('--clock-y', `${50 + y * 35.5}%`);
+  const symbol = document.createElement(icon ? 'img' : 'span');
+  symbol.className = 'legend-symbol';
+  if (icon) {
+    symbol.src = `../assets/${icon}.svg`;
+    symbol.alt = '';
+  } else {
+    symbol.classList.add('legend-nucleus');
+    symbol.setAttribute('aria-hidden', 'true');
+  }
+  const name = document.createElement('span');
+  name.textContent = label;
+  button.append(symbol, name);
+  button.addEventListener('click', () => {
+    const option = [...relation.options].find(option => option.value === key);
+    if (!relation.disabled && option && !option.disabled) relation.value = key;
+    showLegendRelation(key);
+  });
+  legendButtons.set(key, {button, description: `${label} — ${definition}`});
+  relationClock.append(button);
+}
+for (const event of ['click', 'change']) {
+  relation.addEventListener(event, () => showLegendRelation(relation.value));
+}
+showLegendRelation('nucleus');
 
 controls();

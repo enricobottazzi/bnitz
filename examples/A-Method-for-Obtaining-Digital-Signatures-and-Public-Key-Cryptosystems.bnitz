@@ -1,0 +1,84 @@
+{
+  "version": 2,
+  "title": "A Method for Obtaining Digital Signatures and Public-Key Cryptosystems",
+  "text": "An encryption method is presented with the novel property that publicly revealing an encryption key does not thereby reveal the corresponding decryption key. This has two important consequences: \n\n1. Couriers or other secure means are not needed to transmit keys, since a message can be enciphered using an encryption key publicly revealed by the intended recipient. Only he can decipher the message, since only he knows the corresponding decryption key. \n\n2. A message can be “signed” using a privately held decryption key. Anyone can verify this signature using the corresponding publicly revealed encryption key. Signatures cannot be forged, and a signer cannot later deny the validity of his signature. This has obvious applications in “electronic mail” and “electronic funds transfer” systems. \n\nA message is encrypted by representing it as a number M, raising M to a publicly specified power e, and then taking the remainder when the result is divided by the publicly specified product, n, of two large secret prime numbers p and q. Decryption is similar; only a different, secret, power d is used, where e · d ≡ 1 (mod (p − 1) · (q − 1)). The security of the system rests in part on the difficulty of factoring the published divisor, n.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 0,
+      "end": 158,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 158,
+          "grade": "strong"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 197,
+      "end": 455,
+      "highlights": [
+        {
+          "start": 197,
+          "end": 455,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    },
+    {
+      "id": "s3",
+      "start": 457,
+      "end": 800,
+      "highlights": [
+        {
+          "start": 457,
+          "end": 706,
+          "grade": "strong"
+        },
+        {
+          "start": 707,
+          "end": 798,
+          "grade": "soft"
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    },
+    {
+      "id": "s4",
+      "start": 801,
+      "end": 1146,
+      "highlights": [
+        {
+          "start": 801,
+          "end": 1146,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s5",
+      "start": 1146,
+      "end": 1243,
+      "highlights": [
+        {
+          "start": 1146,
+          "end": 1243,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s4",
+      "relation": "scope"
+    }
+  ],
+  "author": "Rivest et al.",
+  "year": 1978,
+  "source": "https://people.csail.mit.edu/rivest/Rsapaper.pdf#page=1"
+}

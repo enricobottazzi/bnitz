@@ -1,0 +1,84 @@
+{
+  "version": 2,
+  "title": "Syntax vs. Semantics",
+  "text": "In this paper the author outlines a semantic theory which she has developed in a number of books and articles (see especially Semantic Primitives Athenäum Frankfun 1972). A universal set of thirteen semantic primitives is postulated which correspond to indefinable expressions to be found in every natural language (Leibniz’s “alphabet of human thought”). It is argued that an autonomous syntax which postulates unobservable underlying structures is unverifiable and cannot be regarded as an empirical theory of mind; but a semantically-based syntax, founded on the self-explanatory language of semantic primitives, is empirically verifiable, since it is rooted in natural language and thus directly related to intuition. By way of illustration, the author analyzes certain key notions of syntactic theory (such as subject, direct object, agent and patient) trying to show that if defined in terms of self-explanatory universal semantic primitives such concepts can be made both precise and intuitively revealing.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 522,
+      "end": 642,
+      "highlights": [
+        {
+          "start": 522,
+          "end": 642,
+          "grade": "strong"
+        },
+        {
+          "start": 643,
+          "end": 721,
+          "grade": "soft"
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "start": 722,
+      "end": 857,
+      "highlights": [
+        {
+          "start": 722,
+          "end": 857,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s4",
+      "start": 858,
+      "end": 1013,
+      "highlights": [
+        {
+          "start": 858,
+          "end": 1013,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s3",
+      "relation": "implication"
+    },
+    {
+      "id": "s5",
+      "start": 0,
+      "end": 356,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 356,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "background"
+    },
+    {
+      "id": "s6",
+      "start": 356,
+      "end": 517,
+      "highlights": [
+        {
+          "start": 356,
+          "end": 517,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "problem"
+    }
+  ],
+  "author": "Anna Wierzbicka",
+  "year": 1978,
+  "source": "https://researchportalplus.anu.edu.au/en/publications/syntax-vs-semantics/"
+}
