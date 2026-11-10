@@ -1,5 +1,7 @@
 # BNITZ rules
 
+BNITZ is inspired by Rhetorical Structure Theory (RST).
+
 ## Legend
 
 | Symbol | Role | Definition |
