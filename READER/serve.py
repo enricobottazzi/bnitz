@@ -15,6 +15,7 @@ ROUTES = {
     '/reader.js': (READER / 'app.js', 'text/javascript; charset=utf-8'),
     '/bnitz.css': (ROOT / 'bnitz.css', 'text/css; charset=utf-8'),
     '/bnitz.js': (ROOT / 'bnitz.js', 'text/javascript; charset=utf-8'),
+    '/vendor/katex.min.js': (ROOT / 'vendor' / 'katex.min.js', 'text/javascript; charset=utf-8'),
 }
 
 

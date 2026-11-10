@@ -1,0 +1,66 @@
+{
+  "version": 2,
+  "title": "The Knowledge Complexity of Interactive Proof Systems",
+  "text": "Usually, a proof of a theorem contains more knowledge than the mere fact that the theorem is true. For instance, to prove that a graph is Hamiltonian it suffices to exhibit a Hamiltonian tour in it; however, this seems to contain more knowledge than the single bit Hamiltonian/non-Hamiltonian. In this paper a computational complexity theory of the “knowledge” contained in a proof is developed. Zero-knowledge proofs are defined as those proofs that convey no additional knowledge other than the correctness of the proposition in question. Examples of zero-knowledge proof systems are given for the languages of quadratic residuosity and 'quadratic nonresiduosity. These are the first examples of zero-knowledge proofs for languages not known to be efficiently recognizable. ",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 294,
+      "end": 395,
+      "highlights": [
+        {
+          "start": 294,
+          "end": 395,
+          "grade": "soft"
+        },
+        {
+          "start": 396,
+          "end": 541,
+          "grade": "strong"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 0,
+      "end": 98,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 98,
+          "grade": "strong"
+        },
+        {
+          "start": 99,
+          "end": 294,
+          "grade": "soft"
+        }
+      ],
+      "parent": "s1",
+      "relation": "problem"
+    },
+    {
+      "id": "s3",
+      "start": 541,
+      "end": 665,
+      "highlights": [
+        {
+          "start": 541,
+          "end": 665,
+          "grade": "strong"
+        },
+        {
+          "start": 666,
+          "end": 776,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "evidence"
+    }
+  ],
+  "author": "S. Goldwasser et al.",
+  "year": 1989,
+  "source": "https://epubs.siam.org/doi/abs/10.1137/0218012"
+}

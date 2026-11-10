@@ -3,7 +3,9 @@ body { margin: 0; padding: 64px 72px 48px; --canvas-height: clamp(340px, calc(10
 .app-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
 .page-title { margin-top: 20px; }
 .metadata { display: grid; grid-template-columns: 1.8fr 1fr 88px; gap: 16px 20px; max-width: 850px; margin: 22px 0 30px; }
-.metadata .source { grid-column: 1 / -1; }
+.metadata .source { grid-column: 1 / -1; display: grid; gap: 4px; }
+.source-import { display: flex; gap: 7px; }
+.source-import button { flex: none; }
 .workspace { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 230px; gap: 24px; align-items: start; }
 .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 34px; margin-bottom: 12px; }
 .workspace h2 { color: #111; }

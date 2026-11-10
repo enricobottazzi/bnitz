@@ -1,0 +1,56 @@
+{
+  "version": 2,
+  "title": "Toward a Universal Law of Generalization for Psychological Science",
+  "text": "A psychological space is established for any set of stimuli by determining metric distances between the stimuli such that the probability that a response learned to any stimulus will generalize to any other is an invariant monotonic function of the distance between them. To a good approximation, this probability of generalization (i) decays exponentialiy with this distance, and (ii) does so in accordance with one of two metrics, depending on the relation between the dimensions along which the stimuli vary. These empirical regularities are mathematically derivable from universal principles of natural kinds and probabilistic geometry that may, through evolutionary internalization, tend to govern the behaviors of all sentient organisms.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 272,
+      "end": 512,
+      "highlights": [
+        {
+          "start": 272,
+          "end": 512,
+          "grade": "strong"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 0,
+      "end": 271,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 271,
+          "grade": "strong"
+        },
+        {
+          "start": 512,
+          "end": 639,
+          "grade": "soft"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s3",
+      "start": 640,
+      "end": 743,
+      "highlights": [
+        {
+          "start": 640,
+          "end": 743,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    }
+  ],
+  "author": "R. Shepard",
+  "year": 1987,
+  "source": "http://matt.colorado.edu/teaching/categories/s87.pdf"
+}

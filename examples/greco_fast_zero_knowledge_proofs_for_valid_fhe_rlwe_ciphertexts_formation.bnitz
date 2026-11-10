@@ -1,0 +1,71 @@
+{
+  "version": 2,
+  "title": "Greco: Fast Zero-Knowledge Proofs for Valid FHE RLWE Ciphertexts Formation",
+  "author": "E. Bottazzi",
+  "year": 2024,
+  "text": "Fully homomorphic encryption (FHE) allows for evaluating arbitrary functions over encrypted data. In Multi-party FHE applications, different parties encrypt their secret data and submit ciphertexts to a server, which, according to the application logic, performs homomorphic operations on them. For example, in a secret voting application, the tally is computed by summing up the ciphertexts encoding the votes. Valid encrypted votes are of the form E(0) and E(1). A malicious voter could send an invalid encrypted vote such as E(145127835), which can mess up the whole election. Because of that, users must prove that the ciphertext they submitted is a valid Ring-Learning with Errors (RLWE) ciphertext and that the plaintext message they encrypted is a valid vote (for example, either a 1 or 0). Greco uses zero-knowledge proof to let a user prove that their RLWE ciphertext is well-formed. Or, in other words, that the encryption operation was performed correctly. The resulting proof can be, therefore, composed with additional application-specific logic and subject to public verification in a non-interactive setting. Considering the secret voting application, one can prove further properties of the message being encrypted or even properties about the voter, allowing the application to support anonymous voting as well. The prover has been implemented using Halo2-lib as a proving system, and the benchmarks have shown that Greco can already be integrated into user-facing applications without creating excessive friction for the user. The implementation is available at https://github.com/privacy-scaling-explorations/greco",
+  "source": "https://eprint.iacr.org/2024/594",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 798,
+      "end": 893,
+      "highlights": [
+        {
+          "start": 798,
+          "end": 893,
+          "grade": "strong"
+        },
+        {
+          "start": 968,
+          "end": 1123,
+          "grade": "soft"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 1329,
+      "end": 1397,
+      "highlights": [
+        {
+          "start": 1329,
+          "end": 1397,
+          "grade": "soft"
+        },
+        {
+          "start": 1402,
+          "end": 1543,
+          "grade": "strong"
+        },
+        {
+          "start": 1545,
+          "end": 1633,
+          "grade": "soft"
+        }
+      ],
+      "parent": "s1",
+      "relation": "evidence"
+    },
+    {
+      "id": "s3",
+      "start": 0,
+      "end": 580,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 580,
+          "grade": "soft"
+        },
+        {
+          "start": 580,
+          "end": 797,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "problem"
+    }
+  ]
+}

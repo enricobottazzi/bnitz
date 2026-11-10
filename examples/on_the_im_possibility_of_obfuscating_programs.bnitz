@@ -1,0 +1,80 @@
+{
+  "version": 2,
+  "title": "On the (Im)possibility of Obfuscating Programs",
+  "author": "B. Barak et al.",
+  "year": 2001,
+  "text": "Informally, an {\\em obfuscator} $O$ is an (efficient,\nprobabilistic) \"compiler\" that takes as input a program (or\ncircuit) $P$ and produces a new program $O(P)$ that has the\nsame functionality as $P$ yet is \"unintelligible\" in some sense.\nObfuscators, if they exist, would have a wide variety of\ncryptographic and complexity-theoretic applications, ranging from\nsoftware protection to homomorphic encryption to\ncomplexity-theoretic analogues of Rice's theorem. Most of these\napplications are based on an interpretation of the \"unintelligibility\" condition in obfuscation as meaning that\n$O(P)$ is a \"virtual black box,\" in the sense that anything\none can  efficiently compute given $O(P)$, one could also\nefficiently compute given oracle access to $P$.\n\nIn this work, we initiate a theoretical investigation of\nobfuscation. Our main result is that, even under very\nweak formalizations of the above intuition, obfuscation\nis impossible. We prove this by constructing a family of\nfunctions $F$ that are {\\em inherently\nunobfuscatable} in the following sense: there is a\nproperty $\\pi : F \\rightarrow \\{0,1\\}$ such that (a) given {\\em\nany program} that computes a function $f\\in F$, the\nvalue $\\pi(f)$ can be efficiently computed, yet (b) given\n{\\em oracle access} to a (randomly selected) function\n$f\\in F$, no efficient algorithm can compute $\\pi(f)$\nmuch better than random guessing.\n\nWe extend our impossibility result in a number of ways, including\neven obfuscators that (a) are not necessarily computable in\npolynomial time, (b) only {\\em approximately} preserve the\nfunctionality, and (c) only need to work for very restricted\nmodels of computation ($TC_0$).  We also rule out several\npotential applications of obfuscators, by constructing\n\"unobfuscatable\" signature schemes, encryption schemes, and\npseudorandom function families.",
+  "source": "https://eprint.iacr.org/2001/069",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 824,
+      "end": 935,
+      "highlights": [
+        {
+          "start": 587,
+          "end": 752,
+          "grade": "soft"
+        },
+        {
+          "start": 824,
+          "end": 935,
+          "grade": "strong"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 0,
+      "end": 239,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 239,
+          "grade": "strong"
+        },
+        {
+          "start": 239,
+          "end": 461,
+          "grade": "soft"
+        }
+      ],
+      "parent": "s1",
+      "relation": "background"
+    },
+    {
+      "id": "s3",
+      "start": 936,
+      "end": 1383,
+      "highlights": [
+        {
+          "start": 936,
+          "end": 1056,
+          "grade": "soft"
+        },
+        {
+          "start": 1057,
+          "end": 1383,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s4",
+      "start": 1664,
+      "end": 1835,
+      "highlights": [
+        {
+          "start": 1664,
+          "end": 1835,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    }
+  ]
+}

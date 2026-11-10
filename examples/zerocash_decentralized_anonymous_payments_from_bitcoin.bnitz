@@ -1,0 +1,90 @@
+{
+  "version": 2,
+  "title": "Zerocash: Decentralized Anonymous Payments from Bitcoin",
+  "author": "E. Ben-Sasson et al.",
+  "year": 2014,
+  "text": "Bitcoin is the first digital currency to see widespread adoption. While payments are conducted between pseudonyms, Bitcoin cannot offer strong privacy guarantees: payment transactions are recorded in a public decentralized ledger, from which much information can be deduced. Zerocoin (Miers et al., IEEE S&P 2013) tackles some of these privacy issues by unlinking transactions from the payment's origin. Yet, it still reveals payments' destinations and amounts, and is limited in functionality.\n\nIn this paper, we construct a full-fledged ledger-based digital currency with strong privacy guarantees. Our results leverage recent advances in zero-knowledge Succinct Non-interactive ARguments of Knowledge (zk-SNARKs).\n\nFirst, we formulate and construct decentralized anonymous payment schemes (DAP schemes). A DAP scheme enables users to directly pay each other privately: the corresponding transaction hides the payment's origin, destination, and transferred amount. We provide formal definitions and proofs of the construction's security.\n\nSecond, we build Zerocash, a practical instantiation of our DAP scheme construction. In Zerocash, transactions are less than 1 kB and take under 6 ms to verify --- orders of magnitude more efficient than the less-anonymous Zerocoin and competitive with plain Bitcoin.",
+  "source": "https://eprint.iacr.org/2014/349",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 496,
+      "end": 601,
+      "highlights": [
+        {
+          "start": 496,
+          "end": 601,
+          "grade": "strong"
+        },
+        {
+          "start": 1041,
+          "end": 1125,
+          "grade": "soft"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 718,
+      "end": 806,
+      "highlights": [
+        {
+          "start": 601,
+          "end": 717,
+          "grade": "soft"
+        },
+        {
+          "start": 718,
+          "end": 806,
+          "grade": "strong"
+        },
+        {
+          "start": 806,
+          "end": 1039,
+          "grade": "soft"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s4",
+      "start": 1126,
+      "end": 1308,
+      "highlights": [
+        {
+          "start": 1126,
+          "end": 1308,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "evidence"
+    },
+    {
+      "id": "s5",
+      "start": 115,
+      "end": 494,
+      "highlights": [
+        {
+          "start": 115,
+          "end": 161,
+          "grade": "strong"
+        },
+        {
+          "start": 163,
+          "end": 403,
+          "grade": "soft"
+        },
+        {
+          "start": 404,
+          "end": 494,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "problem"
+    }
+  ]
+}

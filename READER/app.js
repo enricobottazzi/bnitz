@@ -5,7 +5,6 @@ const title = document.querySelector('#title');
 const metadata = document.querySelector('#metadata');
 const abstract = document.querySelector('#abstract');
 const map = document.querySelector('#map');
-const legend = document.querySelector('.reader-legend');
 const showLegendRelation = BNITZ.legend(document.querySelector('#legend'));
 const status = document.querySelector('#status');
 const library = new Map();
@@ -50,7 +49,7 @@ function paintArticle(article) {
         start: Math.max(0, range.start - offset),
         end: Math.min(part.length, range.end - offset),
       }));
-      BNITZ.paintText(paragraph, part, local, (mark, matches) => links.set(mark, matches));
+      BNITZ.paintText(paragraph, part, local, (mark, matches) => links.set(mark, matches), {typeset: true});
       fragment.append(paragraph);
     }
     offset = end;
@@ -144,9 +143,6 @@ async function load() {
   show();
 }
 
-legend.addEventListener('toggle', () => {
-  if (legend.open) legend.scrollIntoView({block: 'nearest'});
-});
 abstract.addEventListener('pointerover', event => {
   if (event.pointerType !== 'touch') hoverText(event.target.closest('mark'));
 });

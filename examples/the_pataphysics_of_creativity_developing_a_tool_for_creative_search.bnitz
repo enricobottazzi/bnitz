@@ -1,0 +1,61 @@
+{
+  "version": 2,
+  "title": "The Pataphysics of Creativity: Developing a Tool for Creative Search",
+  "text": "We introduce the idea of a new kind of web search tool that uses the literary and philosophical idea of pataphysics as a conceptual framework in order to return creative results. Pataphysics, the science of exceptions and imaginary solutions, can be directly linked to creativity and is therefore very suitable to guide the transformation from relevant into creative search results. To enable pataphysical algorithms within our system we propose the need for a new type of system architecture. We discuss a component-based software architecture that would allow the flexible integration of the new algorithms at any stage or location and the need for an index suitable to handle patadata, data which have been transformed pataphysically. This tool aims to generate surprising, novel and provocative search results rather than relevant ones, in order to inspire a more creative interaction that has applications in both creative work and learning contexts.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 0,
+      "end": 179,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 179,
+          "grade": "strong"
+        },
+        {
+          "start": 179,
+          "end": 241,
+          "grade": "soft"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 494,
+      "end": 738,
+      "highlights": [
+        {
+          "start": 494,
+          "end": 738,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s3",
+      "start": 738,
+      "end": 841,
+      "highlights": [
+        {
+          "start": 738,
+          "end": 841,
+          "grade": "strong"
+        },
+        {
+          "start": 841,
+          "end": 955,
+          "grade": "soft"
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    }
+  ],
+  "author": "A. Hugill",
+  "year": 2013,
+  "source": "https://www.tandfonline.com/doi/full/10.1080/14626268.2013.813377"
+}

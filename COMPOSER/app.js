@@ -15,6 +15,8 @@ const remove = document.querySelector('#remove');
 const status = document.querySelector('#status');
 const map = document.querySelector('#map');
 const file = document.querySelector('#file');
+const source = document.querySelector('#source');
+const importAbstract = document.querySelector('#import-abstract');
 
 let article = {version: 2, title: '', text: '', nucleus: null, spans: []};
 let selectedId = null;
@@ -332,6 +334,42 @@ remove.addEventListener('click', () => {
   status.textContent = '';
 });
 
+function openArticle(opened, ignoredField) {
+  const hasDraft = abstract.value || metadata.some(field => field !== ignoredField && field.value);
+  if (hasDraft && !window.confirm('Replace the current draft?')) return false;
+  article = opened;
+  resetDraft();
+  for (const field of metadata) field.value = article[field.id] ?? '';
+  abstract.value = article.text;
+  selectedId = null;
+  abstract.hidden = true;
+  preview.hidden = false;
+  editText.textContent = 'Edit text';
+  controls();
+  redraw();
+  status.textContent = '';
+  return true;
+}
+
+function isGroupAuthor(name) {
+  return /^DeepSeek-AI$/i.test(name) || /\b(?:collaboration|consortium|team)\b/i.test(name);
+}
+
+function formatImportedAuthor(name) {
+  if (isGroupAuthor(name)) return name;
+  const [family, given] = name.split(/\s*,\s*/, 2);
+  if (given) return `${Array.from(given)[0]}. ${family}`;
+
+  const [first, ...rest] = name.split(/\s+/);
+  if (!rest.length) return name;
+
+  const surname = [rest.pop()];
+  while (/^(?:da|de|del|della|den|der|di|dos|du|la|le|ten|ter|van|von)$/i.test(rest.at(-1) ?? '')) {
+    surname.unshift(rest.pop());
+  }
+  return `${Array.from(first)[0]}. ${surname.join(' ')}`;
+}
+
 document.querySelector('#open').addEventListener('click', () => file.click());
 file.addEventListener('change', async () => {
   const [selected] = file.files;
@@ -339,20 +377,50 @@ file.addEventListener('change', async () => {
   if (!selected) return;
   try {
     const opened = BNITZ.validate(JSON.parse(await selected.text()));
-    if ((abstract.value || metadata.some(field => field.value)) && !window.confirm('Replace the current draft?')) return;
-    article = opened;
-    resetDraft();
-    for (const field of metadata) field.value = article[field.id] ?? '';
-    abstract.value = article.text;
-    selectedId = null;
-    abstract.hidden = true;
-    preview.hidden = false;
-    editText.textContent = 'Edit text';
-    controls();
-    redraw();
-    status.textContent = '';
+    openArticle(opened);
   } catch (error) {
     status.textContent = error.message;
+  }
+});
+
+importAbstract.hidden = location.protocol === 'file:';
+source.addEventListener('keydown', event => {
+  if (event.key === 'Enter' && !importAbstract.hidden) importAbstract.click();
+});
+importAbstract.addEventListener('click', async () => {
+  const url = source.value.trim();
+  if (!url) {
+    status.textContent = 'Paste an arXiv or IACR ePrint paper link in Source.';
+    source.focus();
+    return;
+  }
+
+  importAbstract.disabled = true;
+  status.textContent = 'Loading abstract…';
+  try {
+    const response = await fetch(`/api/abstract?${new URLSearchParams({url})}`);
+    const data = response.headers.get('content-type')?.includes('application/json') ? await response.json() : null;
+    if (!response.ok || !data?.title || !data.text) throw new Error(data?.error ?? 'Could not import the abstract.');
+    if (source.value.trim() !== url) return;
+
+    // Archive metadata comes from HTML attributes. Decode entities without interpreting markup.
+    const decoder = document.createElement('textarea');
+    const decode = value => {
+      decoder.innerHTML = value.replace(/</g, '&lt;');
+      return decoder.value;
+    };
+    const names = data.authors.map(name => decode(name).trim()).filter(Boolean);
+    const people = names.filter(name => !isGroupAuthor(name));
+    const authors = (people.length ? people : names).map(formatImportedAuthor);
+    const author = authors.length > 2 ? `${authors[0]} et al.` : authors.join(' and ');
+    status.textContent = '';
+    openArticle({version: 2, title: decode(data.title), author, year: data.year, text: decode(data.text),
+      source: data.source, nucleus: null, spans: []}, source);
+  } catch (error) {
+    status.textContent = error.message;
+  } finally {
+    importAbstract.disabled = false;
+    if (status.textContent === 'Loading abstract…') status.textContent = '';
   }
 });
 

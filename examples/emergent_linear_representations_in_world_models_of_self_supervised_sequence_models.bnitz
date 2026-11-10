@@ -1,0 +1,65 @@
+{
+  "version": 2,
+  "title": "Emergent Linear Representations in World Models of Self-Supervised Sequence Models",
+  "author": "N. Nanda et al.",
+  "year": 2023,
+  "text": "How do sequence models represent their decision-making process? Prior work suggests that Othello-playing neural network learned nonlinear models of the board state (Li et al., 2023). In this work, we provide evidence of a closely related linear representation of the board. In particular, we show that probing for \"my colour\" vs. \"opponent's colour\" may be a simple yet powerful way to interpret the model's internal state. This precise understanding of the internal representations allows us to control the model's behaviour with simple vector arithmetic. Linear representations enable significant interpretability progress, which we demonstrate with further exploration of how the world model is computed.",
+  "source": "https://arxiv.org/abs/2309.00941",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 183,
+      "end": 274,
+      "highlights": [
+        {
+          "start": 183,
+          "end": 274,
+          "grade": "strong"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 64,
+      "end": 182,
+      "highlights": [
+        {
+          "start": 64,
+          "end": 182,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "background"
+    },
+    {
+      "id": "s3",
+      "start": 274,
+      "end": 424,
+      "highlights": [
+        {
+          "start": 274,
+          "end": 424,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s4",
+      "start": 424,
+      "end": 557,
+      "highlights": [
+        {
+          "start": 424,
+          "end": 557,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "version": 2,
+  "title": "Progress measures for grokking via mechanistic interpretability",
+  "author": "N. Nanda et al.",
+  "year": 2023,
+  "text": "Neural networks often exhibit emergent behavior, where qualitatively new capabilities arise from scaling up the amount of parameters, training data, or training steps. One approach to understanding emergence is to find continuous progress measures that underlie the seemingly discontinuous qualitative changes. We argue that progress measures can be found via mechanistic interpretability: reverse-engineering learned behaviors into their individual components. As a case study, we investigate the recently-discovered phenomenon of \"grokking'' exhibited by small transformers trained on modular addition tasks. We fully reverse engineer the algorithm learned by these networks, which uses discrete Fourier transforms and trigonometric identities to convert addition to rotation about a circle. We confirm the algorithm by analyzing the activations and weights and by performing ablations in Fourier space. Based on this understanding, we define progress measures that allow us to study the dynamics of training and split training into three continuous phases: memorization, circuit formation, and cleanup. Our results show that grokking, rather than being a sudden shift, arises from the gradual amplification of structured mechanisms encoded in the weights, followed by the later removal of memorizing components.",
+  "source": "https://arxiv.org/abs/2301.05217",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 935,
+      "end": 1106,
+      "highlights": [
+        {
+          "start": 935,
+          "end": 1106,
+          "grade": "strong"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 0,
+      "end": 168,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 168,
+          "grade": "soft"
+        },
+        {
+          "start": 168,
+          "end": 310,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "background"
+    },
+    {
+      "id": "s3",
+      "start": 611,
+      "end": 793,
+      "highlights": [
+        {
+          "start": 325,
+          "end": 461,
+          "grade": "strong"
+        },
+        {
+          "start": 479,
+          "end": 610,
+          "grade": "soft"
+        },
+        {
+          "start": 611,
+          "end": 793,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s4",
+      "start": 794,
+      "end": 906,
+      "highlights": [
+        {
+          "start": 794,
+          "end": 906,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s3",
+      "relation": "evidence"
+    },
+    {
+      "id": "s5",
+      "start": 1128,
+      "end": 1314,
+      "highlights": [
+        {
+          "start": 1128,
+          "end": 1314,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    }
+  ]
+}

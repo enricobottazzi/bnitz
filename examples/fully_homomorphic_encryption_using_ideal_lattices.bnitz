@@ -1,0 +1,80 @@
+{
+  "version": 2,
+  "title": "Fully Homomorphic Encryption Using Ideal Lattices",
+  "author": "C. Gentry",
+  "year": 2009,
+  "text": "We propose a fully homomorphic encryption scheme – i.e., a scheme that allows one to evaluate circuits over encrypted data without being able to decrypt. Our solution comes in three steps. First, we provide a general result – that, to construct an encryption scheme that permits evaluation of arbitrary circuits, it suffices to construct an encryption scheme that can evaluate (slightly augmented versions of) its own decryption circuit; we call a scheme that can evaluate its (augmented) decryption circuit bootstrappable. Next, we describe a public key encryption scheme using ideal lattices that is almost bootstrappable. Lattice-based cryptosystems typically have decryption algorithms with low circuit complexity, often dominated by an inner product computation that is in NC1. Also, ideal lattices provide both additive and multiplicative homomorphisms (modulo a public-key ideal in a polynomial ring that is represented as a lattice), as needed to evaluate general circuits. Unfortunately, our initial scheme is not quite bootstrappable – i.e., the depth that the scheme can correctly evaluate can be logarithmic in the lattice dimension, just like the depth of the decryption circuit, but the latter is greater than the former. In the final step, we show how to modify the scheme to reduce the depth of the decryption circuit, and thereby obtain a bootstrappable encryption scheme, without reducing the depth that the scheme can evaluate. Abstractly, we accomplish this by enabling the encrypter to start the decryption process, leaving less work for the decrypter, much like the server leaves less work for the decrypter in a server-aided cryptosystem.",
+  "source": "https://www.cs.cmu.edu/~odonnell/hits09/gentry-homomorphic-encryption.pdf",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 0,
+      "end": 48,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 48,
+          "grade": "strong"
+        },
+        {
+          "start": 51,
+          "end": 153,
+          "grade": "soft"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 232,
+      "end": 437,
+      "highlights": [
+        {
+          "start": 232,
+          "end": 437,
+          "grade": "strong"
+        },
+        {
+          "start": 437,
+          "end": 524,
+          "grade": "soft"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s3",
+      "start": 524,
+      "end": 625,
+      "highlights": [
+        {
+          "start": 524,
+          "end": 625,
+          "grade": "strong"
+        },
+        {
+          "start": 1052,
+          "end": 1235,
+          "grade": "soft"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s4",
+      "start": 1236,
+      "end": 1447,
+      "highlights": [
+        {
+          "start": 1236,
+          "end": 1447,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    }
+  ]
+}

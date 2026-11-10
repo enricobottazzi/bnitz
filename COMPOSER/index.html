@@ -6,9 +6,9 @@
   <title>BNITZ — Composer</title>
   <link rel="icon" type="image/svg+xml" href="../assets/problem.svg?v=0.0.4">
   <link rel="stylesheet" href="../bnitz.css">
-  <link rel="stylesheet" href="style.css">
-  <script defer src="../bnitz.js?v=0.0.4"></script>
-  <script defer src="app.js"></script>
+  <link rel="stylesheet" href="style.css?v=0.0.5">
+  <script defer src="../bnitz.js?v=0.0.7"></script>
+  <script defer src="app.js?v=0.0.8"></script>
 </head>
 <body>
   <header class="app-header">
@@ -25,7 +25,13 @@
     <label>Title <input id="title" placeholder="Article title"></label>
     <label>Author <input id="author" placeholder="Author name"></label>
     <label>Year <input id="year" type="number" min="1" max="9999" step="1"></label>
-    <label class="source">Source <input id="source" type="url" pattern="[Hh][Tt][Tt][Pp][Ss]?://.+" placeholder="https://…"></label>
+    <div class="source">
+      <label for="source">Source</label>
+      <div class="source-import">
+        <input id="source" type="url" pattern="[Hh][Tt][Tt][Pp][Ss]?://.+" placeholder="https://…">
+        <button type="button" id="import-abstract" hidden>Import abstract</button>
+      </div>
+    </div>
   </div>
   <main class="workspace">
     <section>
@@ -62,6 +68,8 @@
       <section class="relation-legend" aria-labelledby="relation-legend-title">
         <h2 id="relation-legend-title">Legend</h2>
         <div id="legend"></div>
+        <p class="legend-note"><strong>Highlighting.</strong> Use strong highlights for a planet’s main point and soft highlights for helpful context or explanation. Highlight only what helps the reader follow the argument.</p>
+        <p class="legend-note"><strong>Nesting.</strong> Add a planet only when the map needs it. Attach it to the point it directly supports, explains, or qualifies. Choose its relation based on what it does for that parent. The relation applies to the whole branch. Roles can be left empty.</p>
       </section>
     </aside>
   </main>

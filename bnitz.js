@@ -53,23 +53,74 @@ const BNITZ = (() => {
   const iconUrl = icon => `../assets/${icon}.svg?v=0.0.4`;
   const highlights = span => span.highlights ?? [{start: span.start, end: span.end, grade: 'strong'}];
 
-  function paintText(container, text, ranges, onMark) {
+  const latex = new RegExp([
+    /(?<![\\$])\$\$(?<display>(?:\\.|[^\\$])+)\$\$/,
+    /(?<![\\$])\$(?![\s$])(?<inline>(?:\\.|[^\\$\r\n])+?)(?<!\s)\$(?![\d$])/,
+    /(?<!\\)\{\\em\s+(?<emphasis>[^{}]+)\}/,
+    /(?<!\\)\\(?:emph|textit)\{(?<italic>[^{}]+)\}/,
+    /\x60\x60(?<quote>[^\x60\r\n]+?)''/,
+  ].map(pattern => pattern.source).join('|'), 'gd');
+
+  function paintText(container, text, ranges, onMark, {typeset = false} = {}) {
     const cuts = [...new Set([0, text.length, ...ranges.flatMap(({start, end}) => [start, end])])].sort((a, b) => a - b);
-    const fragment = document.createDocumentFragment();
-    for (let i = 1; i < cuts.length; i++) {
-      const start = cuts[i - 1], end = cuts[i];
-      const matches = ranges.filter(range => range.start <= start && range.end >= end);
-      const content = text.slice(start, end);
-      if (matches.length) {
-        const mark = document.createElement('mark');
-        mark.textContent = content;
-        if (onMark) onMark(mark, matches);
-        else mark.className = matches.some(range => range.grade === 'strong') ? 'strong' : 'soft';
-        fragment.append(mark);
-      } else {
-        fragment.append(content);
+    function append(parent, start, end, content) {
+      const matches = ranges.filter(range => range.start < end && range.end > start);
+      if (!matches.length) {
+        parent.append(content);
+        return;
       }
+      const mark = document.createElement('mark');
+      mark.append(content);
+      if (onMark) onMark(mark, matches);
+      else mark.className = matches.some(range => range.grade === 'strong') ? 'strong' : 'soft';
+      parent.append(mark);
     }
+
+    function plain(parent, start, end) {
+      for (const cut of cuts) {
+        if (cut <= start) continue;
+        if (cut >= end) break;
+        append(parent, start, cut, text.slice(start, cut));
+        start = cut;
+      }
+      if (start < end) append(parent, start, end, text.slice(start, end));
+    }
+
+    function render(parent, start, end) {
+      let cursor = start;
+      for (const match of text.slice(start, end).matchAll(latex)) {
+        const from = start + match.index;
+        const to = from + match[0].length;
+        plain(parent, cursor, from);
+        const {display, inline, quote} = match.groups;
+        if (display || inline) {
+          const token = document.createElement('span');
+          try {
+            globalThis.katex.render(display ?? inline, token, {
+              output: 'mathml', displayMode: Boolean(display), trust: false, maxExpand: 100,
+            });
+            append(parent, from, to, token);
+          } catch {
+            plain(parent, from, to);
+          }
+        } else if (quote) {
+          append(parent, from, from + 2, '“');
+          render(parent, from + 2, to - 2);
+          append(parent, to - 2, to, '”');
+        } else {
+          const [bodyStart, bodyEnd] = match.indices.groups.emphasis ?? match.indices.groups.italic;
+          const em = document.createElement('em');
+          render(em, start + bodyStart, start + bodyEnd);
+          parent.append(em);
+        }
+        cursor = to;
+      }
+      plain(parent, cursor, end);
+    }
+
+    const fragment = document.createDocumentFragment();
+    if (typeset) render(fragment, 0, text.length);
+    else plain(fragment, 0, text.length);
     container.replaceChildren(fragment);
   }
 
@@ -83,8 +134,6 @@ const BNITZ = (() => {
     container.insertAdjacentHTML('beforeend', `
       <div id="relation-clock"></div>
       <p id="relation-definition" aria-live="polite"></p>
-      <p class="legend-note"><strong>Highlighting.</strong> Use strong highlights for a planet’s main point and soft highlights for helpful context or explanation. Highlight only what helps the reader follow the argument.</p>
-      <p class="legend-note"><strong>Nesting.</strong> Add a planet only when the map needs it. Attach it to the point it directly supports, explains, or qualifies. Choose its relation based on what it does for that parent. The relation applies to the whole branch. Roles can be left empty.</p>
     `);
     const clock = container.querySelector('#relation-clock');
     const definition = container.querySelector('#relation-definition');

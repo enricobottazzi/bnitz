@@ -1,0 +1,90 @@
+{
+  "version": 2,
+  "title": "On the Psychophysical Law",
+  "author": "S. Stevens",
+  "year": 1957,
+  "text": "This paper has rambled far enough afield at this point and it is time to try to restate the issues in briefer compass. The main points are these. Two general classes of perceptual continua can be distinguished by means of four functional criteria. On Class I or \"quantitative\" continua the j.n.d. increases in subjective size as psychological magnitude increases, category rating-scales are concave downward when plotted against psychological magnitude, comparative judgments exhibit a timeorder error (a \"category effect\"), and equisection experiments exhibit hysteresis. On Class II or \"qualitative\" continua these four effects are apparently absent. Class I, called prothetic, includes those continua on which discrimination is mediated by an additive mechanism at the physiological level; Class II, called metathetic, includes those mediated by a substitutive mechanism. On Class I (prothetic) continua the use of one or more of four kinds of direct methods for constructing ratio scales reveals that equal stimulus ratios tend to produce equal subjective ratios. Hence, to a first-order approximation the \"psychophysical law\" relating stimulus and response is a power function. The exponent, as measured on fourteen different continua, varies from about 0.3 for loudness to about 2.0 for visual flash rate. A few workers in the past have conjectured this power function, even starting sometimes from wrong assumptions. Only lately, however, is this law becoming securely anchored in experiment. Fechner's logarithmic law is not found in experiment for the simple reason that resolving power (the j.n.d.) is not constant in psychological units, but is roughly proportional to psychological magnitude. For this reason, all procedures of Fechnerian extraction, like the method of pair comparisons and its related techniques, which seek to build scales out of \"unitized\" measures of dispersion, are not proper methods for scaling magnitudes that behave like Class I or prothetic continua. Whenever psychological scales are called for, direct ratio scaling methods should probably be tried.",
+  "source": "https://citeseerx.ist.psu.edu/document?doi=7784d3af65ef8979784c2e0032226c8898fcedfc&repid=rep1&type=pdf#page=26",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 1068,
+      "end": 1182,
+      "highlights": [
+        {
+          "start": 875,
+          "end": 1067,
+          "grade": "soft"
+        },
+        {
+          "start": 1068,
+          "end": 1182,
+          "grade": "strong"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 146,
+      "end": 247,
+      "highlights": [
+        {
+          "start": 146,
+          "end": 247,
+          "grade": "strong"
+        },
+        {
+          "start": 248,
+          "end": 572,
+          "grade": "soft"
+        },
+        {
+          "start": 573,
+          "end": 652,
+          "grade": "strong"
+        },
+        {
+          "start": 653,
+          "end": 874,
+          "grade": "soft"
+        }
+      ],
+      "parent": "s1",
+      "relation": "scope"
+    },
+    {
+      "id": "s3",
+      "start": 1183,
+      "end": 1311,
+      "highlights": [
+        {
+          "start": 1183,
+          "end": 1311,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "evidence"
+    },
+    {
+      "id": "s4",
+      "start": 1990,
+      "end": 2090,
+      "highlights": [
+        {
+          "start": 1500,
+          "end": 1989,
+          "grade": "soft"
+        },
+        {
+          "start": 1990,
+          "end": 2090,
+          "grade": "strong"
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    }
+  ]
+}

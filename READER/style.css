@@ -23,7 +23,7 @@ main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); ou
 .reader-grid { display: grid; grid-template-columns: minmax(0, 1fr) calc((min(100%, 720px) - var(--reader-gap)) / 2); gap: var(--reader-gap); }
 .reader-text { position: relative; min-width: 0; height: max(280px, calc(100svh - var(--content-top) - 100px)); overflow-x: hidden; overflow-y: auto; overflow-wrap: anywhere; overscroll-behavior: contain; padding: 3px var(--reader-inset) 20px 0; line-height: 1.7; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
 .reader-text:focus-visible { outline: 1px solid #ccc; outline-offset: 8px; }
-.reader-text p { margin: 0 0 20px; white-space: pre-wrap; }
+.reader-text p { margin: 0 0 20px; }
 .reader-text mark { padding: 2px 0; background: transparent; }
 .reader-text mark.strong { background: var(--lime); }
 .reader-text mark.soft { background: var(--soft-lime); }
