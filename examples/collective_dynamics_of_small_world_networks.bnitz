@@ -56,26 +56,17 @@
       "highlights": [
         {
           "start": 1033,
-          "end": 1277,
+          "end": 1173,
           "grade": "strong"
+        },
+        {
+          "start": 1174,
+          "end": 1277,
+          "grade": "soft"
         }
       ],
       "parent": "s1",
       "relation": "implication"
-    },
-    {
-      "id": "s4",
-      "start": 0,
-      "end": 226,
-      "highlights": [
-        {
-          "start": 0,
-          "end": 226,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "background"
     },
     {
       "id": "s5",

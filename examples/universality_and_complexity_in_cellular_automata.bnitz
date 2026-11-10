@@ -18,36 +18,18 @@
           "start": 140,
           "end": 222,
           "grade": "strong"
-        }
-      ]
-    },
-    {
-      "id": "s2",
-      "start": 398,
-      "end": 461,
-      "highlights": [
-        {
-          "start": 398,
-          "end": 461,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "evidence"
-    },
-    {
-      "id": "s5",
-      "start": 302,
-      "end": 398,
-      "highlights": [
+        },
         {
           "start": 302,
-          "end": 398,
-          "grade": "strong"
+          "end": 397,
+          "grade": "soft"
+        },
+        {
+          "start": 398,
+          "end": 460,
+          "grade": "soft"
         }
-      ],
-      "parent": "s1",
-      "relation": "evidence"
+      ]
     },
     {
       "id": "s6",
@@ -60,22 +42,8 @@
           "grade": "strong"
         }
       ],
-      "parent": "s2",
-      "relation": "implication"
-    },
-    {
-      "id": "s7",
-      "start": 0,
-      "end": 113,
-      "highlights": [
-        {
-          "start": 0,
-          "end": 113,
-          "grade": "strong"
-        }
-      ],
       "parent": "s1",
-      "relation": "background"
+      "relation": "implication"
     }
   ],
   "author": "S. Wolfram",

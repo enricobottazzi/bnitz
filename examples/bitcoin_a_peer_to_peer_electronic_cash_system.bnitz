@@ -17,27 +17,32 @@
       ]
     },
     {
-      "id": "s2",
+      "id": "s6",
       "start": 0,
-      "end": 169,
+      "end": 320,
       "highlights": [
         {
           "start": 0,
-          "end": 169,
+          "end": 218,
+          "grade": "soft"
+        },
+        {
+          "start": 223,
+          "end": 320,
           "grade": "strong"
         }
       ],
       "parent": "s1",
-      "relation": "implication"
+      "relation": "problem"
     },
     {
       "id": "s3",
       "start": 404,
-      "end": 721,
+      "end": 720,
       "highlights": [
         {
           "start": 404,
-          "end": 721,
+          "end": 720,
           "grade": "strong"
         }
       ],
@@ -47,63 +52,16 @@
     {
       "id": "s4",
       "start": 721,
-      "end": 883,
+      "end": 884,
       "highlights": [
         {
           "start": 721,
-          "end": 883,
+          "end": 884,
           "grade": "strong"
         }
       ],
       "parent": "s3",
       "relation": "scope"
-    },
-    {
-      "id": "s6",
-      "start": 223,
-      "end": 319,
-      "highlights": [
-        {
-          "start": 223,
-          "end": 319,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "problem"
-    },
-    {
-      "id": "s7",
-      "start": 170,
-      "end": 218,
-      "highlights": [
-        {
-          "start": 170,
-          "end": 218,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s6",
-      "relation": "background"
-    },
-    {
-      "id": "s8",
-      "start": 983,
-      "end": 1120,
-      "highlights": [
-        {
-          "start": 885,
-          "end": 977,
-          "grade": "soft"
-        },
-        {
-          "start": 983,
-          "end": 1120,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s3",
-      "relation": "implication"
     }
   ],
   "author": "S. Nakamoto",

@@ -6,12 +6,12 @@
   "spans": [
     {
       "id": "s1",
-      "start": 969,
-      "end": 1039,
+      "start": 948,
+      "end": 1038,
       "highlights": [
         {
-          "start": 969,
-          "end": 1039,
+          "start": 948,
+          "end": 1038,
           "grade": "strong"
         }
       ]
@@ -60,12 +60,17 @@
     },
     {
       "id": "s8",
-      "start": 315,
-      "end": 400,
+      "start": 0,
+      "end": 399,
       "highlights": [
         {
-          "start": 315,
-          "end": 400,
+          "start": 0,
+          "end": 238,
+          "grade": "soft"
+        },
+        {
+          "start": 239,
+          "end": 399,
           "grade": "strong"
         }
       ],
@@ -85,53 +90,6 @@
       ],
       "parent": "s1",
       "relation": "method"
-    },
-    {
-      "id": "s7",
-      "start": 0,
-      "end": 97,
-      "highlights": [
-        {
-          "start": 0,
-          "end": 97,
-          "grade": "soft"
-        },
-        {
-          "start": 99,
-          "end": 239,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s8",
-      "relation": "background"
-    },
-    {
-      "id": "s10",
-      "start": 1039,
-      "end": 1218,
-      "highlights": [
-        {
-          "start": 1039,
-          "end": 1218,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "evidence"
-    },
-    {
-      "id": "s11",
-      "start": 948,
-      "end": 967,
-      "highlights": [
-        {
-          "start": 948,
-          "end": 967,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "scope"
     }
   ],
   "author": "S. Marks and M. Tegmark",

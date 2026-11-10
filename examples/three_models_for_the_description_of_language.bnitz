@@ -15,8 +15,8 @@
           "grade": "strong"
         }
       ],
-      "parent": "s7",
-      "relation": "evidence"
+      "parent": "s5",
+      "relation": "background"
     },
     {
       "id": "s2",
@@ -47,44 +47,26 @@
       "relation": "method"
     },
     {
-      "id": "s4",
-      "start": 1016,
-      "end": 1118,
-      "highlights": [
-        {
-          "start": 1016,
-          "end": 1118,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s3",
-      "relation": "evidence"
-    },
-    {
       "id": "s5",
       "start": 1124,
       "end": 1323,
       "highlights": [
+        {
+          "start": 1021,
+          "end": 1046,
+          "grade": "strong"
+        },
+        {
+          "start": 1047,
+          "end": 1118,
+          "grade": "soft"
+        },
         {
           "start": 1124,
           "end": 1323,
           "grade": "strong"
         }
       ]
-    },
-    {
-      "id": "s6",
-      "start": 1323,
-      "end": 1432,
-      "highlights": [
-        {
-          "start": 1323,
-          "end": 1432,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s5",
-      "relation": "implication"
     },
     {
       "id": "s7",
@@ -103,30 +85,21 @@
     {
       "id": "s8",
       "start": 198,
-      "end": 333,
+      "end": 531,
       "highlights": [
         {
           "start": 198,
-          "end": 333,
+          "end": 332,
           "grade": "strong"
-        }
-      ],
-      "parent": "s7",
-      "relation": "evidence"
-    },
-    {
-      "id": "s9",
-      "start": 333,
-      "end": 532,
-      "highlights": [
+        },
         {
           "start": 333,
-          "end": 532,
-          "grade": "strong"
+          "end": 531,
+          "grade": "soft"
         }
       ],
-      "parent": "s7",
-      "relation": "evidence"
+      "parent": "s5",
+      "relation": "background"
     }
   ],
   "author": "N. Chomsky",

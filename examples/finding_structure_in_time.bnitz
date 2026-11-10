@@ -10,6 +10,11 @@
       "end": 450,
       "highlights": [
         {
+          "start": 136,
+          "end": 356,
+          "grade": "soft"
+        },
+        {
           "start": 372,
           "end": 450,
           "grade": "strong"
@@ -18,36 +23,22 @@
     },
     {
       "id": "s2",
-      "start": 785,
-      "end": 904,
+      "start": 998,
+      "end": 1157,
       "highlights": [
         {
-          "start": 785,
-          "end": 904,
-          "grade": "strong"
+          "start": 628,
+          "end": 784,
+          "grade": "soft"
         },
         {
-          "start": 1069,
+          "start": 998,
           "end": 1157,
           "grade": "strong"
         }
       ],
       "parent": "s1",
       "relation": "evidence"
-    },
-    {
-      "id": "s3",
-      "start": 628,
-      "end": 784,
-      "highlights": [
-        {
-          "start": 628,
-          "end": 784,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s2",
-      "relation": "method"
     },
     {
       "id": "s4",
@@ -76,20 +67,6 @@
       ],
       "parent": "s1",
       "relation": "problem"
-    },
-    {
-      "id": "s6",
-      "start": 136,
-      "end": 356,
-      "highlights": [
-        {
-          "start": 136,
-          "end": 356,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "background"
     },
     {
       "id": "s7",

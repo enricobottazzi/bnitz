@@ -1,6 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <title>Method circular motif</title>
+  <title>Circular tile motif</title>
   <circle cx="50" cy="50" r="43.5" fill="#fff" stroke="#000" stroke-width="13"/>
-  <path d="M50 1V19 M99 50H81 M50 99V81 M1 50H19" transform="rotate(45 50 50)"
-        fill="none" stroke="#000" stroke-width="13" stroke-linecap="round"/>
+  <defs>
+    <g id="quadrant">
+      <path d="M9 42 Q16 17 41 9 Q34 34 9 42Z"/>
+      <path d="M50 12 Q47 25 38 34 L42 38 Q47 34 50 27 Q53 34 58 38 L62 34 Q53 25 50 12Z"/>
+    </g>
+  </defs>
+  <g fill="#000" transform="translate(10 10) scale(0.8)">
+    <use href="#quadrant"/>
+    <use href="#quadrant" transform="rotate(90 50 50)"/>
+    <use href="#quadrant" transform="rotate(180 50 50)"/>
+    <use href="#quadrant" transform="rotate(270 50 50)"/>
+  </g>
 </svg>

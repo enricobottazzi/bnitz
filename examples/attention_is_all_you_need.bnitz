@@ -7,11 +7,11 @@
     {
       "id": "s1",
       "start": 239,
-      "end": 300,
+      "end": 393,
       "highlights": [
         {
           "start": 239,
-          "end": 300,
+          "end": 393,
           "grade": "strong"
         }
       ]
@@ -19,44 +19,16 @@
     {
       "id": "s2",
       "start": 0,
-      "end": 142,
-      "highlights": [
-        {
-          "start": 0,
-          "end": 142,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "problem"
-    },
-    {
-      "id": "s3",
-      "start": 143,
       "end": 238,
       "highlights": [
         {
-          "start": 143,
+          "start": 0,
           "end": 238,
           "grade": "strong"
         }
       ],
       "parent": "s1",
       "relation": "background"
-    },
-    {
-      "id": "s4",
-      "start": 302,
-      "end": 393,
-      "highlights": [
-        {
-          "start": 302,
-          "end": 393,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "method"
     },
     {
       "id": "s5",
@@ -80,29 +52,15 @@
     {
       "id": "s8",
       "start": 973,
-      "end": 1033,
-      "highlights": [
-        {
-          "start": 973,
-          "end": 1033,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "implication"
-    },
-    {
-      "id": "s9",
-      "start": 1034,
       "end": 1136,
       "highlights": [
         {
-          "start": 1034,
+          "start": 973,
           "end": 1136,
           "grade": "strong"
         }
       ],
-      "parent": "s8",
+      "parent": "s1",
       "relation": "evidence"
     }
   ],

@@ -18,6 +18,18 @@ ROUTES = {
 }
 
 
+def read_library(path, from_folder):
+    files = sorted(path.rglob('*')) if from_folder else [path]
+    return [
+        {
+            'name': file.relative_to(path).as_posix() if from_folder else file.name,
+            'text': file.read_text(encoding='utf-8-sig'),
+        }
+        for file in files
+        if file.suffix.lower() == '.bnitz' and file.is_file()
+    ]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('path', type=Path, help='a .bnitz file or a folder of .bnitz files')
@@ -25,25 +37,23 @@ def main():
     args = parser.parse_args()
     path = args.path.expanduser()
     from_folder = path.is_dir()
-    files = sorted(path.rglob('*')) if from_folder else [path]
-    files = [file for file in files if file.suffix.lower() == '.bnitz' and file.is_file()]
-    if not files:
-        parser.error(f'No .bnitz files found at {path}')
-
-    library = []
-    for file in files:
-        name = file.relative_to(path).as_posix() if from_folder else file.name
-        try:
-            library.append({'name': name, 'text': file.read_text(encoding='utf-8-sig')})
-        except (OSError, UnicodeError) as error:
-            parser.exit(1, f'Could not read {file}: {error}\n')
-    payload = json.dumps({'fromFolder': from_folder, 'files': library}).encode()
+    try:
+        if not read_library(path, from_folder):
+            parser.error(f'No .bnitz files found at {path}')
+    except (OSError, UnicodeError) as error:
+        parser.exit(1, f'Could not read the library at {path}: {error}\n')
 
     class ReaderHandler(BaseHTTPRequestHandler):
         def do_GET(self):
             route = urlsplit(self.path).path
             if route == '/library.json':
-                content, content_type = payload, 'application/json'
+                try:
+                    library = read_library(path, from_folder)
+                except (OSError, UnicodeError):
+                    self.send_error(500, 'Could not read the library')
+                    return
+                content = json.dumps({'fromFolder': from_folder, 'files': library}).encode()
+                content_type = 'application/json'
             else:
                 resource = ROUTES.get(route)
                 if route.startswith('/assets/') and route.count('/') == 2 and route.endswith('.svg'):
@@ -59,6 +69,7 @@ def main():
                     return
             self.send_response(200)
             self.send_header('Content-Type', content_type)
+            self.send_header('Cache-Control', 'no-store')
             self.send_header('Content-Length', str(len(content)))
             self.end_headers()
             self.wfile.write(content)

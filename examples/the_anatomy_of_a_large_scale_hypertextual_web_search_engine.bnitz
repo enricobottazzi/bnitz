@@ -36,20 +36,6 @@
       "relation": "problem"
     },
     {
-      "id": "s3",
-      "start": 1397,
-      "end": 1537,
-      "highlights": [
-        {
-          "start": 1397,
-          "end": 1537,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s2",
-      "relation": "problem"
-    },
-    {
       "id": "s4",
       "start": 267,
       "end": 393,

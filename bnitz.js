@@ -5,7 +5,7 @@ const BNITZ = (() => {
     method: ['Method', 2, 'method', 'Describes how the parent’s result was obtained or how its proposed work would be carried out.'],
     implication: ['Implication', 3, 'implication', 'States what follows from the parent, such as a prediction, an application, or a next step.'],
     evidence: ['Evidence', 4, 'evidence', 'Uses results, analyses, or comparisons to support, challenge, or assess the parent.'],
-    scope: ['Scope', 5, 'scope', 'Specifies where, when, or under what conditions the parent applies.'],
+    scope: ['Scope', 5, 'scope', 'Specifies where, when, or under what conditions the parent applies, including limitations and assumptions. Give a limitation or assumption its own Scope planet when it needs separate attention, and fold brief qualifiers into the parent.'],
   };
 
   function validRange(text, start, end) {
@@ -50,7 +50,7 @@ const BNITZ = (() => {
   }
 
   const label = span => relations[span.relation]?.[0] ?? 'Nucleus';
-  const iconUrl = icon => `../assets/${icon}.svg?v=0.0.2`;
+  const iconUrl = icon => `../assets/${icon}.svg?v=0.0.4`;
   const highlights = span => span.highlights ?? [{start: span.start, end: span.end, grade: 'strong'}];
 
   function paintText(container, text, ranges, onMark) {
@@ -83,6 +83,8 @@ const BNITZ = (() => {
     container.insertAdjacentHTML('beforeend', `
       <div id="relation-clock"></div>
       <p id="relation-definition" aria-live="polite"></p>
+      <p class="legend-note"><strong>Highlighting.</strong> Use strong highlights for a planet’s main point and soft highlights for helpful context or explanation. Highlight only what helps the reader follow the argument.</p>
+      <p class="legend-note"><strong>Nesting.</strong> Add a planet only when the map needs it. Attach it to the point it directly supports, explains, or qualifies. Choose its relation based on what it does for that parent. The relation applies to the whole branch. Roles can be left empty.</p>
     `);
     const clock = container.querySelector('#relation-clock');
     const definition = container.querySelector('#relation-definition');

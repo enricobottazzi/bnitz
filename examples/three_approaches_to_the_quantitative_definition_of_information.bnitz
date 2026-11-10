@@ -6,12 +6,12 @@
   "spans": [
     {
       "id": "s1",
-      "start": 197,
-      "end": 223,
+      "start": 186,
+      "end": 268,
       "highlights": [
         {
-          "start": 197,
-          "end": 223,
+          "start": 186,
+          "end": 268,
           "grade": "strong"
         }
       ]
@@ -34,25 +34,6 @@
       ],
       "parent": "s1",
       "relation": "background"
-    },
-    {
-      "id": "s3",
-      "start": 229,
-      "end": 237,
-      "highlights": [
-        {
-          "start": 229,
-          "end": 237,
-          "grade": "strong"
-        },
-        {
-          "start": 238,
-          "end": 268,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "method"
     }
   ],
   "author": "A. Kolmogorov",

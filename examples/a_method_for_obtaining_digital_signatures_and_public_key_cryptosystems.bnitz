@@ -23,8 +23,13 @@
       "highlights": [
         {
           "start": 197,
-          "end": 455,
+          "end": 262,
           "grade": "strong"
+        },
+        {
+          "start": 264,
+          "end": 454,
+          "grade": "soft"
         }
       ],
       "parent": "s1",
@@ -37,11 +42,11 @@
       "highlights": [
         {
           "start": 457,
-          "end": 706,
+          "end": 615,
           "grade": "strong"
         },
         {
-          "start": 707,
+          "start": 616,
           "end": 798,
           "grade": "soft"
         }
@@ -74,7 +79,7 @@
           "grade": "strong"
         }
       ],
-      "parent": "s4",
+      "parent": "s1",
       "relation": "scope"
     }
   ],

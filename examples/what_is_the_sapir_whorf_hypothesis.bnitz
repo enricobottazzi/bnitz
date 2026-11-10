@@ -22,60 +22,18 @@
       ]
     },
     {
-      "id": "s2",
-      "start": 0,
-      "end": 77,
-      "highlights": [
-        {
-          "start": 0,
-          "end": 77,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "background"
-    },
-    {
-      "id": "s6",
-      "start": 77,
-      "end": 128,
-      "highlights": [
-        {
-          "start": 77,
-          "end": 128,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s1",
-      "relation": "method"
-    },
-    {
       "id": "s7",
-      "start": 337,
+      "start": 256,
       "end": 372,
       "highlights": [
         {
-          "start": 337,
+          "start": 256,
           "end": 372,
           "grade": "strong"
         }
       ],
       "parent": "s1",
       "relation": "evidence"
-    },
-    {
-      "id": "s8",
-      "start": 256,
-      "end": 335,
-      "highlights": [
-        {
-          "start": 256,
-          "end": 335,
-          "grade": "strong"
-        }
-      ],
-      "parent": "s7",
-      "relation": "method"
     }
   ],
   "author": "P. Kay and W. Kempton",
