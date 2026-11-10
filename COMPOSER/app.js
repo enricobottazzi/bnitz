@@ -26,7 +26,7 @@ let originalHighlights = null;
 
 function describe(planet) {
   const text = article.text.slice(planet.start, planet.end).trim().replace(/\s+/g, ' ');
-  return `${BNITZ.label(planet)} · ${text.length > 42 ? text.slice(0, 42) + '…' : text}`;
+  return `${BNITZModel.label(planet)} · ${text.length > 42 ? text.slice(0, 42) + '…' : text}`;
 }
 
 function possibleParents(planet) {
@@ -46,7 +46,7 @@ function controls() {
   const editing = Boolean(originalHighlights);
   const planet = editing ? article.spans.find(item => item.id === selectedId) : null;
   const editingNucleus = planet?.id === article.nucleus;
-  const options = Object.entries(BNITZ.relations).map(([key, [label]]) => {
+  const options = Object.entries(BNITZModel.relations).map(([key, [label]]) => {
     const option = new Option(label, key);
     option.disabled = !hasNucleus;
     return option;
@@ -70,7 +70,7 @@ function controls() {
 
 function renderArticle() {
   const planets = article.spans.filter(planet => planet.id === selectedId ? !originalHighlights : showAll.checked);
-  BNITZ.paintText(preview, article.text, [...planets.flatMap(BNITZ.highlights), ...draftHighlights]);
+  BNITZView.paintText(preview, article.text, [...planets.flatMap(BNITZModel.highlights), ...draftHighlights]);
   remove.hidden = editPlanet.hidden = !selectedId || Boolean(originalHighlights);
   editPlanet.disabled = Boolean(draftHighlights.length);
   clearHighlights.hidden = !draftHighlights.length;
@@ -78,16 +78,16 @@ function renderArticle() {
   updateHighlightButtons();
 }
 
-function captureSelection() {
-  if (preview.hidden) return;
+function selectedRange() {
+  if (preview.hidden) return {start: abstract.selectionStart, end: abstract.selectionEnd};
   const selection = window.getSelection();
-  if (!selection.rangeCount || selection.isCollapsed) return;
+  if (!selection.rangeCount || selection.isCollapsed) return pendingRange;
   const range = selection.getRangeAt(0);
   const startsInside = preview.contains(range.startContainer);
   const endsInside = preview.contains(range.endContainer);
   if (!startsInside && !endsInside) {
     pendingRange = null;
-    return;
+    return null;
   }
   // A drag past the text can place one endpoint outside the preview.
   const prefix = document.createRange();
@@ -100,49 +100,45 @@ function captureSelection() {
     start: startsInside ? offsetInPreview(range.startContainer, range.startOffset) : 0,
     end: endsInside ? offsetInPreview(range.endContainer, range.endOffset) : article.text.length,
   };
-}
-
-function selectedRange() {
-  if (preview.hidden) return {start: abstract.selectionStart, end: abstract.selectionEnd};
-  captureSelection();
   return pendingRange;
 }
 
 function updateHighlightButtons() {
   const {start, end} = selectedRange() ?? {};
-  strong.disabled = soft.disabled = !BNITZ.validRange(article.text, start, end);
+  strong.disabled = soft.disabled = !BNITZModel.validRange(article.text, start, end);
+}
+
+function showSource(editing) {
+  abstract.hidden = !editing;
+  preview.hidden = editing;
+  editText.textContent = editing ? 'Done editing' : 'Edit text';
 }
 
 function editMode(editing) {
   pendingRange = selectedRange();
-  abstract.hidden = !editing;
-  preview.hidden = editing;
-  editText.textContent = editing ? 'Done editing' : 'Edit text';
-  if (editing) {
-    abstract.focus();
-    if (pendingRange) abstract.setSelectionRange(pendingRange.start, pendingRange.end);
-    updateHighlightButtons();
-  } else {
-    renderArticle();
-  }
+  showSource(editing);
+  if (!editing) return renderArticle();
+  abstract.focus();
+  if (pendingRange) abstract.setSelectionRange(pendingRange.start, pendingRange.end);
+  updateHighlightButtons();
 }
 
 function selectPlanet(planet) {
   selectedId = planet.id;
-  BNITZ.select(map, selectedId);
+  BNITZView.select(map, selectedId);
   showLegendRelation(planet.relation ?? 'nucleus');
-  if (preview.hidden) editMode(false);
-  else renderArticle();
   pendingRange = null;
-  updateHighlightButtons();
+  showSource(false);
+  renderArticle();
   status.textContent = '';
 }
 
 function redraw() {
-  if (article.nucleus) BNITZ.map(map, article, selectPlanet);
+  if (article.nucleus) BNITZView.map(map, article, selectPlanet);
   else map.replaceChildren();
-  BNITZ.select(map, selectedId);
+  BNITZView.select(map, selectedId);
   renderArticle();
+  status.textContent = '';
 }
 
 function resetDraft() {
@@ -153,9 +149,9 @@ function resetDraft() {
 editPlanet.addEventListener('click', () => {
   const planet = article.spans.find(item => item.id === selectedId);
   if (!planet || draftHighlights.length) return;
-  if (preview.hidden) editMode(false);
+  showSource(false);
   pendingRange = null;
-  originalHighlights = draftHighlights = BNITZ.highlights(planet);
+  originalHighlights = draftHighlights = BNITZModel.highlights(planet);
   controls();
   renderArticle();
   (relation.disabled ? preview : relation).focus();
@@ -186,7 +182,7 @@ showAll.addEventListener('change', () => {
 
 function setHighlight(grade) {
   const {start, end} = selectedRange() ?? {};
-  if (!BNITZ.validRange(article.text, start, end)) {
+  if (!BNITZModel.validRange(article.text, start, end)) {
     status.textContent = 'Select text in the article first.';
     return;
   }
@@ -196,13 +192,13 @@ function setHighlight(grade) {
     const parts = [];
     if (range.start < start) parts.push({...range, end: start});
     if (range.end > end) parts.push({...range, start: end});
-    return parts.filter(part => BNITZ.validRange(article.text, part.start, part.end));
+    return parts.filter(part => BNITZModel.validRange(article.text, part.start, part.end));
   });
   draftHighlights.push({start, end, grade});
   if (!originalHighlights) selectedId = null;
-  BNITZ.select(map, selectedId);
+  BNITZView.select(map, selectedId);
   window.getSelection().removeAllRanges();
-  if (preview.hidden) editMode(false);
+  showSource(false);
   pendingRange = null;
   renderArticle();
   status.textContent = '';
@@ -252,24 +248,23 @@ abstract.addEventListener('input', () => {
   const spans = article.spans.map(planet => {
     const updated = {...remap(planet)};
     if (planet.highlights) {
-      updated.highlights = planet.highlights.map(remap).filter(range => BNITZ.validRange(next, range.start, range.end));
+      updated.highlights = planet.highlights.map(remap).filter(range => BNITZModel.validRange(next, range.start, range.end));
     }
     return updated;
   });
-  if (spans.some(planet => !BNITZ.validRange(next, planet.start, planet.end))) {
+  if (spans.some(planet => !BNITZModel.validRange(next, planet.start, planet.end))) {
     abstract.value = previous;
     abstract.setSelectionRange(left, before);
     status.textContent = 'Remove the affected planet before deleting its text.';
     return;
   }
   article = {...article, text: next, spans};
-  draftHighlights = draftHighlights.map(remap).filter(range => BNITZ.validRange(next, range.start, range.end));
+  draftHighlights = draftHighlights.map(remap).filter(range => BNITZModel.validRange(next, range.start, range.end));
   for (const option of parent.options) {
     const planet = spans.find(item => item.id === option.value);
     if (planet) option.text = describe(planet);
   }
   redraw();
-  status.textContent = '';
 });
 
 document.querySelector('#annotation').addEventListener('submit', event => {
@@ -279,42 +274,32 @@ document.querySelector('#annotation').addEventListener('submit', event => {
     return;
   }
   const editing = Boolean(originalHighlights);
-  if (draftHighlights !== originalHighlights) draftHighlights.sort((a, b) => a.start - b.start);
-  const first = draftHighlights[0];
-  if (editing) {
-    const planet = article.spans.find(item => item.id === selectedId);
-    if (planet.id !== article.nucleus) {
-      planet.parent = parent.value;
-      planet.relation = relation.value;
-    }
-    if (draftHighlights !== originalHighlights) {
-      planet.highlights = draftHighlights;
-      if (first) {
-        planet.start = first.start;
-        planet.end = first.end;
-      }
-    }
-  } else {
+  let planet = article.spans.find(item => item.id === selectedId);
+  if (!editing) {
     let nextId = article.spans.length + 1;
-    while (article.spans.some(planet => planet.id === `s${nextId}`)) nextId++;
-    const id = `s${nextId}`;
-    const planet = {id, start: first.start, end: first.end, highlights: draftHighlights};
-    if (article.nucleus) {
-      planet.parent = parent.value;
-      planet.relation = relation.value;
-    } else {
-      article.nucleus = id;
-    }
+    while (article.spans.some(item => item.id === `s${nextId}`)) nextId++;
+    planet = {id: `s${nextId}`};
     article.spans.push(planet);
-    selectedId = id;
+    selectedId = planet.id;
+  }
+  if (!article.nucleus) article.nucleus = planet.id;
+  else if (planet.id !== article.nucleus) {
+    planet.parent = parent.value;
+    planet.relation = relation.value;
+  }
+  if (draftHighlights !== originalHighlights) {
+    planet.highlights = draftHighlights.sort((a, b) => a.start - b.start);
+    const [first] = planet.highlights;
+    if (first) {
+      planet.start = first.start;
+      planet.end = first.end;
+    }
   }
   resetDraft();
-  if (preview.hidden) editMode(false);
-  pendingRange = null;
+  showSource(false);
   controls();
   parent.value = article.nucleus;
   redraw();
-  status.textContent = '';
   if (editing) editPlanet.focus();
 });
 
@@ -331,24 +316,19 @@ remove.addEventListener('click', () => {
   selectedId = pendingRange = null;
   controls();
   redraw();
-  status.textContent = '';
 });
 
 function openArticle(opened, ignoredField) {
   const hasDraft = abstract.value || metadata.some(field => field !== ignoredField && field.value);
-  if (hasDraft && !window.confirm('Replace the current draft?')) return false;
+  if (hasDraft && !window.confirm('Replace the current draft?')) return;
   article = opened;
   resetDraft();
   for (const field of metadata) field.value = article[field.id] ?? '';
   abstract.value = article.text;
   selectedId = null;
-  abstract.hidden = true;
-  preview.hidden = false;
-  editText.textContent = 'Edit text';
+  showSource(false);
   controls();
   redraw();
-  status.textContent = '';
-  return true;
 }
 
 function isGroupAuthor(name) {
@@ -376,7 +356,7 @@ file.addEventListener('change', async () => {
   file.value = '';
   if (!selected) return;
   try {
-    const opened = BNITZ.validate(JSON.parse(await selected.text()));
+    const opened = BNITZModel.validate(JSON.parse(await selected.text()));
     openArticle(opened);
   } catch (error) {
     status.textContent = error.message;
@@ -435,7 +415,7 @@ document.querySelector('#save').addEventListener('click', () => {
       if (value) result[field.id] = field.type === 'number' ? field.valueAsNumber : value;
       else delete result[field.id];
     }
-    BNITZ.validate(result);
+    BNITZModel.validate(result);
     const url = URL.createObjectURL(new Blob([JSON.stringify(result, null, 2) + '\n'], {type: 'application/json'}));
     const link = document.createElement('a');
     link.href = url;
@@ -449,7 +429,7 @@ document.querySelector('#save').addEventListener('click', () => {
   }
 });
 
-const showLegendRelation = BNITZ.legend(document.querySelector('#legend'), key => {
+const showLegendRelation = BNITZView.legend(document.querySelector('#legend'), key => {
   const option = [...relation.options].find(option => option.value === key);
   if (!relation.disabled && option && !option.disabled) relation.value = key;
 });

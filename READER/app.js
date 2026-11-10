@@ -1,3 +1,4 @@
+const {textElement} = BNITZView;
 const readings = document.querySelector('#readings');
 const papers = document.querySelector('#papers');
 const reading = document.querySelector('#reading');
@@ -5,19 +6,13 @@ const title = document.querySelector('#title');
 const metadata = document.querySelector('#metadata');
 const abstract = document.querySelector('#abstract');
 const map = document.querySelector('#map');
-const showLegendRelation = BNITZ.legend(document.querySelector('#legend'));
+const showLegendRelation = BNITZView.legend(document.querySelector('#legend'));
 const status = document.querySelector('#status');
 const library = new Map();
 const links = new Map();
 let active;
 let selectedId;
 let hovered;
-
-function textElement(tag, text) {
-  const element = document.createElement(tag);
-  element.textContent = text;
-  return element;
-}
 
 function sourceLink(source) {
   if (typeof source !== 'string') return null;
@@ -37,7 +32,7 @@ function sourceLink(source) {
 function paintArticle(article) {
   links.clear();
   const ranges = article.spans.flatMap(planet =>
-    BNITZ.highlights(planet).map(range => ({...range, planetId: planet.id})));
+    BNITZModel.highlights(planet).map(range => ({...range, planetId: planet.id})));
   const fragment = document.createDocumentFragment();
   let offset = 0;
   for (const part of article.text.split(/(\r?\n[ \t]*(?:\r?\n)+)/)) {
@@ -49,7 +44,7 @@ function paintArticle(article) {
         start: Math.max(0, range.start - offset),
         end: Math.min(part.length, range.end - offset),
       }));
-      BNITZ.paintText(paragraph, part, local, (mark, matches) => links.set(mark, matches), {typeset: true});
+      BNITZView.paintText(paragraph, part, local, (mark, matches) => links.set(mark, matches), {typeset: true});
       fragment.append(paragraph);
     }
     offset = end;
@@ -59,7 +54,7 @@ function paintArticle(article) {
 
 function highlight() {
   const ids = new Set(hovered ? links.get(hovered).map(range => range.planetId) : selectedId ? [selectedId] : []);
-  BNITZ.select(map, ...ids);
+  BNITZView.select(map, ...ids);
   for (const [mark, ranges] of links) {
     const matches = ranges.filter(range => ids.has(range.planetId));
     mark.className = matches.some(range => range.grade === 'strong') ? 'strong' : matches.length ? 'soft' : '';
@@ -100,7 +95,7 @@ function show() {
     metadata.hidden = !details.length;
     paintArticle(article);
     abstract.scrollTop = 0;
-    BNITZ.map(map, article, selectPlanet);
+    BNITZView.map(map, article, selectPlanet);
     title.focus({preventScroll: true});
   } else {
     previous?.row.focus({preventScroll: true});
@@ -116,7 +111,7 @@ async function load() {
   const errors = [];
   for (const {name, text} of files) {
     try {
-      const article = BNITZ.validate(JSON.parse(text));
+      const article = BNITZModel.validate(JSON.parse(text));
       const author = typeof article.author === 'string' ? article.author.trim() : '';
       const year = Number.isInteger(article.year) && article.year > 0 && article.year < 10000 ? article.year : null;
       entries.push({name, article, author, year});
