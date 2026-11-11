@@ -1,5 +1,6 @@
+import {complete} from './openrouter.mjs';
+
 const model = 'google/gemini-2.5-flash';
-const endpoint = 'https://openrouter.ai/api/v1/chat/completions';
 
 function object(properties) {
   return {type: 'object', properties, required: Object.keys(properties), additionalProperties: false};
@@ -82,18 +83,10 @@ function toDocument({planets}, {title, text, source}) {
 export async function generateMap(article, apiKey, signal) {
   const messages = await prompt(article);
   for (let attempt = 0; attempt < 2; attempt++) {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        model, messages, max_tokens: 6000, provider: {require_parameters: true},
-        response_format: {type: 'json_schema', json_schema: {name: 'bnitz_abstract_map', strict: true, schema}},
-      }),
-      signal: AbortSignal.any([signal, AbortSignal.timeout(45000)]),
-    });
-    if (!response.ok) throw new Error(`OpenRouter returned HTTP ${response.status}.`);
-    const completion = await response.json();
-    const content = completion.choices?.[0]?.message?.content;
+    const content = await complete(apiKey, {
+      model, messages, max_tokens: 6000, provider: {require_parameters: true},
+      response_format: {type: 'json_schema', json_schema: {name: 'bnitz_abstract_map', strict: true, schema}},
+    }, AbortSignal.any([signal, AbortSignal.timeout(45000)]));
     try {
       return toDocument(JSON.parse(content), article);
     } catch (error) {

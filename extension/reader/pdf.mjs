@@ -1,75 +1,29 @@
 import * as pdfjs from '../pdfjs/pdf.min.mjs';
-import {arxivId, arxivPaper} from './arxiv.mjs';
+import {readPdfAbstract} from './abstract.mjs';
+import {locateWithGemini} from './abstract-fallback.mjs';
+import {arxivId, arxivPaper, loadArxivAbstract} from './arxiv.mjs';
+import {loadOpenRouterKey} from './openrouter.mjs';
 
 const asset = path => new URL(`../pdfjs/${path}`, import.meta.url).href;
 pdfjs.GlobalWorkerOptions.workerSrc = asset('pdf.worker.min.mjs');
 
-function textLines(items) {
-  const lines = [];
-  let parts = [];
-  let index = 0;
-  for (const item of items) {
-    if (item.str) {
-      if (item.transform[0] > 0 && Math.abs(item.transform[1]) < 0.01) {
-        parts.push({index, text: item.str, y: item.transform[5], height: item.height});
-      }
-      index++;
-    }
-    if (item.hasEOL && parts.length) {
-      lines.push({...parts[0], parts, text: parts.map(part => part.text).join('').trim()});
-      parts = [];
-    }
-  }
-  if (parts.length) lines.push({...parts[0], parts, text: parts.map(part => part.text).join('').trim()});
-  return lines;
-}
-
-function extractAbstract(items, paper) {
-  const lines = textLines(items);
-  const heading = lines.findIndex(line => /^abstract\s*[:.]?$/i.test(line.text));
-  if (heading < 0) throw new Error('No abstract heading was found on the first PDF page.');
-
-  const title = lines.slice(0, heading).reduce((largest, line) =>
-    line.height > (largest?.height ?? 0) ? line : largest, null)?.text || `arXiv ${paper.id}`;
-  const segments = [];
-  let text = '';
-  let previous = null;
-  for (const line of lines.slice(heading + 1)) {
-    if (/^(?:\d+\s+)?(?:introduction|keywords|index terms)\b/i.test(line.text)) break;
-    if (previous && (line.y > previous.y || previous.y - line.y > 1.8 * previous.height)) break;
-    // Keep printed compounds such as “English-to-German” together across line wraps.
-    if (previous && !text.endsWith('-') && !/\s$/.test(text)) text += ' ';
-    for (const part of line.parts) {
-      segments.push({index: part.index, text: part.text, start: text.length, end: text.length + part.text.length});
-      text += part.text;
-    }
-    previous = line;
-  }
-  if (!text.trim()) throw new Error('The abstract could not be extracted from the first PDF page.');
-  return {article: {title, text, source: paper.source}, segments};
-}
-
-function paintHighlights(layer, segments, ranges) {
+function addPageHighlights(layer, spans, ranges, marks) {
   // PDF.js may remove presentation roles when linking annotations to text.
   const nodes = [...layer.querySelectorAll('span')].map(span => span.firstChild)
     .filter(node => node?.nodeType === Node.TEXT_NODE);
-  const marks = {strong: new Highlight(), soft: new Highlight()};
-  marks.strong.priority = 1;
-  for (const segment of segments) {
-    const node = nodes[segment.index];
-    if (node?.textContent !== segment.text) continue;
+  for (const span of spans) {
+    const node = nodes[span.index];
+    if (node?.textContent !== span.text) continue;
     for (const {start, end, grade} of ranges) {
-      const from = Math.max(start, segment.start);
-      const to = Math.min(end, segment.end);
+      const from = Math.max(start, span.start);
+      const to = Math.min(end, span.end);
       if (from >= to || !Object.hasOwn(marks, grade)) continue;
       const range = new Range();
-      range.setStart(node, from - segment.start);
-      range.setEnd(node, to - segment.start);
+      range.setStart(node, span.nodeOffset + from - span.start);
+      range.setEnd(node, span.nodeOffset + to - span.start);
       marks[grade].add(range);
     }
   }
-  CSS.highlights.set('bnitz-soft', marks.soft);
-  CSS.highlights.set('bnitz-strong', marks.strong);
 }
 
 async function loadViewer(streamUrl) {
@@ -107,13 +61,22 @@ async function start() {
 
   const loading = loadViewer(streamUrl);
   let abstract;
-  const getAbstract = () => abstract ??= loading.then(async ({doc}) => {
-    const page = await doc.getPage(1);
-    const {items} = await page.getTextContent({includeMarkedContent: true, disableNormalization: true});
-    return extractAbstract(items, paper);
-  });
+  const getAbstract = () => abstract ??= Promise.all([loading, loadArxivAbstract(paper)])
+    .then(([{doc}, metadata]) => readPdfAbstract(doc, metadata, async (fragments, reference) =>
+      locateWithGemini(fragments, reference, await loadOpenRouterKey())));
 
   let selected;
+  function paintHighlights(viewer) {
+    const marks = {strong: new Highlight(), soft: new Highlight()};
+    marks.strong.priority = 1;
+    for (const [pageNumber, spans] of selected.pages) {
+      const layer = viewer.getPageView(pageNumber - 1)?.textLayer?.div;
+      if (layer?.isConnected) addPageHighlights(layer, spans, selected.ranges, marks);
+    }
+    CSS.highlights.set('bnitz-soft', marks.soft);
+    CSS.highlights.set('bnitz-strong', marks.strong);
+  }
+
   chrome.runtime.onMessage.addListener((message, _sender, respond) => {
     if (message.tabId !== tabId || message.id !== paper.id) return;
     if (message.type === 'bnitz-abstract') {
@@ -121,21 +84,18 @@ async function start() {
       return true;
     }
     if (message.type === 'bnitz-highlight') {
-      Promise.all([loading, getAbstract()]).then(([{viewer}, {segments}]) => {
-        selected = {segments, ranges: message.ranges};
-        const layer = viewer.getPageView(0)?.textLayer?.div;
-        if (layer?.isConnected) paintHighlights(layer, segments, selected.ranges);
+      Promise.all([loading, getAbstract()]).then(([{viewer}, {spans}]) => {
+        selected = {pages: Map.groupBy(spans, span => span.pageNumber), ranges: message.ranges};
+        paintHighlights(viewer);
         respond(true);
       }, () => respond(false));
       return true;
     }
   });
 
-  const {eventBus} = await loading;
-  eventBus.on('textlayerrendered', ({pageNumber, source}) => {
-    if (pageNumber === 1 && selected) {
-      paintHighlights(source.textLayer.div, selected.segments, selected.ranges);
-    }
+  const {eventBus, viewer} = await loading;
+  eventBus.on('textlayerrendered', ({pageNumber}) => {
+    if (selected?.pages.has(pageNumber)) paintHighlights(viewer);
   });
 }
 

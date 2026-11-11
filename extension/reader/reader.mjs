@@ -1,5 +1,6 @@
 import {arxivId} from './arxiv.mjs';
 import {generateMap} from './generate.mjs';
+import {loadOpenRouterKey} from './openrouter.mjs';
 
 const status = document.querySelector('#status');
 const progress = document.querySelector('#progress');
@@ -47,9 +48,7 @@ async function start() {
     if (signal.aborted) return;
     if (!result?.article) throw new Error(result?.error ?? 'BNITZ could not connect to the PDF.');
 
-    const key = await fetch('./local-key', {signal});
-    if (!key.ok) throw new Error('The local BNITZ build is missing its OpenRouter key.');
-    const article = await generateMap(result.article, (await key.text()).trim(), signal);
+    const article = await generateMap(result.article, await loadOpenRouterKey(signal), signal);
     if (signal.aborted) return;
     BNITZView.map(map, article, async planet => {
       const selected = await chrome.runtime.sendMessage({
