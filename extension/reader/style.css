@@ -14,8 +14,8 @@ body { margin: 0; }
   width: 28px;
   height: 28px;
   padding: 0;
-  border: 1px solid var(--line);
-  background: white;
+  border: 0;
+  background: none;
   color: #000;
 }
 .panel-actions svg {
@@ -27,7 +27,7 @@ body { margin: 0; }
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-#rules-link:hover { border-color: #222; }
+.panel-actions button:active { background: none; }
 
 #progress {
   display: grid;
