@@ -1,5 +1,7 @@
 # BNITZ rules
 
+![Nucleus at the center, with Problem, Background, Method, Implication, Evidence, and Scope orbiting clockwise from the top.](assets/planet-configuration.svg)
+
 BNITZ is inspired by Rhetorical Structure Theory (RST).
 
 ## Legend
