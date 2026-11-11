@@ -94,7 +94,32 @@ function findExactMatch(indexed, reference) {
   const start = starts[match];
   const end = ends[match + reference.length - 1];
   if (/[\p{L}\p{N}]/u.test(text[start - 1] ?? '') || /[\p{L}\p{N}]/u.test(text[end] ?? '')) return null;
-  return clipText(indexed, start, end);
+  return {start, end};
+}
+
+export function matchPdfQuote(block, quote) {
+  return findExactMatch(block, normalized(quote).key);
+}
+
+function bodyBlocks(groups, abstract, words) {
+  if (!groups.length) return [];
+  const last = abstract.spans.reduce((latest, span) =>
+    span.pageNumber > latest.pageNumber ||
+    (span.pageNumber === latest.pageNumber && span.index > latest.index) ? span : latest);
+  return groups.map(group => indexedText(group.filter(([first]) =>
+    first.pageNumber > last.pageNumber ||
+    (first.pageNumber === last.pageNumber && first.index > last.index)), words))
+    .filter(block => block.text.trim());
+}
+
+function selectedBodyLines(lines, ranges) {
+  if (!Array.isArray(ranges)) return [];
+  return ranges.flatMap(range => {
+    const {first, last} = range ?? {};
+    if (!Number.isInteger(first) || !Number.isInteger(last) || first < 1 || last < first ||
+        last > lines.length || lines[first - 1][0].pageNumber !== lines[last - 1][0].pageNumber) return [];
+    return [lines.slice(first - 1, last)];
+  });
 }
 
 async function findWithFallback(lines, metadata, words, locate) {
@@ -120,21 +145,37 @@ async function findWithFallback(lines, metadata, words, locate) {
   const end = indexed.text.trimEnd().length - suffix.length;
   const text = indexed.text.slice(start, end);
   if (/[\p{Cc}\uFFFD]/u.test(text.replace(/\s/gu, ''))) return null;
-  return clipText(indexed, start + text.length - text.trimStart().length, end - (text.length - text.trimEnd().length));
+  const match = clipText(indexed, start + text.length - text.trimStart().length,
+    end - (text.length - text.trimEnd().length));
+  if (!match) return null;
+  return {...match, body: bodyBlocks(selectedBodyLines(lines, result.body), match, words)};
 }
 
-export async function readPdfAbstract(doc, metadata, locate) {
+export async function readPdfAbstract(doc, metadata, locate, includeBody = false) {
   const {key} = normalized(metadata.text);
   const words = new Set(wordKey(metadata.text).match(/[\p{L}\p{M}]+(?:-[\p{L}\p{M}]+)*/gu));
   const lines = [];
-  for (let pageNumber = 1; pageNumber <= Math.min(3, doc.numPages); pageNumber++) {
+  const pages = includeBody ? doc.numPages : Math.min(3, doc.numPages);
+  let match;
+  for (let pageNumber = 1; pageNumber <= pages; pageNumber++) {
     const page = await doc.getPage(pageNumber);
     const {items} = await page.getTextContent({includeMarkedContent: true, disableNormalization: true});
     lines.push(...pdfLines(items, pageNumber));
-    const match = findExactMatch(indexedText(lines, words), key);
-    if (match) return {article: {...metadata, text: match.text}, spans: match.spans};
+    if (pageNumber <= 3 && !match) {
+      const indexed = indexedText(lines, words);
+      const range = findExactMatch(indexed, key);
+      if (range) match = clipText(indexed, range.start, range.end);
+    }
+    if (match && !includeBody) break;
   }
-  const match = await findWithFallback(lines, metadata, words, locate);
-  if (match) return {article: {...metadata, text: match.text}, spans: match.spans};
+  if (match && includeBody) {
+    const groups = Map.groupBy(lines, line => line[0].pageNumber);
+    match.body = bodyBlocks([...groups.values()], match, words);
+  }
+  match ??= await findWithFallback(lines, metadata, words, locate);
+  if (match) {
+    const {text, spans, body} = match;
+    return {article: {...metadata, text}, spans, body: body ?? []};
+  }
   throw new Error('BNITZ could not reliably locate the abstract in this PDF.');
 }

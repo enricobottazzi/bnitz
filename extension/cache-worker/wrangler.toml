@@ -1,0 +1,7 @@
+name = "bnitz-paper-cache"
+main = "worker.mjs"
+compatibility_date = "2026-11-11"
+
+[[r2_buckets]]
+binding = "PAPER_CACHE"
+bucket_name = "bnitz-paper-cache"

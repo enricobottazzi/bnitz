@@ -1,11 +1,11 @@
 import * as pdfjs from '../pdfjs/pdf.min.mjs';
-import {readPdfAbstract} from './abstract.mjs';
-import {locateWithGemini} from './abstract-fallback.mjs';
-import {arxivId, arxivPaper, loadArxivAbstract} from './arxiv.mjs';
-import {loadOpenRouterKey} from './openrouter.mjs';
+import {arxivId, arxivPaper, loadArxivRecord} from './arxiv.mjs';
+import {overlaps} from './cache-entry.mjs';
+import {loadPaperMap} from './paper.mjs';
 
 const asset = path => new URL(`../pdfjs/${path}`, import.meta.url).href;
 pdfjs.GlobalWorkerOptions.workerSrc = asset('pdf.worker.min.mjs');
+const markerTrack = document.querySelector('#highlight-markers');
 
 function addPageHighlights(layer, spans, ranges, marks) {
   // PDF.js may remove presentation roles when linking annotations to text.
@@ -26,20 +26,26 @@ function addPageHighlights(layer, spans, ranges, marks) {
   }
 }
 
-function scrollToHighlight(viewer, spans, ranges) {
-  const target = spans.find(span => ranges.some(range =>
-    range.grade === 'strong' && span.start < range.end && span.end > range.start));
-  if (!target) return;
-  viewer.scrollPageIntoView({
-    pageNumber: target.pageNumber,
-    destArray: [null, {name: 'XYZ'}, target.x, target.y, null],
-    center: 'both',
-    ignoreDestinationZoom: true,
-  });
+function renderMarkers(viewer, targets) {
+  const {container} = viewer;
+  markerTrack.style.right = `${Math.max(10, container.offsetWidth - container.clientWidth)}px`;
+  const origin = container.getBoundingClientRect().top - container.scrollTop;
+  const markers = [];
+  for (const target of targets) {
+    const page = viewer.getPageView(target.pageNumber - 1);
+    if (!page) continue;
+    const [, y] = page.viewport.convertToViewportPoint(target.x, target.y);
+    const offset = page.div.getBoundingClientRect().top + page.div.clientTop + y - origin;
+    const marker = document.createElement('span');
+    marker.style.top = `${100 * Math.min(1, Math.max(0, offset / container.scrollHeight))}%`;
+    markers.push(marker);
+  }
+  markerTrack.replaceChildren(...markers);
 }
 
-async function loadViewer(streamUrl) {
-  const response = await fetch(streamUrl, {signal: AbortSignal.timeout(25000)});
+async function loadViewer(pdfUrl) {
+  const response = await fetch(pdfUrl, {signal: AbortSignal.timeout(25000)});
+  if (!response.ok) throw new Error('Could not load the arXiv PDF.');
   const data = new Uint8Array(await response.arrayBuffer());
   const doc = await pdfjs.getDocument({
     data, useWasm: false, cMapUrl: asset('cmaps/'),
@@ -68,14 +74,19 @@ async function loadViewer(streamUrl) {
 async function start() {
   const handler = chrome.mimeHandler;
   const {streamUrl, originalUrl, tabId} = await handler.getStreamInfo();
-  const paper = arxivPaper(arxivId(originalUrl));
-  if (!paper) return handler.abortAndFallbackToNativeHandler();
+  const requested = arxivPaper(arxivId(originalUrl));
+  if (!requested) return handler.abortAndFallbackToNativeHandler();
 
-  const loading = loadViewer(streamUrl);
-  let abstract;
-  const getAbstract = () => abstract ??= Promise.all([loading, loadArxivAbstract(paper)])
-    .then(([{doc}, metadata]) => readPdfAbstract(doc, metadata, async (fragments, reference) =>
-      locateWithGemini(fragments, reference, await loadOpenRouterKey())));
+  const resolution = requested.version ? Promise.resolve({paper: requested}) :
+    loadArxivRecord(requested).catch(() => ({paper: requested}));
+  const loading = resolution.then(({paper}) => loadViewer(paper.id === requested.id ? streamUrl : paper.pdf));
+  let entry;
+  const getEntry = () => entry ??= Promise.all([loading, resolution])
+    .then(([{doc}, {paper, article}]) => loadPaperMap(doc, paper, article, pdfjs.version))
+    .catch(error => {
+      entry = null;
+      throw error;
+    });
 
   let selected;
   function paintHighlights(viewer) {
@@ -89,17 +100,30 @@ async function start() {
     CSS.highlights.set('bnitz-strong', marks.strong);
   }
 
+  function highlight(viewer, spans, ranges) {
+    const relevant = spans.filter(span => ranges.some(range => overlaps(span, range)));
+    const pages = Map.groupBy(relevant, span => span.pageNumber);
+    const targets = new Set();
+    for (const spans of pages.values()) {
+      for (const range of ranges) {
+        const span = spans.find(span => overlaps(span, range));
+        if (span) targets.add(span);
+      }
+    }
+    selected = {pages, ranges, targets};
+    paintHighlights(viewer);
+    renderMarkers(viewer, targets);
+  }
+
   chrome.runtime.onMessage.addListener((message, _sender, respond) => {
-    if (message.tabId !== tabId || message.id !== paper.id) return;
-    if (message.type === 'bnitz-abstract') {
-      getAbstract().then(({article}) => respond({article}), error => respond({error: error.message}));
+    if (message.tabId !== tabId || message.id !== requested.id) return;
+    if (message.type === 'bnitz-map') {
+      getEntry().then(entry => respond({map: entry['map.bnitz']}), error => respond({error: error.message}));
       return true;
     }
     if (message.type === 'bnitz-highlight') {
-      Promise.all([loading, getAbstract()]).then(([{viewer}, {spans}]) => {
-        selected = {pages: Map.groupBy(spans, span => span.pageNumber), ranges: message.ranges};
-        paintHighlights(viewer);
-        if (message.follow) scrollToHighlight(viewer, spans, selected.ranges);
+      Promise.all([loading, getEntry()]).then(([{viewer}, entry]) => {
+        highlight(viewer, entry['pdf-anchors.json'].pdfSpans, message.ranges);
         respond(true);
       }, () => respond(false));
       return true;
@@ -110,6 +134,13 @@ async function start() {
   eventBus.on('textlayerrendered', ({pageNumber}) => {
     if (selected?.pages.has(pageNumber)) paintHighlights(viewer);
   });
+  const updateMarkers = () => {
+    if (selected) renderMarkers(viewer, selected.targets);
+  };
+  const resize = new ResizeObserver(updateMarkers);
+  resize.observe(viewer.viewer);
+  resize.observe(viewer.container);
+  eventBus.on('pagesloaded', updateMarkers);
 }
 
 start().catch(() => chrome.mimeHandler?.abortAndFallbackToNativeHandler());

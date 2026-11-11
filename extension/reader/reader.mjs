@@ -1,19 +1,15 @@
 import {arxivId} from './arxiv.mjs';
-import {generateMap} from './generate.mjs';
-import {loadOpenRouterKey} from './openrouter.mjs';
 
 const status = document.querySelector('#status');
 const progress = document.querySelector('#progress');
 const orbit = document.querySelector('#loading-orbit');
 const map = document.querySelector('#map');
-const followControl = document.querySelector('#follow-control');
-const followHighlights = document.querySelector('#follow-highlights');
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 let current;
 
-async function waitForAbstract(tabId, id, attempts, signal) {
+async function waitForMap(tabId, id, attempts, signal) {
   for (let i = 0; i < attempts && !signal.aborted; i++) {
-    const result = await chrome.runtime.sendMessage({type: 'bnitz-abstract', tabId, id}).catch(() => null);
+    const result = await chrome.runtime.sendMessage({type: 'bnitz-map', tabId, id}).catch(() => null);
     if (result) return result;
     await delay(250);
   }
@@ -30,7 +26,6 @@ async function start() {
   const {signal} = controller;
   current = {tabKey, controller};
   map.hidden = true;
-  followControl.hidden = true;
   map.replaceChildren();
   progress.hidden = false;
   orbit.hidden = !id;
@@ -42,27 +37,24 @@ async function start() {
   }
 
   try {
-    let result = await waitForAbstract(tab.id, id, 8, signal);
+    let result = await waitForMap(tab.id, id, 8, signal);
     if (!result && !signal.aborted) {
       // An already-open PDF may still be using Chrome's previous viewer.
       await chrome.tabs.reload(tab.id);
-      result = await waitForAbstract(tab.id, id, 48, signal);
+      result = await waitForMap(tab.id, id, 48, signal);
     }
     if (signal.aborted) return;
-    if (!result?.article) throw new Error(result?.error ?? 'BNITZ could not connect to the PDF.');
+    if (!result?.map) throw new Error(result?.error ?? 'BNITZ could not connect to the PDF.');
 
-    const article = await generateMap(result.article, await loadOpenRouterKey(signal), signal);
-    if (signal.aborted) return;
-    BNITZView.map(map, article, async planet => {
-      const selected = await chrome.runtime.sendMessage({
-        type: 'bnitz-highlight', tabId: tab.id, id, ranges: BNITZModel.highlights(planet),
-        follow: followHighlights.checked,
-      }).catch(() => false);
-      if (selected && !signal.aborted) BNITZView.select(map, planet.id);
+    const message = data => chrome.runtime.sendMessage({tabId: tab.id, id, ...data}).catch(() => null);
+    let selection = 0;
+    BNITZView.map(map, result.map, async planet => {
+      const request = ++selection;
+      const selected = await message({type: 'bnitz-highlight', ranges: BNITZModel.highlights(planet)});
+      if (selected && !signal.aborted && request === selection) BNITZView.select(map, planet.id);
     });
     progress.hidden = true;
     map.hidden = false;
-    followControl.hidden = false;
   } catch (error) {
     if (signal.aborted) return;
     orbit.hidden = true;
