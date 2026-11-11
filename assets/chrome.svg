@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round">
+  <circle cx="12" cy="12" r="11"/>
+  <circle cx="12" cy="12" r="4"/>
+  <path d="M12 8h10.25"/>
+  <path d="M12 8h10.25" transform="rotate(120 12 12)"/>
+  <path d="M12 8h10.25" transform="rotate(240 12 12)"/>
+</svg>

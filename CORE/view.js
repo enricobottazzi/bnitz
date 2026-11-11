@@ -16,13 +16,15 @@ const BNITZView = (() => {
     /\x60\x60(?<quote>[^\x60\r\n]+?)''/,
   ].map(pattern => pattern.source).join('|'), 'gd');
 
-  function paintText(container, text, ranges, onMark, {typeset = false} = {}) {
+  function paintText(container, text, ranges, onMark, {typeset = false, onSegment} = {}) {
     const cuts = [...new Set([0, text.length, ...ranges.flatMap(({start, end}) => [start, end])])].sort((a, b) => a - b);
     function append(parent, start, end, content) {
+      const node = typeof content === 'string' ? document.createTextNode(content) : content;
+      onSegment?.(node, start, end);
       const matches = ranges.filter(range => range.start < end && range.end > start);
-      if (!matches.length) return parent.append(content);
+      if (!matches.length) return parent.append(node);
       const mark = document.createElement('mark');
-      mark.append(content);
+      mark.append(node);
       if (onMark) onMark(mark, matches);
       else mark.className = matches.some(range => range.grade === 'strong') ? 'strong' : 'soft';
       parent.append(mark);

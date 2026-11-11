@@ -59,7 +59,7 @@
         }
       ],
       "parent": "s1",
-      "relation": "background"
+      "relation": "problem"
     }
   ]
 }

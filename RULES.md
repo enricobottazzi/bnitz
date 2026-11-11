@@ -14,11 +14,16 @@ BNITZ is inspired by Rhetorical Structure Theory (RST).
 | <img src="assets/evidence.svg" alt="" width="20"> | **Evidence** | Uses results, analyses, or comparisons to support, challenge, or assess the parent. |
 | <img src="assets/scope.svg" alt="" width="20"> | **Scope** | Specifies where, when, or under what conditions the parent applies, including limitations and assumptions. |
 
-**Method** answers “How did the authors get this result?” **Evidence** answers “What observation or check supports it?”
+## Heuristic rules
+
+1. First thing: ask what you would cite the paper for. Use that contribution as the **Nucleus**.
+2. If a passage gives context and identifies a question, gap, or difficulty the parent addresses, label it **Problem**. Priviledge it over **Background** when in doubt. [Example](https://bnitz.org/#readings/the_geometry_of_truth_emergent_linear_structure_in_llm_representations_of_true_false_datas.bnitz)
+3. **Method** answers “How did the authors get this result?” **Evidence** answers “What observation or check supports it?” Attach Evidence to the **Nucleus** when it supports the main contribution, even if it comes from the Method. [Example](https://bnitz.org/#readings/inference_time_intervention_eliciting_truthful_answers_from_a_language_model.bnitz). If it directly supports a claim in the **Method** planet, attach it there. [Example](https://bnitz.org/#readings/progress_measures_for_grokking_via_mechanistic_interpretability.bnitz)
+4. **Scope** can be easy to miss. Use it if leaving out a condition, assumption, or limitation would make the parent’s claim sound broader or stronger than the paper supports. [On the Psychophysical Law](https://bnitz.org/#readings/on_the_psychophysical_law.bnitz) · [Bitcoin](https://bnitz.org/#readings/bitcoin_a_peer_to_peer_electronic_cash_system.bnitz)
 
 ## Highlighting
 
-Use **strong highlights** for a planet’s main point and **soft highlights** for helpful context or explanation. Highlight only what helps the reader follow the argument.
+Use **strong highlights** for a planet’s main point, focusing on the words that justify its role. Use **soft highlights** for any context or explanation needed to understand that point. Highlight only what helps the reader follow the argument.
 
 ## Nesting
 

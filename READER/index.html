@@ -8,7 +8,7 @@
   <title>BNITZ</title>
   <link rel="icon" type="image/svg+xml" href="/assets/problem.svg?v=0.0.4">
   <link rel="stylesheet" href="/bnitz.css?v=0.0.4">
-  <link rel="stylesheet" href="/reader.css?v=0.0.3">
+  <link rel="stylesheet" href="/reader.css?v=0.0.7">
   <link rel="preload" as="image" href="/assets/problem.svg?v=0.0.4">
   <link rel="preload" as="image" href="/assets/background.svg?v=0.0.4">
   <link rel="preload" as="image" href="/assets/method.svg?v=0.0.4">
@@ -17,37 +17,63 @@
   <link rel="preload" as="image" href="/assets/scope.svg?v=0.0.4">
   <script defer src="/vendor/katex.min.js"></script>
   <script defer src="/CORE/model.js"></script>
-  <script defer src="/CORE/view.js"></script>
-  <script defer src="/reader.js?v=0.0.5"></script>
+  <script defer src="/CORE/view.js?v=0.0.5"></script>
+  <script defer src="/reader.js?v=0.0.9"></script>
 </head>
 <body>
   <header class="sidebar">
     <a class="wordmark" href="#" aria-label="BNITZ home"><span>BNITZ</span></a>
     <p class="tagline">The layout of ideas</p>
+    <div class="reader-links">
+      <a role="link" aria-disabled="true" aria-label="BNITZ Chrome extension">
+        <img src="/assets/chrome.svg" alt="" width="16" height="16">
+      </a>
+      <a href="https://github.com/enricobottazzi/bnitz" target="_blank" rel="noopener noreferrer" aria-label="BNITZ on GitHub">
+        <!-- GitHub Invertocat from https://brand.github.com/foundations/logo -->
+        <img src="/assets/github.svg" alt="" width="16" height="16">
+      </a>
+    </div>
   </header>
   <main id="content" tabindex="-1">
     <p id="status" class="status" role="status" hidden></p>
     <section id="readings" aria-label="Readings">
       <div id="papers" class="readings-list"></div>
-      <footer class="reader-footer">
-        <a href="https://github.com/enricobottazzi/bnitz" target="_blank" rel="noopener noreferrer" aria-label="BNITZ on GitHub">
-          <!-- GitHub Invertocat from https://brand.github.com/foundations/logo -->
-          <img src="/assets/github.svg" alt="" width="14" height="14">
-        </a>
-      </footer>
     </section>
     <section id="reading" class="article-reader" aria-labelledby="title" hidden>
       <header class="reader-heading">
         <h1 id="title" tabindex="-1"></h1>
         <p id="metadata"></p>
       </header>
+      <form id="planet-editor" aria-label="Playground" hidden>
+        <div class="actions">
+          <button type="button" id="add-planet">Add planet</button>
+          <button type="button" id="remove-planet" disabled>Remove planet</button>
+          <button type="button" id="edit-planet" disabled>Edit planet</button>
+          <p id="editor-status" role="status"></p>
+        </div>
+        <div class="actions">
+          <button type="button" id="strong-highlight" disabled>Strong highlight</button>
+          <button type="button" id="soft-highlight" disabled>Soft highlight</button>
+          <button type="button" id="clear-highlights" disabled>Clear highlights</button>
+          <span id="highlight-hint">Select text.</span>
+        </div>
+        <div class="planet-settings">
+          <select id="relation" aria-label="Planet type" required disabled></select>
+          <select id="parent" aria-label="Attaches to" required disabled></select>
+          <button type="submit" id="save-planet" class="primary" disabled>Save</button>
+          <button type="button" id="cancel-planet" disabled>Cancel</button>
+        </div>
+      </form>
       <div class="reader-grid">
         <article id="abstract" class="reader-text" aria-label="Abstract" tabindex="0"></article>
         <div class="reader-layout">
           <div id="map" class="map map-pane" aria-label="BNITZ language map"></div>
           <details class="reader-legend">
             <summary>Legend</summary>
-            <div id="legend" class="reader-legend-panel"></div>
+            <div class="reader-legend-panel">
+              <div id="legend"></div>
+              <a href="https://github.com/enricobottazzi/bnitz/blob/main/RULES.md" target="_blank" rel="noopener noreferrer">RULES.md</a>
+            </div>
           </details>
         </div>
       </div>
