@@ -14,8 +14,8 @@ ROUTES = {
     '/reader.css': (READER / 'style.css', 'text/css; charset=utf-8'),
     '/reader.js': (READER / 'app.js', 'text/javascript; charset=utf-8'),
     '/bnitz.css': (ROOT / 'bnitz.css', 'text/css; charset=utf-8'),
-    '/CORE/model.js': (ROOT / 'CORE' / 'model.js', 'text/javascript; charset=utf-8'),
-    '/CORE/view.js': (ROOT / 'CORE' / 'view.js', 'text/javascript; charset=utf-8'),
+    '/lang/model.js': (ROOT / 'lang' / 'model.js', 'text/javascript; charset=utf-8'),
+    '/lang/view.js': (ROOT / 'lang' / 'view.js', 'text/javascript; charset=utf-8'),
     '/vendor/katex.min.js': (ROOT / 'vendor' / 'katex.min.js', 'text/javascript; charset=utf-8'),
 }
 
