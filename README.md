@@ -1,6 +1,6 @@
 # BNITZ
 
-Bnitz is a visual language for mapping scientific papers.
+Bnitz is a visual language for mapping scientific papers. See the rules of the language in [RULES.md](RULES.md).
 
 A `.bnitz` file stores the text, highlights, and map together.
 
@@ -14,9 +14,6 @@ python3 READER/serve.py /path/to/paper.bnitz
 
 Pass a folder instead to open a reading list. The deployed Reader displays the maps in `examples/`. [Open the live Reader](https://bnitz.org/).
 
-Click **playground** next to an article’s source link to edit its map in the Reader. Edits last until you open another article, return to the list, or reload.
-
-See the rules of the language in [RULES.md](RULES.md).
 
 ## License
 
