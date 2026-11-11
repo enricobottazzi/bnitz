@@ -11,8 +11,13 @@
   <script type="module" src="reader.mjs"></script>
 </head>
 <body>
-  <a id="rules-link" href="https://github.com/enricobottazzi/bnitz/blob/main/RULES.md"
-     target="_blank" rel="noopener noreferrer" aria-label="BNITZ rules on GitHub">Rules</a>
+  <header class="panel-controls">
+    <label id="follow-control" hidden>
+      <input type="checkbox" id="follow-highlights"> Follow highlights
+    </label>
+    <a id="rules-link" href="https://github.com/enricobottazzi/bnitz/blob/main/RULES.md"
+       target="_blank" rel="noopener noreferrer" aria-label="BNITZ rules on GitHub">Rules</a>
+  </header>
   <div id="progress">
     <div id="loading-orbit" role="progressbar" aria-label="Generating abstract map">
       <span class="loading-nucleus"></span>

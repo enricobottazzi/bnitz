@@ -48,7 +48,10 @@ function indexedText(lines, words) {
           part.x - previous.x - previous.width > part.size * 0.2) text += ' ';
       const start = text.length;
       text += part.text;
-      spans.push({pageNumber: part.pageNumber, index: part.index, text: part.text, start, end: text.length});
+      spans.push({
+        pageNumber: part.pageNumber, index: part.index, text: part.text,
+        x: part.x, y: part.y, start, end: text.length,
+      });
       previous = part;
     }
   }
@@ -75,7 +78,7 @@ function clipText({text, spans}, start, end) {
   return {
     text: text.slice(start, end),
     spans: spans.filter(span => span.start < end && span.end > start).map(span => ({
-      pageNumber: span.pageNumber, index: span.index, text: span.text,
+      pageNumber: span.pageNumber, index: span.index, text: span.text, x: span.x, y: span.y,
       nodeOffset: Math.max(0, start - span.start),
       start: Math.max(0, span.start - start), end: Math.min(span.end, end) - start,
     })),

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "BNITZ",
   "description": "Generate an interactive map of an arXiv paper’s abstract.",
-  "version": "0.2.0",
+  "version": "0.1.1",
   "minimum_chrome_version": "151",
   "icons": {
     "16": "icons/bnitz-16.png",

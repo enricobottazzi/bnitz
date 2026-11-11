@@ -6,6 +6,8 @@ const status = document.querySelector('#status');
 const progress = document.querySelector('#progress');
 const orbit = document.querySelector('#loading-orbit');
 const map = document.querySelector('#map');
+const followControl = document.querySelector('#follow-control');
+const followHighlights = document.querySelector('#follow-highlights');
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 let current;
 
@@ -28,6 +30,7 @@ async function start() {
   const {signal} = controller;
   current = {tabKey, controller};
   map.hidden = true;
+  followControl.hidden = true;
   map.replaceChildren();
   progress.hidden = false;
   orbit.hidden = !id;
@@ -53,11 +56,13 @@ async function start() {
     BNITZView.map(map, article, async planet => {
       const selected = await chrome.runtime.sendMessage({
         type: 'bnitz-highlight', tabId: tab.id, id, ranges: BNITZModel.highlights(planet),
+        follow: followHighlights.checked,
       }).catch(() => false);
       if (selected && !signal.aborted) BNITZView.select(map, planet.id);
     });
     progress.hidden = true;
     map.hidden = false;
+    followControl.hidden = false;
   } catch (error) {
     if (signal.aborted) return;
     orbit.hidden = true;

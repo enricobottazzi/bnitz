@@ -26,6 +26,18 @@ function addPageHighlights(layer, spans, ranges, marks) {
   }
 }
 
+function scrollToHighlight(viewer, spans, ranges) {
+  const target = spans.find(span => ranges.some(range =>
+    range.grade === 'strong' && span.start < range.end && span.end > range.start));
+  if (!target) return;
+  viewer.scrollPageIntoView({
+    pageNumber: target.pageNumber,
+    destArray: [null, {name: 'XYZ'}, target.x, target.y, null],
+    center: 'both',
+    ignoreDestinationZoom: true,
+  });
+}
+
 async function loadViewer(streamUrl) {
   const response = await fetch(streamUrl, {signal: AbortSignal.timeout(25000)});
   const data = new Uint8Array(await response.arrayBuffer());
@@ -87,6 +99,7 @@ async function start() {
       Promise.all([loading, getAbstract()]).then(([{viewer}, {spans}]) => {
         selected = {pages: Map.groupBy(spans, span => span.pageNumber), ranges: message.ranges};
         paintHighlights(viewer);
+        if (message.follow) scrollToHighlight(viewer, spans, selected.ranges);
         respond(true);
       }, () => respond(false));
       return true;
