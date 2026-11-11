@@ -118,7 +118,10 @@ async function start() {
   chrome.runtime.onMessage.addListener((message, _sender, respond) => {
     if (message.tabId !== tabId || message.id !== requested.id) return;
     if (message.type === 'bnitz-map') {
-      getEntry().then(entry => respond({map: entry['map.bnitz']}), error => respond({error: error.message}));
+      getEntry().then(entry => respond({
+        map: entry['map.bnitz'],
+        anchors: entry['pdf-anchors.json'],
+      }), error => respond({error: error.message}));
       return true;
     }
     if (message.type === 'bnitz-highlight') {

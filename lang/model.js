@@ -1,4 +1,4 @@
-globalThis.BNITZModel = (() => {
+const BNITZModel = (() => {
   const relations = {
     problem: ['Problem', 6, 'problem', 'States the question, gap, or practical problem the parent addresses.'],
     background: ['Background', 1, 'background', 'Gives prior work, definitions, or other context needed to understand the parent.'],

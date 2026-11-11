@@ -11,8 +11,21 @@
   <script type="module" src="reader.mjs"></script>
 </head>
 <body>
-  <a id="rules-link" href="https://github.com/enricobottazzi/bnitz/blob/main/RULES.md"
-     target="_blank" rel="noopener noreferrer" aria-label="BNITZ rules on GitHub">Rules</a>
+  <nav class="panel-actions" aria-label="Paper actions">
+    <button id="export-map" type="button" title="Export map and PDF anchors"
+            aria-label="Export map and PDF anchors" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3v12m-4-4 4 4 4-4M5 15v5h14v-5"/>
+      </svg>
+    </button>
+    <a id="rules-link" href="https://github.com/enricobottazzi/bnitz/blob/main/RULES.md"
+       target="_blank" rel="noopener noreferrer" title="Help" aria-label="Help, BNITZ rules on GitHub">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M9.5 9a2.5 2.5 0 1 1 4.5 1.5c-1.1 1.1-2 1.3-2 3m0 3h.01"/>
+      </svg>
+    </a>
+  </nav>
   <div id="progress">
     <div id="loading-orbit" role="progressbar" aria-label="Generating abstract map">
       <span class="loading-nucleus"></span>
