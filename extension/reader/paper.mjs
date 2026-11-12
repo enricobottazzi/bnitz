@@ -1,11 +1,11 @@
 import {readPdfAbstract} from './abstract.mjs';
-import {extractionRecipe, locateWithGemini} from './abstract-fallback.mjs';
+import {locateWithGemini} from './abstract-fallback.mjs';
 import {loadArxivRecord} from './arxiv.mjs';
-import {anchorVersion, createEntry} from './cache-entry.mjs';
+import {createEntry} from './cache-entry.mjs';
 import {openPaperCache} from './cache.mjs';
-import {generateMap, mapRecipe} from './generate.mjs';
-import {loadOpenRouterKey} from './openrouter.mjs';
-import {findPassages, passageRecipe} from './passages.mjs';
+import config from './config.mjs';
+import {findPassages} from './passages.mjs';
+import {generationClient} from './routing.mjs';
 
 function indexBody(text, spans, body) {
   const indexedSpans = [...spans];
@@ -20,13 +20,13 @@ function indexBody(text, spans, body) {
   return {text, spans: indexedSpans, blocks};
 }
 
-async function addBodyHighlights(map, text, blocks, key) {
+async function addBodyHighlights(map, text, blocks, requestGeneration) {
   const planets = map.spans.map(planet => ({
     id: planet.id,
     quote: map.text.slice(planet.start, planet.end),
     focus: BNITZModel.highlights(planet).map(range => map.text.slice(range.start, range.end)),
   }));
-  const additional = new Map(await findPassages(map.title, planets, blocks, key));
+  const additional = new Map(await findPassages(map.title, planets, blocks, requestGeneration));
   return BNITZModel.validate({
     ...map,
     text,
@@ -37,34 +37,28 @@ async function addBodyHighlights(map, text, blocks, key) {
   });
 }
 
-export async function loadPaperMap(doc, paper, metadata, pdfjsVersion) {
-  const recipe = {
-    extraction: extractionRecipe,
-    map: await mapRecipe(),
-    passages: passageRecipe,
-    pdfjsVersion,
-    anchorVersion,
-  };
-  const cache = await openPaperCache(paper, recipe, doc.numPages).catch(() => null);
+export async function loadPaperMap(doc, paper, metadata) {
+  const cache = await openPaperCache(paper, config.paperRevision, doc.numPages).catch(() => null);
   const cached = await cache?.get();
   if (cached) return cached;
 
   metadata ??= (await loadArxivRecord(paper)).article;
   if (!metadata.text) throw new Error('The arXiv record has no abstract.');
-  let apiKey;
-  const loadKey = () => apiKey ??= loadOpenRouterKey();
+  const generation = generationClient(paper);
+  const {request} = generation;
   const {article, spans, body} = await readPdfAbstract(doc, metadata, async (fragments, reference) =>
-    locateWithGemini(fragments, reference, await loadKey(), recipe.extraction));
-  let map = await generateMap(article, await loadKey(), recipe.map);
+    locateWithGemini(fragments, reference, request));
+  const mapped = await request('map', {title: article.title, text: article.text});
+  let map = BNITZModel.validate({...mapped, source: article.source});
   const indexed = indexBody(article.text, spans, body);
   if (!indexed.blocks.length) return createEntry(map, spans);
   try {
-    map = await addBodyHighlights(map, indexed.text, indexed.blocks, await loadKey());
+    map = await addBodyHighlights(map, indexed.text, indexed.blocks, request);
   } catch {
     // Show the abstract map and retry the passage search on the next open.
     return createEntry(map, spans);
   }
   const entry = createEntry(map, indexed.spans);
-  await cache?.put(entry).catch(() => {});
+  if (generation.cacheable) await cache?.put(entry).catch(() => {});
   return entry;
 }

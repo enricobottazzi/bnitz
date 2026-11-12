@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "BNITZ",
   "description": "Map arXiv abstracts and highlight related passages throughout the full PDF.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "minimum_chrome_version": "151",
   "icons": {
     "16": "icons/bnitz-16.png",
@@ -15,5 +15,5 @@
   "side_panel": {"default_path": "dist/reader/index.html"},
   "mime_types_handler": {"application/pdf": {"handler_url": "dist/reader/pdf.html"}},
   "permissions": ["sidePanel"],
-  "host_permissions": ["https://arxiv.org/*", "https://www.arxiv.org/*", "https://openrouter.ai/*"]
+  "host_permissions": ["https://arxiv.org/*", "https://www.arxiv.org/*", "https://bnitz-routing.enricobottazzi.workers.dev/*"]
 }

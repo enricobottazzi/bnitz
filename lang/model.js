@@ -121,3 +121,5 @@ const BNITZModel = (() => {
 
   return {relations, validRange, validate, label, highlights, relationDirection, planetRadius, layout};
 })();
+
+if (typeof module !== 'undefined') module.exports = BNITZModel;

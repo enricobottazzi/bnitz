@@ -41,13 +41,13 @@ BNITZ sends each `body[].text` from `01-parse.json` as a numbered `{id, text}` b
 
 ## Local setup
 
-Add `BNITZ_OPENROUTER: <key>` to `~/Desktop/TOKEN.md`. From `extension/`, using Node 22.13 or later, run:
+From `extension/`, using Node 22.13 or later, build the extension:
 
 ```sh
 npm ci --omit=optional
 npm run build
 ```
 
-In Chrome 151 or later, enable **Developer mode** at `chrome://extensions` and select `extension/dist` with **Load unpacked**.
+The build uses the deployed Worker by default. To use a local Worker, set `OPENROUTER_API_KEY` in `extension/.dev.vars`, run `npx wrangler dev` from `extension/`, and build with `BNITZ_WORKER_ORIGIN=http://127.0.0.1:8787 npm run build`.
 
-The build embeds your key. Keep it local and see [Routing](ROUTING.md) before publishing.
+In Chrome 151 or later, enable **Developer mode** at `chrome://extensions` and select `extension/dist` with **Load unpacked**. See [Routing](ROUTING.md) for deployment and the Chrome Web Store build.

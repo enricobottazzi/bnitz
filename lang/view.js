@@ -1,6 +1,6 @@
 const BNITZView = (() => {
   const {relations, label, relationDirection, planetRadius, layout} = BNITZModel;
-  const iconUrl = icon => `../assets/${icon}.svg?v=0.0.4`;
+  const iconUrl = icon => `../assets/${icon}.svg?v=0.0.5`;
 
   function textElement(tag, text) {
     const element = document.createElement(tag);

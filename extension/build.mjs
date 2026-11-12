@@ -1,14 +1,24 @@
 import {cpSync, mkdirSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
-import {homedir} from 'node:os';
-import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {mapExampleNames} from './reader/map-prompt.mjs';
+import {anchorVersion} from './reader/cache-entry.mjs';
+import {loadRecipes, revisionFor} from './worker/build.mjs';
 
 const here = path => fileURLToPath(new URL(path, import.meta.url));
-const tokenFile = process.argv[2] ?? join(homedir(), 'Desktop', 'TOKEN.md');
-const openRouterKey = /^(?:[-*#]+\s*)?`*BNITZ_OPENROUTER`*\s*[:=]\s*[`'"]*(sk-or-v1-[\w-]+)/m
-  .exec(readFileSync(tokenFile, 'utf8'))?.[1];
-if (!openRouterKey) throw new Error('The BNITZ_OPENROUTER entry is missing from TOKEN.md.');
+const defaultOrigin = 'https://bnitz-routing.enricobottazzi.workers.dev';
+const worker = new URL(process.env.BNITZ_WORKER_ORIGIN ?? defaultOrigin);
+const localWorker = worker.protocol === 'http:' && worker.hostname === '127.0.0.1';
+if ((!localWorker && worker.protocol !== 'https:') ||
+    worker.pathname !== '/' || worker.search || worker.hash || worker.username || worker.password) {
+  throw new Error('BNITZ_WORKER_ORIGIN must be an HTTPS origin or http://127.0.0.1 for local development.');
+}
+
+const recipes = loadRecipes();
+const {version: pdfjsVersion} = JSON.parse(readFileSync(here('node_modules/pdfjs-dist/package.json'), 'utf8'));
+const config = {
+  origin: worker.origin,
+  generationRevision: revisionFor(recipes),
+  paperRevision: revisionFor({...recipes, pdfjsVersion, anchorVersion}),
+};
 
 const dist = here('dist');
 rmSync(dist, {recursive: true, force: true});
@@ -16,9 +26,11 @@ mkdirSync(dist);
 
 for (const path of ['reader', 'icons']) cpSync(here(path), `${dist}/${path}`, {recursive: true});
 // Support the already-installed source directory and the standalone build.
-const manifest = readFileSync(here('manifest.json'), 'utf8');
-writeFileSync(`${dist}/manifest.json`, manifest.replaceAll('"dist/', '"'));
-writeFileSync(`${dist}/reader/local-key`, openRouterKey, {mode: 0o600});
+const manifest = JSON.parse(readFileSync(here('manifest.json'), 'utf8').replaceAll('"dist/', '"'));
+manifest.host_permissions = manifest.host_permissions.map(permission =>
+  permission === `${defaultOrigin}/*` ? `${worker.protocol}//${worker.hostname}/*` : permission);
+writeFileSync(`${dist}/manifest.json`, `${JSON.stringify(manifest, null, 2)}\n`);
+writeFileSync(`${dist}/reader/config.mjs`, `export default ${JSON.stringify(config)};\n`);
 for (const path of ['assets', 'lang', 'bnitz.css']) {
   cpSync(here(`../${path}`), `${dist}/${path}`, {recursive: true});
 }
@@ -26,11 +38,6 @@ for (const path of ['assets', 'lang', 'bnitz.css']) {
 mkdirSync(`${dist}/vendor`);
 cpSync(here('node_modules/fflate/esm/browser.js'), `${dist}/vendor/fflate.mjs`);
 cpSync(here('node_modules/fflate/LICENSE'), `${dist}/vendor/fflate-LICENSE`);
-
-mkdirSync(`${dist}/examples`);
-for (const name of mapExampleNames) {
-  cpSync(here(`../examples/${name}.bnitz`), `${dist}/examples/${name}.bnitz`);
-}
 
 mkdirSync(`${dist}/pdfjs`);
 for (const path of ['LICENSE', 'cmaps', 'standard_fonts', 'wasm']) {

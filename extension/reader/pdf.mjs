@@ -82,7 +82,7 @@ async function start() {
   const loading = resolution.then(({paper}) => loadViewer(paper.id === requested.id ? streamUrl : paper.pdf));
   let entry;
   const getEntry = () => entry ??= Promise.all([loading, resolution])
-    .then(([{doc}, {paper, article}]) => loadPaperMap(doc, paper, article, pdfjs.version))
+    .then(([{doc}, {paper, article}]) => loadPaperMap(doc, paper, article))
     .catch(error => {
       entry = null;
       throw error;

@@ -1,0 +1,17 @@
+name = "bnitz-routing"
+main = "worker/index.mjs"
+compatibility_date = "2026-10-01"
+preview_urls = false
+
+[build]
+command = "node worker/build.mjs"
+watch_dir = ["worker", "../examples", "../lang"]
+
+[[kv_namespaces]]
+binding = "GENERATION_CACHE"
+id = "6412856b27d4498db9611684dbbe323a"
+
+[[ratelimits]]
+name = "GENERATION_RATE"
+namespace_id = "13701"
+simple = { limit = 12, period = 60 }

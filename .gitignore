@@ -3,3 +3,7 @@ __pycache__/
 .DS_Store
 /extension/dist/
 /extension/node_modules/
+/extension/worker-dist/
+/extension/.wrangler/
+/extension/.dev.vars*
+/extension/.env*
