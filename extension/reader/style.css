@@ -27,6 +27,7 @@ body { margin: 0; }
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+#rules-link svg { stroke-width: 2.6; }
 .panel-actions button:active { background: none; }
 
 #progress {
