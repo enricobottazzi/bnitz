@@ -118,10 +118,12 @@ async function start() {
   chrome.runtime.onMessage.addListener((message, _sender, respond) => {
     if (message.tabId !== tabId || message.id !== requested.id) return;
     if (message.type === 'bnitz-map') {
-      getEntry().then(entry => respond({
-        map: entry['map.bnitz'],
-        anchors: entry['pdf-anchors.json'],
-      }), error => respond({error: error.message}));
+      Promise.all([loading, getEntry()]).then(([{viewer}, entry]) => {
+        const map = entry['map.bnitz'];
+        const anchors = entry['pdf-anchors.json'];
+        if (!selected) highlight(viewer, anchors.pdfSpans, map.spans.flatMap(BNITZModel.highlights));
+        respond({map, anchors});
+      }).catch(error => respond({error: error.message}));
       return true;
     }
     if (message.type === 'bnitz-highlight') {

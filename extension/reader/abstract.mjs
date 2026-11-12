@@ -151,13 +151,12 @@ async function findWithFallback(lines, metadata, words, locate) {
   return {...match, body: bodyBlocks(selectedBodyLines(lines, result.body), match, words)};
 }
 
-export async function readPdfAbstract(doc, metadata, locate, includeBody = false) {
+export async function readPdfAbstract(doc, metadata, locate) {
   const {key} = normalized(metadata.text);
   const words = new Set(wordKey(metadata.text).match(/[\p{L}\p{M}]+(?:-[\p{L}\p{M}]+)*/gu));
   const lines = [];
-  const pages = includeBody ? doc.numPages : Math.min(3, doc.numPages);
   let match;
-  for (let pageNumber = 1; pageNumber <= pages; pageNumber++) {
+  for (let pageNumber = 1; pageNumber <= doc.numPages; pageNumber++) {
     const page = await doc.getPage(pageNumber);
     const {items} = await page.getTextContent({includeMarkedContent: true, disableNormalization: true});
     lines.push(...pdfLines(items, pageNumber));
@@ -166,9 +165,8 @@ export async function readPdfAbstract(doc, metadata, locate, includeBody = false
       const range = findExactMatch(indexed, key);
       if (range) match = clipText(indexed, range.start, range.end);
     }
-    if (match && !includeBody) break;
   }
-  if (match && includeBody) {
+  if (match) {
     const groups = Map.groupBy(lines, line => line[0].pageNumber);
     match.body = bodyBlocks([...groups.values()], match, words);
   }

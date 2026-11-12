@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "BNITZ",
-  "description": "Generate an interactive map of an arXiv paper’s abstract.",
+  "description": "Map arXiv abstracts and highlight related passages throughout the full PDF.",
   "version": "0.1.1",
   "minimum_chrome_version": "151",
   "icons": {

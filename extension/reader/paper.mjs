@@ -39,11 +39,10 @@ async function addBodyHighlights(map, text, blocks, key) {
 }
 
 export async function loadPaperMap(doc, paper, metadata, pdfjsVersion) {
-  const includeBody = /^1706\.03762(?:v7)?$/.test(paper.id);
   const recipe = {
-    extraction: extractionRecipe(includeBody),
-    map: await mapRecipe(includeBody),
-    passages: includeBody ? passageRecipe : null,
+    extraction: extractionRecipe,
+    map: await mapRecipe(),
+    passages: passageRecipe,
     pdfjsVersion,
     anchorVersion,
   };
@@ -56,17 +55,15 @@ export async function loadPaperMap(doc, paper, metadata, pdfjsVersion) {
   let apiKey;
   const loadKey = () => apiKey ??= loadOpenRouterKey();
   const {article, spans, body} = await readPdfAbstract(doc, metadata, async (fragments, reference) =>
-    locateWithGemini(fragments, reference, await loadKey(), recipe.extraction), includeBody);
+    locateWithGemini(fragments, reference, await loadKey(), recipe.extraction));
   let map = await generateMap(article, await loadKey(), recipe.map);
   const indexed = indexBody(article.text, spans, body);
-  if (includeBody) {
-    // A failed passage search can still display the abstract map. Retry it on the next open.
-    if (!indexed.blocks.length) return createEntry(map, spans);
-    try {
-      map = await addBodyHighlights(map, indexed.text, indexed.blocks, await loadKey());
-    } catch {
-      return createEntry(map, spans);
-    }
+  if (!indexed.blocks.length) return createEntry(map, spans);
+  try {
+    map = await addBodyHighlights(map, indexed.text, indexed.blocks, await loadKey());
+  } catch {
+    // Show the abstract map and retry the passage search on the next open.
+    return createEntry(map, spans);
   }
   const entry = createEntry(map, indexed.spans);
   await cache?.put(entry).catch(() => {});

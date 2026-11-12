@@ -34,7 +34,7 @@ function exampleMessage(article) {
   return {role: 'assistant', content: JSON.stringify({planets})};
 }
 
-export async function mapRecipe(includeBody) {
+export async function mapRecipe() {
   const names = ['toy_models_of_superposition', 'scaling_laws_for_neural_language_models'];
   const [rules, ...examples] = await Promise.all([
     fetch(new URL('../RULES.md', import.meta.url)).then(response => {
@@ -53,14 +53,14 @@ If a short highlight is repeated, make it unique within its planet quote.
     ...examples.flatMap(example => [paperMessage(example), exampleMessage(example)]),
   ];
   const settings = {
-    model: includeBody ? 'google/gemini-4-argon' : 'google/gemini-2.5-flash',
+    model: 'google/gemini-4-argon',
     max_tokens: 6000,
-    ...(includeBody && {reasoning: {effort: 'low'}}),
+    reasoning: {effort: 'low'},
     provider: {require_parameters: true},
     response_format: {type: 'json_schema', json_schema: {name: 'bnitz_abstract_map', strict: true, schema}},
   };
   const retryPrompt = 'Return a corrected map using only exact quotes from the abstract.';
-  return {messages, settings, attempts: includeBody ? 1 : 2, timeout: 45000, retryPrompt};
+  return {messages, settings, attempts: 2, timeout: 45000, retryPrompt};
 }
 
 function uniqueRange(text, quote, offset = 0) {
