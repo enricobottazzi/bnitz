@@ -1,6 +1,6 @@
 # BNITZ Chrome extension
 
-Open an arXiv PDF and click the BNITZ toolbar icon. BNITZ loads the full PDF, maps the abstract, and highlights related passages throughout the paper. Select a planet to focus on its passages.
+Open an arXiv PDF and click the BNITZ toolbar icon. BNITZ loads the full PDF and maps the abstract. Select a planet to highlight its related passages throughout the paper.
 
 ```mermaid
 flowchart TD

@@ -1,6 +1,6 @@
 # Paper cache
 
-BNITZ first checks Chrome’s Cache Storage for `map.bnitz` and `pdf-anchors.json`. A local hit displays the map and highlights directly. The local key includes the arXiv paper ID, paper version, and a digest of the generation recipe, PDF.js version, and anchor format.
+BNITZ first checks Chrome’s Cache Storage for `map.bnitz` and `pdf-anchors.json`. A local hit displays the saved map and uses the saved anchors when a planet is selected. The local key includes the arXiv paper ID, paper version, and a digest of the generation recipe, PDF.js version, and anchor format.
 
 On a local miss, Chrome parses the PDF and sends generation requests to the Worker. The Worker checks Workers KV for its own extraction, map, and passage-selection results. The [shared key](worker/cache.mjs) uses the versioned arXiv ID, generation recipe, operation, and SHA-256 digest of that operation’s input. A hit skips OpenRouter. Chrome verifies the selected text against the PDF and builds its local anchors.
 
