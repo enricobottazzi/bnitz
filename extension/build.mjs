@@ -2,6 +2,7 @@ import {cpSync, mkdirSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
 import {homedir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {mapExampleNames} from './reader/map-prompt.mjs';
 
 const here = path => fileURLToPath(new URL(path, import.meta.url));
 const tokenFile = process.argv[2] ?? join(homedir(), 'Desktop', 'TOKEN.md');
@@ -18,7 +19,7 @@ for (const path of ['reader', 'icons']) cpSync(here(path), `${dist}/${path}`, {r
 const manifest = readFileSync(here('manifest.json'), 'utf8');
 writeFileSync(`${dist}/manifest.json`, manifest.replaceAll('"dist/', '"'));
 writeFileSync(`${dist}/reader/local-key`, openRouterKey, {mode: 0o600});
-for (const path of ['assets', 'lang', 'bnitz.css', 'RULES.md']) {
+for (const path of ['assets', 'lang', 'bnitz.css']) {
   cpSync(here(`../${path}`), `${dist}/${path}`, {recursive: true});
 }
 
@@ -27,7 +28,7 @@ cpSync(here('node_modules/fflate/esm/browser.js'), `${dist}/vendor/fflate.mjs`);
 cpSync(here('node_modules/fflate/LICENSE'), `${dist}/vendor/fflate-LICENSE`);
 
 mkdirSync(`${dist}/examples`);
-for (const name of ['toy_models_of_superposition', 'scaling_laws_for_neural_language_models']) {
+for (const name of mapExampleNames) {
   cpSync(here(`../examples/${name}.bnitz`), `${dist}/examples/${name}.bnitz`);
 }
 
