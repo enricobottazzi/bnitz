@@ -18,6 +18,7 @@ The deployed Reader displays the maps in `examples/`. [Open the live Reader](htt
 
 - [`lang/`](lang/) defines the `.bnitz` language model and map layout in `model.js`. `view.js` renders the text, highlights, map, and legend.
 - [`reader/`](reader/) contains the reading list, article view, inline Playground, and local server.
+- [`extension/`](extension/) contains the Chrome extension and its [privacy policy](extension/PRIVACY.md).
 - [`examples/`](examples/) contains the published paper maps. [`archive/`](archive/) holds maps outside the reading list.
 - [`assets/`](assets/), [`bnitz.css`](bnitz.css), and [`vendor/`](vendor/) provide the icons, base styles, and bundled KaTeX.
 
