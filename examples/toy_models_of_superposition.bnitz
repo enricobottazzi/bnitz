@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Toy Models of Superposition",
   "author": "N. Elhage et al.",
   "year": 2022,
@@ -14,8 +14,7 @@
       "highlights": [
         {
           "start": 175,
-          "end": 338,
-          "grade": "strong"
+          "end": 338
         }
       ]
     },
@@ -26,8 +25,7 @@
       "highlights": [
         {
           "start": 358,
-          "end": 447,
-          "grade": "strong"
+          "end": 447
         }
       ],
       "parent": "s1",
@@ -40,8 +38,7 @@
       "highlights": [
         {
           "start": 453,
-          "end": 496,
-          "grade": "strong"
+          "end": 496
         }
       ],
       "parent": "s1",
@@ -54,8 +51,7 @@
       "highlights": [
         {
           "start": 0,
-          "end": 175,
-          "grade": "strong"
+          "end": 175
         }
       ],
       "parent": "s1",

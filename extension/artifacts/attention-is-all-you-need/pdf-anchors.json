@@ -193,22 +193,32 @@
     },
     {
       "pageNumber": 2,
+      "index": 30,
+      "text": "Attention mechanisms have become an integral part of compelling sequence modeling and transduc-",
+      "x": 107.641,
+      "y": 532.577,
+      "start": 2329,
+      "end": 2423,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 31,
+      "text": "tion models in various tasks, allowing modeling of dependencies without regard to their distance in",
+      "x": 108,
+      "y": 521.668,
+      "start": 2423,
+      "end": 2522,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
       "index": 32,
       "text": "the input or output sequences [2, 19]. In all but a few cases [27], however, such attention mechanisms",
       "x": 108,
       "y": 510.759,
       "start": 2523,
       "end": 2625,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 2,
-      "index": 33,
-      "text": "are used in conjunction with a recurrent network.",
-      "x": 108,
-      "y": 499.85,
-      "start": 2626,
-      "end": 2675,
       "nodeOffset": 0
     },
     {
@@ -229,36 +239,6 @@
       "y": 450.734,
       "start": 2970,
       "end": 3059,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 2,
-      "index": 41,
-      "text": "The goal of reducing sequential computation also forms the foundation of the Extended Neural GPU",
-      "x": 107.691,
-      "y": 395.041,
-      "start": 3073,
-      "end": 3169,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 2,
-      "index": 42,
-      "text": "[16], ByteNet [18] and ConvS2S [9], all of which use convolutional neural networks as basic building",
-      "x": 108,
-      "y": 384.132,
-      "start": 3170,
-      "end": 3270,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 2,
-      "index": 43,
-      "text": "block, computing hidden representations in parallel for all input and output positions. In these models,",
-      "x": 108,
-      "y": 373.223,
-      "start": 3271,
-      "end": 3375,
       "nodeOffset": 0
     },
     {
@@ -319,6 +299,66 @@
       "y": 325.829,
       "start": 5640,
       "end": 5653,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 133,
+      "text": "• In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer,",
+      "x": 135.397,
+      "y": 464.18300000000005,
+      "start": 10639,
+      "end": 10729,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 134,
+      "text": "and the memory keys and values come from the output of the encoder. This allows every",
+      "x": 143.866,
+      "y": 453.273,
+      "start": 10730,
+      "end": 10815,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 135,
+      "text": "position in the decoder to attend over all positions in the input sequence. This mimics the",
+      "x": 143.866,
+      "y": 442.364,
+      "start": 10816,
+      "end": 10907,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 118,
+      "text": "Since our model contains no recurrence and no convolution, in order for the model to make use of the",
+      "x": 108,
+      "y": 550.588,
+      "start": 13471,
+      "end": 13571,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 119,
+      "text": "order of the sequence, we must inject some information about the relative or absolute position of the",
+      "x": 108,
+      "y": 539.679,
+      "start": 13572,
+      "end": 13673,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 120,
+      "text": "tokens in the sequence. To this end, we add \"positional encodings\" to the input embeddings at the",
+      "x": 108,
+      "y": 528.77,
+      "start": 13674,
+      "end": 13771,
       "nodeOffset": 0
     },
     {
@@ -442,23 +482,23 @@
       "nodeOffset": 0
     },
     {
-      "pageNumber": 7,
-      "index": 109,
-      "text": "bottom line of table 3), step time was 1.0 seconds. The big models were trained for 300,000 steps",
-      "x": 108,
-      "y": 264.859,
-      "start": 19072,
-      "end": 19169,
+      "pageNumber": 8,
+      "index": 0,
+      "text": "Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the",
+      "x": 107.691,
+      "y": 713.245,
+      "start": 19721,
+      "end": 19818,
       "nodeOffset": 0
     },
     {
-      "pageNumber": 7,
-      "index": 110,
-      "text": "(3.5 days).",
-      "x": 107.671,
-      "y": 253.95,
-      "start": 19170,
-      "end": 19181,
+      "pageNumber": 8,
+      "index": 1,
+      "text": "English-to-German and English-to-French newstest2014 tests at a fraction of the training cost.",
+      "x": 108,
+      "y": 702.336,
+      "start": 19819,
+      "end": 19913,
       "nodeOffset": 0
     },
     {
@@ -769,36 +809,6 @@
       "y": 445.948,
       "start": 27103,
       "end": 27180,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 10,
-      "index": 90,
-      "text": "In this work, we presented the Transformer, the first sequence transduction model based entirely on",
-      "x": 108,
-      "y": 395.338,
-      "start": 27194,
-      "end": 27293,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 10,
-      "index": 91,
-      "text": "attention, replacing the recurrent layers most commonly used in encoder-decoder architectures with",
-      "x": 108,
-      "y": 384.429,
-      "start": 27294,
-      "end": 27392,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 10,
-      "index": 92,
-      "text": "multi-headed self-attention.",
-      "x": 108,
-      "y": 373.52,
-      "start": 27393,
-      "end": 27421,
       "nodeOffset": 0
     }
   ]

@@ -53,7 +53,7 @@ export async function findPassages(title, planets, body, apiKey) {
     if (!span) continue;
     const location = `${span.pageNumber}:${span.index}:${Math.max(start - span.start, 0)}`;
     if (matches.some(passage => passage.location === location)) continue;
-    matches.push({location, range: {start: source.offset + start, end: source.offset + end, grade: 'strong'}});
+    matches.push({location, range: {start: source.offset + start, end: source.offset + end}});
   }
   return [...found].map(([planetId, matches]) => [planetId, matches.map(passage => passage.range)]);
 }

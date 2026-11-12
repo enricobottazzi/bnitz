@@ -12,7 +12,7 @@ flowchart TD
 
     A -->|Title and PDF abstract| B
     A -->|Body text blocks| C
-    B -->|Planet IDs, quotes, and strong highlights| C
+    B -->|Planet IDs, quotes, and highlights| C
     C --> M
     C --> P
 ```
@@ -31,7 +31,7 @@ BNITZ sends `article.title` as `title` and `article.text` as `abstract` from `01
 
 ### Step 3
 
-BNITZ sends each `body[].text` from `01-parse.json` as a numbered `{id, text}` block, plus the title and each planet’s ID, abstract quote, and strong highlight phrases from step 2. The LLM selects up to three passages per planet. BNITZ verifies the quotes and saves the map and PDF anchors.
+BNITZ sends each `body[].text` from `01-parse.json` as a numbered `{id, text}` block, plus the title and each planet’s ID, abstract quote, and highlight phrases from step 2. The LLM selects up to three passages per planet. BNITZ verifies the quotes and saves the map and PDF anchors.
 
 | Step | [PRIME-CVD](https://arxiv.org/abs/2603.19299v1) · Default | [Attention Is All You Need](https://arxiv.org/abs/1706.03762v7) · Fallback |
 | --- | --- | --- |

@@ -12,10 +12,7 @@ const schema = object({
     parent: string,
     relation: {type: 'string', enum: ['nucleus', ...Object.keys(BNITZModel.relations)]},
     quote: string,
-    highlights: {type: 'array', minItems: 1, items: object({
-      quote: string,
-      grade: {type: 'string', enum: ['strong', 'soft']},
-    })},
+    highlights: {type: 'array', minItems: 1, items: string},
   })},
 });
 
@@ -30,7 +27,7 @@ function exampleMessage(article) {
     parent: span.parent ?? '',
     relation: span.relation ?? 'nucleus',
     quote: quote(span),
-    highlights: BNITZModel.highlights(span).map(range => ({quote: quote(range), grade: range.grade})),
+    highlights: BNITZModel.highlights(span).map(quote),
   }));
   return {role: 'assistant', content: JSON.stringify({planets})};
 }
@@ -70,16 +67,16 @@ function toDocument({planets}, {title, text, source}) {
   const spans = planets.map(planet => {
     const range = uniqueRange(text, planet.quote);
     if (!range) throw new Error('A planet quote does not uniquely match the abstract.');
-    const highlights = planet.highlights.map(({quote, grade}) => {
+    const highlights = planet.highlights.map(quote => {
       const match = uniqueRange(planet.quote, quote, range.start) ?? uniqueRange(text, quote);
       if (!match) throw new Error('A highlight quote does not uniquely match the abstract.');
-      return {...match, grade};
+      return match;
     });
-    if (!highlights.some(range => range.grade === 'strong')) throw new Error('Each planet needs a strong highlight.');
+    if (!highlights.length) throw new Error('Each planet needs a highlight.');
     const parent = planet === root ? {} : {parent: planet.parent, relation: planet.relation};
     return {id: planet.id, ...range, ...parent, highlights};
   });
-  return BNITZModel.validate({version: 2, title, text, source, nucleus: root.id, spans});
+  return BNITZModel.validate({version: 3, title, text, source, nucleus: root.id, spans});
 }
 
 export async function generateMap(article, apiKey, recipe) {

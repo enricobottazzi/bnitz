@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Zerocash: Decentralized Anonymous Payments from Bitcoin",
   "author": "E. Ben-Sasson et al.",
   "year": 2014,
@@ -14,13 +14,11 @@
       "highlights": [
         {
           "start": 496,
-          "end": 601,
-          "grade": "strong"
+          "end": 601
         },
         {
           "start": 1041,
-          "end": 1125,
-          "grade": "soft"
+          "end": 1125
         }
       ]
     },
@@ -31,18 +29,15 @@
       "highlights": [
         {
           "start": 601,
-          "end": 717,
-          "grade": "soft"
+          "end": 717
         },
         {
           "start": 718,
-          "end": 806,
-          "grade": "strong"
+          "end": 806
         },
         {
           "start": 806,
-          "end": 1039,
-          "grade": "soft"
+          "end": 1039
         }
       ],
       "parent": "s1",
@@ -55,8 +50,7 @@
       "highlights": [
         {
           "start": 1126,
-          "end": 1308,
-          "grade": "strong"
+          "end": 1308
         }
       ],
       "parent": "s1",
@@ -69,18 +63,15 @@
       "highlights": [
         {
           "start": 115,
-          "end": 161,
-          "grade": "strong"
+          "end": 161
         },
         {
           "start": 163,
-          "end": 403,
-          "grade": "soft"
+          "end": 403
         },
         {
           "start": 404,
-          "end": 494,
-          "grade": "strong"
+          "end": 494
         }
       ],
       "parent": "s1",

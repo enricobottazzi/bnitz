@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Refusal in Language Models Is Mediated by a Single Direction",
   "author": "A. Arditi et al.",
   "year": 2024,
@@ -14,8 +14,7 @@
       "highlights": [
         {
           "start": 280,
-          "end": 430,
-          "grade": "strong"
+          "end": 430
         }
       ]
     },
@@ -26,8 +25,7 @@
       "highlights": [
         {
           "start": 430,
-          "end": 687,
-          "grade": "strong"
+          "end": 687
         }
       ],
       "parent": "s1",
@@ -40,13 +38,11 @@
       "highlights": [
         {
           "start": 953,
-          "end": 1031,
-          "grade": "strong"
+          "end": 1031
         },
         {
           "start": 1032,
-          "end": 1182,
-          "grade": "soft"
+          "end": 1182
         }
       ],
       "parent": "s1",
@@ -59,13 +55,11 @@
       "highlights": [
         {
           "start": 0,
-          "end": 227,
-          "grade": "soft"
+          "end": 227
         },
         {
           "start": 228,
-          "end": 279,
-          "grade": "strong"
+          "end": 279
         }
       ],
       "parent": "s1",

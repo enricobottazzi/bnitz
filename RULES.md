@@ -25,7 +25,7 @@ BNITZ is inspired by Rhetorical Structure Theory (RST).
 
 ## Highlighting
 
-Use **strong highlights** for a planet’s main point, focusing on the words that justify its role. Use **soft highlights** for any context or explanation needed to understand that point. Highlight only what helps the reader follow the argument.
+Highlight the words that carry a planet’s main point. Include only the context needed to understand it.
 
 ## Nesting
 

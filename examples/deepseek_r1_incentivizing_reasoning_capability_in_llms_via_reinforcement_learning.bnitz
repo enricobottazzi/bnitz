@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
   "author": "D. Guo et al.",
   "year": 2025,
@@ -14,8 +14,7 @@
       "highlights": [
         {
           "start": 529,
-          "end": 623,
-          "grade": "strong"
+          "end": 623
         }
       ]
     },
@@ -26,8 +25,7 @@
       "highlights": [
         {
           "start": 623,
-          "end": 705,
-          "grade": "strong"
+          "end": 705
         }
       ],
       "parent": "s1",
@@ -40,13 +38,11 @@
       "highlights": [
         {
           "start": 86,
-          "end": 377,
-          "grade": "soft"
+          "end": 377
         },
         {
           "start": 378,
-          "end": 458,
-          "grade": "strong"
+          "end": 458
         }
       ],
       "parent": "s1",

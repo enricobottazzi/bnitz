@@ -14,14 +14,14 @@ function addPageHighlights(layer, spans, ranges, marks) {
   for (const span of spans) {
     const node = nodes[span.index];
     if (node?.textContent !== span.text) continue;
-    for (const {start, end, grade} of ranges) {
+    for (const {start, end} of ranges) {
       const from = Math.max(start, span.start);
       const to = Math.min(end, span.end);
-      if (from >= to || !Object.hasOwn(marks, grade)) continue;
+      if (from >= to) continue;
       const range = new Range();
       range.setStart(node, span.nodeOffset + from - span.start);
       range.setEnd(node, span.nodeOffset + to - span.start);
-      marks[grade].add(range);
+      marks.add(range);
     }
   }
 }
@@ -90,14 +90,12 @@ async function start() {
 
   let selected;
   function paintHighlights(viewer) {
-    const marks = {strong: new Highlight(), soft: new Highlight()};
-    marks.strong.priority = 1;
+    const marks = new Highlight();
     for (const [pageNumber, spans] of selected.pages) {
       const layer = viewer.getPageView(pageNumber - 1)?.textLayer?.div;
       if (layer?.isConnected) addPageHighlights(layer, spans, selected.ranges, marks);
     }
-    CSS.highlights.set('bnitz-soft', marks.soft);
-    CSS.highlights.set('bnitz-strong', marks.strong);
+    CSS.highlights.set('bnitz-highlight', marks);
   }
 
   function highlight(viewer, spans, ranges) {

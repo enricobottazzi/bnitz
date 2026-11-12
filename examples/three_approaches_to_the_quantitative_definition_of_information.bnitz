@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Three Approaches to the Quantitative Definition of Information",
   "text": "There are two common approaches to the quantitative definition of \"information\": combinatorial and probabilistic. The author briefly describes the major features of these approaches and introduces a new algorithmic approach that uses the theory of recursive functions.",
   "nucleus": "s1",
@@ -11,8 +11,7 @@
       "highlights": [
         {
           "start": 186,
-          "end": 268,
-          "grade": "strong"
+          "end": 268
         }
       ]
     },
@@ -23,13 +22,11 @@
       "highlights": [
         {
           "start": 0,
-          "end": 113,
-          "grade": "strong"
+          "end": 113
         },
         {
           "start": 114,
-          "end": 181,
-          "grade": "soft"
+          "end": 181
         }
       ],
       "parent": "s1",

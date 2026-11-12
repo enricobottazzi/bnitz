@@ -25,8 +25,7 @@ const BNITZView = (() => {
       if (!matches.length) return parent.append(node);
       const mark = document.createElement('mark');
       mark.append(node);
-      if (onMark) onMark(mark, matches);
-      else mark.className = matches.some(range => range.grade === 'strong') ? 'strong' : 'soft';
+      onMark?.(mark, matches);
       parent.append(mark);
     }
 

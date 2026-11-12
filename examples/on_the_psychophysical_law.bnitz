@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "On the Psychophysical Law",
   "author": "S. Stevens",
   "year": 1957,
@@ -14,13 +14,11 @@
       "highlights": [
         {
           "start": 875,
-          "end": 1067,
-          "grade": "soft"
+          "end": 1067
         },
         {
           "start": 1068,
-          "end": 1182,
-          "grade": "strong"
+          "end": 1182
         }
       ]
     },
@@ -31,23 +29,19 @@
       "highlights": [
         {
           "start": 146,
-          "end": 247,
-          "grade": "strong"
+          "end": 247
         },
         {
           "start": 248,
-          "end": 572,
-          "grade": "soft"
+          "end": 572
         },
         {
           "start": 573,
-          "end": 652,
-          "grade": "strong"
+          "end": 652
         },
         {
           "start": 653,
-          "end": 874,
-          "grade": "soft"
+          "end": 874
         }
       ],
       "parent": "s1",
@@ -60,8 +54,7 @@
       "highlights": [
         {
           "start": 1183,
-          "end": 1311,
-          "grade": "strong"
+          "end": 1311
         }
       ],
       "parent": "s1",
@@ -74,13 +67,11 @@
       "highlights": [
         {
           "start": 1500,
-          "end": 1989,
-          "grade": "soft"
+          "end": 1989
         },
         {
           "start": 1990,
-          "end": 2090,
-          "grade": "strong"
+          "end": 2090
         }
       ],
       "parent": "s1",

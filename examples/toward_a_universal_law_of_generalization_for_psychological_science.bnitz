@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Toward a Universal Law of Generalization for Psychological Science",
   "text": "A psychological space is established for any set of stimuli by determining metric distances between the stimuli such that the probability that a response learned to any stimulus will generalize to any other is an invariant monotonic function of the distance between them. To a good approximation, this probability of generalization (i) decays exponentialiy with this distance, and (ii) does so in accordance with one of two metrics, depending on the relation between the dimensions along which the stimuli vary. These empirical regularities are mathematically derivable from universal principles of natural kinds and probabilistic geometry that may, through evolutionary internalization, tend to govern the behaviors of all sentient organisms.",
   "nucleus": "s1",
@@ -11,8 +11,7 @@
       "highlights": [
         {
           "start": 272,
-          "end": 512,
-          "grade": "strong"
+          "end": 512
         }
       ]
     },
@@ -23,13 +22,11 @@
       "highlights": [
         {
           "start": 0,
-          "end": 271,
-          "grade": "strong"
+          "end": 271
         },
         {
           "start": 512,
-          "end": 639,
-          "grade": "soft"
+          "end": 639
         }
       ],
       "parent": "s1",
@@ -42,8 +39,7 @@
       "highlights": [
         {
           "start": 640,
-          "end": 743,
-          "grade": "strong"
+          "end": 743
         }
       ],
       "parent": "s1",

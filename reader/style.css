@@ -34,8 +34,7 @@ main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); ou
 .reader-text:focus-visible { outline: 1px solid #ccc; outline-offset: 8px; }
 .reader-text p { margin: 0 0 20px; }
 .reader-text mark { padding: 2px 0; background: transparent; }
-.reader-text mark.strong { background: var(--lime); }
-.reader-text mark.soft { background: var(--soft-lime); }
+.reader-text mark.highlighted { background: var(--lime); }
 .reader-layout { min-width: 0; min-height: 0; }
 .map-pane { display: flex; align-items: center; justify-content: center; height: clamp(240px, 30svh, 300px); background: var(--dots); }
 .map-pane svg { max-width: 460px; overflow: visible; }

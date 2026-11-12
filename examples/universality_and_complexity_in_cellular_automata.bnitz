@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Universality and Complexity in Cellular Automata",
   "text": "Cellular automata are discrete dynamical systems with simple construction but complex self-organizing behaviour. Evidence is presented that all one-dimensional cellular automata fall into four distinct universality classes. Characterizations of the structures generated in these classes are discussed. Three classes exhibit behaviour analogous to limit points, limit cycles and chaotic attractors. The fourth class is probably capable of universal computation, so that properties of its infinite time behaviour are undecidable.",
   "nucleus": "s1",
@@ -11,23 +11,19 @@
       "highlights": [
         {
           "start": 113,
-          "end": 139,
-          "grade": "soft"
+          "end": 139
         },
         {
           "start": 140,
-          "end": 222,
-          "grade": "strong"
+          "end": 222
         },
         {
           "start": 302,
-          "end": 397,
-          "grade": "soft"
+          "end": 397
         },
         {
           "start": 398,
-          "end": 460,
-          "grade": "soft"
+          "end": 460
         }
       ]
     },
@@ -38,8 +34,7 @@
       "highlights": [
         {
           "start": 461,
-          "end": 527,
-          "grade": "strong"
+          "end": 527
         }
       ],
       "parent": "s1",

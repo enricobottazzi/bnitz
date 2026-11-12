@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Emergent Linear Representations in World Models of Self-Supervised Sequence Models",
   "author": "N. Nanda et al.",
   "year": 2023,
@@ -14,8 +14,7 @@
       "highlights": [
         {
           "start": 183,
-          "end": 274,
-          "grade": "strong"
+          "end": 274
         }
       ]
     },
@@ -26,8 +25,7 @@
       "highlights": [
         {
           "start": 64,
-          "end": 182,
-          "grade": "strong"
+          "end": 182
         }
       ],
       "parent": "s1",
@@ -40,8 +38,7 @@
       "highlights": [
         {
           "start": 274,
-          "end": 424,
-          "grade": "strong"
+          "end": 424
         }
       ],
       "parent": "s1",
@@ -54,8 +51,7 @@
       "highlights": [
         {
           "start": 424,
-          "end": 557,
-          "grade": "strong"
+          "end": 557
         }
       ],
       "parent": "s1",

@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Collective Dynamics of ‘Small-World’ Networks",
   "text": "Networks of coupled dynamical systems have been used to model biological oscillators, Josephson junction arrays, excitable media, neural networks, spatial games, genetic control networks and many other self-organizing systems. Ordinarily, the connection topology is assumed to be either completely regular or completely random. But many biological, technological and social networks lie somewhere between these two extremes. Here we explore simple models of networks that can be tuned through this middle ground: regular networks ‘rewired’ to introduce increasing amounts of disorder. We find that these systems can be highly clustered, like regular lattices, yet have small characteristic path lengths, like random graphs. We call them ‘small-world’ networks, by analogy with the small-world phenomenon (popularly known as six degrees of separation). The neural network of the worm Caenorhabditis elegans, the power grid of the western United States, and the collaboration graph of film actors are shown to be small-world networks. Models of dynamical systems with small-world coupling display enhanced signal-propagation speed, computational power, and synchronizability. In particular, infectious diseases spread more easily in small-world networks than in regular lattices.",
   "nucleus": "s1",
@@ -11,13 +11,11 @@
       "highlights": [
         {
           "start": 585,
-          "end": 723,
-          "grade": "strong"
+          "end": 723
         },
         {
           "start": 724,
-          "end": 851,
-          "grade": "soft"
+          "end": 851
         }
       ]
     },
@@ -28,8 +26,7 @@
       "highlights": [
         {
           "start": 425,
-          "end": 584,
-          "grade": "strong"
+          "end": 584
         }
       ],
       "parent": "s1",
@@ -42,8 +39,7 @@
       "highlights": [
         {
           "start": 852,
-          "end": 1033,
-          "grade": "strong"
+          "end": 1033
         }
       ],
       "parent": "s1",
@@ -56,13 +52,11 @@
       "highlights": [
         {
           "start": 1033,
-          "end": 1173,
-          "grade": "strong"
+          "end": 1173
         },
         {
           "start": 1174,
-          "end": 1277,
-          "grade": "soft"
+          "end": 1277
         }
       ],
       "parent": "s1",
@@ -75,8 +69,7 @@
       "highlights": [
         {
           "start": 227,
-          "end": 425,
-          "grade": "strong"
+          "end": 425
         }
       ],
       "parent": "s1",

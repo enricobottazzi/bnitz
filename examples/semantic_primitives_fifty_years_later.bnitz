@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "“Semantic Primitives”, Fifty Years Later",
   "text": "Are there any concepts that all human beings share? Three hundred years ago Leibniz was convinced that there are indeed such concepts and that they can be identified by trial and error. He called this hypothetical set “the alphabet of human thoughts”. Gradually, however, the idea faded from philosophical discourse and eventually it was largely forgotten. It was revived in the early 1960s by the Polish linguist Andrzej Bogusławski.\n\nA few years later it was taken up in my own work and in 1972 in my book “Semantic Primitives” a first hypothetical set of “universal semantic primitives” was actually proposed. It included 14 elements. Following my emigration to Australia more and more linguists joined the testing of the proposed set against an increasing range of languages and domains. As a result, from mid 1980s the set steadily grew.\n\nThe expansion stopped in 2014, when the number stabilised at 65, and when Cliff Goddard and I reached the conclusion that this is the full set. This paper reviews the developments which have taken place over the last 50 years. It reaffirms our belief that we have identified, in full, the shared “alphabet of human thoughts”. It also examines the recurring claim that one of these primes, HAVE PARTS, is not universal.\n\nFurther, the paper argues that there is not only a shared “alphabet of human thoughts” but a shared mental language, “Basic Human”, with a specifiable vocabulary and grammar. It points out that the stakes are high, because what is at issue is not only “the psychic unity of humankind” (Boas 1911) but also the possibility of a “universal human community of communication” (Apel 1972).\n\nThe paper contends that “Basic Human” can provide a secure basis for a non-Anglocentric global discourse about questions that concern us all, such as global ethics, the earth and its future, and the health and well-being of all people on earth.",
   "nucleus": "s1",
@@ -11,13 +11,11 @@
       "highlights": [
         {
           "start": 844,
-          "end": 987,
-          "grade": "soft"
+          "end": 987
         },
         {
           "start": 1264,
-          "end": 1438,
-          "grade": "strong"
+          "end": 1438
         }
       ]
     },
@@ -28,8 +26,7 @@
       "highlights": [
         {
           "start": 0,
-          "end": 51,
-          "grade": "strong"
+          "end": 51
         }
       ],
       "parent": "s1",
@@ -42,13 +39,11 @@
       "highlights": [
         {
           "start": 52,
-          "end": 434,
-          "grade": "soft"
+          "end": 434
         },
         {
           "start": 436,
-          "end": 842,
-          "grade": "strong"
+          "end": 842
         }
       ],
       "parent": "s1",
@@ -61,8 +56,7 @@
       "highlights": [
         {
           "start": 1650,
-          "end": 1894,
-          "grade": "strong"
+          "end": 1894
         }
       ],
       "parent": "s1",

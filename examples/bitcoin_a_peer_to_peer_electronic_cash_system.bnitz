@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Bitcoin: A Peer-to-Peer Electronic Cash System",
   "text": "A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution. Digital signatures provide part of the solution, but the main benefits are lost if a trusted third party is still required to prevent double-spending. We propose a solution to the double-spending problem using a peer-to-peer network. The network timestamps transactions by hashing them into an ongoing chain of hash-based proof-of-work, forming a record that cannot be changed without redoing the proof-of-work. The longest chain not only serves as proof of the sequence of events witnessed, but proof that it came from the largest pool of CPU power. As long as a majority of CPU power is controlled by nodes that are not cooperating to attack the network, they'll generate the longest chain and outpace attackers. The network itself requires minimal structure. Messages are broadcast on a best effort basis, and nodes can leave and rejoin the network at will, accepting the longest proof-of-work chain as proof of what happened while they were gone.",
   "nucleus": "s1",
@@ -11,8 +11,7 @@
       "highlights": [
         {
           "start": 321,
-          "end": 403,
-          "grade": "strong"
+          "end": 403
         }
       ]
     },
@@ -23,13 +22,11 @@
       "highlights": [
         {
           "start": 0,
-          "end": 218,
-          "grade": "soft"
+          "end": 218
         },
         {
           "start": 223,
-          "end": 320,
-          "grade": "strong"
+          "end": 320
         }
       ],
       "parent": "s1",
@@ -42,8 +39,7 @@
       "highlights": [
         {
           "start": 404,
-          "end": 720,
-          "grade": "strong"
+          "end": 720
         }
       ],
       "parent": "s1",
@@ -56,8 +52,7 @@
       "highlights": [
         {
           "start": 721,
-          "end": 884,
-          "grade": "strong"
+          "end": 884
         }
       ],
       "parent": "s3",

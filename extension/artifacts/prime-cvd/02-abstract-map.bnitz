@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "PRIME-CVD: A Parametrically Rendered Informatics Medical Environment for Education in Cardiovascular Risk Modelling",
   "text": "In recent years, progress in medical informatics and machine learning has been accelerated by the availability of openly accessible benchmark datasets. However, patient-level electronic medical record (EMR) data are rarely available for teaching or methodological development due to privacy, governance, and re-identification risks. This has limited reproducibility, transparency, and hands-on training in cardiovascular risk modelling. Here we introduce PRIME-CVD, a parametrically rendered informatics medical environment designed explicitly for medical education. PRIME-CVD comprises two openly accessible synthetic data assets representing a cohort of 50,000 adults undergoing primary prevention for cardiovascular disease. The datasets are generated entirely from a user-specified causal directed acyclic graph parameterised using publicly available Australian population statistics and published epidemiologic effect estimates, rather than from patient-level EMR data or trained generative models. Data Asset 1 provides a clean, analysis-ready cohort suitable for exploratory analysis, stratification, and survival modelling, while Data Asset 2 restructures the same cohort into a relational, EMR-style database with realistic structural and lexical heterogeneity. Together, these assets enable instruction in data cleaning, harmonisation, causal reasoning, and policy-relevant risk modelling without exposing sensitive information. Because all individuals and events are generated de novo, PRIME-CVD preserves realistic subgroup imbalance and risk gradients while ensuring negligible disclosure risk. PRIME-CVD is released under a Creative Commons Attribution 4.0 licence to support reproducible research and scalable medical education.",
   "source": "https://arxiv.org/abs/2603.19299v1",
@@ -11,14 +11,12 @@
       "end": 727,
       "highlights": [
         {
-          "start": 437,
-          "end": 566,
-          "grade": "strong"
+          "start": 445,
+          "end": 566
         },
         {
-          "start": 567,
-          "end": 727,
-          "grade": "soft"
+          "start": 577,
+          "end": 727
         }
       ]
     },
@@ -31,13 +29,11 @@
       "highlights": [
         {
           "start": 161,
-          "end": 332,
-          "grade": "soft"
+          "end": 332
         },
         {
-          "start": 333,
-          "end": 436,
-          "grade": "strong"
+          "start": 342,
+          "end": 436
         }
       ]
     },
@@ -49,9 +45,8 @@
       "relation": "method",
       "highlights": [
         {
-          "start": 728,
-          "end": 1003,
-          "grade": "strong"
+          "start": 745,
+          "end": 933
         }
       ]
     },
@@ -64,51 +59,37 @@
       "highlights": [
         {
           "start": 1004,
-          "end": 1056,
-          "grade": "strong"
-        },
-        {
-          "start": 1057,
-          "end": 1131,
-          "grade": "soft"
+          "end": 1056
         },
         {
           "start": 1138,
-          "end": 1270,
-          "grade": "strong"
+          "end": 1270
         }
       ]
     },
     {
       "id": "s5",
-      "start": 1439,
-      "end": 1607,
-      "parent": "s3",
-      "relation": "implication",
-      "highlights": [
-        {
-          "start": 1439,
-          "end": 1496,
-          "grade": "soft"
-        },
-        {
-          "start": 1497,
-          "end": 1607,
-          "grade": "strong"
-        }
-      ]
-    },
-    {
-      "id": "s6",
       "start": 1271,
       "end": 1438,
       "parent": "s4",
       "relation": "implication",
       "highlights": [
         {
-          "start": 1271,
-          "end": 1438,
-          "grade": "strong"
+          "start": 1294,
+          "end": 1438
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "start": 1439,
+      "end": 1607,
+      "parent": "s3",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 1507,
+          "end": 1607
         }
       ]
     }

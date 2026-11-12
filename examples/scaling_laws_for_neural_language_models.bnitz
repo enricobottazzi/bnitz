@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Scaling Laws for Neural Language Models",
   "author": "J. Kaplan et al.",
   "year": 2020,
@@ -14,13 +14,11 @@
       "highlights": [
         {
           "start": 0,
-          "end": 89,
-          "grade": "soft"
+          "end": 89
         },
         {
           "start": 90,
-          "end": 259,
-          "grade": "strong"
+          "end": 259
         }
       ]
     },
@@ -31,13 +29,11 @@
       "highlights": [
         {
           "start": 489,
-          "end": 646,
-          "grade": "soft"
+          "end": 646
         },
         {
           "start": 646,
-          "end": 803,
-          "grade": "strong"
+          "end": 803
         }
       ],
       "parent": "s1",

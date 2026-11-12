@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Three Models for the Description of Language",
   "text": "We investigate several conceptions of linguistic structure to determine whether or not they can provide simple and \"revealing\" grammars that generate all of the sentences of English and only these. We find that no finite-state Markov process that produces symbols with transition from state to state can serve as an English grammar. Furthermore, the particular subclass of such processes that produce n-order statistical approximations to English do not come closer, with increasing n, to matching the output of an English grammar. We formalize the notions of \"phrase structure\" and show that this gives us a method for describing language which is essentially more powerful, though still representable as a rather elementary type of finite-state process. Nevertheless, it is successful only when limited to a small subset of simple sentences. We study the formal properties of a set of grammatical transformations that carry sentences with phrase structure into new sentences with derived phrase structure, showing that transformational grammars are processes of the same elementary type as phrase-structure grammars; that the grammar of English is materially simplified if phrase structure description is limited to a kernel of simple sentences from which all other sentences are constructed by repeated transformations; and that this view of linguistic structure gives a certain insight into the use and understanding of language. ",
   "nucleus": "s5",
@@ -11,8 +11,7 @@
       "highlights": [
         {
           "start": 532,
-          "end": 756,
-          "grade": "strong"
+          "end": 756
         }
       ],
       "parent": "s5",
@@ -25,8 +24,7 @@
       "highlights": [
         {
           "start": 756,
-          "end": 844,
-          "grade": "strong"
+          "end": 844
         }
       ],
       "parent": "s1",
@@ -39,8 +37,7 @@
       "highlights": [
         {
           "start": 844,
-          "end": 1008,
-          "grade": "strong"
+          "end": 1008
         }
       ],
       "parent": "s5",
@@ -53,18 +50,15 @@
       "highlights": [
         {
           "start": 1021,
-          "end": 1046,
-          "grade": "strong"
+          "end": 1046
         },
         {
           "start": 1047,
-          "end": 1118,
-          "grade": "soft"
+          "end": 1118
         },
         {
           "start": 1124,
-          "end": 1323,
-          "grade": "strong"
+          "end": 1323
         }
       ]
     },
@@ -75,8 +69,7 @@
       "highlights": [
         {
           "start": 0,
-          "end": 198,
-          "grade": "strong"
+          "end": 198
         }
       ],
       "parent": "s5",
@@ -89,13 +82,11 @@
       "highlights": [
         {
           "start": 198,
-          "end": 332,
-          "grade": "strong"
+          "end": 332
         },
         {
           "start": 333,
-          "end": 531,
-          "grade": "soft"
+          "end": 531
         }
       ],
       "parent": "s5",

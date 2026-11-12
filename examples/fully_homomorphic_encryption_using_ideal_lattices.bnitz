@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Fully Homomorphic Encryption Using Ideal Lattices",
   "author": "C. Gentry",
   "year": 2009,
@@ -14,13 +14,11 @@
       "highlights": [
         {
           "start": 0,
-          "end": 48,
-          "grade": "strong"
+          "end": 48
         },
         {
           "start": 51,
-          "end": 153,
-          "grade": "soft"
+          "end": 153
         }
       ]
     },
@@ -31,13 +29,11 @@
       "highlights": [
         {
           "start": 232,
-          "end": 437,
-          "grade": "strong"
+          "end": 437
         },
         {
           "start": 437,
-          "end": 524,
-          "grade": "soft"
+          "end": 524
         }
       ],
       "parent": "s1",
@@ -50,13 +46,11 @@
       "highlights": [
         {
           "start": 524,
-          "end": 625,
-          "grade": "strong"
+          "end": 625
         },
         {
           "start": 1052,
-          "end": 1235,
-          "grade": "soft"
+          "end": 1235
         }
       ],
       "parent": "s1",
@@ -69,8 +63,7 @@
       "highlights": [
         {
           "start": 1236,
-          "end": 1447,
-          "grade": "strong"
+          "end": 1447
         }
       ],
       "parent": "s1",

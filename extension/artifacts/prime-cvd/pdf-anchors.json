@@ -292,33 +292,123 @@
       "nodeOffset": 0
     },
     {
-      "pageNumber": 3,
-      "index": 24,
-      "text": "The assembly engine is parameterised using publicly accessible data sources, including population",
-      "x": 107.691,
-      "y": 464.827,
-      "start": 7348,
-      "end": 7445,
+      "pageNumber": 2,
+      "index": 52,
+      "text": "20% of individuals in each deprivation stratum. At baseline, 73.1% are non-smokers, 10.1% current",
+      "x": 108,
+      "y": 208.389,
+      "start": 5032,
+      "end": 5129,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 68,
+      "text": "Data Asset 2 restructures the same 50,000 adults into a relational, EMR-style database with three",
+      "x": 108,
+      "y": 115.636,
+      "start": 5690,
+      "end": 5787,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 69,
+      "text": "linked tables (Table 2).",
+      "x": 108,
+      "y": 104.727,
+      "start": 5788,
+      "end": 5812,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 70,
+      "text": " ",
+      "x": 197.2662907640001,
+      "y": 104.727,
+      "start": 5812,
+      "end": 5813,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 71,
+      "text": "PatientMasterSummary",
+      "x": 200.296,
+      "y": 104.727,
+      "start": 5813,
+      "end": 5833,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 72,
+      "text": " ",
+      "x": 304.88337479999996,
+      "y": 104.727,
+      "start": 5833,
+      "end": 5834,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 73,
+      "text": "contains identifiers, demographics, socioeconomic",
+      "x": 307.186,
+      "y": 104.727,
+      "start": 5834,
+      "end": 5883,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 74,
+      "text": "position, smoking status, and a coarsened five-year CVD outcome.",
+      "x": 108,
+      "y": 93.818,
+      "start": 5884,
+      "end": 5948,
       "nodeOffset": 0
     },
     {
       "pageNumber": 3,
-      "index": 25,
-      "text": "demographic distributions from the Australian Bureau of Statistics (ABS), chronic-disease prevalence",
-      "x": 108,
-      "y": 453.918,
-      "start": 7446,
-      "end": 7546,
+      "index": 37,
+      "text": "Variable generation proceeds conditionally along this graph:",
+      "x": 252.288136548,
+      "y": 339.347,
+      "start": 8451,
+      "end": 8511,
       "nodeOffset": 0
     },
     {
       "pageNumber": 3,
-      "index": 26,
-      "text": "summaries from the Australian Institute of Health and Welfare (AIHW), and effect estimates from",
+      "index": 38,
+      "text": "nodes are sampled using logistic, linear, or mixture-based formulations calibrated to reproduce the",
       "x": 108,
-      "y": 443.009,
-      "start": 7547,
-      "end": 7642,
+      "y": 328.438,
+      "start": 8512,
+      "end": 8611,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 39,
+      "text": "epidemiologic quantities derived from these sources, ensuring internal coherence across the synthetic",
+      "x": 108,
+      "y": 317.529,
+      "start": 8612,
+      "end": 8713,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 40,
+      "text": "cohort. Full methodological details, including mathematical specifications and executable code for",
+      "x": 108,
+      "y": 306.62,
+      "start": 8714,
+      "end": 8812,
       "nodeOffset": 0
     },
     {
@@ -349,36 +439,6 @@
       "y": 246.595,
       "start": 9123,
       "end": 9216,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 4,
-      "index": 36,
-      "text": "To emulate the challenges of working with real EMR data, we inject controlled “messiness” into",
-      "x": 107.691,
-      "y": 439.982,
-      "start": 12341,
-      "end": 12435,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 4,
-      "index": 37,
-      "text": "all three tables: non-sequential but reproducible patient IDs; patterned missingness in smoking",
-      "x": 108,
-      "y": 429.073,
-      "start": 12436,
-      "end": 12531,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 4,
-      "index": 38,
-      "text": "status; lexical heterogeneity in diagnosis and measurement labels; unit inconsistency for a subset of",
-      "x": 108,
-      "y": 418.164,
-      "start": 12532,
-      "end": 12633,
       "nodeOffset": 0
     },
     {
@@ -543,22 +603,32 @@
     },
     {
       "pageNumber": 6,
-      "index": 30,
-      "text": "high-risk strata. To mitigate re-identification risk, these strata are routinely pooled or suppressed,",
+      "index": 1,
+      "text": "forest plot (Figure 6) illustrate the relative contribution of established risk factors. This exercise",
       "x": 108,
-      "y": 510.794,
-      "start": 20047,
-      "end": 20149,
+      "y": 699.128,
+      "start": 19002,
+      "end": 19104,
       "nodeOffset": 0
     },
     {
       "pageNumber": 6,
-      "index": 31,
-      "text": "limiting opportunities to teach health inequities, subgroup risk, and fairness-aware modelling.",
+      "index": 2,
+      "text": "reinforces interpretation of adjusted effects and demonstrates how survival models can inform",
       "x": 108,
-      "y": 499.885,
-      "start": 20150,
-      "end": 20245,
+      "y": 688.219,
+      "start": 19105,
+      "end": 19198,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 3,
+      "text": "equitable, evidence-based cardiovascular risk policy.",
+      "x": 108,
+      "y": 677.31,
+      "start": 19199,
+      "end": 19252,
       "nodeOffset": 0
     },
     {
@@ -589,126 +659,6 @@
       "y": 461.678,
       "start": 20436,
       "end": 20538,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 6,
-      "index": 38,
-      "text": "The two data assets serve complementary pedagogical functions. Data Asset 1 provides a structured",
-      "x": 107.691,
-      "y": 412.562,
-      "start": 20729,
-      "end": 20826,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 6,
-      "index": 39,
-      "text": "cohort for regression, survival modelling, and calibration assessment of predicted 5-year cardio-",
-      "x": 108,
-      "y": 401.653,
-      "start": 20827,
-      "end": 20923,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 6,
-      "index": 40,
-      "text": "vascular risk, including stratified analyses across socioeconomic strata. Data Asset 2 reintroduces",
-      "x": 107.751,
-      "y": 390.744,
-      "start": 20923,
-      "end": 21022,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 6,
-      "index": 43,
-      "text": "This design aligns with the CBDRH Health Data Science curriculum. In Data Management & Curation",
-      "x": 107.691,
-      "y": 352.538,
-      "start": 21187,
-      "end": 21282,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 6,
-      "index": 44,
-      "text": "(HDAT9400), students derive an analysis-ready dataset from relational EMR tables while documenting",
-      "x": 107.671,
-      "y": 341.628,
-      "start": 21283,
-      "end": 21381,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 6,
-      "index": 45,
-      "text": "data dictionaries and quality-control procedures. In Statistical Modelling (HDAT9600/9700), the",
-      "x": 108,
-      "y": 330.719,
-      "start": 21382,
-      "end": 21477,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 6,
-      "index": 46,
-      "text": "cohort supports generalised linear models and Cox proportional hazards modelling with diagnostic",
-      "x": 108,
-      "y": 319.81,
-      "start": 21478,
-      "end": 21574,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 46,
-      "index": 16,
-      "text": "or machine-learned generative models. As such, only relationships explicitly encoded in the DAG",
-      "x": 108,
-      "y": 188.081,
-      "start": 99481,
-      "end": 99576,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 46,
-      "index": 17,
-      "text": "manifest as correlations, while unmodelled or subtle dependencies remain absent. For this reason,",
-      "x": 108,
-      "y": 177.172,
-      "start": 99577,
-      "end": 99674,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 49,
-      "index": 104,
-      "text": "event timing, multi-episode structure) is irretrievably lost during EMR decomposition. Nonethe-",
-      "x": 108,
-      "y": 395.467,
-      "start": 105738,
-      "end": 105833,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 49,
-      "index": 105,
-      "text": "less, this reconstruction process faithfully illustrates the data cleaning, harmonisation and linkage",
-      "x": 108,
-      "y": 384.558,
-      "start": 105833,
-      "end": 105934,
-      "nodeOffset": 0
-    },
-    {
-      "pageNumber": 49,
-      "index": 106,
-      "text": "challenges that arise in transforming real-world relational EMR data into analysis-ready cohorts.",
-      "x": 108,
-      "y": 373.649,
-      "start": 105935,
-      "end": 106032,
       "nodeOffset": 0
     }
   ]

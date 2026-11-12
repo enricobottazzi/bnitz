@@ -24,8 +24,7 @@ async function addBodyHighlights(map, text, blocks, key) {
   const planets = map.spans.map(planet => ({
     id: planet.id,
     quote: map.text.slice(planet.start, planet.end),
-    focus: BNITZModel.highlights(planet).filter(range => range.grade === 'strong')
-      .map(range => map.text.slice(range.start, range.end)),
+    focus: BNITZModel.highlights(planet).map(range => map.text.slice(range.start, range.end)),
   }));
   const additional = new Map(await findPassages(map.title, planets, blocks, key));
   return BNITZModel.validate({

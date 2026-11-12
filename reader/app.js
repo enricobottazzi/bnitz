@@ -12,8 +12,7 @@ const editor = document.querySelector('#planet-editor');
 const addPlanet = document.querySelector('#add-planet');
 const removePlanet = document.querySelector('#remove-planet');
 const editPlanet = document.querySelector('#edit-planet');
-const strong = document.querySelector('#strong-highlight');
-const soft = document.querySelector('#soft-highlight');
+const highlightButton = document.querySelector('#add-highlight');
 const clearHighlights = document.querySelector('#clear-highlights');
 const hint = document.querySelector('#highlight-hint');
 const relation = document.querySelector('#relation');
@@ -86,8 +85,7 @@ function highlight() {
   const ids = new Set(hovered ? links.get(hovered).map(range => range.planetId) : selectedId ? [selectedId] : []);
   BNITZView.select(map, ...ids);
   for (const [mark, ranges] of links) {
-    const matches = ranges.filter(range => range.draft || ids.has(range.planetId));
-    mark.className = matches.some(range => range.grade === 'strong') ? 'strong' : matches.length ? 'soft' : '';
+    mark.classList.toggle('highlighted', ranges.some(range => range.draft || ids.has(range.planetId)));
   }
 }
 
@@ -104,7 +102,7 @@ function selectPlanet(planet) {
   highlight();
   updateEditor();
   editorStatus.textContent = '';
-  const first = abstract.querySelector('mark.strong, mark.soft');
+  const first = abstract.querySelector('mark.highlighted');
   if (!first) return;
   abstract.scrollTop = Math.max(0, first.offsetTop - abstract.clientHeight / 4);
   if (editor.hidden && matchMedia('(max-width: 600px)').matches) abstract.scrollIntoView({block: 'start'});
@@ -168,9 +166,9 @@ function selectedRange() {
   return pendingRange;
 }
 
-function updateHighlightButtons() {
+function updateHighlightButton() {
   const {start, end} = (draft && selectedRange()) ?? {};
-  strong.disabled = soft.disabled = !draft || !BNITZModel.validRange(article.text, start, end);
+  highlightButton.disabled = !draft || !BNITZModel.validRange(article.text, start, end);
 }
 
 function updateEditor() {
@@ -184,7 +182,7 @@ function updateEditor() {
   hint.style.visibility = editing ? 'visible' : '';
   relation.disabled = parent.disabled = isNucleus || !(draft?.planet || hasHighlights);
   savePlanet.disabled = !(hasHighlights || (draft?.planet && !draft.original.length));
-  updateHighlightButtons();
+  updateHighlightButton();
 }
 
 function startDraft(planet) {
@@ -207,18 +205,16 @@ function resetDraft() {
   editorStatus.textContent = '';
 }
 
-function setHighlight(grade) {
+function setHighlight() {
   const {start, end} = selectedRange() ?? {};
   if (!BNITZModel.validRange(article.text, start, end)) return;
-  // Replace the color only where the new selection overlaps.
-  draft.highlights = draft.highlights.flatMap(range => {
-    if (range.end <= start || range.start >= end) return [range];
-    const parts = [];
-    if (range.start < start) parts.push({...range, end: start});
-    if (range.end > end) parts.push({...range, start: end});
-    return parts.filter(part => BNITZModel.validRange(article.text, part.start, part.end));
-  });
-  draft.highlights.push({start, end, grade});
+  const ranges = [...draft.highlights, {start, end}].sort((a, b) => a.start - b.start);
+  draft.highlights = [];
+  for (const range of ranges) {
+    const previous = draft.highlights.at(-1);
+    if (previous && range.start < previous.end) previous.end = Math.max(previous.end, range.end);
+    else draft.highlights.push({...range});
+  }
   window.getSelection().removeAllRanges();
   pendingRange = null;
   paintArticle();
@@ -264,11 +260,9 @@ removePlanet.addEventListener('click', () => {
   addPlanet.focus({preventScroll: true});
 });
 
-for (const [button, grade] of [[strong, 'strong'], [soft, 'soft']]) {
-  // Keep the article selection intact until the click applies it.
-  button.addEventListener('pointerdown', event => event.preventDefault());
-  button.addEventListener('click', () => setHighlight(grade));
-}
+// Keep the article selection intact until the click applies it.
+highlightButton.addEventListener('pointerdown', event => event.preventDefault());
+highlightButton.addEventListener('click', setHighlight);
 clearHighlights.addEventListener('click', () => {
   draft.highlights = [];
   pendingRange = null;
@@ -295,7 +289,7 @@ editor.addEventListener('submit', event => {
     planet.relation = relation.value;
   }
   if (draft.highlights !== draft.original) {
-    planet.highlights = draft.highlights.sort((a, b) => a.start - b.start);
+    planet.highlights = draft.highlights;
     const [first] = planet.highlights;
     if (first) {
       planet.start = first.start;
@@ -307,10 +301,10 @@ editor.addEventListener('submit', event => {
   trigger.focus({preventScroll: true});
 });
 
-document.addEventListener('selectionchange', updateHighlightButtons);
+document.addEventListener('selectionchange', updateHighlightButton);
 function updateTextSelection() {
   if (window.getSelection().isCollapsed) pendingRange = null;
-  updateHighlightButtons();
+  updateHighlightButton();
 }
 abstract.addEventListener('pointerup', updateTextSelection);
 abstract.addEventListener('keyup', updateTextSelection);

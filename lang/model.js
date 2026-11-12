@@ -15,7 +15,7 @@ const BNITZModel = (() => {
   }
 
   function validate(document) {
-    if (document?.version !== 2) throw new Error('Expected a version 2 .bnitz file.');
+    if (document?.version !== 3) throw new Error('Expected a version 3 .bnitz file.');
     const {title, text, nucleus, spans} = document;
     if (typeof title !== 'string' || !title.trim() || typeof text !== 'string' || !Array.isArray(spans)) {
       throw new Error('The file needs a title, abstract, and planets.');
@@ -27,7 +27,7 @@ const BNITZModel = (() => {
       }
       if (!validRange(text, span.start, span.end)) throw new Error('A planet needs a passage in the abstract.');
       if (Object.hasOwn(span, 'highlights') && (!Array.isArray(span.highlights) || span.highlights.some(range =>
-        !range || !['strong', 'soft'].includes(range.grade) || !validRange(text, range.start, range.end)
+        !range || !validRange(text, range.start, range.end)
       ))) throw new Error('A planet has an invalid highlight.');
       byId.set(span.id, span);
     }
@@ -50,7 +50,7 @@ const BNITZModel = (() => {
   }
 
   const label = span => relations[span.relation]?.[0] ?? 'Nucleus';
-  const highlights = span => span.highlights ?? [{start: span.start, end: span.end, grade: 'strong'}];
+  const highlights = span => span.highlights ?? [{start: span.start, end: span.end}];
 
   const point = angle => [Math.sin(angle), -Math.cos(angle)];
   const turn = 2 * Math.PI;

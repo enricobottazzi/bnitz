@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Inference-Time Intervention: Eliciting Truthful Answers from a Language Model",
   "author": "K. Li et al.",
   "year": 2023,
@@ -14,8 +14,7 @@
       "highlights": [
         {
           "start": 0,
-          "end": 131,
-          "grade": "strong"
+          "end": 131
         }
       ]
     },
@@ -26,13 +25,11 @@
       "highlights": [
         {
           "start": 132,
-          "end": 267,
-          "grade": "strong"
+          "end": 267
         },
         {
           "start": 600,
-          "end": 824,
-          "grade": "soft"
+          "end": 824
         }
       ],
       "parent": "s1",
@@ -45,13 +42,11 @@
       "highlights": [
         {
           "start": 267,
-          "end": 368,
-          "grade": "soft"
+          "end": 368
         },
         {
           "start": 369,
-          "end": 468,
-          "grade": "strong"
+          "end": 468
         }
       ],
       "parent": "s1",
@@ -64,13 +59,11 @@
       "highlights": [
         {
           "start": 469,
-          "end": 528,
-          "grade": "strong"
+          "end": 528
         },
         {
           "start": 529,
-          "end": 599,
-          "grade": "soft"
+          "end": 599
         }
       ],
       "parent": "s1",
@@ -83,8 +76,7 @@
       "highlights": [
         {
           "start": 825,
-          "end": 982,
-          "grade": "strong"
+          "end": 982
         }
       ],
       "parent": "s1",

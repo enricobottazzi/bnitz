@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Greco: Fast Zero-Knowledge Proofs for Valid FHE RLWE Ciphertexts Formation",
   "author": "E. Bottazzi",
   "year": 2024,
@@ -14,13 +14,11 @@
       "highlights": [
         {
           "start": 798,
-          "end": 893,
-          "grade": "strong"
+          "end": 893
         },
         {
           "start": 968,
-          "end": 1123,
-          "grade": "soft"
+          "end": 1123
         }
       ]
     },
@@ -31,18 +29,15 @@
       "highlights": [
         {
           "start": 1329,
-          "end": 1397,
-          "grade": "soft"
+          "end": 1397
         },
         {
           "start": 1402,
-          "end": 1543,
-          "grade": "strong"
+          "end": 1543
         },
         {
           "start": 1545,
-          "end": 1633,
-          "grade": "soft"
+          "end": 1633
         }
       ],
       "parent": "s1",
@@ -55,13 +50,11 @@
       "highlights": [
         {
           "start": 0,
-          "end": 580,
-          "grade": "soft"
+          "end": 580
         },
         {
           "start": 580,
-          "end": 797,
-          "grade": "strong"
+          "end": 797
         }
       ],
       "parent": "s1",

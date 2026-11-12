@@ -1,8 +1,8 @@
 # BNITZ
 
-Bnitz is a visual language for mapping scientific papers. See the rules of the language in [RULES.md](RULES.md).
+BNITZ is a visual language for mapping scientific papers. See the rules of the language in [RULES.md](RULES.md).
 
-A `.bnitz` file stores the paper's text, highlights, and map together.
+A v3 `.bnitz` file stores the paper's text, highlights, and map together. Highlights are `{start, end}` ranges in the text.
 
 The **Reader** shows the map and text from a `.bnitz` file.
 

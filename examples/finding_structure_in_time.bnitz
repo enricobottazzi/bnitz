@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "Finding Structure in Time",
   "text": "Time underlies many interesting human behaviors. Thus, the question of how to represent time in connectionist models is very important. One approach is to represent time implicitly by its effects on processing rather than explicitly (as in a spatial representation). The current report develops a proposal along these lines first described by Jordan (1986) which involves the use of recurrent links in order to provide networks with a dynamic memory. In this approach, hidden unit patterns are fed back to themselves: the internal representations which develop thus reflect task demands in the context of prior internal states. A set of simulations is reported which range from relatively simple problems (temporal version of XOR) to discovering syntactic/semantic features for words. The networks are able to learn interesting internal representations which incorporate task demands with memory demands: indeed, in this approach the notion of memory is inextricably bound up with task processing. These representations reveal a rich structure, which allows them to be highly context-dependent, while also expressing generalizations across classes of items. These representations suggest a method for representing lexical categories and the type/token distinction.\n\n",
   "nucleus": "s1",
@@ -11,13 +11,11 @@
       "highlights": [
         {
           "start": 136,
-          "end": 356,
-          "grade": "soft"
+          "end": 356
         },
         {
           "start": 372,
-          "end": 450,
-          "grade": "strong"
+          "end": 450
         }
       ]
     },
@@ -28,13 +26,11 @@
       "highlights": [
         {
           "start": 628,
-          "end": 784,
-          "grade": "soft"
+          "end": 784
         },
         {
           "start": 998,
-          "end": 1157,
-          "grade": "strong"
+          "end": 1157
         }
       ],
       "parent": "s1",
@@ -47,8 +43,7 @@
       "highlights": [
         {
           "start": 1180,
-          "end": 1264,
-          "grade": "strong"
+          "end": 1264
         }
       ],
       "parent": "s2",
@@ -61,8 +56,7 @@
       "highlights": [
         {
           "start": 71,
-          "end": 116,
-          "grade": "strong"
+          "end": 116
         }
       ],
       "parent": "s1",
@@ -75,8 +69,7 @@
       "highlights": [
         {
           "start": 469,
-          "end": 628,
-          "grade": "strong"
+          "end": 628
         }
       ],
       "parent": "s1",
