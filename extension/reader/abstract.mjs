@@ -122,6 +122,15 @@ function selectedBodyLines(lines, ranges) {
   });
 }
 
+export function extractionTrim({lines, skipStart, skipEnd}, first, last) {
+  const prefix = skipStart.trim();
+  const suffix = skipEnd.trim();
+  if (!first.startsWith(prefix) || !last.endsWith(suffix) ||
+      (prefix && prefix.length === first.length) || (suffix && suffix.length === last.length) ||
+      (lines.length === 1 && !first.slice(prefix.length, first.length - suffix.length).trim())) return null;
+  return {prefix, suffix};
+}
+
 async function findWithFallback(lines, metadata, words, locate) {
   if (!locate || !lines.length) return null;
   const fragments = lines.map((line, index) => {
@@ -134,13 +143,12 @@ async function findWithFallback(lines, metadata, words, locate) {
       typeof result.skipEnd !== 'string' || new Set(result.lines).size !== result.lines.length ||
       result.lines.some(id => !Number.isInteger(id) || !lines[id - 1])) return null;
 
-  const indexed = indexedText(result.lines.map(id => lines[id - 1]), words);
   const first = fragments[result.lines[0] - 1].text;
   const last = fragments[result.lines.at(-1) - 1].text;
-  const prefix = result.skipStart.trim();
-  const suffix = result.skipEnd.trim();
-  if (!first.startsWith(prefix) || !last.endsWith(suffix) ||
-      (prefix && prefix.length === first.length) || (suffix && suffix.length === last.length)) return null;
+  const trim = extractionTrim(result, first, last);
+  if (!trim) return null;
+  const {prefix, suffix} = trim;
+  const indexed = indexedText(result.lines.map(id => lines[id - 1]), words);
   const start = indexed.text.length - indexed.text.trimStart().length + prefix.length;
   const end = indexed.text.trimEnd().length - suffix.length;
   const text = indexed.text.slice(start, end);

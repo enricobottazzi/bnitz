@@ -1,5 +1,5 @@
 import {recipes, revision} from '../worker-dist/recipe.mjs';
-import {matchPdfQuote} from '../reader/abstract.mjs';
+import {extractionTrim, matchPdfQuote} from '../reader/abstract.mjs';
 import {openGenerationCache} from './cache.mjs';
 import {generateMap} from './map.mjs';
 
@@ -99,9 +99,11 @@ const routes = {
     canCache(result, {pdfLines}) {
       const {lines, skipStart, skipEnd, body} = result ?? {};
       const lineExists = id => Number.isInteger(id) && id >= 1 && id <= pdfLines.length;
-      return isArrayOf(lines, lineExists) && lines.length > 0 && new Set(lines).size === lines.length &&
-        isString(skipStart) && isString(skipEnd) && isArrayOf(body, range =>
-          lineExists(range?.first) && lineExists(range?.last) && range.first <= range.last);
+      if (!isArrayOf(lines, lineExists) || !lines.length || new Set(lines).size !== lines.length ||
+          !isString(skipStart) || !isString(skipEnd) || !isArrayOf(body, range =>
+            lineExists(range?.first) && lineExists(range?.last) && range.first <= range.last)) return false;
+      const lineText = id => pdfLines[id - 1].replace(/^\d+ \[p[^\]]*\] /, '');
+      return Boolean(extractionTrim(result, lineText(lines[0]), lineText(lines.at(-1))));
     },
   },
   '/v1/map': {
@@ -160,11 +162,12 @@ export default {
       if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw invalidInput();
       const input = route.input(payload);
       const cache = await openGenerationCache(env.GENERATION_CACHE, payload.arxivId, revision, path, input);
+      const cacheable = result => result != null && (route.canCache?.(result, input) ?? true);
       const cached = await cache?.get();
-      if (cached != null) return respond(cached, 'HIT');
+      if (cacheable(cached)) return respond(cached, 'HIT');
 
       const result = await route.run(input, (body, timeout) => complete(request, env, body, timeout));
-      if (cache && result != null && (route.canCache?.(result, input) ?? true)) await cache.put(result);
+      if (cache && cacheable(result)) await cache.put(result);
       return respond(result, cache ? 'MISS' : 'BYPASS');
     } catch (error) {
       if (error instanceof RequestError) {
