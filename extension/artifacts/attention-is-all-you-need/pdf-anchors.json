@@ -1,0 +1,805 @@
+{
+  "anchorVersion": 1,
+  "pdfSpans": [
+    {
+      "pageNumber": 1,
+      "index": 36,
+      "text": "The dominant sequence transduction models are based on complex recurrent or",
+      "x": 143.557,
+      "y": 371.035,
+      "nodeOffset": 0,
+      "start": 0,
+      "end": 75
+    },
+    {
+      "pageNumber": 1,
+      "index": 37,
+      "text": "convolutional neural networks that include an encoder and a decoder. The best",
+      "x": 143.866,
+      "y": 360.126,
+      "nodeOffset": 0,
+      "start": 76,
+      "end": 153
+    },
+    {
+      "pageNumber": 1,
+      "index": 38,
+      "text": "performing models also connect the encoder and decoder through an attention",
+      "x": 143.866,
+      "y": 349.217,
+      "nodeOffset": 0,
+      "start": 154,
+      "end": 229
+    },
+    {
+      "pageNumber": 1,
+      "index": 39,
+      "text": "mechanism. We propose a new simple network architecture, the Transformer,",
+      "x": 143.866,
+      "y": 338.308,
+      "nodeOffset": 0,
+      "start": 230,
+      "end": 303
+    },
+    {
+      "pageNumber": 1,
+      "index": 40,
+      "text": "based solely on attention mechanisms, dispensing with recurrence and convolutions",
+      "x": 143.866,
+      "y": 327.399,
+      "nodeOffset": 0,
+      "start": 304,
+      "end": 385
+    },
+    {
+      "pageNumber": 1,
+      "index": 41,
+      "text": "entirely.",
+      "x": 143.866,
+      "y": 316.49,
+      "nodeOffset": 0,
+      "start": 386,
+      "end": 395
+    },
+    {
+      "pageNumber": 1,
+      "index": 43,
+      "text": "Experiments on two machine translation tasks show these models to",
+      "x": 182.928159088,
+      "y": 316.49,
+      "nodeOffset": 0,
+      "start": 396,
+      "end": 461
+    },
+    {
+      "pageNumber": 1,
+      "index": 44,
+      "text": "be superior in quality while being more parallelizable and requiring significantly",
+      "x": 143.866,
+      "y": 305.581,
+      "nodeOffset": 0,
+      "start": 462,
+      "end": 544
+    },
+    {
+      "pageNumber": 1,
+      "index": 45,
+      "text": "less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-",
+      "x": 143.866,
+      "y": 294.672,
+      "nodeOffset": 0,
+      "start": 545,
+      "end": 618
+    },
+    {
+      "pageNumber": 1,
+      "index": 46,
+      "text": "to-German translation task, improving over the existing best results, including",
+      "x": 143.866,
+      "y": 283.762,
+      "nodeOffset": 0,
+      "start": 618,
+      "end": 697
+    },
+    {
+      "pageNumber": 1,
+      "index": 47,
+      "text": "ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task,",
+      "x": 143.866,
+      "y": 272.853,
+      "nodeOffset": 0,
+      "start": 698,
+      "end": 776
+    },
+    {
+      "pageNumber": 1,
+      "index": 48,
+      "text": "our model establishes a new single-model state-of-the-art BLEU score of 41.8 after",
+      "x": 143.866,
+      "y": 261.944,
+      "nodeOffset": 0,
+      "start": 777,
+      "end": 859
+    },
+    {
+      "pageNumber": 1,
+      "index": 49,
+      "text": "training for 3.5 days on eight GPUs, a small fraction of the training costs of the",
+      "x": 143.866,
+      "y": 251.035,
+      "nodeOffset": 0,
+      "start": 860,
+      "end": 942
+    },
+    {
+      "pageNumber": 1,
+      "index": 50,
+      "text": "best models from the literature. We show that the Transformer generalizes well to",
+      "x": 143.866,
+      "y": 240.126,
+      "nodeOffset": 0,
+      "start": 943,
+      "end": 1024
+    },
+    {
+      "pageNumber": 1,
+      "index": 51,
+      "text": "other tasks by applying it successfully to English constituency parsing both with",
+      "x": 143.866,
+      "y": 229.217,
+      "nodeOffset": 0,
+      "start": 1025,
+      "end": 1106
+    },
+    {
+      "pageNumber": 1,
+      "index": 52,
+      "text": "large and limited training data.",
+      "x": 143.866,
+      "y": 218.308,
+      "nodeOffset": 0,
+      "start": 1107,
+      "end": 1139
+    },
+    {
+      "pageNumber": 2,
+      "index": 3,
+      "text": "Recurrent neural networks, long short-term memory [13] and gated recurrent [7] neural networks",
+      "x": 108,
+      "y": 685.354,
+      "start": 1156,
+      "end": 1250,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 4,
+      "text": "in particular, have been firmly established as state of the art approaches in sequence modeling and",
+      "x": 108,
+      "y": 674.445,
+      "start": 1251,
+      "end": 1350,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 5,
+      "text": "transduction problems such as language modeling and machine translation [35, 2, 5]. Numerous",
+      "x": 108,
+      "y": 663.536,
+      "start": 1351,
+      "end": 1443,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 32,
+      "text": "the input or output sequences [2, 19]. In all but a few cases [27], however, such attention mechanisms",
+      "x": 108,
+      "y": 510.759,
+      "start": 2523,
+      "end": 2625,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 33,
+      "text": "are used in conjunction with a recurrent network.",
+      "x": 108,
+      "y": 499.85,
+      "start": 2626,
+      "end": 2675,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 36,
+      "text": "The Transformer allows for significantly more parallelization and can reach a new state of the art in",
+      "x": 107.691,
+      "y": 461.643,
+      "start": 2868,
+      "end": 2969,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 37,
+      "text": "translation quality after being trained for as little as twelve hours on eight P100 GPUs.",
+      "x": 108,
+      "y": 450.734,
+      "start": 2970,
+      "end": 3059,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 41,
+      "text": "The goal of reducing sequential computation also forms the foundation of the Extended Neural GPU",
+      "x": 107.691,
+      "y": 395.041,
+      "start": 3073,
+      "end": 3169,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 42,
+      "text": "[16], ByteNet [18] and ConvS2S [9], all of which use convolutional neural networks as basic building",
+      "x": 108,
+      "y": 384.132,
+      "start": 3170,
+      "end": 3270,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 43,
+      "text": "block, computing hidden representations in parallel for all input and output positions. In these models,",
+      "x": 108,
+      "y": 373.223,
+      "start": 3271,
+      "end": 3375,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 57,
+      "text": "To the best of our knowledge, however, the Transformer is the first transduction model relying",
+      "x": 107.691,
+      "y": 204.057,
+      "start": 4512,
+      "end": 4606,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 58,
+      "text": "entirely on self-attention to compute representations of its input and output without using sequence-",
+      "x": 108,
+      "y": 193.148,
+      "start": 4607,
+      "end": 4708,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 59,
+      "text": "aligned RNNs or convolution. In the following sections, we will describe the Transformer, motivate",
+      "x": 108,
+      "y": 182.239,
+      "start": 4708,
+      "end": 4806,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 1,
+      "text": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully",
+      "x": 107.691,
+      "y": 347.647,
+      "start": 5440,
+      "end": 5540,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 2,
+      "text": "connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1,",
+      "x": 108,
+      "y": 336.738,
+      "start": 5541,
+      "end": 5639,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 3,
+      "text": "respectively.",
+      "x": 108,
+      "y": 325.829,
+      "start": 5640,
+      "end": 5653,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 249,
+      "text": "As noted in Table 1, a self-attention layer connects all positions with a constant number of sequentially",
+      "x": 107.641,
+      "y": 93.818,
+      "start": 16100,
+      "end": 16205,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 250,
+      "text": "executed operations, whereas a recurrent layer requires",
+      "x": 108,
+      "y": 82.909,
+      "start": 16206,
+      "end": 16261,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 251,
+      "text": " ",
+      "x": 335.5848373919997,
+      "y": 82.909,
+      "start": 16261,
+      "end": 16262,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 252,
+      "text": "O",
+      "x": 338.789,
+      "y": 82.909,
+      "start": 16262,
+      "end": 16263,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 253,
+      "text": "(",
+      "x": 346.66499999999996,
+      "y": 82.909,
+      "start": 16263,
+      "end": 16264,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 254,
+      "text": "n",
+      "x": 350.539,
+      "y": 82.909,
+      "start": 16264,
+      "end": 16265,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 255,
+      "text": ")",
+      "x": 356.519,
+      "y": 82.909,
+      "start": 16265,
+      "end": 16266,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 256,
+      "text": " ",
+      "x": 360.39345514,
+      "y": 82.909,
+      "start": 16266,
+      "end": 16267,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 257,
+      "text": "sequential operations. In terms of",
+      "x": 363.594,
+      "y": 82.909,
+      "start": 16267,
+      "end": 16301,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 7,
+      "index": 106,
+      "text": "We trained our models on one machine with 8 NVIDIA P100 GPUs. For our base models using",
+      "x": 107.532,
+      "y": 297.586,
+      "start": 18783,
+      "end": 18870,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 7,
+      "index": 107,
+      "text": "the hyperparameters described throughout the paper, each training step took about 0.4 seconds. We",
+      "x": 108,
+      "y": 286.677,
+      "start": 18871,
+      "end": 18968,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 7,
+      "index": 108,
+      "text": "trained the base models for a total of 100,000 steps or 12 hours. For our big models,(described on the",
+      "x": 108,
+      "y": 275.768,
+      "start": 18969,
+      "end": 19071,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 7,
+      "index": 109,
+      "text": "bottom line of table 3), step time was 1.0 seconds. The big models were trained for 300,000 steps",
+      "x": 108,
+      "y": 264.859,
+      "start": 19072,
+      "end": 19169,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 7,
+      "index": 110,
+      "text": "(3.5 days).",
+      "x": 107.671,
+      "y": 253.95,
+      "start": 19170,
+      "end": 19181,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 215,
+      "text": "On the WMT 2014 English-to-German translation task, the big transformer model (Transformer (big)",
+      "x": 108,
+      "y": 366.219,
+      "start": 20941,
+      "end": 21037,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 216,
+      "text": "in Table 2) outperforms the best previously reported models (including ensembles) by more than",
+      "x": 108,
+      "y": 355.31,
+      "start": 21038,
+      "end": 21132,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 217,
+      "text": " ",
+      "x": 489.016548594,
+      "y": 355.31,
+      "start": 21132,
+      "end": 21133,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 218,
+      "text": "2",
+      "x": 491.519,
+      "y": 355.31,
+      "start": 21133,
+      "end": 21134,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 219,
+      "text": ".",
+      "x": 496.5,
+      "y": 355.31,
+      "start": 21134,
+      "end": 21135,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 220,
+      "text": "0",
+      "x": 499.268,
+      "y": 355.31,
+      "start": 21135,
+      "end": 21136,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 221,
+      "text": "BLEU, establishing a new state-of-the-art BLEU score of",
+      "x": 108,
+      "y": 344.401,
+      "start": 21137,
+      "end": 21192,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 222,
+      "text": " ",
+      "x": 340.6456588651997,
+      "y": 344.401,
+      "start": 21192,
+      "end": 21193,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 223,
+      "text": "28",
+      "x": 343.135,
+      "y": 344.401,
+      "start": 21193,
+      "end": 21195,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 224,
+      "text": ".",
+      "x": 353.098,
+      "y": 344.401,
+      "start": 21195,
+      "end": 21196,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 225,
+      "text": "4",
+      "x": 355.865,
+      "y": 344.401,
+      "start": 21196,
+      "end": 21197,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 226,
+      "text": ". The configuration of this model is",
+      "x": 360.846,
+      "y": 344.401,
+      "start": 21197,
+      "end": 21233,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 240,
+      "text": "On the WMT 2014 English-to-French translation task, our big model achieves a BLEU score of",
+      "x": 108,
+      "y": 295.285,
+      "start": 21457,
+      "end": 21547,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 241,
+      "text": " ",
+      "x": 482.60122198739947,
+      "y": 295.285,
+      "start": 21547,
+      "end": 21548,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 242,
+      "text": "41",
+      "x": 485.091,
+      "y": 295.285,
+      "start": 21548,
+      "end": 21550,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 243,
+      "text": ".",
+      "x": 495.053,
+      "y": 295.285,
+      "start": 21550,
+      "end": 21551,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 244,
+      "text": "0",
+      "x": 497.82099999999997,
+      "y": 295.285,
+      "start": 21551,
+      "end": 21552,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 245,
+      "text": ",",
+      "x": 502.802,
+      "y": 295.285,
+      "start": 21552,
+      "end": 21553,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 246,
+      "text": "outperforming all of the previously published single models, at less than",
+      "x": 108,
+      "y": 284.376,
+      "start": 21554,
+      "end": 21627,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 247,
+      "text": " ",
+      "x": 394.74761794079996,
+      "y": 284.376,
+      "start": 21627,
+      "end": 21628,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 248,
+      "text": "1",
+      "x": 397.239,
+      "y": 284.376,
+      "start": 21628,
+      "end": 21629,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 249,
+      "text": "/",
+      "x": 402.21999999999997,
+      "y": 284.376,
+      "start": 21629,
+      "end": 21630,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 250,
+      "text": "4",
+      "x": 407.202,
+      "y": 284.376,
+      "start": 21630,
+      "end": 21631,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 251,
+      "text": " ",
+      "x": 412.1833,
+      "y": 284.376,
+      "start": 21631,
+      "end": 21632,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 252,
+      "text": "the training cost of the",
+      "x": 414.672,
+      "y": 284.376,
+      "start": 21632,
+      "end": 21656,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 8,
+      "index": 253,
+      "text": "previous state-of-the-art model. The Transformer (big) model trained for English-to-French used",
+      "x": 108,
+      "y": 273.467,
+      "start": 21657,
+      "end": 21752,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 10,
+      "index": 82,
+      "text": "Our results in Table 4 show that despite the lack of task-specific tuning our model performs sur-",
+      "x": 108,
+      "y": 495.064,
+      "start": 26772,
+      "end": 26869,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 10,
+      "index": 83,
+      "text": "prisingly well, yielding better results than all previously reported models with the exception of the",
+      "x": 108,
+      "y": 484.155,
+      "start": 26869,
+      "end": 26970,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 10,
+      "index": 84,
+      "text": "Recurrent Neural Network Grammar [8].",
+      "x": 108,
+      "y": 473.246,
+      "start": 26971,
+      "end": 27008,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 10,
+      "index": 85,
+      "text": "In contrast to RNN sequence-to-sequence models [37], the Transformer outperforms the Berkeley-",
+      "x": 108,
+      "y": 456.857,
+      "start": 27009,
+      "end": 27103,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 10,
+      "index": 86,
+      "text": "Parser [29] even when training only on the WSJ training set of 40K sentences.",
+      "x": 108,
+      "y": 445.948,
+      "start": 27103,
+      "end": 27180,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 10,
+      "index": 90,
+      "text": "In this work, we presented the Transformer, the first sequence transduction model based entirely on",
+      "x": 108,
+      "y": 395.338,
+      "start": 27194,
+      "end": 27293,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 10,
+      "index": 91,
+      "text": "attention, replacing the recurrent layers most commonly used in encoder-decoder architectures with",
+      "x": 108,
+      "y": 384.429,
+      "start": 27294,
+      "end": 27392,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 10,
+      "index": 92,
+      "text": "multi-headed self-attention.",
+      "x": 108,
+      "y": 373.52,
+      "start": 27393,
+      "end": 27421,
+      "nodeOffset": 0
+    }
+  ]
+}

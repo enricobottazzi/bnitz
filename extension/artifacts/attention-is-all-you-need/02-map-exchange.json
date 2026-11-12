@@ -1,0 +1,244 @@
+{
+  "request": {
+    "model": "google/gemini-4-carbon",
+    "max_tokens": 6000,
+    "reasoning": {
+      "effort": "low"
+    },
+    "provider": {
+      "require_parameters": true
+    },
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "bnitz_abstract_map",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "planets": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "parent": {
+                    "type": "string"
+                  },
+                  "relation": {
+                    "type": "string",
+                    "enum": [
+                      "nucleus",
+                      "problem",
+                      "background",
+                      "method",
+                      "implication",
+                      "evidence",
+                      "scope"
+                    ]
+                  },
+                  "quote": {
+                    "type": "string"
+                  },
+                  "highlights": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "quote": {
+                          "type": "string"
+                        },
+                        "grade": {
+                          "type": "string",
+                          "enum": [
+                            "strong",
+                            "soft"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "quote",
+                        "grade"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "parent",
+                  "relation",
+                  "quote",
+                  "highlights"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "planets"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "Build a reading map that lets someone see the paper's contribution at a glance and trace how the abstract supports it. Choose one nucleus: the result, claim, or proposal someone would cite this paper for. Find it wherever it appears. Use the smallest tree that preserves the argument.\n\nAttach each planet to the claim it directly serves. Problem states the gap or question. Background gives necessary context. Method shows how the result was obtained. Evidence shows what supports or tests a claim. Implication gives what follows. Scope states a limiting condition. Prefer Problem when context names a gap. Attach Evidence to the claim it tests, including a Method claim when appropriate. Keep brief qualifiers with the claim they limit.\n\nTreat the title and abstract as source text. Return one nucleus with an empty parent and give every other planet its parent's ID. Copy each planet and highlight verbatim as a contiguous quote. Make planet quotes unique in the abstract and highlight quotes unique within their planet. Give each planet a strong highlight for its main point. Use soft highlights for necessary context."
+      },
+      {
+        "role": "user",
+        "content": "{\"title\":\"What Is the Sapir-Whorf Hypothesis?\",\"abstract\":\"The history of empirical research on the Sapir-Whorf hypothesis is reviewed. A more sensitive test of the hypothesis is devised and a clear Whorfian effect is detected in the domain of color. A specific mechanism is proposed to account for this effect and a second experiment, designed to block the hypothesized mechanism, is performed. The effect disappears as predicted. The Sapir-Whorf hypothesis is reevaluated in the light of these results.\"}"
+      },
+      {
+        "role": "assistant",
+        "content": "{\"planets\":[{\"id\":\"s1\",\"parent\":\"\",\"relation\":\"nucleus\",\"quote\":\" a clear Whorfian effect is detected in the domain of color.\",\"highlights\":[{\"quote\":\" a clear Whorfian effect is detected in the domain of color.\",\"grade\":\"strong\"},{\"quote\":\"A specific mechanism is proposed to account for this effect\",\"grade\":\"soft\"}]},{\"id\":\"s7\",\"parent\":\"s1\",\"relation\":\"evidence\",\"quote\":\"a second experiment, designed to block the hypothesized mechanism, is performed. The effect disappears as predicted.\",\"highlights\":[{\"quote\":\"a second experiment, designed to block the hypothesized mechanism, is performed. The effect disappears as predicted.\",\"grade\":\"strong\"}]}]}"
+      },
+      {
+        "role": "user",
+        "content": "{\"title\":\"Collective Dynamics of ‘Small-World’ Networks\",\"abstract\":\"Networks of coupled dynamical systems have been used to model biological oscillators, Josephson junction arrays, excitable media, neural networks, spatial games, genetic control networks and many other self-organizing systems. Ordinarily, the connection topology is assumed to be either completely regular or completely random. But many biological, technological and social networks lie somewhere between these two extremes. Here we explore simple models of networks that can be tuned through this middle ground: regular networks ‘rewired’ to introduce increasing amounts of disorder. We find that these systems can be highly clustered, like regular lattices, yet have small characteristic path lengths, like random graphs. We call them ‘small-world’ networks, by analogy with the small-world phenomenon (popularly known as six degrees of separation). The neural network of the worm Caenorhabditis elegans, the power grid of the western United States, and the collaboration graph of film actors are shown to be small-world networks. Models of dynamical systems with small-world coupling display enhanced signal-propagation speed, computational power, and synchronizability. In particular, infectious diseases spread more easily in small-world networks than in regular lattices.\"}"
+      },
+      {
+        "role": "assistant",
+        "content": "{\"planets\":[{\"id\":\"s1\",\"parent\":\"\",\"relation\":\"nucleus\",\"quote\":\"We find that these systems can be highly clustered, like regular lattices, yet have small characteristic path lengths, like random graphs.\",\"highlights\":[{\"quote\":\"We find that these systems can be highly clustered, like regular lattices, yet have small characteristic path lengths, like random graphs.\",\"grade\":\"strong\"},{\"quote\":\"We call them ‘small-world’ networks, by analogy with the small-world phenomenon (popularly known as six degrees of separation).\",\"grade\":\"soft\"}]},{\"id\":\"s6\",\"parent\":\"s1\",\"relation\":\"method\",\"quote\":\"Here we explore simple models of networks that can be tuned through this middle ground: regular networks ‘rewired’ to introduce increasing amounts of disorder.\",\"highlights\":[{\"quote\":\"Here we explore simple models of networks that can be tuned through this middle ground: regular networks ‘rewired’ to introduce increasing amounts of disorder.\",\"grade\":\"strong\"}]},{\"id\":\"s2\",\"parent\":\"s1\",\"relation\":\"evidence\",\"quote\":\"The neural network of the worm Caenorhabditis elegans, the power grid of the western United States, and the collaboration graph of film actors are shown to be small-world networks. \",\"highlights\":[{\"quote\":\"The neural network of the worm Caenorhabditis elegans, the power grid of the western United States, and the collaboration graph of film actors are shown to be small-world networks. \",\"grade\":\"strong\"}]},{\"id\":\"s3\",\"parent\":\"s1\",\"relation\":\"implication\",\"quote\":\"Models of dynamical systems with small-world coupling display enhanced signal-propagation speed, computational power, and synchronizability. In particular, infectious diseases spread more easily in small-world networks than in regular lattices.\",\"highlights\":[{\"quote\":\"Models of dynamical systems with small-world coupling display enhanced signal-propagation speed, computational power, and synchronizability.\",\"grade\":\"strong\"},{\"quote\":\"In particular, infectious diseases spread more easily in small-world networks than in regular lattices.\",\"grade\":\"soft\"}]},{\"id\":\"s5\",\"parent\":\"s1\",\"relation\":\"problem\",\"quote\":\"Ordinarily, the connection topology is assumed to be either completely regular or completely random. But many biological, technological and social networks lie somewhere between these two extremes. \",\"highlights\":[{\"quote\":\"Ordinarily, the connection topology is assumed to be either completely regular or completely random. But many biological, technological and social networks lie somewhere between these two extremes. \",\"grade\":\"strong\"}]}]}"
+      },
+      {
+        "role": "user",
+        "content": "{\"title\":\"Bitcoin: A Peer-to-Peer Electronic Cash System\",\"abstract\":\"A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution. Digital signatures provide part of the solution, but the main benefits are lost if a trusted third party is still required to prevent double-spending. We propose a solution to the double-spending problem using a peer-to-peer network. The network timestamps transactions by hashing them into an ongoing chain of hash-based proof-of-work, forming a record that cannot be changed without redoing the proof-of-work. The longest chain not only serves as proof of the sequence of events witnessed, but proof that it came from the largest pool of CPU power. As long as a majority of CPU power is controlled by nodes that are not cooperating to attack the network, they'll generate the longest chain and outpace attackers. The network itself requires minimal structure. Messages are broadcast on a best effort basis, and nodes can leave and rejoin the network at will, accepting the longest proof-of-work chain as proof of what happened while they were gone.\"}"
+      },
+      {
+        "role": "assistant",
+        "content": "{\"planets\":[{\"id\":\"s1\",\"parent\":\"\",\"relation\":\"nucleus\",\"quote\":\"We propose a solution to the double-spending problem using a peer-to-peer network.\",\"highlights\":[{\"quote\":\"We propose a solution to the double-spending problem using a peer-to-peer network.\",\"grade\":\"strong\"}]},{\"id\":\"s6\",\"parent\":\"s1\",\"relation\":\"problem\",\"quote\":\"A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution. Digital signatures provide part of the solution, but the main benefits are lost if a trusted third party is still required to prevent double-spending.\",\"highlights\":[{\"quote\":\"A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution. Digital signatures provide part of the solution,\",\"grade\":\"soft\"},{\"quote\":\"the main benefits are lost if a trusted third party is still required to prevent double-spending.\",\"grade\":\"strong\"}]},{\"id\":\"s3\",\"parent\":\"s1\",\"relation\":\"method\",\"quote\":\"The network timestamps transactions by hashing them into an ongoing chain of hash-based proof-of-work, forming a record that cannot be changed without redoing the proof-of-work. The longest chain not only serves as proof of the sequence of events witnessed, but proof that it came from the largest pool of CPU power.\",\"highlights\":[{\"quote\":\"The network timestamps transactions by hashing them into an ongoing chain of hash-based proof-of-work, forming a record that cannot be changed without redoing the proof-of-work. The longest chain not only serves as proof of the sequence of events witnessed, but proof that it came from the largest pool of CPU power.\",\"grade\":\"strong\"}]},{\"id\":\"s4\",\"parent\":\"s3\",\"relation\":\"scope\",\"quote\":\"As long as a majority of CPU power is controlled by nodes that are not cooperating to attack the network, they'll generate the longest chain and outpace attackers.\",\"highlights\":[{\"quote\":\"As long as a majority of CPU power is controlled by nodes that are not cooperating to attack the network, they'll generate the longest chain and outpace attackers.\",\"grade\":\"strong\"}]}]}"
+      },
+      {
+        "role": "user",
+        "content": "{\"title\":\"Three Models for the Description of Language\",\"abstract\":\"We investigate several conceptions of linguistic structure to determine whether or not they can provide simple and \\\"revealing\\\" grammars that generate all of the sentences of English and only these. We find that no finite-state Markov process that produces symbols with transition from state to state can serve as an English grammar. Furthermore, the particular subclass of such processes that produce n-order statistical approximations to English do not come closer, with increasing n, to matching the output of an English grammar. We formalize the notions of \\\"phrase structure\\\" and show that this gives us a method for describing language which is essentially more powerful, though still representable as a rather elementary type of finite-state process. Nevertheless, it is successful only when limited to a small subset of simple sentences. We study the formal properties of a set of grammatical transformations that carry sentences with phrase structure into new sentences with derived phrase structure, showing that transformational grammars are processes of the same elementary type as phrase-structure grammars; that the grammar of English is materially simplified if phrase structure description is limited to a kernel of simple sentences from which all other sentences are constructed by repeated transformations; and that this view of linguistic structure gives a certain insight into the use and understanding of language. \"}"
+      },
+      {
+        "role": "assistant",
+        "content": "{\"planets\":[{\"id\":\"s1\",\"parent\":\"s5\",\"relation\":\"background\",\"quote\":\"We formalize the notions of \\\"phrase structure\\\" and show that this gives us a method for describing language which is essentially more powerful, though still representable as a rather elementary type of finite-state process. \",\"highlights\":[{\"quote\":\"We formalize the notions of \\\"phrase structure\\\" and show that this gives us a method for describing language which is essentially more powerful, though still representable as a rather elementary type of finite-state process. \",\"grade\":\"strong\"}]},{\"id\":\"s2\",\"parent\":\"s1\",\"relation\":\"scope\",\"quote\":\"Nevertheless, it is successful only when limited to a small subset of simple sentences. \",\"highlights\":[{\"quote\":\"Nevertheless, it is successful only when limited to a small subset of simple sentences. \",\"grade\":\"strong\"}]},{\"id\":\"s3\",\"parent\":\"s5\",\"relation\":\"method\",\"quote\":\"We study the formal properties of a set of grammatical transformations that carry sentences with phrase structure into new sentences with derived phrase structure, \",\"highlights\":[{\"quote\":\"We study the formal properties of a set of grammatical transformations that carry sentences with phrase structure into new sentences with derived phrase structure, \",\"grade\":\"strong\"}]},{\"id\":\"s5\",\"parent\":\"\",\"relation\":\"nucleus\",\"quote\":\"the grammar of English is materially simplified if phrase structure description is limited to a kernel of simple sentences from which all other sentences are constructed by repeated transformations; \",\"highlights\":[{\"quote\":\"transformational grammars\",\"grade\":\"strong\"},{\"quote\":\"are processes of the same elementary type as phrase-structure grammars;\",\"grade\":\"soft\"},{\"quote\":\"the grammar of English is materially simplified if phrase structure description is limited to a kernel of simple sentences from which all other sentences are constructed by repeated transformations; \",\"grade\":\"strong\"}]},{\"id\":\"s7\",\"parent\":\"s5\",\"relation\":\"problem\",\"quote\":\"We investigate several conceptions of linguistic structure to determine whether or not they can provide simple and \\\"revealing\\\" grammars that generate all of the sentences of English and only these. \",\"highlights\":[{\"quote\":\"We investigate several conceptions of linguistic structure to determine whether or not they can provide simple and \\\"revealing\\\" grammars that generate all of the sentences of English and only these. \",\"grade\":\"strong\"}]},{\"id\":\"s8\",\"parent\":\"s5\",\"relation\":\"background\",\"quote\":\"We find that no finite-state Markov process that produces symbols with transition from state to state can serve as an English grammar. Furthermore, the particular subclass of such processes that produce n-order statistical approximations to English do not come closer, with increasing n, to matching the output of an English grammar.\",\"highlights\":[{\"quote\":\"We find that no finite-state Markov process that produces symbols with transition from state to state can serve as an English grammar.\",\"grade\":\"strong\"},{\"quote\":\"Furthermore, the particular subclass of such processes that produce n-order statistical approximations to English do not come closer, with increasing n, to matching the output of an English grammar.\",\"grade\":\"soft\"}]}]}"
+      },
+      {
+        "role": "user",
+        "content": "{\"title\":\"Finding Structure in Time\",\"abstract\":\"Time underlies many interesting human behaviors. Thus, the question of how to represent time in connectionist models is very important. One approach is to represent time implicitly by its effects on processing rather than explicitly (as in a spatial representation). The current report develops a proposal along these lines first described by Jordan (1986) which involves the use of recurrent links in order to provide networks with a dynamic memory. In this approach, hidden unit patterns are fed back to themselves: the internal representations which develop thus reflect task demands in the context of prior internal states. A set of simulations is reported which range from relatively simple problems (temporal version of XOR) to discovering syntactic/semantic features for words. The networks are able to learn interesting internal representations which incorporate task demands with memory demands: indeed, in this approach the notion of memory is inextricably bound up with task processing. These representations reveal a rich structure, which allows them to be highly context-dependent, while also expressing generalizations across classes of items. These representations suggest a method for representing lexical categories and the type/token distinction.\\n\\n\"}"
+      },
+      {
+        "role": "assistant",
+        "content": "{\"planets\":[{\"id\":\"s1\",\"parent\":\"\",\"relation\":\"nucleus\",\"quote\":\"the use of recurrent links in order to provide networks with a dynamic memory.\",\"highlights\":[{\"quote\":\"One approach is to represent time implicitly by its effects on processing rather than explicitly (as in a spatial representation). The current report develops a proposal along these lines first described by Jordan (1986)\",\"grade\":\"soft\"},{\"quote\":\"the use of recurrent links in order to provide networks with a dynamic memory.\",\"grade\":\"strong\"}]},{\"id\":\"s2\",\"parent\":\"s1\",\"relation\":\"evidence\",\"quote\":\"These representations reveal a rich structure, which allows them to be highly context-dependent, while also expressing generalizations across classes of items.\",\"highlights\":[{\"quote\":\"A set of simulations is reported which range from relatively simple problems (temporal version of XOR) to discovering syntactic/semantic features for words.\",\"grade\":\"soft\"},{\"quote\":\"These representations reveal a rich structure, which allows them to be highly context-dependent, while also expressing generalizations across classes of items.\",\"grade\":\"strong\"}]},{\"id\":\"s4\",\"parent\":\"s2\",\"relation\":\"implication\",\"quote\":\"suggest a method for representing lexical categories and the type/token distinction.\",\"highlights\":[{\"quote\":\"suggest a method for representing lexical categories and the type/token distinction.\",\"grade\":\"strong\"}]},{\"id\":\"s5\",\"parent\":\"s1\",\"relation\":\"problem\",\"quote\":\"how to represent time in connectionist models\",\"highlights\":[{\"quote\":\"how to represent time in connectionist models\",\"grade\":\"strong\"}]},{\"id\":\"s7\",\"parent\":\"s1\",\"relation\":\"method\",\"quote\":\"hidden unit patterns are fed back to themselves: the internal representations which develop thus reflect task demands in the context of prior internal states. \",\"highlights\":[{\"quote\":\"hidden unit patterns are fed back to themselves: the internal representations which develop thus reflect task demands in the context of prior internal states. \",\"grade\":\"strong\"}]}]}"
+      },
+      {
+        "role": "user",
+        "content": "{\"title\":\"The Geometry of Truth: Emergent Linear Structure in LLM Representations of True/False Datasets\",\"abstract\":\"Large Language Models (LLMs) have impressive capabilities, but are prone to outputting falsehoods. Recent work has developed techniques for inferring whether a LLM is telling the truth by training probes on the LLM’s internal activations. However, this line of work is controversial, with some authors pointing out failures of these probes to generalize in basic ways, among other conceptual issues. In this work, we use high-quality datasets of simple true/false statements to study in detail the structure of LLM representations of truth, drawing on three lines of evidence: 1. Visualizations of LLM true/false statement representations, which reveal clear linear structure. 2. Transfer experiments in which probes trained on one dataset generalize to different datasets. 3. Causal evidence obtained by surgically intervening in a LLM’s forward pass, causing it to treat false statements as true and vice versa. Overall, we present evidence that at sufficient scale, LLMs linearly represent the truth or falsehood of factual statements. We also show that simple difference-in-mean probes generalize as well as other probing techniques while identifying directions which are more causally implicated in model outputs.\"}"
+      },
+      {
+        "role": "assistant",
+        "content": "{\"planets\":[{\"id\":\"s1\",\"parent\":\"\",\"relation\":\"nucleus\",\"quote\":\"at sufficient scale, LLMs linearly represent the truth or falsehood of factual statements.\",\"highlights\":[{\"quote\":\"at sufficient scale, LLMs linearly represent the truth or falsehood of factual statements.\",\"grade\":\"strong\"}]},{\"id\":\"s2\",\"parent\":\"s1\",\"relation\":\"evidence\",\"quote\":\"1. Visualizations of LLM true/false statement representations, which reveal clear linear structure\",\"highlights\":[{\"quote\":\"1. Visualizations of LLM true/false statement representations, which reveal clear linear structure\",\"grade\":\"strong\"}]},{\"id\":\"s3\",\"parent\":\"s1\",\"relation\":\"evidence\",\"quote\":\"2. Transfer experiments in which probes trained on one dataset generalize to different datasets.\",\"highlights\":[{\"quote\":\"2. Transfer experiments in which probes trained on one dataset generalize to different datasets.\",\"grade\":\"strong\"}]},{\"id\":\"s4\",\"parent\":\"s1\",\"relation\":\"evidence\",\"quote\":\"3. Causal evidence obtained by surgically intervening in a LLM’s forward pass, causing it to treat false statements as true and vice versa.\",\"highlights\":[{\"quote\":\"3. Causal evidence obtained by surgically intervening in a LLM’s forward pass, causing it to treat false statements as true and vice versa.\",\"grade\":\"strong\"}]},{\"id\":\"s8\",\"parent\":\"s1\",\"relation\":\"problem\",\"quote\":\"Large Language Models (LLMs) have impressive capabilities, but are prone to outputting falsehoods. Recent work has developed techniques for inferring whether a LLM is telling the truth by training probes on the LLM’s internal activations. However, this line of work is controversial, with some authors pointing out failures of these probes to generalize in basic ways, among other conceptual issues.\",\"highlights\":[{\"quote\":\"Large Language Models (LLMs) have impressive capabilities, but are prone to outputting falsehoods. Recent work has developed techniques for inferring whether a LLM is telling the truth by training probes on the LLM’s internal activations.\",\"grade\":\"soft\"},{\"quote\":\"However, this line of work is controversial, with some authors pointing out failures of these probes to generalize in basic ways, among other conceptual issues.\",\"grade\":\"strong\"}]},{\"id\":\"s9\",\"parent\":\"s1\",\"relation\":\"method\",\"quote\":\"we use high-quality datasets of simple true/false statements to study in detail the structure of LLM representations of truth,\",\"highlights\":[{\"quote\":\"we use high-quality datasets of simple true/false statements to study in detail the structure of LLM representations of truth,\",\"grade\":\"strong\"}]}]}"
+      },
+      {
+        "role": "user",
+        "content": "{\"title\":\"Attention Is All You Need\",\"abstract\":\"The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.\"}"
+      }
+    ]
+  },
+  "response": {
+    "planets": [
+      {
+        "id": "s1",
+        "parent": "",
+        "relation": "nucleus",
+        "quote": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+        "highlights": [
+          {
+            "quote": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+            "grade": "strong"
+          }
+        ]
+      },
+      {
+        "id": "s2",
+        "parent": "s1",
+        "relation": "background",
+        "quote": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism.",
+        "highlights": [
+          {
+            "quote": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks",
+            "grade": "strong"
+          },
+          {
+            "quote": "The best performing models also connect the encoder and decoder through an attention mechanism.",
+            "grade": "soft"
+          }
+        ]
+      },
+      {
+        "id": "s3",
+        "parent": "s1",
+        "relation": "evidence",
+        "quote": "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
+        "highlights": [
+          {
+            "quote": "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
+            "grade": "strong"
+          }
+        ]
+      },
+      {
+        "id": "s4",
+        "parent": "s3",
+        "relation": "evidence",
+        "quote": "Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.",
+        "highlights": [
+          {
+            "quote": "improving over the existing best results, including ensembles, by over 2 BLEU.",
+            "grade": "strong"
+          },
+          {
+            "quote": "establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.",
+            "grade": "strong"
+          }
+        ]
+      },
+      {
+        "id": "s5",
+        "parent": "s1",
+        "relation": "evidence",
+        "quote": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+        "highlights": [
+          {
+            "quote": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+            "grade": "strong"
+          }
+        ]
+      }
+    ]
+  },
+  "usage": {
+    "prompt_tokens": 4919,
+    "completion_tokens": 559,
+    "total_tokens": 5478,
+    "cost": 0.015428,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.015428,
+      "upstream_inference_prompt_cost": 0.009838,
+      "upstream_inference_completions_cost": 0.00559
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "milliseconds": 9399
+}

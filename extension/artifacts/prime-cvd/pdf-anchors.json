@@ -1,0 +1,715 @@
+{
+  "anchorVersion": 1,
+  "pdfSpans": [
+    {
+      "pageNumber": 1,
+      "index": 16,
+      "text": "patient-level electronic medical record (EMR) data are rarely available for teaching",
+      "x": 143.866,
+      "y": 411.351,
+      "nodeOffset": 0,
+      "start": 161,
+      "end": 245
+    },
+    {
+      "pageNumber": 1,
+      "index": 17,
+      "text": "or methodological development due to privacy, governance, and re-identification",
+      "x": 143.866,
+      "y": 400.442,
+      "nodeOffset": 0,
+      "start": 246,
+      "end": 325
+    },
+    {
+      "pageNumber": 1,
+      "index": 18,
+      "text": "risks.",
+      "x": 143.866,
+      "y": 389.533,
+      "nodeOffset": 0,
+      "start": 326,
+      "end": 332
+    },
+    {
+      "pageNumber": 1,
+      "index": 20,
+      "text": "This has limited reproducibility, transparency, and hands-on training in",
+      "x": 171.73996003600004,
+      "y": 389.533,
+      "nodeOffset": 0,
+      "start": 333,
+      "end": 405
+    },
+    {
+      "pageNumber": 1,
+      "index": 21,
+      "text": "cardiovascular risk modelling.",
+      "x": 143.866,
+      "y": 378.624,
+      "nodeOffset": 0,
+      "start": 406,
+      "end": 436
+    },
+    {
+      "pageNumber": 1,
+      "index": 23,
+      "text": "Here we introduce PRIME-CVD, a parametri-",
+      "x": 275.93959044400003,
+      "y": 378.624,
+      "nodeOffset": 0,
+      "start": 437,
+      "end": 477
+    },
+    {
+      "pageNumber": 1,
+      "index": 24,
+      "text": "cally rendered informatics medical environment designed explicitly for medical",
+      "x": 143.866,
+      "y": 367.715,
+      "nodeOffset": 0,
+      "start": 477,
+      "end": 555
+    },
+    {
+      "pageNumber": 1,
+      "index": 25,
+      "text": "education. PRIME-CVD comprises two openly accessible synthetic data assets",
+      "x": 143.866,
+      "y": 356.805,
+      "nodeOffset": 0,
+      "start": 556,
+      "end": 630
+    },
+    {
+      "pageNumber": 1,
+      "index": 26,
+      "text": "representing a cohort of 50,000 adults undergoing primary prevention for cardio-",
+      "x": 143.866,
+      "y": 345.896,
+      "nodeOffset": 0,
+      "start": 631,
+      "end": 710
+    },
+    {
+      "pageNumber": 1,
+      "index": 27,
+      "text": "vascular disease. The datasets are generated entirely from a user-specified causal",
+      "x": 143.616,
+      "y": 334.987,
+      "nodeOffset": 0,
+      "start": 710,
+      "end": 792
+    },
+    {
+      "pageNumber": 1,
+      "index": 28,
+      "text": "directed acyclic graph parameterised using publicly available Australian popu-",
+      "x": 143.866,
+      "y": 324.078,
+      "nodeOffset": 0,
+      "start": 793,
+      "end": 870
+    },
+    {
+      "pageNumber": 1,
+      "index": 29,
+      "text": "lation statistics and published epidemiologic effect estimates, rather than from",
+      "x": 143.866,
+      "y": 313.169,
+      "nodeOffset": 0,
+      "start": 870,
+      "end": 950
+    },
+    {
+      "pageNumber": 1,
+      "index": 30,
+      "text": "patient-level EMR data or trained generative models. Data Asset 1 provides a clean,",
+      "x": 143.866,
+      "y": 302.26,
+      "nodeOffset": 0,
+      "start": 951,
+      "end": 1034
+    },
+    {
+      "pageNumber": 1,
+      "index": 31,
+      "text": "analysis-ready cohort suitable for exploratory analysis, stratification, and survival",
+      "x": 143.866,
+      "y": 291.351,
+      "nodeOffset": 0,
+      "start": 1035,
+      "end": 1120
+    },
+    {
+      "pageNumber": 1,
+      "index": 32,
+      "text": "modelling, while Data Asset 2 restructures the same cohort into a relational, EMR-",
+      "x": 143.866,
+      "y": 280.442,
+      "nodeOffset": 0,
+      "start": 1121,
+      "end": 1203
+    },
+    {
+      "pageNumber": 1,
+      "index": 33,
+      "text": "style database with realistic structural and lexical heterogeneity. Together, these",
+      "x": 143.866,
+      "y": 269.533,
+      "nodeOffset": 0,
+      "start": 1203,
+      "end": 1286
+    },
+    {
+      "pageNumber": 1,
+      "index": 34,
+      "text": "assets enable instruction in data cleaning, harmonisation, causal reasoning, and",
+      "x": 143.866,
+      "y": 258.624,
+      "nodeOffset": 0,
+      "start": 1287,
+      "end": 1367
+    },
+    {
+      "pageNumber": 1,
+      "index": 35,
+      "text": "policy-relevant risk modelling without exposing sensitive information. Because",
+      "x": 143.866,
+      "y": 247.715,
+      "nodeOffset": 0,
+      "start": 1368,
+      "end": 1446
+    },
+    {
+      "pageNumber": 1,
+      "index": 36,
+      "text": "all individuals and events are generated de novo, PRIME-CVD preserves realistic",
+      "x": 143.866,
+      "y": 236.806,
+      "nodeOffset": 0,
+      "start": 1447,
+      "end": 1526
+    },
+    {
+      "pageNumber": 1,
+      "index": 37,
+      "text": "subgroup imbalance and risk gradients while ensuring negligible disclosure risk.",
+      "x": 143.866,
+      "y": 225.896,
+      "nodeOffset": 0,
+      "start": 1527,
+      "end": 1607
+    },
+    {
+      "pageNumber": 2,
+      "index": 28,
+      "text": "methodological development and benchmarking. However, because MIMIC and similar EMR re-",
+      "x": 108,
+      "y": 443.334,
+      "start": 3463,
+      "end": 3550,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 29,
+      "text": "sources require credentialled access, each student must clear the same administrative hurdle, creating",
+      "x": 108,
+      "y": 432.425,
+      "start": 3550,
+      "end": 3652,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 30,
+      "text": "a bottleneck that makes it difficult to design courses in which large cohorts can use the data for",
+      "x": 108,
+      "y": 421.516,
+      "start": 3653,
+      "end": 3751,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 31,
+      "text": "assignments or examinations. Synthetic datasets have therefore been explored as substitutes for real",
+      "x": 108,
+      "y": 410.607,
+      "start": 3752,
+      "end": 3852,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 35,
+      "text": "autoregressive Transformer-based approaches [15, 16, 17]. Although these methods show strong",
+      "x": 108,
+      "y": 366.971,
+      "start": 4137,
+      "end": 4229,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 36,
+      "text": "generative performance, they learn directly from real patient trajectories and thus retain residual",
+      "x": 108,
+      "y": 356.061,
+      "start": 4230,
+      "end": 4329,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 37,
+      "text": "membership-inference risks [18], limiting their suitability for education.",
+      "x": 108,
+      "y": 345.152,
+      "start": 4330,
+      "end": 4404,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 50,
+      "text": "PRIME-CVD Data Asset 1 comprises 50,000 simulated adults aged 18–90 years (median 49.6;",
+      "x": 108,
+      "y": 230.207,
+      "start": 4852,
+      "end": 4939,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 2,
+      "index": 51,
+      "text": "Q1–Q3: 41.3–58.1). IRSD quintiles are approximately balanced across the cohort, with around",
+      "x": 108,
+      "y": 219.298,
+      "start": 4940,
+      "end": 5031,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 24,
+      "text": "The assembly engine is parameterised using publicly accessible data sources, including population",
+      "x": 107.691,
+      "y": 464.827,
+      "start": 7348,
+      "end": 7445,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 25,
+      "text": "demographic distributions from the Australian Bureau of Statistics (ABS), chronic-disease prevalence",
+      "x": 108,
+      "y": 453.918,
+      "start": 7446,
+      "end": 7546,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 26,
+      "text": "summaries from the Australian Institute of Health and Welfare (AIHW), and effect estimates from",
+      "x": 108,
+      "y": 443.009,
+      "start": 7547,
+      "end": 7642,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 46,
+      "text": "PRIME-CVD assembles a cohort of 50,000 adults aged 18-90 years, reflecting the typical age range of",
+      "x": 108,
+      "y": 268.413,
+      "start": 8922,
+      "end": 9021,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 47,
+      "text": "primary-prevention cardiovascular studies and remaining consistent with the population distributions",
+      "x": 108,
+      "y": 257.504,
+      "start": 9022,
+      "end": 9122,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 3,
+      "index": 48,
+      "text": "used to parameterise the model [20]. The cohort design deliberately mirrors contemporary EMR-",
+      "x": 108,
+      "y": 246.595,
+      "start": 9123,
+      "end": 9216,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 4,
+      "index": 36,
+      "text": "To emulate the challenges of working with real EMR data, we inject controlled “messiness” into",
+      "x": 107.691,
+      "y": 439.982,
+      "start": 12341,
+      "end": 12435,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 4,
+      "index": 37,
+      "text": "all three tables: non-sequential but reproducible patient IDs; patterned missingness in smoking",
+      "x": 108,
+      "y": 429.073,
+      "start": 12436,
+      "end": 12531,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 4,
+      "index": 38,
+      "text": "status; lexical heterogeneity in diagnosis and measurement labels; unit inconsistency for a subset of",
+      "x": 108,
+      "y": 418.164,
+      "start": 12532,
+      "end": 12633,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 4,
+      "index": 49,
+      "text": "Real EMR datasets pose several re-identification risks: direct identifiers (names, record numbers,",
+      "x": 108,
+      "y": 330.094,
+      "start": 12984,
+      "end": 13082,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 4,
+      "index": 50,
+      "text": "full birth dates), quasi-identifiers [18] (precise timestamps, rare diagnoses, unique demographic",
+      "x": 108,
+      "y": 319.185,
+      "start": 13083,
+      "end": 13180,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 4,
+      "index": 51,
+      "text": "combinations), and free-text notes that may contain protected health information. Synthetic datasets",
+      "x": 108,
+      "y": 308.276,
+      "start": 13181,
+      "end": 13281,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 4,
+      "index": 54,
+      "text": "de-identification pipelines and restrictive data-governance frameworks [23]. Since PRIME-CVD",
+      "x": 108,
+      "y": 275.549,
+      "start": 13470,
+      "end": 13562,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 4,
+      "index": 55,
+      "text": "contains no personal data and cannot be mapped to real individuals, it falls outside human-subjects",
+      "x": 108,
+      "y": 264.64,
+      "start": 13563,
+      "end": 13662,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 4,
+      "index": 56,
+      "text": "research requirements, and no ethics approval was needed.",
+      "x": 108,
+      "y": 253.731,
+      "start": 13663,
+      "end": 13720,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 7,
+      "text": "structure students will encounter when fitting risk models. Data Asset 1 is provided as a single",
+      "x": 108,
+      "y": 664.162,
+      "start": 14616,
+      "end": 14712,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 8,
+      "text": "comma separated value (CSV) file (6.16 MB) containing one row per individual with the canonical",
+      "x": 108,
+      "y": 653.253,
+      "start": 14713,
+      "end": 14808,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 9,
+      "text": "variables used throughout the manuscript (IRSD quintile, age, smoking, BMI, diabetes, CKD, HbA1c,",
+      "x": 107.751,
+      "y": 642.344,
+      "start": 14809,
+      "end": 14906,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 10,
+      "text": "eGFR, SBP, AF, binary CVD event and continuous follow-up time). Users can load this file directly",
+      "x": 108,
+      "y": 631.434,
+      "start": 14907,
+      "end": 15004,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 46,
+      "text": "All PRIME-CVD assets are released as versioned CSV files on FigShare ([24, 25]). The format en-",
+      "x": 107.641,
+      "y": 489.567,
+      "start": 15932,
+      "end": 16027,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 47,
+      "text": "sures platform-agnostic ingestion and compatibility with common analytical workflows in Python [26]",
+      "x": 108,
+      "y": 478.657,
+      "start": 16027,
+      "end": 16126,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 48,
+      "text": "and R [27]. Reproducible quick-start notebooks are provided for both environments",
+      "x": 108,
+      "y": 467.748,
+      "start": 16127,
+      "end": 16208,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 56,
+      "text": "framework. We present three representative assignment-style exercises that reflect common learning",
+      "x": 108,
+      "y": 391.906,
+      "start": 16429,
+      "end": 16527,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 57,
+      "text": "objectives in health informatics training: EMR-style cohort reconstruction, socioeconomic strati-",
+      "x": 108,
+      "y": 380.997,
+      "start": 16528,
+      "end": 16625,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 5,
+      "index": 58,
+      "text": "fied analysis, and multivariable time-to-event modelling, illustrating complementary pathways for",
+      "x": 108,
+      "y": 370.087,
+      "start": 16625,
+      "end": 16722,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 30,
+      "text": "high-risk strata. To mitigate re-identification risk, these strata are routinely pooled or suppressed,",
+      "x": 108,
+      "y": 510.794,
+      "start": 20047,
+      "end": 20149,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 31,
+      "text": "limiting opportunities to teach health inequities, subgroup risk, and fairness-aware modelling.",
+      "x": 108,
+      "y": 499.885,
+      "start": 20150,
+      "end": 20245,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 32,
+      "text": "By generating all individuals, events, and covariates de novo from publicly available aggregate",
+      "x": 108,
+      "y": 483.496,
+      "start": 20246,
+      "end": 20341,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 33,
+      "text": "statistics and published epidemiologic effect estimates, PRIME-CVD retains realistic subgroup",
+      "x": 108,
+      "y": 472.587,
+      "start": 20342,
+      "end": 20435,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 34,
+      "text": "imbalance and risk gradients without exposing direct or quasi-identifiers. Because no synthetic record",
+      "x": 108,
+      "y": 461.678,
+      "start": 20436,
+      "end": 20538,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 38,
+      "text": "The two data assets serve complementary pedagogical functions. Data Asset 1 provides a structured",
+      "x": 107.691,
+      "y": 412.562,
+      "start": 20729,
+      "end": 20826,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 39,
+      "text": "cohort for regression, survival modelling, and calibration assessment of predicted 5-year cardio-",
+      "x": 108,
+      "y": 401.653,
+      "start": 20827,
+      "end": 20923,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 40,
+      "text": "vascular risk, including stratified analyses across socioeconomic strata. Data Asset 2 reintroduces",
+      "x": 107.751,
+      "y": 390.744,
+      "start": 20923,
+      "end": 21022,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 43,
+      "text": "This design aligns with the CBDRH Health Data Science curriculum. In Data Management & Curation",
+      "x": 107.691,
+      "y": 352.538,
+      "start": 21187,
+      "end": 21282,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 44,
+      "text": "(HDAT9400), students derive an analysis-ready dataset from relational EMR tables while documenting",
+      "x": 107.671,
+      "y": 341.628,
+      "start": 21283,
+      "end": 21381,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 45,
+      "text": "data dictionaries and quality-control procedures. In Statistical Modelling (HDAT9600/9700), the",
+      "x": 108,
+      "y": 330.719,
+      "start": 21382,
+      "end": 21477,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 6,
+      "index": 46,
+      "text": "cohort supports generalised linear models and Cox proportional hazards modelling with diagnostic",
+      "x": 108,
+      "y": 319.81,
+      "start": 21478,
+      "end": 21574,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 46,
+      "index": 16,
+      "text": "or machine-learned generative models. As such, only relationships explicitly encoded in the DAG",
+      "x": 108,
+      "y": 188.081,
+      "start": 99481,
+      "end": 99576,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 46,
+      "index": 17,
+      "text": "manifest as correlations, while unmodelled or subtle dependencies remain absent. For this reason,",
+      "x": 108,
+      "y": 177.172,
+      "start": 99577,
+      "end": 99674,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 49,
+      "index": 104,
+      "text": "event timing, multi-episode structure) is irretrievably lost during EMR decomposition. Nonethe-",
+      "x": 108,
+      "y": 395.467,
+      "start": 105738,
+      "end": 105833,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 49,
+      "index": 105,
+      "text": "less, this reconstruction process faithfully illustrates the data cleaning, harmonisation and linkage",
+      "x": 108,
+      "y": 384.558,
+      "start": 105833,
+      "end": 105934,
+      "nodeOffset": 0
+    },
+    {
+      "pageNumber": 49,
+      "index": 106,
+      "text": "challenges that arise in transforming real-world relational EMR data into analysis-ready cohorts.",
+      "x": 108,
+      "y": 373.649,
+      "start": 105935,
+      "end": 106032,
+      "nodeOffset": 0
+    }
+  ]
+}
