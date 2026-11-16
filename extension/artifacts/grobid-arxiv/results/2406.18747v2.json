@@ -1,0 +1,3072 @@
+{
+  "source": "https://arxiv.org/pdf/2406.18747v2",
+  "title": "A STEM-AGNOSTIC SINGLE-DECODER SYSTEM FOR MUSIC SOURCE SEPARATION BEYOND FOUR STEMS",
+  "abstract": [
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Despite significant recent progress across multiple subtasks of audio source separation, few music source separation systems support separation beyond the four-stem vocals, drums, bass, and other (VDBO) setup. Of the very few current systems that support source separation beyond this setup, most continue to rely on an inflexible decoder setup that can only support a fixed pre-defined set of stems. Increasing stem support in these inflexible systems correspondingly requires increasing computational complexity, rendering extensions of these systems computationally infeasible for long-tail instruments. We propose Banquet, a system that allows source separation of multiple stems using just one decoder. A bandsplit source separation model is extended to work in a query-based setup in tandem with a music instrument recognition PaSST model. On the Moi-sesDB dataset, Banquet -at only 24.9 M trainable parameters -performed on par with or better than the significantly more complex 6-stem Hybrid Transformer Demucs. The query-based setup allows for the separation of narrow instrument classes such as clean acoustic guitars, and can be successfully applied to the extraction of less common stems such as reeds and organs.",
+          "coords": [
+            "1,54.99,210.90,232.44,8.64",
+            "1,54.99,223.06,232.44,8.64",
+            "1,54.99,235.21,232.44,8.64",
+            "1,54.99,247.37,232.44,8.64",
+            "1,54.99,259.52,232.44,8.64",
+            "1,54.99,271.67,232.44,8.64",
+            "1,54.99,283.83,232.44,8.64",
+            "1,54.99,295.98,232.44,8.64",
+            "1,54.99,308.14,232.44,8.64",
+            "1,54.99,320.29,232.44,8.64",
+            "1,54.99,332.45,232.44,8.64",
+            "1,54.99,344.60,232.44,8.64",
+            "1,54.99,356.76,232.44,8.64",
+            "1,54.99,368.91,232.44,8.64",
+            "1,54.99,381.06,232.44,8.64",
+            "1,54.99,393.22,232.44,8.64",
+            "1,54.99,405.37,232.44,8.64",
+            "1,54.99,417.53,232.44,8.64",
+            "1,54.99,429.68,232.44,8.64",
+            "1,54.99,441.84,232.44,8.64",
+            "1,54.99,453.99,232.44,8.64",
+            "1,54.99,466.15,125.94,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Despite significant recent progress across multiple subtasks of audio source separation, few music source separation systems support separation beyond the four-stem vocals, drums, bass, and other (VDBO) setup.",
+              "coords": [
+                "1,54.99,210.90,232.44,8.64",
+                "1,54.99,223.06,232.44,8.64",
+                "1,54.99,235.21,232.44,8.64",
+                "1,54.99,247.37,182.07,8.64"
+              ]
+            },
+            {
+              "text": "Of the very few current systems that support source separation beyond this setup, most continue to rely on an inflexible decoder setup that can only support a fixed pre-defined set of stems.",
+              "coords": [
+                "1,241.39,247.37,46.05,8.64",
+                "1,54.99,259.52,232.44,8.64",
+                "1,54.99,271.67,232.44,8.64",
+                "1,54.99,283.83,232.44,8.64"
+              ]
+            },
+            {
+              "text": "Increasing stem support in these inflexible systems correspondingly requires increasing computational complexity, rendering extensions of these systems computationally infeasible for long-tail instruments.",
+              "coords": [
+                "1,54.99,295.98,232.44,8.64",
+                "1,54.99,308.14,232.44,8.64",
+                "1,54.99,320.29,232.44,8.64",
+                "1,54.99,332.45,134.24,8.64"
+              ]
+            },
+            {
+              "text": "We propose Banquet, a system that allows source separation of multiple stems using just one decoder.",
+              "coords": [
+                "1,193.73,332.45,93.70,8.64",
+                "1,54.99,344.60,232.44,8.64",
+                "1,54.99,356.76,82.87,8.64"
+              ]
+            },
+            {
+              "text": "A bandsplit source separation model is extended to work in a query-based setup in tandem with a music instrument recognition PaSST model.",
+              "coords": [
+                "1,141.35,356.76,146.08,8.64",
+                "1,54.99,368.91,232.44,8.64",
+                "1,54.99,381.06,181.04,8.64"
+              ]
+            },
+            {
+              "text": "On the Moi-sesDB dataset, Banquet -at only 24.9 M trainable parameters -performed on par with or better than the significantly more complex 6-stem Hybrid Transformer Demucs.",
+              "coords": [
+                "1,238.98,381.06,48.45,8.64",
+                "1,54.99,393.22,232.44,8.64",
+                "1,54.99,405.37,232.44,8.64",
+                "1,54.99,417.53,232.44,8.64"
+              ]
+            },
+            {
+              "text": "The query-based setup allows for the separation of narrow instrument classes such as clean acoustic guitars, and can be successfully applied to the extraction of less common stems such as reeds and organs.",
+              "coords": [
+                "1,54.99,429.68,232.44,8.64",
+                "1,54.99,441.84,232.44,8.64",
+                "1,54.99,453.99,232.44,8.64",
+                "1,54.99,466.15,125.94,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "INTRODUCTION",
+          "coords": [
+            "1,124.79,495.15,92.85,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Music Source Separation (MSS) is the task of separating a musical audio mixture into its constituent components, commonly referred to as stems. The releases of DSD100 [1] and MUSDB18 [2,3], both being four-stem MSS datasets, have defined a de-facto standard, with nearly every major work since relying on the four-stem vocals, bass, drum, and others (VDBO) setup [4][5][6][7][8][9][10][11][12][13][14][15][16][17][18][19]. While this has significantly improved the comparability and reproducibility of the task, it has also disproportionately favored the VDBO setup. Very few works have tackled MSS beyond the VDBO setup, each relying on datasets with significant limitations: Wang et al. [20] relied on MedleyDB [21,22], whose stem ontology is somewhat unfriendly to source separation, Manilow et al. [23] relied on the syn-thetically generated Slakh dataset [24], and others relied on proprietary data inaccessible to other research groups [11,18], limiting reproducibility. The recently released MoisesDB [25], a multitrack source separation dataset, attempts to address these limitations, particularly in terms of stem availability and taxonomy. This aims at broadening the task beyond VDBO based on publicly available data. However, to the best of our knowledge, while Moi-sesDB was used in the 2023 Sound Demixing Challenge (SDX) [26], no published system has utilized MoisesDB for source separation beyond VDBO yet.",
+          "coords": [
+            "1,54.99,514.21,232.44,8.64",
+            "1,54.99,526.36,232.44,8.64",
+            "1,54.99,538.51,232.44,8.64",
+            "1,54.99,550.67,34.87,8.64",
+            "1,108.35,550.67,63.21,8.64",
+            "1,194.91,550.67,92.52,8.64",
+            "1,54.99,562.82,232.44,8.64",
+            "1,54.99,574.80,232.44,8.82",
+            "1,54.99,586.95,171.66,8.82",
+            "1,254.50,587.13,32.93,8.64",
+            "1,54.99,599.29,232.44,8.64",
+            "1,54.99,611.44,232.44,8.64",
+            "1,54.99,623.60,232.44,8.64",
+            "1,54.99,635.75,232.45,8.64",
+            "1,54.99,647.90,127.60,8.64",
+            "1,204.93,647.90,82.50,8.64",
+            "1,84.42,660.06,203.01,8.64",
+            "1,54.99,672.21,136.33,8.64",
+            "1,214.93,672.21,72.50,8.64",
+            "1,310.11,187.66,137.09,8.64",
+            "1,466.10,187.66,76.45,8.64",
+            "1,310.11,199.81,232.44,8.64",
+            "1,340.16,211.97,202.39,8.64",
+            "1,310.11,224.12,42.62,8.64",
+            "1,370.53,224.12,172.02,8.64",
+            "1,310.11,236.28,232.44,8.64",
+            "1,310.11,248.43,232.44,8.64",
+            "1,310.11,260.59,232.44,8.64",
+            "1,310.11,272.74,232.44,8.64",
+            "1,310.11,284.89,232.44,8.64",
+            "1,310.11,297.05,26.56,8.64",
+            "1,355.42,297.05,187.13,8.64",
+            "1,310.11,309.20,159.41,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Music Source Separation (MSS) is the task of separating a musical audio mixture into its constituent components, commonly referred to as stems.",
+              "coords": [
+                "1,54.99,514.21,232.44,8.64",
+                "1,54.99,526.36,232.44,8.64",
+                "1,54.99,538.51,160.42,8.64"
+              ]
+            },
+            {
+              "text": "The releases of DSD100 [1] and MUSDB18 [2,3], both being four-stem MSS datasets, have defined a de-facto standard, with nearly every major work since relying on the four-stem vocals, bass, drum, and others (VDBO) setup [4][5][6][7][8][9][10][11][12][13][14][15][16][17][18][19].",
+              "coords": [
+                "1,223.68,538.51,63.75,8.64",
+                "1,54.99,550.67,232.44,8.64",
+                "1,54.99,562.82,232.44,8.64",
+                "1,54.99,574.80,232.44,8.82",
+                "1,54.99,586.95,203.66,8.82"
+              ]
+            },
+            {
+              "text": "While this has significantly improved the comparability and reproducibility of the task, it has also disproportionately favored the VDBO setup.",
+              "coords": [
+                "1,263.08,587.13,24.35,8.64",
+                "1,54.99,599.29,232.44,8.64",
+                "1,54.99,611.44,232.44,8.64",
+                "1,54.99,623.60,90.69,8.64"
+              ]
+            },
+            {
+              "text": "Very few works have tackled MSS beyond the VDBO setup, each relying on datasets with significant limitations: Wang et al. [20] relied on MedleyDB [21,22], whose stem ontology is somewhat unfriendly to source separation, Manilow et al. [23] relied on the syn-thetically generated Slakh dataset [24], and others relied on proprietary data inaccessible to other research groups [11,18], limiting reproducibility.",
+              "coords": [
+                "1,149.26,623.60,138.17,8.64",
+                "1,54.99,635.75,232.45,8.64",
+                "1,54.99,647.90,232.44,8.64",
+                "1,54.99,660.06,232.44,8.64",
+                "1,54.99,672.21,232.44,8.64",
+                "1,310.11,187.66,232.44,8.64",
+                "1,310.11,199.81,232.44,8.64",
+                "1,310.11,211.97,135.49,8.64"
+              ]
+            },
+            {
+              "text": "The recently released MoisesDB [25], a multitrack source separation dataset, attempts to address these limitations, particularly in terms of stem availability and taxonomy.",
+              "coords": [
+                "1,453.89,211.97,88.66,8.64",
+                "1,310.11,224.12,232.44,8.64",
+                "1,310.11,236.28,232.44,8.64",
+                "1,310.11,248.43,143.39,8.64"
+              ]
+            },
+            {
+              "text": "This aims at broadening the task beyond VDBO based on publicly available data.",
+              "coords": [
+                "1,460.96,248.43,81.58,8.64",
+                "1,310.11,260.59,232.44,8.64",
+                "1,310.11,272.74,19.09,8.64"
+              ]
+            },
+            {
+              "text": "However, to the best of our knowledge, while Moi-sesDB was used in the 2023 Sound Demixing Challenge (SDX) [26], no published system has utilized MoisesDB for source separation beyond VDBO yet.",
+              "coords": [
+                "1,334.06,272.74,208.49,8.64",
+                "1,310.11,284.89,232.44,8.64",
+                "1,310.11,297.05,232.44,8.64",
+                "1,310.11,309.20,159.41,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work, we propose Banquet,foot_0 a query-based source separation model that can separate an arbitrary number of stems using just one set of stem-agnostic encoder and decoder, and a pre-trained feature extractor [27]. Our model was adapted from the cinematic audio source separation Bandit model [28], which was in turn adapted from the music source separation Bandsplit RNN model [17]. Bandit significantly reduces the complexity of Bandsplit RNN by adopting a common-encoder approach with stem-specific decoders. In this work, we take the complexity reduction further by switching to a query-based setup, using only one decoder shared amongst all possible stems. Performance evaluation on MoisesDB demonstrated separation performance above oracle for drum and bass, state-of-the-art for guitar and piano, and at least 7.4 dB SNR for vocals. Our system additionally provided support for fine-level stem extraction currently available only in a few MSS systems.",
+          "coords": [
+            "1,322.07,322.15,149.51,8.64",
+            "1,473.31,320.48,3.49,6.05",
+            "1,484.54,322.15,58.01,8.64",
+            "1,310.11,334.30,232.44,8.64",
+            "1,310.11,346.46,232.44,8.64",
+            "1,310.11,358.61,232.44,8.64",
+            "1,325.38,370.77,217.17,8.64",
+            "1,310.11,382.92,130.06,8.64",
+            "1,459.33,382.92,83.22,8.64",
+            "1,310.11,395.07,232.44,8.64",
+            "1,310.11,407.23,24.91,8.64",
+            "1,352.62,407.23,189.93,8.64",
+            "1,310.11,419.38,232.44,8.64",
+            "1,310.11,431.54,232.44,8.64",
+            "1,310.11,443.69,232.44,8.64",
+            "1,310.11,455.85,232.44,8.64",
+            "1,310.11,468.00,232.44,8.64",
+            "1,310.11,480.16,232.44,8.64",
+            "1,310.11,492.31,232.44,8.64",
+            "1,310.11,504.46,232.44,8.64",
+            "1,310.11,516.62,232.44,8.64",
+            "1,310.11,528.77,111.00,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In this work, we propose Banquet,foot_0 a query-based source separation model that can separate an arbitrary number of stems using just one set of stem-agnostic encoder and decoder, and a pre-trained feature extractor [27].",
+              "coords": [
+                "1,322.07,322.15,220.49,8.64",
+                "1,310.11,334.30,232.44,8.64",
+                "1,310.11,346.46,232.44,8.64",
+                "1,310.11,358.61,232.44,8.64",
+                "1,310.11,370.77,19.09,8.64"
+              ]
+            },
+            {
+              "text": "Our model was adapted from the cinematic audio source separation Bandit model [28], which was in turn adapted from the music source separation Bandsplit RNN model [17].",
+              "coords": [
+                "1,336.38,370.77,206.17,8.64",
+                "1,310.11,382.92,232.44,8.64",
+                "1,310.11,395.07,232.44,8.64",
+                "1,310.11,407.23,46.33,8.64"
+              ]
+            },
+            {
+              "text": "Bandit significantly reduces the complexity of Bandsplit RNN by adopting a common-encoder approach with stem-specific decoders.",
+              "coords": [
+                "1,359.47,407.23,183.07,8.64",
+                "1,310.11,419.38,232.44,8.64",
+                "1,310.11,431.54,116.65,8.64"
+              ]
+            },
+            {
+              "text": "In this work, we take the complexity reduction further by switching to a query-based setup, using only one decoder shared amongst all possible stems.",
+              "coords": [
+                "1,435.09,431.54,107.46,8.64",
+                "1,310.11,443.69,232.44,8.64",
+                "1,310.11,455.85,232.44,8.64",
+                "1,310.11,468.00,40.43,8.64"
+              ]
+            },
+            {
+              "text": "Performance evaluation on MoisesDB demonstrated separation performance above oracle for drum and bass, state-of-the-art for guitar and piano, and at least 7.4 dB SNR for vocals.",
+              "coords": [
+                "1,355.36,468.00,187.19,8.64",
+                "1,310.11,480.16,232.44,8.64",
+                "1,310.11,492.31,232.44,8.64",
+                "1,310.11,504.46,93.25,8.64"
+              ]
+            },
+            {
+              "text": "Our system additionally provided support for fine-level stem extraction currently available only in a few MSS systems.",
+              "coords": [
+                "1,407.74,504.46,134.80,8.64",
+                "1,310.11,516.62,232.44,8.64",
+                "1,310.11,528.77,111.00,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "RELATED WORK",
+          "coords": [
+            "1,378.48,560.57,95.71,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Nearly every major MSS works since 2017 have relied on the VDBO setup. Early systems [4,6,29], including Open-Unmix [8], were usually Time-Frequency (TF) masking models with LSTM forming the core of the systems, with some experimenting with densely-connected convolutional systems [5,12]. Beginning with Wave-U-Net [7], the U-Net architecture became a popular choice for MSS, with notable models such as Demucs [9,10,14,18], Spleeter [11], ByteSep [13], and KUIELab-MDX-Net [15] all being some variations of a U-Net. More recently, Bandsplit RNN [17] became one of the few state-of-the-art systems to not rely on a U-Net setup. This was followed by the Bandsplit RoPE Transformer model [19] topping the leaderboard of SDX 2023 [26]. Of existing open-source systems, very few offer separation functionality beyond the VDBO setup. Spleeter [11] supports 5-stem separation with VDBO and piano. HT-Demucs [18] supports a 6-stem setup with VDBO, piano, and guitar.",
+          "coords": [
+            "1,310.11,580.60,232.44,8.64",
+            "1,310.11,592.75,125.00,8.64",
+            "1,470.70,592.75,71.86,8.64",
+            "1,310.11,604.90,27.68,8.64",
+            "1,352.40,604.90,190.15,8.64",
+            "1,310.11,617.06,232.44,8.64",
+            "1,310.11,629.21,232.44,8.64",
+            "1,310.11,641.37,67.12,8.64",
+            "1,408.02,641.37,134.53,8.64",
+            "1,320.69,653.52,221.86,8.64",
+            "1,310.11,665.68,173.87,8.64",
+            "1,538.60,665.68,3.94,8.64",
+            "1,310.11,677.83,32.65,8.64",
+            "1,360.23,677.83,39.84,8.64",
+            "1,417.54,677.83,106.20,8.64",
+            "1,310.11,689.99,232.44,8.64",
+            "1,310.11,702.14,40.69,8.64",
+            "1,372.38,702.14,170.17,8.64",
+            "1,310.11,714.29,232.44,8.64",
+            "1,310.11,726.45,162.40,8.64",
+            "1,496.32,726.45,46.23,8.64",
+            "2,54.99,52.20,105.82,8.64",
+            "2,179.64,52.20,107.79,8.64",
+            "2,54.99,64.35,232.44,8.64",
+            "2,55.24,76.50,85.53,8.64",
+            "2,161.58,76.50,125.85,8.64",
+            "2,55.24,88.66,118.79,8.64",
+            "2,194.81,88.66,92.62,8.64",
+            "2,54.99,100.81,118.91,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Nearly every major MSS works since 2017 have relied on the VDBO setup.",
+              "coords": [
+                "1,310.11,580.60,232.44,8.64",
+                "1,310.11,592.75,65.58,8.64"
+              ]
+            },
+            {
+              "text": "Early systems [4,6,29], including Open-Unmix [8], were usually Time-Frequency (TF) masking models with LSTM forming the core of the systems, with some experimenting with densely-connected convolutional systems [5,12].",
+              "coords": [
+                "1,379.31,592.75,163.25,8.64",
+                "1,310.11,604.90,232.44,8.64",
+                "1,310.11,617.06,232.44,8.64",
+                "1,310.11,629.21,232.44,8.64",
+                "1,310.11,641.37,101.85,8.64"
+              ]
+            },
+            {
+              "text": "Beginning with Wave-U-Net [7], the U-Net architecture became a popular choice for MSS, with notable models such as Demucs [9,10,14,18], Spleeter [11], ByteSep [13], and KUIELab-MDX-Net [15] all being some variations of a U-Net.",
+              "coords": [
+                "1,422.94,641.37,119.61,8.64",
+                "1,310.11,653.52,232.44,8.64",
+                "1,310.11,665.68,232.44,8.64",
+                "1,310.11,677.83,232.44,8.64",
+                "1,310.11,689.99,145.22,8.64"
+              ]
+            },
+            {
+              "text": "More recently, Bandsplit RNN [17] became one of the few state-of-the-art systems to not rely on a U-Net setup.",
+              "coords": [
+                "1,458.31,689.99,84.23,8.64",
+                "1,310.11,702.14,232.44,8.64",
+                "1,310.11,714.29,139.67,8.64"
+              ]
+            },
+            {
+              "text": "This was followed by the Bandsplit RoPE Transformer model [19] topping the leaderboard of SDX 2023 [26].",
+              "coords": [
+                "1,454.86,714.29,87.69,8.64",
+                "1,310.11,726.45,232.44,8.64",
+                "2,54.99,52.20,128.47,8.64"
+              ]
+            },
+            {
+              "text": "Of existing open-source systems, very few offer separation functionality beyond the VDBO setup.",
+              "coords": [
+                "2,189.73,52.20,97.70,8.64",
+                "2,54.99,64.35,232.44,8.64",
+                "2,55.24,76.50,49.92,8.64"
+              ]
+            },
+            {
+              "text": "Spleeter [11] supports 5-stem separation with VDBO and piano.",
+              "coords": [
+                "2,108.12,76.50,179.31,8.64",
+                "2,55.24,88.66,67.50,8.64"
+              ]
+            },
+            {
+              "text": "HT-Demucs [18] supports a 6-stem setup with VDBO, piano, and guitar.",
+              "coords": [
+                "2,125.70,88.66,161.73,8.64",
+                "2,54.99,100.81,118.91,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Conditional source separation",
+          "coords": [
+            "2,54.99,127.24,146.11,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The systems mentioned above were mostly designed with either stem-specific models, stem-specific decoders, or a shared decoder with predetermined outputs. As a result, these systems are not particularly amenable to the addition of new stems, especially if these new stems have limited data availability. Below we review some of the common approaches for conditional source separation that may be useful for extending existing systems beyond VDBO.",
+          "coords": [
+            "2,54.99,146.96,232.44,8.64",
+            "2,54.99,159.11,232.44,8.64",
+            "2,54.99,171.27,232.44,8.64",
+            "2,54.99,183.42,232.44,8.64",
+            "2,54.99,195.57,232.44,8.64",
+            "2,54.99,207.73,232.44,8.64",
+            "2,54.99,219.88,232.44,8.64",
+            "2,54.99,232.04,209.22,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The systems mentioned above were mostly designed with either stem-specific models, stem-specific decoders, or a shared decoder with predetermined outputs.",
+              "coords": [
+                "2,54.99,146.96,232.44,8.64",
+                "2,54.99,159.11,232.44,8.64",
+                "2,54.99,171.27,178.88,8.64"
+              ]
+            },
+            {
+              "text": "As a result, these systems are not particularly amenable to the addition of new stems, especially if these new stems have limited data availability.",
+              "coords": [
+                "2,240.19,171.27,47.24,8.64",
+                "2,54.99,183.42,232.44,8.64",
+                "2,54.99,195.57,232.44,8.64",
+                "2,54.99,207.73,66.19,8.64"
+              ]
+            },
+            {
+              "text": "Below we review some of the common approaches for conditional source separation that may be useful for extending existing systems beyond VDBO.",
+              "coords": [
+                "2,126.89,207.73,160.54,8.64",
+                "2,54.99,219.88,232.44,8.64",
+                "2,54.99,232.04,209.22,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Meseguer-Brocal and Peeters [30] were likely amongst the first to attempt a conditioned U-Net for source separation using a single decoder. They used multiple featurewise linear modulation (FiLM) [31] layers within the encoder to perform MSS in a VDBO setup. Slizovskaia et al. [32] used a similar setup with FiLMs either throughout the encoder, at the bottleneck layer, or at the final decoder layer. The systems in [32] were tested on the 13instrument URMP dataset [33], with up to 4 active instruments in any recording, but all performed poorly in terms of mean signal-to-distortion ratio (SDR). Lin et al. [34] proposed a joint separation-transcription U-Net system, which performed well for string and brass instruments in URMP, but struggled on woodwind instruments. The system in [34] used FiLMs throughout the encoder with a query embedding from another convolutional model, and across all skip connections with transcription embeddings.",
+          "coords": [
+            "2,66.95,244.82,117.37,8.64",
+            "2,206.31,244.82,81.12,8.64",
+            "2,54.99,256.98,232.44,8.64",
+            "2,54.99,269.13,232.44,8.64",
+            "2,54.99,281.28,125.78,8.64",
+            "2,203.73,281.28,83.70,8.64",
+            "2,54.99,293.44,232.44,8.64",
+            "2,54.99,305.59,19.45,8.64",
+            "2,96.19,305.59,191.24,8.64",
+            "2,54.99,317.75,232.44,8.64",
+            "2,54.99,329.90,116.11,8.64",
+            "2,194.94,329.90,92.49,8.64",
+            "2,54.99,342.06,104.06,8.64",
+            "2,177.10,342.06,110.33,8.64",
+            "2,54.99,354.21,232.44,8.64",
+            "2,54.99,366.36,211.83,8.64",
+            "2,54.99,378.52,232.44,8.64",
+            "2,54.99,390.67,232.44,8.64",
+            "2,54.99,402.83,232.44,8.64",
+            "2,54.99,414.98,26.94,8.64",
+            "2,107.02,414.98,180.41,8.64",
+            "2,54.99,427.14,232.44,8.64",
+            "2,54.99,439.29,232.44,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Meseguer-Brocal and Peeters [30] were likely amongst the first to attempt a conditioned U-Net for source separation using a single decoder.",
+              "coords": [
+                "2,66.95,244.82,220.48,8.64",
+                "2,54.99,256.98,232.44,8.64",
+                "2,54.99,269.13,112.90,8.64"
+              ]
+            },
+            {
+              "text": "They used multiple featurewise linear modulation (FiLM) [31] layers within the encoder to perform MSS in a VDBO setup.",
+              "coords": [
+                "2,174.08,269.13,113.34,8.64",
+                "2,54.99,281.28,232.44,8.64",
+                "2,54.99,293.44,176.37,8.64"
+              ]
+            },
+            {
+              "text": "Slizovskaia et al. [32] used a similar setup with FiLMs either throughout the encoder, at the bottleneck layer, or at the final decoder layer.",
+              "coords": [
+                "2,241.64,293.44,45.79,8.64",
+                "2,54.99,305.59,232.44,8.64",
+                "2,54.99,317.75,232.44,8.64",
+                "2,54.99,329.90,47.60,8.64"
+              ]
+            },
+            {
+              "text": "The systems in [32] were tested on the 13instrument URMP dataset [33], with up to 4 active instruments in any recording, but all performed poorly in terms of mean signal-to-distortion ratio (SDR).",
+              "coords": [
+                "2,109.07,329.90,178.36,8.64",
+                "2,54.99,342.06,232.44,8.64",
+                "2,54.99,354.21,232.44,8.64",
+                "2,54.99,366.36,169.08,8.64"
+              ]
+            },
+            {
+              "text": "Lin et al. [34] proposed a joint separation-transcription U-Net system, which performed well for string and brass instruments in URMP, but struggled on woodwind instruments.",
+              "coords": [
+                "2,228.08,366.36,59.35,8.64",
+                "2,54.99,378.52,232.44,8.64",
+                "2,54.99,390.67,232.44,8.64",
+                "2,54.99,402.83,194.11,8.64"
+              ]
+            },
+            {
+              "text": "The system in [34] used FiLMs throughout the encoder with a query embedding from another convolutional model, and across all skip connections with transcription embeddings.",
+              "coords": [
+                "2,253.10,402.83,34.33,8.64",
+                "2,54.99,414.98,232.44,8.64",
+                "2,54.99,427.14,232.44,8.64",
+                "2,54.99,439.29,232.44,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Lee et al. [35] proposed a U-Net with two methods of less aggressive conditioning with examples beyond VDBO, but only provided objective results for a VDBO setup on MUSDB18. Wang et al. [20] also proposed a U-Net, with FiLM conditioning only at the bottleneck layer. The system in [20] was able to support a substantial number of stems beyond VDBO with the caveat that its reported performance is significantly below contemporary models for VDBO stems. Gfeller et al. [36] utilized a FiLM-conditioned wave-to-wave U-Net to perform oneshot conditional audio filtering. Similar approaches were also adopted in Choi et al. [37] and Jeong et al. [38] for MSS, in Chen et al. [39] for source activity-queried separation, in Kong et al. [40] for universal source separation, and in Liu et al. [41,42] for language-queried source separation. These works [36][37][38][39][40][41][42] applied FiLM or generalizations thereof to nearly every single layer of the network, significantly increasing the computational complexity of the system. We surmise that the apparent need for multiple conditioning in a U-Net is probably due to the nature of its information flow [43], which may require a significant number of information streams to be conditioned to achieve acceptable performance.",
+          "coords": [
+            "2,66.95,452.07,38.14,8.64",
+            "2,128.00,452.07,159.43,8.64",
+            "2,54.99,464.23,232.44,8.64",
+            "2,54.99,476.38,232.44,8.64",
+            "2,54.99,488.54,107.42,8.64",
+            "2,188.62,488.54,98.81,8.64",
+            "2,54.99,500.69,232.44,8.64",
+            "2,54.99,512.85,40.17,8.64",
+            "2,121.25,512.85,166.18,8.64",
+            "2,54.99,525.00,232.44,8.64",
+            "2,54.99,537.16,232.44,8.64",
+            "2,54.99,549.31,167.71,8.64",
+            "2,248.51,549.31,38.92,8.64",
+            "2,54.99,561.46,232.44,8.64",
+            "2,54.99,573.62,232.44,8.64",
+            "2,54.99,585.77,108.90,8.64",
+            "2,187.41,585.77,64.89,8.64",
+            "2,275.81,585.77,11.62,8.64",
+            "2,54.99,597.93,79.77,8.64",
+            "2,157.20,597.93,130.23,8.64",
+            "2,54.99,610.08,83.99,8.64",
+            "2,161.45,610.08,125.98,8.64",
+            "2,54.99,622.24,64.24,8.64",
+            "2,155.51,622.24,131.91,8.64",
+            "2,54.99,634.39,83.68,8.64",
+            "2,175.04,634.39,112.39,8.64",
+            "2,54.99,646.54,232.44,8.64",
+            "2,54.99,658.70,232.44,8.64",
+            "2,54.99,670.85,232.44,8.64",
+            "2,54.99,683.01,232.44,8.64",
+            "2,54.99,695.16,92.47,8.64",
+            "2,166.15,695.16,121.28,8.64",
+            "2,54.99,707.32,232.44,8.64",
+            "2,54.99,719.47,129.88,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Lee et al. [35] proposed a U-Net with two methods of less aggressive conditioning with examples beyond VDBO, but only provided objective results for a VDBO setup on MUSDB18.",
+              "coords": [
+                "2,66.95,452.07,220.48,8.64",
+                "2,54.99,464.23,232.44,8.64",
+                "2,54.99,476.38,232.44,8.64",
+                "2,54.99,488.54,47.88,8.64"
+              ]
+            },
+            {
+              "text": "Wang et al. [20] also proposed a U-Net, with FiLM conditioning only at the bottleneck layer.",
+              "coords": [
+                "2,112.91,488.54,174.51,8.64",
+                "2,54.99,500.69,212.46,8.64"
+              ]
+            },
+            {
+              "text": "The system in [20] was able to support a substantial number of stems beyond VDBO with the caveat that its reported performance is significantly below contemporary models for VDBO stems.",
+              "coords": [
+                "2,271.94,500.69,15.49,8.64",
+                "2,54.99,512.85,232.44,8.64",
+                "2,54.99,525.00,232.44,8.64",
+                "2,54.99,537.16,232.44,8.64",
+                "2,54.99,549.31,103.96,8.64"
+              ]
+            },
+            {
+              "text": "Gfeller et al. [36] utilized a FiLM-conditioned wave-to-wave U-Net to perform oneshot conditional audio filtering.",
+              "coords": [
+                "2,168.39,549.31,119.04,8.64",
+                "2,54.99,561.46,232.44,8.64",
+                "2,54.99,573.62,127.25,8.64"
+              ]
+            },
+            {
+              "text": "Similar approaches were also adopted in Choi et al. [37] and Jeong et al. [38] for MSS, in Chen et al. [39] for source activity-queried separation, in Kong et al. [40] for universal source separation, and in Liu et al. [41,42] for language-queried source separation.",
+              "coords": [
+                "2,187.50,573.62,99.92,8.64",
+                "2,54.99,585.77,232.44,8.64",
+                "2,54.99,597.93,232.44,8.64",
+                "2,54.99,610.08,232.44,8.64",
+                "2,54.99,622.24,232.44,8.64",
+                "2,54.99,634.39,30.16,8.64"
+              ]
+            },
+            {
+              "text": "These works [36][37][38][39][40][41][42] applied FiLM or generalizations thereof to nearly every single layer of the network, significantly increasing the computational complexity of the system.",
+              "coords": [
+                "2,88.22,634.39,199.21,8.64",
+                "2,54.99,646.54,232.44,8.64",
+                "2,54.99,658.70,232.44,8.64",
+                "2,54.99,670.85,45.96,8.64"
+              ]
+            },
+            {
+              "text": "We surmise that the apparent need for multiple conditioning in a U-Net is probably due to the nature of its information flow [43], which may require a significant number of information streams to be conditioned to achieve acceptable performance.",
+              "coords": [
+                "2,107.43,670.85,180.00,8.64",
+                "2,54.99,683.01,232.44,8.64",
+                "2,54.99,695.16,232.44,8.64",
+                "2,54.99,707.32,232.44,8.64",
+                "2,54.99,719.47,129.88,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In a different direction, source separation systems relying on audio embedding \"distances\" have also been developed, notably with Le Roux et al. in [23,44,45]. In 2018, Kumar et al. [46] presented an early work using Euclidean audio embedding distance from a \"query\" embedding to inform music source separation. A similar system using a Gaussian mixture model posterior in lieu of standard distance was proposed in [44]. Hierarchical masking [23] was later utilized to allow the extraction of stems at multiple levels of specificity. More recently, source separation systems with audio embedding in a low-dimensional hyperbolic space have been developed to allow music [45] and speech [47] source separation with some degrees of control on the specificity of the extraction. Uniquely, Samuel et al. [48] proposed a network-generating network approach for instrument-conditioned source separation.",
+          "coords": [
+            "2,66.95,732.25,220.48,8.64",
+            "2,54.99,744.41,232.44,8.64",
+            "2,54.99,756.56,145.46,8.64",
+            "2,246.18,756.56,41.25,8.64",
+            "2,310.11,263.44,49.31,8.64",
+            "2,380.94,263.44,161.60,8.64",
+            "2,310.11,275.60,232.44,8.64",
+            "2,310.11,287.75,232.44,8.64",
+            "2,310.11,299.91,232.44,8.64",
+            "2,310.11,312.06,93.17,8.64",
+            "2,422.72,312.06,99.08,8.64",
+            "2,310.11,324.22,232.44,8.64",
+            "2,310.11,336.37,232.44,8.64",
+            "2,310.11,348.52,232.44,8.64",
+            "2,310.11,360.68,212.11,8.64",
+            "2,310.11,372.83,45.25,8.64",
+            "2,379.48,372.83,163.07,8.64",
+            "2,310.11,384.99,232.44,8.64",
+            "2,310.11,397.14,51.82,8.64",
+            "2,383.56,397.14,158.98,8.64",
+            "2,310.11,409.30,220.51,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In a different direction, source separation systems relying on audio embedding \"distances\" have also been developed, notably with Le Roux et al. in [23,44,45].",
+              "coords": [
+                "2,66.95,732.25,220.48,8.64",
+                "2,54.99,744.41,232.44,8.64",
+                "2,54.99,756.56,195.13,8.64"
+              ]
+            },
+            {
+              "text": "In 2018, Kumar et al. [46] presented an early work using Euclidean audio embedding distance from a \"query\" embedding to inform music source separation.",
+              "coords": [
+                "2,253.98,756.56,33.45,8.64",
+                "2,310.11,263.44,232.44,8.64",
+                "2,310.11,275.60,232.44,8.64",
+                "2,310.11,287.75,128.73,8.64"
+              ]
+            },
+            {
+              "text": "A similar system using a Gaussian mixture model posterior in lieu of standard distance was proposed in [44].",
+              "coords": [
+                "2,442.83,287.75,99.72,8.64",
+                "2,310.11,299.91,232.44,8.64",
+                "2,310.11,312.06,116.42,8.64"
+              ]
+            },
+            {
+              "text": "Hierarchical masking [23] was later utilized to allow the extraction of stems at multiple levels of specificity.",
+              "coords": [
+                "2,434.63,312.06,107.91,8.64",
+                "2,310.11,324.22,232.44,8.64",
+                "2,310.11,336.37,95.48,8.64"
+              ]
+            },
+            {
+              "text": "More recently, source separation systems with audio embedding in a low-dimensional hyperbolic space have been developed to allow music [45] and speech [47] source separation with some degrees of control on the specificity of the extraction.",
+              "coords": [
+                "2,410.57,336.37,131.97,8.64",
+                "2,310.11,348.52,232.44,8.64",
+                "2,310.11,360.68,232.44,8.64",
+                "2,310.11,372.83,232.44,8.64",
+                "2,310.11,384.99,183.26,8.64"
+              ]
+            },
+            {
+              "text": "Uniquely, Samuel et al. [48] proposed a network-generating network approach for instrument-conditioned source separation.",
+              "coords": [
+                "2,503.62,384.99,38.92,8.64",
+                "2,310.11,397.14,232.44,8.64",
+                "2,310.11,409.30,220.51,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "PROPOSED SYSTEM",
+          "coords": [
+            "2,370.90,438.44,110.85,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The overview of the proposed Banquet system is shown in Fig. 1. The system is a single-encoder single-decoder adaptation of Bandit [28], that takes in a mixture signal x and a query signal q, and extracts a stem estimate ŝ from the mixture signal of the \"same\" stem type as the query signal using a complex-valued TF mask. This is done by (i) encoding the mixture into a subband-level time-varying embedding tensor Υ, (ii) encoding the query into a singlevector representation z, (iii) adapting the mixture embedding, conditioned on the query, into a stem-specific embedding Λ \" QpΥ; zq, then (iv) decoding the Λ to a TF mask M that is used to obtain the source estimate.",
+          "coords": [
+            "2,310.11,457.55,232.44,8.64",
+            "2,310.11,469.70,27.13,8.64",
+            "2,342.91,469.70,199.64,8.64",
+            "2,310.11,481.86,82.08,8.64",
+            "2,410.32,481.51,132.23,8.99",
+            "2,310.11,493.56,232.44,9.09",
+            "2,310.11,506.17,232.44,8.64",
+            "2,310.11,518.32,232.44,8.64",
+            "2,310.11,530.48,232.44,8.64",
+            "2,310.11,542.28,232.45,8.99",
+            "2,310.11,554.33,232.44,9.09",
+            "2,310.11,566.94,232.44,8.64",
+            "2,310.11,578.64,232.44,9.43",
+            "2,310.11,590.90,177.18,8.99"
+          ],
+          "sentences": [
+            {
+              "text": "The overview of the proposed Banquet system is shown in Fig. 1.",
+              "coords": [
+                "2,310.11,457.55,232.44,8.64",
+                "2,310.11,469.70,36.53,8.64"
+              ]
+            },
+            {
+              "text": "The system is a single-encoder single-decoder adaptation of Bandit [28], that takes in a mixture signal x and a query signal q, and extracts a stem estimate ŝ from the mixture signal of the \"same\" stem type as the query signal using a complex-valued TF mask.",
+              "coords": [
+                "2,353.04,469.70,189.51,8.64",
+                "2,310.11,481.51,232.44,8.99",
+                "2,310.11,493.56,232.44,9.09",
+                "2,310.11,506.17,232.44,8.64",
+                "2,310.11,518.32,164.38,8.64"
+              ]
+            },
+            {
+              "text": "This is done by (i) encoding the mixture into a subband-level time-varying embedding tensor Υ, (ii) encoding the query into a singlevector representation z, (iii) adapting the mixture embedding, conditioned on the query, into a stem-specific embedding Λ \" QpΥ; zq, then (iv) decoding the Λ to a TF mask M that is used to obtain the source estimate.",
+              "coords": [
+                "2,479.48,518.32,63.06,8.64",
+                "2,310.11,530.48,232.44,8.64",
+                "2,310.11,542.28,232.45,8.99",
+                "2,310.11,554.33,232.44,9.09",
+                "2,310.11,566.94,232.44,8.64",
+                "2,310.11,578.64,232.44,9.43",
+                "2,310.11,590.90,177.18,8.99"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Bandit encoder",
+          "coords": [
+            "2,310.11,615.91,83.47,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The encoder module of the system used in this work is the musical variant of the Bandit encoder, with B \" 64 bands. Specifically, given an input mixture x P R CˆN with C channels and N samples, a short-time Fourier transform (STFT) of x is computed to obtain X P C CˆF ˆT with a frame size of N FFT \" 2pF ´1q \" 2048 and 75 % overlap. The STFT is then split into overlapping subbands as detailed in [28]. Each of the subbands is then viewed as a real-valued tensor in R 2CF ˆT , passed through a layer norm and an affine transformation with D \" 128 neurons to obtain V b P R DˆT . These tensors are then stacked to obtain V P R DˆBˆT . TF modeling is then applied on V to obtain Υ using 8 pairs of residual gated recurrent units (GRUs), the first of each pair operating along the time axis and the second along the band axis. Note that this TF modeling is the only part of the model that is recurrent across either the time or the subband axes. The rest of the encoder and the decoder operate in a subband-wise manner identically for any time frame.",
+          "coords": [
+            "2,310.11,635.02,232.44,8.64",
+            "2,310.11,646.85,232.44,9.30",
+            "2,310.11,658.98,179.47,9.33",
+            "2,489.59,657.43,18.63,6.12",
+            "2,513.23,659.01,28.61,8.96",
+            "2,310.11,671.16,232.44,8.96",
+            "2,310.11,683.29,173.30,9.33",
+            "2,483.41,681.74,29.26,6.51",
+            "2,517.33,683.64,25.23,8.64",
+            "2,310.11,695.47,232.45,9.81",
+            "2,310.11,707.95,232.44,8.64",
+            "2,310.11,720.10,42.66,8.64",
+            "2,371.40,720.10,171.15,8.64",
+            "2,310.11,732.25,103.65,8.98",
+            "2,413.77,730.36,27.12,6.51",
+            "2,442.46,732.25,100.09,8.64",
+            "2,310.11,744.09,232.44,9.30",
+            "2,310.11,756.21,71.68,9.68",
+            "2,381.79,754.67,17.55,6.12",
+            "2,400.91,756.56,141.65,8.64",
+            "3,54.99,51.85,55.90,9.33",
+            "3,110.89,50.30,30.02,6.12",
+            "3,142.49,51.85,144.79,8.99",
+            "3,54.99,64.00,232.44,8.99",
+            "3,54.99,76.50,232.44,8.64",
+            "3,54.99,88.66,141.39,8.64",
+            "3,66.95,101.64,220.48,8.64",
+            "3,54.99,113.79,232.44,8.64",
+            "3,54.99,125.95,232.44,8.64",
+            "3,54.99,138.10,217.87,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The encoder module of the system used in this work is the musical variant of the Bandit encoder, with B \" 64 bands.",
+              "coords": [
+                "2,310.11,635.02,232.44,8.64",
+                "2,310.11,646.85,232.44,9.30"
+              ]
+            },
+            {
+              "text": "Specifically, given an input mixture x P R CˆN with C channels and N samples, a short-time Fourier transform (STFT) of x is computed to obtain X P C CˆF ˆT with a frame size of N FFT \" 2pF ´1q \" 2048 and 75 % overlap.",
+              "coords": [
+                "2,310.11,658.98,179.47,9.33",
+                "2,489.59,657.43,18.63,6.12",
+                "2,513.23,659.01,28.61,8.96",
+                "2,310.11,671.16,232.44,8.96",
+                "2,310.11,683.29,173.30,9.33",
+                "2,483.41,681.74,29.26,6.51",
+                "2,517.33,683.64,25.23,8.64",
+                "2,310.11,695.47,232.45,9.81",
+                "2,310.11,707.95,14.66,8.64"
+              ]
+            },
+            {
+              "text": "The STFT is then split into overlapping subbands as detailed in [28].",
+              "coords": [
+                "2,329.74,707.95,212.81,8.64",
+                "2,310.11,720.10,65.11,8.64"
+              ]
+            },
+            {
+              "text": "Each of the subbands is then viewed as a real-valued tensor in R 2CF ˆT , passed through a layer norm and an affine transformation with D \" 128 neurons to obtain V b P R DˆT .",
+              "coords": [
+                "2,380.92,720.10,161.62,8.64",
+                "2,310.11,732.25,103.65,8.98",
+                "2,413.77,730.36,27.12,6.51",
+                "2,442.46,732.25,100.09,8.64",
+                "2,310.11,744.09,232.44,9.30",
+                "2,310.11,756.21,71.68,9.68",
+                "2,381.79,754.67,17.55,6.12",
+                "2,400.91,756.56,2.49,8.64"
+              ]
+            },
+            {
+              "text": "These tensors are then stacked to obtain V P R DˆBˆT .",
+              "coords": [
+                "2,408.27,756.56,134.29,8.64",
+                "3,54.99,51.85,55.90,9.33",
+                "3,110.89,50.30,30.02,6.12",
+                "3,142.49,52.20,2.49,8.64"
+              ]
+            },
+            {
+              "text": "TF modeling is then applied on V to obtain Υ using 8 pairs of residual gated recurrent units (GRUs), the first of each pair operating along the time axis and the second along the band axis.",
+              "coords": [
+                "3,149.15,51.85,138.12,8.99",
+                "3,54.99,64.00,232.44,8.99",
+                "3,54.99,76.50,232.44,8.64",
+                "3,54.99,88.66,141.39,8.64"
+              ]
+            },
+            {
+              "text": "Note that this TF modeling is the only part of the model that is recurrent across either the time or the subband axes.",
+              "coords": [
+                "3,66.95,101.64,220.48,8.64",
+                "3,54.99,113.79,232.44,8.64",
+                "3,54.99,125.95,20.04,8.64"
+              ]
+            },
+            {
+              "text": "The rest of the encoder and the decoder operate in a subband-wise manner identically for any time frame.",
+              "coords": [
+                "3,80.59,125.95,206.84,8.64",
+                "3,54.99,138.10,217.87,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Query encoding",
+          "coords": [
+            "3,54.99,165.63,86.24,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To obtain the query embedding, a PaSST model [27] trained on the OpenMIC-2018 dataset [49] is used. The 20 instruments in OpenMIC span all coarse-level classes of MoisesDB, except other. For compatibility, each query signal is downmixed to mono and downsampled to 32 kHz before being fed to PaSST. Although the query feature extractor could, in theory, be jointly trained with the rest of the system, preliminary experiments showed that this can result in considerable instability during training, especially if the query feature extractor is not at least pretrained. Due to the size and complexity of PaSST, the query feature extractor is fully frozen in this work. The embedding from the PaSST variant used is a time series with a feature dimension of D \" 784. The embedding is averaged over time and linearly down-projected to obtain z P R D .",
+          "coords": [
+            "3,54.99,185.72,210.59,8.64",
+            "3,54.99,197.88,155.61,8.64",
+            "3,234.44,197.88,52.99,8.64",
+            "3,54.99,210.03,232.44,8.64",
+            "3,54.99,222.01,232.44,8.82",
+            "3,54.99,234.34,232.44,8.64",
+            "3,54.99,246.49,232.44,8.64",
+            "3,54.99,258.65,232.44,8.64",
+            "3,54.99,270.80,232.44,8.64",
+            "3,54.99,282.96,232.44,8.64",
+            "3,54.99,295.11,232.44,8.64",
+            "3,54.99,307.27,232.44,8.64",
+            "3,54.99,319.42,232.44,8.64",
+            "3,54.99,331.58,232.44,8.64",
+            "3,54.99,340.89,232.44,11.81",
+            "3,54.99,355.43,195.49,9.43",
+            "3,250.48,353.99,6.51,6.12",
+            "3,257.71,355.88,2.49,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "To obtain the query embedding, a PaSST model [27] trained on the OpenMIC-2018 dataset [49] is used.",
+              "coords": [
+                "3,54.99,185.72,232.44,8.64",
+                "3,54.99,197.88,210.46,8.64"
+              ]
+            },
+            {
+              "text": "The 20 instruments in OpenMIC span all coarse-level classes of MoisesDB, except other.",
+              "coords": [
+                "3,271.94,197.88,15.49,8.64",
+                "3,54.99,210.03,232.44,8.64",
+                "3,54.99,222.01,110.91,8.82"
+              ]
+            },
+            {
+              "text": "For compatibility, each query signal is downmixed to mono and downsampled to 32 kHz before being fed to PaSST.",
+              "coords": [
+                "3,169.65,222.19,117.79,8.64",
+                "3,54.99,234.34,232.44,8.64",
+                "3,54.99,246.49,106.98,8.64"
+              ]
+            },
+            {
+              "text": "Although the query feature extractor could, in theory, be jointly trained with the rest of the system, preliminary experiments showed that this can result in considerable instability during training, especially if the query feature extractor is not at least pretrained.",
+              "coords": [
+                "3,164.52,246.49,122.91,8.64",
+                "3,54.99,258.65,232.44,8.64",
+                "3,54.99,270.80,232.44,8.64",
+                "3,54.99,282.96,232.44,8.64",
+                "3,54.99,295.11,212.80,8.64"
+              ]
+            },
+            {
+              "text": "Due to the size and complexity of PaSST, the query feature extractor is fully frozen in this work.",
+              "coords": [
+                "3,270.83,295.11,16.60,8.64",
+                "3,54.99,307.27,232.44,8.64",
+                "3,54.99,319.42,141.43,8.64"
+              ]
+            },
+            {
+              "text": "The embedding from the PaSST variant used is a time series with a feature dimension of D \" 784.",
+              "coords": [
+                "3,201.80,319.42,85.63,8.64",
+                "3,54.99,331.58,232.44,8.64",
+                "3,54.99,340.89,92.43,11.81"
+              ]
+            },
+            {
+              "text": "The embedding is averaged over time and linearly down-projected to obtain z P R D .",
+              "coords": [
+                "3,153.74,343.73,133.70,8.64",
+                "3,54.99,355.43,195.49,9.43",
+                "3,250.48,353.99,6.51,6.12",
+                "3,257.71,355.88,2.49,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Query-based adaptation",
+          "coords": [
+            "3,54.99,383.41,121.66,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In the original Bandit system [28], each stem was estimated through a dedicated decoder. As a result, Υ typically contains information from all stems, with most of the \"separation\" occurring within each of the decoders. This is evident in the fact that the encoder of a Bandit system trained on the cinematic audio Divide and Remaster (DnR) dataset [50] could be successfully used in a 4-stem MSS on the MUSDB18-HQ dataset [2] with separation quality on par with Open-Unmix [28].",
+          "coords": [
+            "3,54.99,403.50,122.42,8.64",
+            "3,196.87,403.50,90.56,8.64",
+            "3,54.99,415.31,232.44,8.99",
+            "3,54.99,427.81,232.44,8.64",
+            "3,54.99,439.97,232.44,8.64",
+            "3,54.99,452.12,232.44,8.64",
+            "3,54.99,464.27,232.44,8.64",
+            "3,54.99,476.43,27.67,8.64",
+            "3,103.35,476.43,184.08,8.64",
+            "3,54.99,488.58,109.10,8.64",
+            "3,181.88,488.58,105.55,8.64",
+            "3,54.99,500.74,87.99,8.64",
+            "3,160.74,500.74,3.82,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In the original Bandit system [28], each stem was estimated through a dedicated decoder.",
+              "coords": [
+                "3,54.99,403.50,232.44,8.64",
+                "3,54.99,415.66,145.00,8.64"
+              ]
+            },
+            {
+              "text": "As a result, Υ typically contains information from all stems, with most of the \"separation\" occurring within each of the decoders.",
+              "coords": [
+                "3,205.79,415.31,81.65,8.99",
+                "3,54.99,427.81,232.44,8.64",
+                "3,54.99,439.97,209.42,8.64"
+              ]
+            },
+            {
+              "text": "This is evident in the fact that the encoder of a Bandit system trained on the cinematic audio Divide and Remaster (DnR) dataset [50] could be successfully used in a 4-stem MSS on the MUSDB18-HQ dataset [2] with separation quality on par with Open-Unmix [28].",
+              "coords": [
+                "3,269.72,439.97,17.71,8.64",
+                "3,54.99,452.12,232.44,8.64",
+                "3,54.99,464.27,232.44,8.64",
+                "3,54.99,476.43,232.44,8.64",
+                "3,54.99,488.58,232.44,8.64",
+                "3,54.99,500.74,109.57,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work, only a single decoder is responsible for mask estimation for any stem. As a result, the query-based adaptation Q : pR DˆBˆT , R D q Þ Ñ R DˆBˆT has an important role in filtering out irrelevant information from Υ, or at least \"hinting\" to the decoder the nature of the target stem. A single FiLM layer is used to map from the mixture embedding to the stem-specific embedding, that is, Λrd, b, ts \" γrds ¨Υrd, b, ts `βrds, @d, b, t, (1) where modulating variables γ, β P R D are obtained from a two-layer nonlinear affine map of z. This is similar to the conditioning method used in [20].",
+          "coords": [
+            "3,66.95,513.72,220.48,8.64",
+            "3,54.99,525.87,232.44,8.64",
+            "3,54.99,537.71,72.00,9.30",
+            "3,126.99,536.14,30.02,6.12",
+            "3,158.58,537.71,11.62,9.30",
+            "3,170.21,536.14,6.51,6.12",
+            "3,177.43,538.72,30.90,8.29",
+            "3,208.33,536.14,30.02,6.12",
+            "3,243.59,538.03,43.85,8.64",
+            "3,54.99,549.83,232.44,8.99",
+            "3,54.99,562.34,232.44,8.64",
+            "3,54.99,574.49,232.44,8.64",
+            "3,54.99,586.65,202.56,8.64",
+            "3,80.27,609.91,207.16,9.48",
+            "3,54.99,633.68,150.90,9.48",
+            "3,205.90,632.30,6.51,6.12",
+            "3,215.95,634.19,71.49,8.64",
+            "3,54.99,646.00,232.44,8.99",
+            "3,54.99,658.50,113.74,8.64",
+            "3,186.50,658.50,3.82,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In this work, only a single decoder is responsible for mask estimation for any stem.",
+              "coords": [
+                "3,66.95,513.72,220.48,8.64",
+                "3,54.99,525.87,119.05,8.64"
+              ]
+            },
+            {
+              "text": "As a result, the query-based adaptation Q : pR DˆBˆT , R D q Þ Ñ R DˆBˆT has an important role in filtering out irrelevant information from Υ, or at least \"hinting\" to the decoder the nature of the target stem.",
+              "coords": [
+                "3,177.08,525.87,110.35,8.64",
+                "3,54.99,537.71,72.00,9.30",
+                "3,126.99,536.14,30.02,6.12",
+                "3,158.58,537.71,11.62,9.30",
+                "3,170.21,536.14,6.51,6.12",
+                "3,177.43,538.72,30.90,8.29",
+                "3,208.33,536.14,30.02,6.12",
+                "3,243.59,538.03,43.85,8.64",
+                "3,54.99,549.83,232.44,8.99",
+                "3,54.99,562.34,232.44,8.64",
+                "3,54.99,574.49,21.31,8.64"
+              ]
+            },
+            {
+              "text": "A single FiLM layer is used to map from the mixture embedding to the stem-specific embedding, that is, Λrd, b, ts \" γrds ¨Υrd, b, ts `βrds, @d, b, t, (1) where modulating variables γ, β P R D are obtained from a two-layer nonlinear affine map of z.",
+              "coords": [
+                "3,79.28,574.49,208.15,8.64",
+                "3,54.99,586.65,202.56,8.64",
+                "3,80.27,609.91,207.16,9.48",
+                "3,54.99,633.68,150.90,9.48",
+                "3,205.90,632.30,6.51,6.12",
+                "3,215.95,634.19,71.49,8.64",
+                "3,54.99,646.00,148.74,8.99"
+              ]
+            },
+            {
+              "text": "This is similar to the conditioning method used in [20].",
+              "coords": [
+                "3,206.72,646.35,80.72,8.64",
+                "3,54.99,658.50,135.32,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Crucially, note that the modulating variables are not subband-specific. Due to the nature of the TF modeling module within the encoder, features of Υ are already aligned across subbands and time frames. Moreover, BSRNN-like models only contain one stream of information flow, with a clear bottleneck, thus lending itself to the global conditioning mechanism significantly more than, for example, U-Net-style models in [20,41,42].",
+          "coords": [
+            "3,66.95,671.48,220.48,8.64",
+            "3,54.99,683.64,232.44,8.64",
+            "3,54.99,695.44,232.44,8.99",
+            "3,54.99,707.95,232.44,8.64",
+            "3,54.99,720.10,232.44,8.64",
+            "3,54.99,732.25,232.44,8.64",
+            "3,54.99,744.41,232.44,8.64",
+            "3,54.99,756.56,163.38,8.64",
+            "3,263.50,756.56,3.94,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Crucially, note that the modulating variables are not subband-specific.",
+              "coords": [
+                "3,66.95,671.48,220.48,8.64",
+                "3,54.99,683.64,69.45,8.64"
+              ]
+            },
+            {
+              "text": "Due to the nature of the TF modeling module within the encoder, features of Υ are already aligned across subbands and time frames.",
+              "coords": [
+                "3,133.75,683.64,153.68,8.64",
+                "3,54.99,695.44,232.44,8.99",
+                "3,54.99,707.95,199.66,8.64"
+              ]
+            },
+            {
+              "text": "Moreover, BSRNN-like models only contain one stream of information flow, with a clear bottleneck, thus lending itself to the global conditioning mechanism significantly more than, for example, U-Net-style models in [20,41,42].",
+              "coords": [
+                "3,262.53,707.95,24.90,8.64",
+                "3,54.99,720.10,232.44,8.64",
+                "3,54.99,732.25,232.44,8.64",
+                "3,54.99,744.41,232.44,8.64",
+                "3,54.99,756.56,212.45,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The use of embedding-based query, as opposed to onehot class-based query, provides significant practical flexibility in adding new instruments as data become available or in adjusting the level of specificity in the querying, as these can be done via finetuning with no architectural changes to the model. Moreover, class-based query can be emulated in an embedding-based system but not vice versa.",
+          "coords": [
+            "3,322.07,52.20,220.48,8.64",
+            "3,310.11,64.35,232.44,8.64",
+            "3,310.11,76.50,232.44,8.64",
+            "3,310.11,88.66,232.44,8.64",
+            "3,310.11,100.81,232.44,8.64",
+            "3,310.11,112.97,232.44,8.64",
+            "3,310.11,125.12,232.44,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The use of embedding-based query, as opposed to onehot class-based query, provides significant practical flexibility in adding new instruments as data become available or in adjusting the level of specificity in the querying, as these can be done via finetuning with no architectural changes to the model.",
+              "coords": [
+                "3,322.07,52.20,220.48,8.64",
+                "3,310.11,64.35,232.44,8.64",
+                "3,310.11,76.50,232.44,8.64",
+                "3,310.11,88.66,232.44,8.64",
+                "3,310.11,100.81,232.44,8.64",
+                "3,310.11,112.97,86.92,8.64"
+              ]
+            },
+            {
+              "text": "Moreover, class-based query can be emulated in an embedding-based system but not vice versa.",
+              "coords": [
+                "3,400.16,112.97,142.39,8.64",
+                "3,310.11,125.12,232.44,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Bandit decoder",
+          "coords": [
+            "3,310.11,148.05,83.47,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The decoder used is identical in structure to that in [28]. The major difference is that there is only one stem-agnostic decoder. Given a conditioned embedding tensor Λ, the embedding tensor is split into subband-level representation Λ b \" Λr : , b, : s. Each Λ b is passed through a layer norm and a gated linear unit (GLU) to obtain a real-valued tensor R 2CF b ˆT which is then viewed as a complex-valued tensor M b P C CˆF b ˆT . Frequency-domain overlap-add is then applied to obtain the full-band mask using Mrc, f, ts \"",
+          "coords": [
+            "3,310.11,166.57,209.95,8.64",
+            "3,538.73,166.57,3.82,8.64",
+            "3,310.11,178.72,232.44,8.64",
+            "3,310.11,190.53,232.44,8.99",
+            "3,310.11,203.03,232.44,8.64",
+            "3,310.11,214.84,232.44,9.68",
+            "3,310.11,227.34,232.44,8.64",
+            "3,310.11,241.36,7.20,7.11",
+            "3,317.31,237.60,29.70,6.79",
+            "3,350.63,239.49,191.92,8.64",
+            "3,310.11,251.30,35.51,9.68",
+            "3,345.62,249.75,31.84,6.79",
+            "3,379.03,251.65,163.53,8.64",
+            "3,310.11,263.80,168.25,8.64",
+            "3,320.84,294.02,50.42,9.32"
+          ],
+          "sentences": [
+            {
+              "text": "The decoder used is identical in structure to that in [28].",
+              "coords": [
+                "3,310.11,166.57,232.44,8.64"
+              ]
+            },
+            {
+              "text": "The major difference is that there is only one stem-agnostic decoder.",
+              "coords": [
+                "3,310.11,178.72,232.44,8.64",
+                "3,310.11,190.88,33.47,8.64"
+              ]
+            },
+            {
+              "text": "Given a conditioned embedding tensor Λ, the embedding tensor is split into subband-level representation Λ b \" Λr : , b, : s.",
+              "coords": [
+                "3,351.28,190.53,191.28,8.99",
+                "3,310.11,203.03,232.44,8.64",
+                "3,310.11,214.84,70.27,9.68"
+              ]
+            },
+            {
+              "text": "Each Λ b is passed through a layer norm and a gated linear unit (GLU) to obtain a real-valued tensor R 2CF b ˆT which is then viewed as a complex-valued tensor M b P C CˆF b ˆT .",
+              "coords": [
+                "3,383.51,214.84,159.04,9.68",
+                "3,310.11,227.34,232.44,8.64",
+                "3,310.11,241.36,7.20,7.11",
+                "3,317.31,237.60,29.70,6.79",
+                "3,350.63,239.49,191.92,8.64",
+                "3,310.11,251.30,35.51,9.68",
+                "3,345.62,249.75,31.84,6.79",
+                "3,379.03,251.65,2.49,8.64"
+              ]
+            },
+            {
+              "text": "Frequency-domain overlap-add is then applied to obtain the full-band mask using Mrc, f, ts \"",
+              "coords": [
+                "3,386.75,251.65,155.81,8.64",
+                "3,310.11,263.80,168.25,8.64",
+                "3,320.84,294.02,50.42,9.32"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "B´1 ÿ b\"0 Wrb, f s ¨Mb rc, f ´min F b , ts ř B´1 k\"0 Wrk, f s(2)",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "Finally, the source estimates are then obtained using elementwise masking Ŝ \" X ˝M.",
+          "coords": [
+            "3,310.11,324.29,232.44,8.64",
+            "3,310.11,333.58,128.01,11.84"
+          ],
+          "sentences": [
+            {
+              "text": "Finally, the source estimates are then obtained using elementwise masking Ŝ \" X ˝M.",
+              "coords": [
+                "3,310.11,324.29,232.44,8.64",
+                "3,310.11,333.58,128.01,11.84"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Loss function",
+          "coords": [
+            "3,310.11,359.37,75.73,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The loss function used in this work is the multichannel version of the L1SNR loss proposed in [28]. The contribution for each sample of the loss function is given by",
+          "coords": [
+            "3,310.11,377.89,232.44,8.64",
+            "3,310.11,390.05,141.55,8.64",
+            "3,469.31,390.05,73.24,8.64",
+            "3,310.11,402.20,188.03,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The loss function used in this work is the multichannel version of the L1SNR loss proposed in [28].",
+              "coords": [
+                "3,310.11,377.89,232.44,8.64",
+                "3,310.11,390.05,163.02,8.64"
+              ]
+            },
+            {
+              "text": "The contribution for each sample of the loss function is given by",
+              "coords": [
+                "3,476.18,390.05,66.37,8.64",
+                "3,310.11,402.20,188.03,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "Lpŝ; sq \" Dpŝ; sq `Dpℜ Ŝ; ℜSq `Dpℑ Ŝ; Sq, (3",
+          "coords": []
+        },
+        {
+          "kind": "formula",
+          "text": ") Dpŷ; yq \" 10 log 10 } vecpŷ ´yq} 1 `ϵ } vecpyq} 1 `ϵ ,(4)",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "where ŝ \" iSTFTp Ŝq, s and S are defined similarly for the ground truth, vecp¨q is the vectorization operator, and ϵ \" 10 ´3 for stability.",
+          "coords": [
+            "3,310.11,472.50,232.44,11.84",
+            "3,310.11,487.20,232.44,8.96",
+            "3,310.11,498.29,37.37,10.36",
+            "3,350.47,499.68,48.06,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "where ŝ \" iSTFTp Ŝq, s and S are defined similarly for the ground truth, vecp¨q is the vectorization operator, and ϵ \" 10 ´3 for stability.",
+              "coords": [
+                "3,310.11,472.50,232.44,11.84",
+                "3,310.11,487.20,232.44,8.96",
+                "3,310.11,498.29,37.37,10.36",
+                "3,350.47,499.68,48.06,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "DATA AND EXPERIMENTAL SETUP",
+          "coords": [
+            "3,335.78,527.08,181.11,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "This work utilizes the MoisesDB dataset [25], which consists of 240 songs from 47 artists, in stereo format at 44.1 kHz. MoisesDB defined their stem ontology with more than 30 fine-level classes, which are then grouped into 11 coarse-level classes [25, Table 2]. Due to the lack of official splits for MoisesDB, we performed a five-fold splitfoot_2 on the dataset stratified by genres. The first three splits are used as the training set, the fourth as the validation set, and the last as the test set.",
+          "coords": [
+            "3,310.11,545.60,163.02,8.64",
+            "3,491.14,545.60,51.41,8.64",
+            "3,310.11,557.76,232.44,8.64",
+            "3,310.11,569.91,232.44,8.64",
+            "3,310.11,582.07,232.44,8.64",
+            "3,310.11,594.22,152.85,8.64",
+            "3,469.42,594.22,73.13,8.64",
+            "3,310.11,606.38,232.44,8.64",
+            "3,310.11,618.53,17.17,8.64",
+            "3,338.22,618.53,204.33,8.64",
+            "3,310.11,630.69,232.44,8.64",
+            "3,310.11,642.84,137.25,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "This work utilizes the MoisesDB dataset [25], which consists of 240 songs from 47 artists, in stereo format at 44.1 kHz.",
+              "coords": [
+                "3,310.11,545.60,232.44,8.64",
+                "3,310.11,557.76,232.44,8.64",
+                "3,310.11,569.91,38.19,8.64"
+              ]
+            },
+            {
+              "text": "MoisesDB defined their stem ontology with more than 30 fine-level classes, which are then grouped into 11 coarse-level classes [25, Table 2].",
+              "coords": [
+                "3,357.59,569.91,184.96,8.64",
+                "3,310.11,582.07,232.44,8.64",
+                "3,310.11,594.22,166.50,8.64"
+              ]
+            },
+            {
+              "text": "Due to the lack of official splits for MoisesDB, we performed a five-fold splitfoot_2 on the dataset stratified by genres.",
+              "coords": [
+                "3,480.83,594.22,61.72,8.64",
+                "3,310.11,606.38,232.44,8.64",
+                "3,310.11,618.53,168.58,8.64"
+              ]
+            },
+            {
+              "text": "The first three splits are used as the training set, the fourth as the validation set, and the last as the test set.",
+              "coords": [
+                "3,484.71,618.53,57.84,8.64",
+                "3,310.11,630.69,232.44,8.64",
+                "3,310.11,642.84,137.25,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Query extraction",
+          "coords": [
+            "3,310.11,665.77,91.20,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "For each possible stem of each song, a 10-second chunk of the clean audio of the same stem is extracted as the query signal. This is done by computing a time series of onset strength for each stem and then aggregating the mean onset strength for each 10-second sliding window with a hop size of 512 samples. The 10-second window with the strongest average onset is taken as the query signal. A t-SNE plot of the query embedding is shown in Fig. 2. While clusters can be clearly seen amongst related stems, it can also be seen that there are varying degrees of non-separability of the embedding between fine-level stems.",
+          "coords": [
+            "3,310.11,684.29,232.44,8.64",
+            "3,310.11,696.44,232.44,8.64",
+            "3,310.11,708.60,232.44,8.64",
+            "3,310.11,720.75,232.44,8.64",
+            "4,54.99,52.20,232.44,8.64",
+            "4,54.99,64.35,232.44,8.64",
+            "4,54.99,76.50,232.44,8.64",
+            "4,54.99,88.66,162.54,8.64",
+            "4,222.34,88.66,65.09,8.64",
+            "4,54.99,100.81,232.44,8.64",
+            "4,54.99,112.97,232.44,8.64",
+            "4,54.99,125.12,162.02,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "For each possible stem of each song, a 10-second chunk of the clean audio of the same stem is extracted as the query signal.",
+              "coords": [
+                "3,310.11,684.29,232.44,8.64",
+                "3,310.11,696.44,232.44,8.64",
+                "3,310.11,708.60,26.29,8.64"
+              ]
+            },
+            {
+              "text": "This is done by computing a time series of onset strength for each stem and then aggregating the mean onset strength for each 10-second sliding window with a hop size of 512 samples.",
+              "coords": [
+                "3,342.04,708.60,200.51,8.64",
+                "3,310.11,720.75,232.44,8.64",
+                "4,54.99,52.20,232.44,8.64",
+                "4,54.99,64.35,62.79,8.64"
+              ]
+            },
+            {
+              "text": "The 10-second window with the strongest average onset is taken as the query signal.",
+              "coords": [
+                "4,120.87,64.35,166.55,8.64",
+                "4,54.99,76.50,172.56,8.64"
+              ]
+            },
+            {
+              "text": "A t-SNE plot of the query embedding is shown in Fig. 2. While clusters can be clearly seen amongst related stems, it can also be seen that there are varying degrees of non-separability of the embedding between fine-level stems.",
+              "coords": [
+                "4,233.16,76.50,54.27,8.64",
+                "4,54.99,88.66,232.44,8.64",
+                "4,54.99,100.81,232.44,8.64",
+                "4,54.99,112.97,232.44,8.64",
+                "4,54.99,125.12,162.02,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Training",
+          "coords": [
+            "4,54.99,147.99,55.34,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Each model was trained using an NVIDIA H100 GPU (80 GB) for up to 150 epochs, unless otherwise stated. A training epoch consists of 8192 mixture-query pairs, with a batch size of 4. We used Adam optimizer with an initial learning rate of 10 -foot_3 and a decay factor of 0.98 per epoch.",
+          "coords": [
+            "4,54.99,166.52,232.44,8.64",
+            "4,54.99,178.67,232.44,8.64",
+            "4,54.99,190.82,232.44,8.64",
+            "4,54.99,202.98,232.44,8.64",
+            "4,54.99,215.13,73.31,8.64",
+            "4,128.31,213.46,7.42,6.05",
+            "4,138.72,215.13,147.35,8.64",
+            "4,54.99,166.52,232.44,8.64",
+            "4,54.99,178.67,232.44,8.64",
+            "4,54.99,190.82,232.44,8.64",
+            "4,54.99,202.98,232.44,8.64",
+            "4,54.99,215.13,73.31,8.64",
+            "4,128.31,213.46,3.71,6.05"
+          ],
+          "sentences": [
+            {
+              "text": "Each model was trained using an NVIDIA H100 GPU (80 GB) for up to 150 epochs, unless otherwise stated.",
+              "coords": [
+                "4,54.99,166.52,232.44,8.64",
+                "4,54.99,178.67,198.49,8.64"
+              ]
+            },
+            {
+              "text": "A training epoch consists of 8192 mixture-query pairs, with a batch size of 4. We used Adam optimizer with an initial learning rate of 10 -foot_3 and a decay factor of 0.98 per epoch.",
+              "coords": [
+                "4,256.48,178.67,30.95,8.64",
+                "4,54.99,190.82,232.44,8.64",
+                "4,54.99,202.98,232.44,8.64",
+                "4,54.99,215.13,73.31,8.64",
+                "4,128.31,213.46,3.71,6.05",
+                "4,138.72,215.13,147.35,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In the default sampling strategy, a random song is chosen, a random trainable stem for that song is chosen as the target stem, then a random chunk of 6 s is chosen. If the current target chunk has an RMS below -36 dBFS, a new random chunk is chosen for up to 10 more trials. Otherwise, the threshold is dropped to -48 dBFS for another 10 trials. If a suitable chunk is still not found, the next random chunk is chosen regardless of RMS. A pre-extracted query of the same stem is then randomly chosen from the available pool of songs, including the song of the mixture.",
+          "coords": [
+            "4,66.95,227.29,220.48,8.64",
+            "4,54.99,239.44,232.44,8.64",
+            "4,54.99,251.60,232.44,8.64",
+            "4,54.99,263.75,232.44,8.64",
+            "4,54.99,275.91,232.44,8.64",
+            "4,54.99,288.06,232.44,8.64",
+            "4,54.99,300.21,232.44,8.64",
+            "4,54.99,312.37,232.44,8.64",
+            "4,54.99,324.52,232.44,8.64",
+            "4,54.99,336.68,231.72,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In the default sampling strategy, a random song is chosen, a random trainable stem for that song is chosen as the target stem, then a random chunk of 6 s is chosen.",
+              "coords": [
+                "4,66.95,227.29,220.48,8.64",
+                "4,54.99,239.44,232.44,8.64",
+                "4,54.99,251.60,205.08,8.64"
+              ]
+            },
+            {
+              "text": "If the current target chunk has an RMS below -36 dBFS, a new random chunk is chosen for up to 10 more trials.",
+              "coords": [
+                "4,265.39,251.60,22.04,8.64",
+                "4,54.99,263.75,232.44,8.64",
+                "4,54.99,275.91,201.09,8.64"
+              ]
+            },
+            {
+              "text": "Otherwise, the threshold is dropped to -48 dBFS for another 10 trials.",
+              "coords": [
+                "4,261.63,275.91,25.80,8.64",
+                "4,54.99,288.06,232.44,8.64",
+                "4,54.99,300.21,22.42,8.64"
+              ]
+            },
+            {
+              "text": "If a suitable chunk is still not found, the next random chunk is chosen regardless of RMS.",
+              "coords": [
+                "4,82.84,300.21,204.59,8.64",
+                "4,54.99,312.37,166.73,8.64"
+              ]
+            },
+            {
+              "text": "A pre-extracted query of the same stem is then randomly chosen from the available pool of songs, including the song of the mixture.",
+              "coords": [
+                "4,224.78,312.37,62.64,8.64",
+                "4,54.99,324.52,232.44,8.64",
+                "4,54.99,336.68,231.72,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Testing and inference",
+          "coords": [
+            "4,54.99,359.55,109.21,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "During testing and inference, each track is split into 6-s segments with a hop size of 0.5 s, as per [17]. The estimated stems were then reconstructed into a full track using time-domain overlap-add with a Hann window. The Banquet models are tested in two scenarios: one using a query from a different song, and another using a query from the same song (SSQ). In different-song querying, the query song for each stem is randomly chosen from another song within the test split that contains the stem. When possible, the query song is chosen so that it is from the same genre as the mixture song but from a different artist. Otherwise, a song from any genre with a different artist is chosen.",
+          "coords": [
+            "4,54.99,378.07,232.44,8.64",
+            "4,54.99,390.23,167.58,8.64",
+            "4,241.34,390.23,46.09,8.64",
+            "4,54.99,402.38,232.44,8.64",
+            "4,54.99,414.53,232.44,8.64",
+            "4,54.99,426.69,232.44,8.64",
+            "4,54.99,438.84,232.44,8.64",
+            "4,54.99,451.00,232.44,8.64",
+            "4,54.99,463.15,232.44,8.64",
+            "4,54.99,475.31,232.44,8.64",
+            "4,54.99,487.46,232.44,8.64",
+            "4,54.99,499.62,232.44,8.64",
+            "4,54.99,511.77,216.80,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "During testing and inference, each track is split into 6-s segments with a hop size of 0.5 s, as per [17].",
+              "coords": [
+                "4,54.99,378.07,232.44,8.64",
+                "4,54.99,390.23,190.17,8.64"
+              ]
+            },
+            {
+              "text": "The estimated stems were then reconstructed into a full track using time-domain overlap-add with a Hann window.",
+              "coords": [
+                "4,251.29,390.23,36.14,8.64",
+                "4,54.99,402.38,232.44,8.64",
+                "4,54.99,414.53,190.26,8.64"
+              ]
+            },
+            {
+              "text": "The Banquet models are tested in two scenarios: one using a query from a different song, and another using a query from the same song (SSQ).",
+              "coords": [
+                "4,249.64,414.53,37.79,8.64",
+                "4,54.99,426.69,232.44,8.64",
+                "4,54.99,438.84,232.44,8.64",
+                "4,54.99,451.00,74.72,8.64"
+              ]
+            },
+            {
+              "text": "In different-song querying, the query song for each stem is randomly chosen from another song within the test split that contains the stem.",
+              "coords": [
+                "4,133.73,451.00,153.70,8.64",
+                "4,54.99,463.15,232.44,8.64",
+                "4,54.99,475.31,167.85,8.64"
+              ]
+            },
+            {
+              "text": "When possible, the query song is chosen so that it is from the same genre as the mixture song but from a different artist.",
+              "coords": [
+                "4,225.98,475.31,61.45,8.64",
+                "4,54.99,487.46,232.44,8.64",
+                "4,54.99,499.62,185.13,8.64"
+              ]
+            },
+            {
+              "text": "Otherwise, a song from any genre with a different artist is chosen.",
+              "coords": [
+                "4,243.99,499.62,43.44,8.64",
+                "4,54.99,511.77,216.80,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Evaluation metric",
+          "coords": [
+            "4,54.99,534.64,94.98,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work, we report the full-track multichannel signalto-noise ratio (SNR) 3 as the main metric. Specifically, for a test signal ŝ and a reference signal s, both in R CˆN , the SNR is computed by SNRpŷ; yq \" 10 log 10 `}s} 2 F {}ŝ ´s} 2 F ˘.",
+          "coords": [
+            "4,54.99,553.16,232.44,8.64",
+            "4,54.99,565.32,81.14,8.64",
+            "4,145.98,565.32,141.45,8.64",
+            "4,54.99,577.02,195.20,9.43",
+            "4,250.19,575.58,18.63,6.12",
+            "4,270.07,577.47,17.36,8.64",
+            "4,54.99,589.63,82.75,8.64",
+            "4,88.11,610.84,82.56,9.32",
+            "4,170.81,615.34,7.94,6.12",
+            "4,180.91,608.80,21.36,6.12",
+            "4,198.30,611.87,40.40,9.61",
+            "4,238.70,608.80,3.97,6.12",
+            "4,238.70,615.37,5.05,6.12",
+            "4,245.32,609.20,8.99,2.79"
+          ],
+          "sentences": [
+            {
+              "text": "In this work, we report the full-track multichannel signalto-noise ratio (SNR) 3 as the main metric.",
+              "coords": [
+                "4,54.99,553.16,232.44,8.64",
+                "4,54.99,565.32,81.14,8.64",
+                "4,137.87,563.65,3.49,6.05",
+                "4,145.98,565.32,75.49,8.64"
+              ]
+            },
+            {
+              "text": "Specifically, for a test signal ŝ and a reference signal s, both in R CˆN , the SNR is computed by SNRpŷ; yq \" 10 log 10 `}s} 2 F {}ŝ ´s} 2 F ˘.",
+              "coords": [
+                "4,224.53,565.32,62.90,8.64",
+                "4,54.99,577.02,195.20,9.43",
+                "4,250.19,575.58,18.63,6.12",
+                "4,270.07,577.47,17.36,8.64",
+                "4,54.99,589.63,82.75,8.64",
+                "4,88.11,610.84,82.56,9.32",
+                "4,170.81,615.34,7.94,6.12",
+                "4,180.91,608.80,21.36,6.12",
+                "4,198.30,611.87,40.40,9.61",
+                "4,238.70,608.80,3.97,6.12",
+                "4,238.70,615.37,5.05,6.12",
+                "4,245.32,609.20,8.99,2.79"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "RESULTS AND DISCUSSION",
+          "coords": [
+            "4,98.52,647.95,145.38,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this section, we provide the results and discussion of our experiments. Section 5.1 discusses pretraining of the Bandit/Banquet encoder. Section 5.2 trials the use of the query-based setup on a subset of vocals, drums, and bass",
+          "coords": [
+            "4,54.99,666.47,232.44,8.64",
+            "4,54.99,678.62,232.44,8.64",
+            "4,54.99,690.78,232.44,8.64",
+            "4,54.99,702.93,232.44,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In this section, we provide the results and discussion of our experiments.",
+              "coords": [
+                "4,54.99,666.47,232.44,8.64",
+                "4,54.99,678.62,67.53,8.64"
+              ]
+            },
+            {
+              "text": "Section 5.1 discusses pretraining of the Bandit/Banquet encoder.",
+              "coords": [
+                "4,127.77,678.62,159.66,8.64",
+                "4,54.99,690.78,99.28,8.64"
+              ]
+            },
+            {
+              "text": "Section 5.2 trials the use of the query-based setup on a subset of vocals, drums, and bass",
+              "coords": [
+                "4,159.67,690.78,127.76,8.64",
+                "4,54.99,702.93,232.44,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Drums Lead M. Vox Lead F. Vox Bg. Vox Bass Gtr. Bass Synth Fx Clean. E. Gtr. Dist. E. Gtr. A. Gtr Pitched Perc. Grand Piano E. Piano Organ Synth Pad Synth Lead Str. Sect. Brass Reeds Drums Lead M. Vox Lead F. Vox Bg. Vox Bass Gtr. Bass Synth Fx Clean. E. Gtr. Dist. E. Gtr. A. Gtr Pitched Perc. Grand Piano E. Piano Organ Synth Pad Synth Lead Str. Sect. Brass Reeds Stems from the same coarse-level grouping, as defined by [25], share the same symbol.",
+          "coords": [
+            "4,336.78,58.67,16.52,9.44",
+            "4,336.78,63.81,29.95,9.44",
+            "4,336.78,68.95,27.71,9.44",
+            "4,336.78,74.10,18.65,9.44",
+            "4,336.78,79.24,22.27,9.44",
+            "4,336.78,84.38,27.68,9.44",
+            "4,336.78,89.52,5.82,9.44",
+            "4,336.78,94.66,32.67,9.44",
+            "4,336.78,99.81,28.29,9.44",
+            "4,336.78,104.95,14.38,9.44",
+            "4,336.78,110.09,32.16,9.44",
+            "4,336.78,115.23,30.47,9.44",
+            "4,336.78,120.37,19.90,9.44",
+            "4,336.78,125.51,15.29,9.44",
+            "4,336.78,130.66,25.01,9.44",
+            "4,336.78,135.80,27.99,9.44",
+            "4,336.78,140.94,22.42,9.44",
+            "4,336.78,146.08,13.73,9.44",
+            "4,336.78,151.22,15.15,9.44",
+            "4,336.78,58.67,16.52,9.44",
+            "4,336.78,63.81,29.95,9.44",
+            "4,336.78,68.95,27.71,9.44",
+            "4,336.78,74.10,18.65,9.44",
+            "4,336.78,79.24,22.27,9.44",
+            "4,336.78,84.38,27.68,9.44",
+            "4,336.78,89.52,5.82,9.44",
+            "4,336.78,94.66,32.67,9.44",
+            "4,336.78,99.81,28.29,9.44",
+            "4,336.78,104.95,14.38,9.44",
+            "4,336.78,110.09,32.16,9.44",
+            "4,336.78,115.23,30.47,9.44",
+            "4,336.78,120.37,19.90,9.44",
+            "4,336.78,125.51,15.29,9.44",
+            "4,336.78,130.66,25.01,9.44",
+            "4,336.78,135.80,27.99,9.44",
+            "4,336.78,140.94,22.42,9.44",
+            "4,336.78,146.08,13.73,9.44",
+            "4,336.78,151.22,15.15,9.44",
+            "4,368.33,192.41,174.22,8.64",
+            "4,310.11,204.56,52.57,8.64",
+            "4,380.44,204.56,99.28,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Drums Lead M. Vox Lead F. Vox Bg.",
+              "coords": [
+                "4,336.78,58.67,16.52,9.44",
+                "4,336.78,63.81,29.95,9.44",
+                "4,336.78,68.95,27.71,9.44",
+                "4,336.78,74.10,8.18,9.44"
+              ]
+            },
+            {
+              "text": "Vox Bass Gtr.",
+              "coords": [
+                "4,346.54,74.10,8.89,9.44",
+                "4,336.78,79.24,22.27,9.44"
+              ]
+            },
+            {
+              "text": "Bass Synth Fx Clean.",
+              "coords": [
+                "4,336.78,84.38,27.68,9.44",
+                "4,336.78,89.52,5.82,9.44",
+                "4,336.78,94.66,15.75,9.44"
+              ]
+            },
+            {
+              "text": "E. Gtr.",
+              "coords": [
+                "4,354.11,94.66,15.33,9.44"
+              ]
+            },
+            {
+              "text": "Dist.",
+              "coords": [
+                "4,336.78,99.81,11.37,9.44"
+              ]
+            },
+            {
+              "text": "E. Gtr. A. Gtr Pitched Perc.",
+              "coords": [
+                "4,349.74,99.81,15.33,9.44",
+                "4,336.78,104.95,14.38,9.44",
+                "4,336.78,110.09,32.16,9.44"
+              ]
+            },
+            {
+              "text": "Grand Piano E. Piano Organ Synth Pad Synth Lead Str.",
+              "coords": [
+                "4,336.78,115.23,30.47,9.44",
+                "4,336.78,120.37,19.90,9.44",
+                "4,336.78,125.51,15.29,9.44",
+                "4,336.78,130.66,25.01,9.44",
+                "4,336.78,135.80,27.99,9.44",
+                "4,336.78,140.94,8.30,9.44"
+              ]
+            },
+            {
+              "text": "Sect.",
+              "coords": [
+                "4,346.67,140.94,12.53,9.44"
+              ]
+            },
+            {
+              "text": "Brass Reeds Drums Lead M. Vox Lead F. Vox Bg.",
+              "coords": [
+                "4,336.78,146.08,13.73,9.44",
+                "4,336.78,151.22,15.15,9.44",
+                "4,336.78,58.67,16.52,9.44",
+                "4,336.78,63.81,29.95,9.44",
+                "4,336.78,68.95,27.71,9.44",
+                "4,336.78,74.10,8.18,9.44"
+              ]
+            },
+            {
+              "text": "Vox Bass Gtr.",
+              "coords": [
+                "4,346.54,74.10,8.89,9.44",
+                "4,336.78,79.24,22.27,9.44"
+              ]
+            },
+            {
+              "text": "Bass Synth Fx Clean.",
+              "coords": [
+                "4,336.78,84.38,27.68,9.44",
+                "4,336.78,89.52,5.82,9.44",
+                "4,336.78,94.66,15.75,9.44"
+              ]
+            },
+            {
+              "text": "E. Gtr.",
+              "coords": [
+                "4,354.11,94.66,15.33,9.44"
+              ]
+            },
+            {
+              "text": "Dist.",
+              "coords": [
+                "4,336.78,99.81,11.37,9.44"
+              ]
+            },
+            {
+              "text": "E. Gtr. A. Gtr Pitched Perc.",
+              "coords": [
+                "4,349.74,99.81,15.33,9.44",
+                "4,336.78,104.95,14.38,9.44",
+                "4,336.78,110.09,32.16,9.44"
+              ]
+            },
+            {
+              "text": "Grand Piano E. Piano Organ Synth Pad Synth Lead Str.",
+              "coords": [
+                "4,336.78,115.23,30.47,9.44",
+                "4,336.78,120.37,19.90,9.44",
+                "4,336.78,125.51,15.29,9.44",
+                "4,336.78,130.66,25.01,9.44",
+                "4,336.78,135.80,27.99,9.44",
+                "4,336.78,140.94,8.30,9.44"
+              ]
+            },
+            {
+              "text": "Sect.",
+              "coords": [
+                "4,346.67,140.94,12.53,9.44"
+              ]
+            },
+            {
+              "text": "Brass Reeds Stems from the same coarse-level grouping, as defined by [25], share the same symbol.",
+              "coords": [
+                "4,336.78,146.08,13.73,9.44",
+                "4,336.78,151.22,15.15,9.44",
+                "4,368.33,192.41,174.22,8.64",
+                "4,310.11,204.56,169.61,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "stems. Section 5.3 extends the system to include fine-level stems from guitar and piano families. Finally, Section 5.4 attempts to perform extraction on all possible fine-level stems with sufficient data.",
+          "coords": [
+            "4,310.11,237.19,232.44,8.64",
+            "4,310.11,249.16,232.44,8.82",
+            "4,310.11,261.50,232.44,8.64",
+            "4,310.11,273.65,103.80,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "stems.",
+              "coords": [
+                "4,310.11,237.19,25.19,8.64"
+              ]
+            },
+            {
+              "text": "Section 5.3 extends the system to include fine-level stems from guitar and piano families.",
+              "coords": [
+                "4,338.38,237.19,204.16,8.64",
+                "4,310.11,249.16,151.30,8.82"
+              ]
+            },
+            {
+              "text": "Finally, Section 5.4 attempts to perform extraction on all possible fine-level stems with sufficient data.",
+              "coords": [
+                "4,464.88,249.34,77.68,8.64",
+                "4,310.11,261.50,232.44,8.64",
+                "4,310.11,273.65,103.80,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Encoder pretraining",
+          "coords": [
+            "4,310.11,298.22,105.42,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Preliminary experiments indicated that encoder pretraining is an important step to stabilize the training of the querybased model, especially as the number of query stems grows. The encoder pretraining is done with a commonencoder multi-decoder setup similar to [28] with a VDBO setup for 100 epochs. The VDBO decoders were discarded and the encoder was used for subsequent experiments. The performance of the pretrained model is shown in Table 1, with performance above oracle ideal ratio mask (IRM) for drums and bass, and on par with HT-Demucs for vocals. 4",
+          "coords": [
+            "4,310.11,317.29,232.44,8.64",
+            "4,310.11,329.45,232.44,8.64",
+            "4,310.11,341.60,232.44,8.64",
+            "4,310.11,353.76,232.44,8.64",
+            "4,310.11,365.91,156.52,8.64",
+            "4,489.55,365.91,52.76,8.64",
+            "4,310.11,378.06,232.44,8.64",
+            "4,310.11,390.22,232.44,8.64",
+            "4,310.11,402.37,221.99,8.64",
+            "4,538.81,402.37,3.74,8.64",
+            "4,310.11,414.53,232.44,8.64",
+            "4,310.11,426.68,223.83,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Preliminary experiments indicated that encoder pretraining is an important step to stabilize the training of the querybased model, especially as the number of query stems grows.",
+              "coords": [
+                "4,310.11,317.29,232.44,8.64",
+                "4,310.11,329.45,232.44,8.64",
+                "4,310.11,341.60,232.44,8.64",
+                "4,310.11,353.76,26.59,8.64"
+              ]
+            },
+            {
+              "text": "The encoder pretraining is done with a commonencoder multi-decoder setup similar to [28] with a VDBO setup for 100 epochs.",
+              "coords": [
+                "4,342.27,353.76,200.28,8.64",
+                "4,310.11,365.91,232.20,8.64",
+                "4,310.11,378.06,85.58,8.64"
+              ]
+            },
+            {
+              "text": "The VDBO decoders were discarded and the encoder was used for subsequent experiments.",
+              "coords": [
+                "4,399.14,378.06,143.42,8.64",
+                "4,310.11,390.22,213.97,8.64"
+              ]
+            },
+            {
+              "text": "The performance of the pretrained model is shown in Table 1, with performance above oracle ideal ratio mask (IRM) for drums and bass, and on par with HT-Demucs for vocals.",
+              "coords": [
+                "4,527.06,390.22,15.49,8.64",
+                "4,310.11,402.37,232.44,8.64",
+                "4,310.11,414.53,232.44,8.64",
+                "4,310.11,426.68,223.83,8.64"
+              ]
+            },
+            {
+              "text": "4",
+              "coords": [
+                "4,535.68,425.01,3.49,6.05"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Learning to separate from queries",
+          "coords": [
+            "4,310.11,451.25,163.65,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "As a first step to verify the query-based ability of the model, a Banquet model is trained to extract only lead female singer, lead male singer, drums, and bass stems, referred to as the Q:VDB setup. We experimented with training from scratch, using a frozen pretrained encoder (FE), and using a trainable pretrained encoder (TE). While the frozen-encoder setup did not demonstrate any sign of overfitting during the training, the trainable-encoder system demonstrated (very slight) overfitting. As a result, an additional setup with data augmentation (DA) was attempted with the trainable encoder setup, using simple stem-wise within-song random gain (up to ˘6 dB), random time shifting, polarity inversion, and channel swapping.",
+          "coords": [
+            "4,310.11,470.32,232.44,8.64",
+            "4,310.11,482.30,232.44,8.82",
+            "4,310.11,494.45,232.44,8.82",
+            "4,310.11,506.79,232.44,8.64",
+            "4,310.11,518.94,232.44,8.64",
+            "4,310.11,531.10,232.44,8.64",
+            "4,310.11,543.25,232.44,8.64",
+            "4,310.11,555.41,232.44,8.64",
+            "4,310.11,567.56,232.44,8.64",
+            "4,310.11,579.71,232.44,8.64",
+            "4,310.11,591.87,232.44,8.64",
+            "4,310.11,604.02,232.44,8.98",
+            "4,310.11,616.18,183.64,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "As a first step to verify the query-based ability of the model, a Banquet model is trained to extract only lead female singer, lead male singer, drums, and bass stems, referred to as the Q:VDB setup.",
+              "coords": [
+                "4,310.11,470.32,232.44,8.64",
+                "4,310.11,482.30,232.44,8.82",
+                "4,310.11,494.45,232.44,8.82",
+                "4,310.11,506.79,115.61,8.64"
+              ]
+            },
+            {
+              "text": "We experimented with training from scratch, using a frozen pretrained encoder (FE), and using a trainable pretrained encoder (TE).",
+              "coords": [
+                "4,428.80,506.79,113.75,8.64",
+                "4,310.11,518.94,232.44,8.64",
+                "4,310.11,531.10,189.06,8.64"
+              ]
+            },
+            {
+              "text": "While the frozen-encoder setup did not demonstrate any sign of overfitting during the training, the trainable-encoder system demonstrated (very slight) overfitting.",
+              "coords": [
+                "4,502.60,531.10,39.95,8.64",
+                "4,310.11,543.25,232.44,8.64",
+                "4,310.11,555.41,232.44,8.64",
+                "4,310.11,567.56,152.94,8.64"
+              ]
+            },
+            {
+              "text": "As a result, an additional setup with data augmentation (DA) was attempted with the trainable encoder setup, using simple stem-wise within-song random gain (up to ˘6 dB), random time shifting, polarity inversion, and channel swapping.",
+              "coords": [
+                "4,467.88,567.56,74.67,8.64",
+                "4,310.11,579.71,232.44,8.64",
+                "4,310.11,591.87,232.44,8.64",
+                "4,310.11,604.02,232.44,8.98",
+                "4,310.11,616.18,183.64,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The results are shown in Table 2. All three variants with pretrained encoder provided better performance than the model trained from scratch, except for drums in the trainable-encoder model without DA being 0.1 dB lower. Thus, for all subsequent experiments, the encoder is always pretrained. Without DA, there was no clear benefit to unfreezing the encoder. However, in a trainable en- coder system with DA, slight to moderate improvements were observed across all but the male vocal stem. Note, however, that allowing full-model training significantly increases the number of trainable parameters from 13.5 M to 24.9 M thus the computational cost and training time also increases accordingly. The performances of the drums and bass stems are on par or better than the dedicated-stem setup in Table 1. Generally, the models perform better on female vocals than on male vocals.",
+          "coords": [
+            "4,322.07,628.62,129.24,8.64",
+            "4,459.08,628.62,83.47,8.64",
+            "4,310.11,640.78,232.44,8.64",
+            "4,310.11,652.93,232.44,8.64",
+            "4,310.11,665.08,232.44,8.64",
+            "4,310.11,677.24,232.44,8.64",
+            "4,310.11,689.39,232.44,8.64",
+            "4,310.11,701.55,232.44,8.64",
+            "5,54.99,247.80,232.44,8.64",
+            "5,54.99,259.95,232.44,8.64",
+            "5,54.99,272.11,232.44,8.64",
+            "5,54.99,284.26,232.44,8.64",
+            "5,54.99,296.41,232.44,8.64",
+            "5,54.99,308.57,232.44,8.64",
+            "5,54.99,320.72,232.44,8.64",
+            "5,54.99,332.88,56.45,8.64",
+            "5,118.07,332.88,169.36,8.64",
+            "5,54.99,345.03,139.05,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The results are shown in Table 2.",
+              "coords": [
+                "4,322.07,628.62,140.75,8.64"
+              ]
+            },
+            {
+              "text": "All three variants with pretrained encoder provided better performance than the model trained from scratch, except for drums in the trainable-encoder model without DA being 0.1 dB lower.",
+              "coords": [
+                "4,470.54,628.62,72.01,8.64",
+                "4,310.11,640.78,232.44,8.64",
+                "4,310.11,652.93,232.44,8.64",
+                "4,310.11,665.08,232.44,8.64"
+              ]
+            },
+            {
+              "text": "Thus, for all subsequent experiments, the encoder is always pretrained.",
+              "coords": [
+                "4,310.11,677.24,232.44,8.64",
+                "4,310.11,689.39,67.06,8.64"
+              ]
+            },
+            {
+              "text": "Without DA, there was no clear benefit to unfreezing the encoder.",
+              "coords": [
+                "4,384.21,689.39,158.34,8.64",
+                "4,310.11,701.55,116.90,8.64"
+              ]
+            },
+            {
+              "text": "However, in a trainable en- coder system with DA, slight to moderate improvements were observed across all but the male vocal stem.",
+              "coords": [
+                "4,432.08,701.55,110.47,8.64",
+                "5,54.99,247.80,232.44,8.64",
+                "5,54.99,259.95,204.55,8.64"
+              ]
+            },
+            {
+              "text": "Note, however, that allowing full-model training significantly increases the number of trainable parameters from 13.5 M to 24.9 M thus the computational cost and training time also increases accordingly.",
+              "coords": [
+                "5,265.57,259.95,21.86,8.64",
+                "5,54.99,272.11,232.44,8.64",
+                "5,54.99,284.26,232.44,8.64",
+                "5,54.99,296.41,232.44,8.64",
+                "5,54.99,308.57,105.75,8.64"
+              ]
+            },
+            {
+              "text": "The performances of the drums and bass stems are on par or better than the dedicated-stem setup in Table 1.",
+              "coords": [
+                "5,163.72,308.57,123.71,8.64",
+                "5,54.99,320.72,232.44,8.64",
+                "5,54.99,332.88,66.81,8.64"
+              ]
+            },
+            {
+              "text": "Generally, the models perform better on female vocals than on male vocals.",
+              "coords": [
+                "5,126.08,332.88,161.35,8.64",
+                "5,54.99,345.03,139.05,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Extending to guitar and piano",
+          "coords": [
+            "5,54.99,367.92,146.31,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Amongst systems that tackled MSS beyond four stems, the next two stems beyond VDBO are usually guitar and piano, due to their high prevalence within pop/rock music. The set of possible queries is thus extended from Q:VDB to also include acoustic guitar, clean electric guitar, distorted electric guitar, grand piano, and electric piano. This is referred to as the Q:VDBGP setup. Due to the significantly lower number of available training data for guitar and piano stems, we also experimented with a balanced sampling (BS) strategy. In this strategy, a random stem is first chosen as the target stem, then a random song containing that stem is chosen. The remainder of the sampling process is the same as the default. This strategy ensures that every stem has a similar number of training pairs, but distorts the \"natural\" distribution of stem occurrences. For comparability with existing systems, the inference outputs of fine-level stems in this setup were added together to form their respective coarse-level predictions. 7 Coarse-level results are shown in Table 3. Fine-level results for trainable-encoder models are shown in Table 4.",
+          "coords": [
+            "5,54.99,386.45,232.44,8.64",
+            "5,54.99,398.60,232.44,8.64",
+            "5,54.99,410.75,232.44,8.64",
+            "5,54.99,422.91,232.44,8.64",
+            "5,54.99,434.88,232.44,8.82",
+            "5,54.99,447.04,232.44,8.82",
+            "5,54.99,459.37,232.44,8.64",
+            "5,54.99,471.53,232.44,8.64",
+            "5,54.99,483.68,232.44,8.64",
+            "5,54.99,495.84,232.44,8.64",
+            "5,54.99,507.99,232.44,8.64",
+            "5,54.99,520.14,232.44,8.64",
+            "5,54.99,532.30,232.44,8.64",
+            "5,54.99,544.45,232.44,8.64",
+            "5,54.99,556.61,169.40,8.64",
+            "5,66.95,568.76,220.48,8.64",
+            "5,54.99,580.92,232.44,8.64",
+            "5,54.99,593.07,224.97,8.64",
+            "5,54.99,605.23,160.92,8.64",
+            "5,223.12,605.23,64.31,8.64",
+            "5,54.99,617.38,213.38,8.64",
+            "5,274.60,617.38,3.74,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Amongst systems that tackled MSS beyond four stems, the next two stems beyond VDBO are usually guitar and piano, due to their high prevalence within pop/rock music.",
+              "coords": [
+                "5,54.99,386.45,232.44,8.64",
+                "5,54.99,398.60,232.44,8.64",
+                "5,54.99,410.75,211.32,8.64"
+              ]
+            },
+            {
+              "text": "The set of possible queries is thus extended from Q:VDB to also include acoustic guitar, clean electric guitar, distorted electric guitar, grand piano, and electric piano.",
+              "coords": [
+                "5,271.94,410.75,15.49,8.64",
+                "5,54.99,422.91,232.44,8.64",
+                "5,54.99,434.88,232.44,8.82",
+                "5,54.99,447.04,197.72,8.82"
+              ]
+            },
+            {
+              "text": "This is referred to as the Q:VDBGP setup.",
+              "coords": [
+                "5,259.39,447.22,28.04,8.64",
+                "5,54.99,459.37,135.34,8.64"
+              ]
+            },
+            {
+              "text": "Due to the significantly lower number of available training data for guitar and piano stems, we also experimented with a balanced sampling (BS) strategy.",
+              "coords": [
+                "5,193.79,459.37,93.64,8.64",
+                "5,54.99,471.53,232.44,8.64",
+                "5,54.99,483.68,232.44,8.64",
+                "5,54.99,495.84,54.98,8.64"
+              ]
+            },
+            {
+              "text": "In this strategy, a random stem is first chosen as the target stem, then a random song containing that stem is chosen.",
+              "coords": [
+                "5,114.40,495.84,173.03,8.64",
+                "5,54.99,507.99,232.44,8.64",
+                "5,54.99,520.14,61.40,8.64"
+              ]
+            },
+            {
+              "text": "The remainder of the sampling process is the same as the default.",
+              "coords": [
+                "5,120.69,520.14,166.74,8.64",
+                "5,54.99,532.30,97.00,8.64"
+              ]
+            },
+            {
+              "text": "This strategy ensures that every stem has a similar number of training pairs, but distorts the \"natural\" distribution of stem occurrences.",
+              "coords": [
+                "5,157.97,532.30,129.46,8.64",
+                "5,54.99,544.45,232.44,8.64",
+                "5,54.99,556.61,169.40,8.64"
+              ]
+            },
+            {
+              "text": "For comparability with existing systems, the inference outputs of fine-level stems in this setup were added together to form their respective coarse-level predictions.",
+              "coords": [
+                "5,66.95,568.76,220.48,8.64",
+                "5,54.99,580.92,232.44,8.64",
+                "5,54.99,593.07,224.97,8.64"
+              ]
+            },
+            {
+              "text": "7 Coarse-level results are shown in Table 3. Fine-level results for trainable-encoder models are shown in Table 4.",
+              "coords": [
+                "5,281.71,591.40,3.49,6.05",
+                "5,54.99,605.23,232.44,8.64",
+                "5,54.99,617.38,223.34,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "At the coarse level, most variants of Banquet continue to perform above the oracle IRM for drums and bass. With the default-sampling trainable encoder systems, the Banquet performed better than HT-Demucs on guitar and piano. Without DA, balanced sampling generally did not lead to consistent improvements for guitar and piano. With balanced sampling and DA on a trainable-encoder model, 6 Median results for the same-song query and different-song query are within 0.2 dB of each other. 7 The ground truth signals for are the full coarse-level tracks, e.g. vocals ground truth include contributions from background vocals even if we do not have background vocals in the predictions. however, slight gains in median SNRs of guitar and piano were observed, albeit at the cost of vocals and drum SNRs. At the fine level, the model performance follows a similar trend to that of the coarse level. Drums and bass continue to perform above the oracle IRM, while both lead vocals performed close to the IRM. Guitar and piano performances are still well below IRM. Interestingly, it appears that querying with excerpts from the same or different track did not affect the model performance for most stems except for electric piano. This is likely due to both the small sample size of electric piano limiting generalizability, and the highly diverse set of possible timbres thus the intertwined nature of both the query embedding and the target audio with other keyboard instruments. The ability of the model to query with stems from different tracks is a double-edged sword, however, since this also means that the model is somewhat insensitive to fine differences in timbre between different renditions of the \"same\" instruments. This could potentially limit its usefulness when applied to a scenario where multiple target stems have very similar timbres.",
+          "coords": [
+            "5,66.95,629.53,220.48,8.64",
+            "5,54.99,641.69,232.44,8.64",
+            "5,54.99,653.84,232.44,8.64",
+            "5,54.99,666.00,232.44,8.64",
+            "5,54.99,678.15,232.44,8.64",
+            "5,54.99,690.31,232.44,8.64",
+            "5,54.99,702.46,232.44,8.64",
+            "5,69.34,721.57,218.09,6.91",
+            "5,54.99,730.53,88.11,6.91",
+            "5,69.34,739.78,218.09,7.05",
+            "5,54.99,748.75,232.44,7.05",
+            "5,54.99,757.72,169.43,7.05",
+            "5,310.11,212.15,232.44,8.64",
+            "5,310.11,224.31,232.44,8.64",
+            "5,322.07,236.89,220.48,8.64",
+            "5,310.11,249.05,232.44,8.64",
+            "5,310.11,261.20,232.44,8.64",
+            "5,310.11,273.35,232.44,8.64",
+            "5,310.11,285.51,232.44,8.64",
+            "5,310.11,297.66,232.44,8.64",
+            "5,310.11,309.82,232.44,8.64",
+            "5,310.11,321.97,232.44,8.64",
+            "5,310.11,334.13,232.44,8.64",
+            "5,310.11,346.28,232.44,8.64",
+            "5,310.11,358.43,232.44,8.64",
+            "5,310.11,370.59,232.44,8.64",
+            "5,310.11,382.74,232.44,8.64",
+            "5,310.11,394.90,232.44,8.64",
+            "5,310.11,407.05,232.44,8.64",
+            "5,310.11,419.21,232.44,8.64",
+            "5,310.11,431.36,232.44,8.64",
+            "5,310.11,443.52,216.26,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "At the coarse level, most variants of Banquet continue to perform above the oracle IRM for drums and bass.",
+              "coords": [
+                "5,66.95,629.53,220.48,8.64",
+                "5,54.99,641.69,209.89,8.64"
+              ]
+            },
+            {
+              "text": "With the default-sampling trainable encoder systems, the Banquet performed better than HT-Demucs on guitar and piano.",
+              "coords": [
+                "5,267.90,641.69,19.53,8.64",
+                "5,54.99,653.84,232.44,8.64",
+                "5,54.99,666.00,232.44,8.64",
+                "5,54.99,678.15,16.88,8.64"
+              ]
+            },
+            {
+              "text": "Without DA, balanced sampling generally did not lead to consistent improvements for guitar and piano.",
+              "coords": [
+                "5,79.73,678.15,207.70,8.64",
+                "5,54.99,690.31,209.93,8.64"
+              ]
+            },
+            {
+              "text": "With balanced sampling and DA on a trainable-encoder model, 6 Median results for the same-song query and different-song query are within 0.2 dB of each other.",
+              "coords": [
+                "5,267.90,690.31,19.53,8.64",
+                "5,54.99,702.46,232.44,8.64",
+                "5,64.36,720.05,223.07,8.42",
+                "5,54.99,730.53,88.11,6.91"
+              ]
+            },
+            {
+              "text": "7 The ground truth signals for are the full coarse-level tracks, e.g.",
+              "coords": [
+                "5,64.36,738.41,209.80,8.43"
+              ]
+            },
+            {
+              "text": "vocals ground truth include contributions from background vocals even if we do not have background vocals in the predictions.",
+              "coords": [
+                "5,277.26,739.78,10.18,6.87",
+                "5,54.99,748.75,232.44,7.05",
+                "5,54.99,757.72,169.43,7.05"
+              ]
+            },
+            {
+              "text": "however, slight gains in median SNRs of guitar and piano were observed, albeit at the cost of vocals and drum SNRs.",
+              "coords": [
+                "5,310.11,212.15,232.44,8.64",
+                "5,310.11,224.31,232.44,8.64"
+              ]
+            },
+            {
+              "text": "At the fine level, the model performance follows a similar trend to that of the coarse level.",
+              "coords": [
+                "5,322.07,236.89,220.48,8.64",
+                "5,310.11,249.05,143.55,8.64"
+              ]
+            },
+            {
+              "text": "Drums and bass continue to perform above the oracle IRM, while both lead vocals performed close to the IRM.",
+              "coords": [
+                "5,457.74,249.05,84.81,8.64",
+                "5,310.11,261.20,232.44,8.64",
+                "5,310.11,273.35,132.20,8.64"
+              ]
+            },
+            {
+              "text": "Guitar and piano performances are still well below IRM.",
+              "coords": [
+                "5,445.01,273.35,97.53,8.64",
+                "5,310.11,285.51,134.91,8.64"
+              ]
+            },
+            {
+              "text": "Interestingly, it appears that querying with excerpts from the same or different track did not affect the model performance for most stems except for electric piano.",
+              "coords": [
+                "5,448.09,285.51,94.46,8.64",
+                "5,310.11,297.66,232.44,8.64",
+                "5,310.11,309.82,232.44,8.64",
+                "5,310.11,321.97,70.35,8.64"
+              ]
+            },
+            {
+              "text": "This is likely due to both the small sample size of electric piano limiting generalizability, and the highly diverse set of possible timbres thus the intertwined nature of both the query embedding and the target audio with other keyboard instruments.",
+              "coords": [
+                "5,383.50,321.97,159.04,8.64",
+                "5,310.11,334.13,232.44,8.64",
+                "5,310.11,346.28,232.44,8.64",
+                "5,310.11,358.43,232.44,8.64",
+                "5,310.11,370.59,131.94,8.64"
+              ]
+            },
+            {
+              "text": "The ability of the model to query with stems from different tracks is a double-edged sword, however, since this also means that the model is somewhat insensitive to fine differences in timbre between different renditions of the \"same\" instruments.",
+              "coords": [
+                "5,445.62,370.59,96.93,8.64",
+                "5,310.11,382.74,232.44,8.64",
+                "5,310.11,394.90,232.44,8.64",
+                "5,310.11,407.05,232.44,8.64",
+                "5,310.11,419.21,186.18,8.64"
+              ]
+            },
+            {
+              "text": "This could potentially limit its usefulness when applied to a scenario where multiple target stems have very similar timbres.",
+              "coords": [
+                "5,500.00,419.21,42.55,8.64",
+                "5,310.11,431.36,232.44,8.64",
+                "5,310.11,443.52,216.26,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Extending beyond guitar and piano",
+          "coords": [
+            "5,310.11,468.84,168.77,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The results for the Q:VDBGP setup demonstrated that the model is able to learn to extract 5 additional stems. In this experiment, we extend the set of possible queries to include all remaining stems with at least one data point per fold: effects, pitched percussion, organs & electronic organs, synth pad, synth lead, string section, brass, and reeds. Additionally, bass is now broken up into bass guitar and bass synth. This is referred to as the Q:ALL setup. Although these are all fine-level stems as defined by Moi-sesDB, some of these classes are more specific than others. For example, brass is a fine-level stem despite possibly including trumpets, trombones, horns, and tuba. The experimental setups are similar to that of Setup B. 8The same-song query results 9 for the models trained in N N N N 5.5 9.6 13.2 6.7 7.9 10.0 8.0 9.6 11.6 7.9 9.9 12.0 0.9 1.8 3.6 0.2 0.7 2.4 0.9 2.4 5.3 0.7 2.3 2.9 0.0 0.6 0.7 Y 5.6 9.6 13.2 6.7 7.9 10.0 8.0 9.6 11.6 7.9 9.9 12.0 0.9 1.8 3.7 0.2 0.9 2.6 0.9 2.4 5.3 0.7 2.2 3.0 0.0 0.8 1.5 Y N 6.1 9.6 13.1 6.8 7.7 9.7 7.8 9.3 11.3 7.6 10.0 11.5 0.8 1.8 3.6 0.2 0.8 2.5 1.0 2.5 5.4 0.8 2.5 3.1 -0.1 0.7 0.8 Y 6.1 9.6 13.1 6.8 7.7 9.7 7.8 9.3 11.3 7.6 10.0 11.5 0.8 1.8 3.7 0.0 0.9 2.7 1.2 2.5 5.4 0.8 2.5 3.1 -0.6 0.8 1.8 Y N N 5.5 10.1 13.0 6.9 7.9 10.2 8.5 10.1 12.3 8.4 10.7 13.2 1.2 1.7 4.5 0.2 0.9 3.0 0.9 2.8 4.7 0.8 2.8 3.2 0.1 0.5 0.9 Y 5.5 10.1 13.1 6.9 7.9 10.2 8.5 10.1 12.3 8.4 10.7 13.2 1.2 1.7 4.6 0.2 1.1 2.7 0.9 2.8 4.7 0.8 2.4 3.1 -0.1 0.6 0.9 Y N 5.5 10.1 13.5 6.5 7.8 10.0 8.3 9.5 11.8 8.4 10.3 12.1 1.1 1.7 3.9 0.0 0.4 2.7 0.9 3.0 4.9 0.8 2.6 3.2 0.2 0.5 0.9 Y 5.5 10.1 13.5 6.5 7.8 10.0 8.3 9.5 11.8 7.8 10.",
+          "coords": [
+            "5,310.11,488.18,232.44,8.64",
+            "5,310.11,500.33,232.44,8.64",
+            "5,310.11,512.48,232.44,8.64",
+            "5,310.11,524.64,232.44,8.64",
+            "5,310.11,536.61,232.44,8.82",
+            "5,310.11,548.77,232.44,8.82",
+            "5,310.11,560.92,232.45,8.82",
+            "5,310.11,573.08,232.44,8.82",
+            "5,310.11,585.41,232.44,8.64",
+            "5,310.11,597.57,232.44,8.64",
+            "5,310.11,609.54,232.44,8.82",
+            "5,310.11,621.87,232.44,8.64",
+            "5,310.11,634.03,174.61,8.64",
+            "5,322.07,646.61,113.63,8.64",
+            "5,445.45,646.61,97.11,8.64",
+            "6,60.03,102.45,481.52,6.32",
+            "6,105.35,109.63,436.20,6.32",
+            "6,90.24,121.60,451.31,6.32",
+            "6,105.35,128.77,436.20,6.32",
+            "6,75.14,140.75,466.42,6.32",
+            "6,105.35,147.92,436.20,6.32",
+            "6,90.24,159.90,451.31,6.32",
+            "6,105.35,167.07,178.13,6.32"
+          ],
+          "sentences": [
+            {
+              "text": "The results for the Q:VDBGP setup demonstrated that the model is able to learn to extract 5 additional stems.",
+              "coords": [
+                "5,310.11,488.18,232.44,8.64",
+                "5,310.11,500.33,216.53,8.64"
+              ]
+            },
+            {
+              "text": "In this experiment, we extend the set of possible queries to include all remaining stems with at least one data point per fold: effects, pitched percussion, organs & electronic organs, synth pad, synth lead, string section, brass, and reeds.",
+              "coords": [
+                "5,534.25,500.33,8.30,8.64",
+                "5,310.11,512.48,232.44,8.64",
+                "5,310.11,524.64,232.44,8.64",
+                "5,310.11,536.61,232.44,8.82",
+                "5,310.11,548.77,232.44,8.82",
+                "5,310.11,560.92,23.70,8.59"
+              ]
+            },
+            {
+              "text": "Additionally, bass is now broken up into bass guitar and bass synth.",
+              "coords": [
+                "5,338.35,560.92,204.20,8.82",
+                "5,310.11,573.08,75.61,8.82"
+              ]
+            },
+            {
+              "text": "This is referred to as the Q:ALL setup.",
+              "coords": [
+                "5,389.47,573.26,153.09,8.64"
+              ]
+            },
+            {
+              "text": "Although these are all fine-level stems as defined by Moi-sesDB, some of these classes are more specific than others.",
+              "coords": [
+                "5,310.11,585.41,232.44,8.64",
+                "5,310.11,597.57,232.44,8.64"
+              ]
+            },
+            {
+              "text": "For example, brass is a fine-level stem despite possibly including trumpets, trombones, horns, and tuba.",
+              "coords": [
+                "5,310.11,609.54,232.44,8.82",
+                "5,310.11,621.87,183.14,8.64"
+              ]
+            },
+            {
+              "text": "The experimental setups are similar to that of Setup B. 8The same-song query results 9 for the models trained in N N N N 5.5 9.6 13.2 6.7 7.9 10.0 8.0 9.6 11.6 7.9 9.9 12.0 0.9 1.8 3.6 0.2 0.7 2.4 0.9 2.4 5.3 0.7 2.3 2.9 0.0 0.6 0.7 Y 5.6 9.6 13.2 6.7 7.9 10.0 8.0 9.6 11.6 7.9 9.9 12.0 0.9 1.8 3.7 0.2 0.9 2.6 0.9 2.4 5.3 0.7 2.2 3.0 0.0 0.8 1.5 Y N 6.1 9.6 13.1 6.8 7.7 9.7 7.8 9.3 11.3 7.6 10.0 11.5 0.8 1.8 3.6 0.2 0.8 2.5 1.0 2.5 5.4 0.8 2.5 3.1 -0.1 0.7 0.8 Y 6.1 9.6 13.1 6.8 7.7 9.7 7.8 9.3 11.3 7.6 10.0 11.5 0.8 1.8 3.7 0.0 0.9 2.7 1.2 2.5 5.4 0.8 2.5 3.1 -0.6 0.8 1.8 Y N N 5.5 10.1 13.0 6.9 7.9 10.2 8.5 10.1 12.3 8.4 10.7 13.2 1.2 1.7 4.5 0.2 0.9 3.0 0.9 2.8 4.7 0.8 2.8 3.2 0.1 0.5 0.9 Y 5.5 10.1 13.1 6.9 7.9 10.2 8.5 10.1 12.3 8.4 10.7 13.2 1.2 1.7 4.6 0.2 1.1 2.7 0.9 2.8 4.7 0.8 2.4 3.1 -0.1 0.6 0.9 Y N 5.5 10.1 13.5 6.5 7.8 10.0 8.3 9.5 11.8 8.4 10.3 12.1 1.1 1.7 3.9 0.0 0.4 2.7 0.9 3.0 4.9 0.8 2.6 3.2 0.2 0.5 0.9 Y 5.5 10.1 13.5 6.5 7.8 10.0 8.3 9.5 11.8 7.8 10.",
+              "coords": [
+                "5,496.46,621.87,46.09,8.64",
+                "5,310.11,634.03,174.61,8.64",
+                "5,486.47,632.36,3.49,6.05",
+                "5,322.07,646.61,113.63,8.64",
+                "5,437.44,644.94,3.49,6.05",
+                "5,445.45,646.61,97.11,8.64",
+                "6,60.03,102.45,481.52,6.32",
+                "6,105.35,109.63,436.20,6.32",
+                "6,90.24,121.60,451.31,6.32",
+                "6,105.35,128.77,436.20,6.32",
+                "6,75.14,140.75,466.42,6.32",
+                "6,105.35,147.92,436.20,6.32",
+                "6,90.24,159.90,451.31,6.32",
+                "6,105.35,167.07,178.13,6.32"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "3 12.1 1.0 1.7 3.9 0.3 0.6 2.7 0.6 3.0 4.8 0.8 2.5 3.2 0.6 0.9 2.1 FE: frozen encoder, DA: data augmentation, BS: balanced sampling, SSQ: same-song query, Q1: lower quartile, Q2: median, Q3: upper quartile 8 6 4 2 0 2 4 6 8 SNR (dB) Female Vox Male Vox Background Vox Drums Bass Gtr. Bass Synth Acoustic Gtr. Clean E. Gtr. Distorted E. Gtr. Grand Piano E. Piano Pitched Perc. Organ & E. Organ String Section Brass Reeds Synth Pad Synth Lead Fx. variant FE FE+BS TE TE+BS TE+DA TE+DA+EM Q:ALL are shown in Fig. 3. The performances of the model trained on Q:ALL on the stems from the Q:VDBGP setup are similar to those in Table 4, with the exception of the significant drop in performance for the balanced-sampled trainable-encoder model. Amongst the newly added stems, there are significant variations in performance, but they are all still very weak in terms of SNR, with no sample performing above 5 dB SNR. For organs, background vocals, and both synth stems, the trainable-encoder model yielded the better upper quartile and maximum performance, but is also very unreliable. Unfortunately, balanced sampling on a trainable encoder model only worsened the performance. DA on a trainable-encoder model with default sampling slightly improved the lower quartile performance, but is also accompanied by lower maximum and upper quartile performance. Frozen-encoder system collapsed for most long-tail stems in default sampling, but balanced sampling interestingly was more stable and performed the best for bass synth, pitched percussion, reeds, and brass. Evidently, the classical tradeoffs are at play here; allowing the model more flexibility with a trainable encoder also comes with a higher risk of model collapse or unreliable performance. More surprisingly, the fact that even a frozen encoder trained on a VDBO setup was able to function at all beyond Q:VDB indicates that the embedding space of a Bandit encoder already contains information that is partially generalizable beyond VDBO, as also observed in [28].",
+          "coords": [
+            "6,283.48,167.07,258.08,6.32",
+            "6,67.76,177.76,460.29,6.91",
+            "6,92.39,435.38,3.29,9.77",
+            "6,111.91,435.38,3.29,9.77",
+            "6,131.44,435.38,3.29,9.77",
+            "6,150.96,435.38,20.65,9.77",
+            "6,187.85,435.38,3.29,9.77",
+            "6,207.38,435.38,3.29,9.77",
+            "6,226.90,435.38,3.29,9.77",
+            "6,246.43,435.38,3.29,9.77",
+            "6,158.35,200.82,23.23,9.77",
+            "6,76.54,202.50,29.52,9.77",
+            "6,76.54,214.86,23.09,9.77",
+            "6,76.54,227.22,41.68,9.77",
+            "6,76.54,239.58,17.10,9.77",
+            "6,76.54,251.94,23.05,9.77",
+            "6,76.54,264.30,28.65,9.77",
+            "6,76.54,276.66,32.67,9.77",
+            "6,76.54,289.02,32.17,9.77",
+            "6,76.54,301.38,41.41,9.77",
+            "6,76.54,313.74,31.53,9.77",
+            "6,76.54,326.10,20.59,9.77",
+            "6,76.54,338.46,33.29,9.77",
+            "6,76.54,350.82,45.50,9.77",
+            "6,76.54,363.18,36.26,9.77",
+            "6,76.54,375.54,14.22,9.77",
+            "6,76.54,387.90,15.68,9.77",
+            "6,76.54,400.26,25.88,9.77",
+            "6,76.54,412.62,28.96,9.77",
+            "6,76.54,424.98,7.67,9.77",
+            "6,222.44,363.26,22.81,12.21",
+            "6,223.99,372.73,7.79,12.21",
+            "6,223.99,382.20,21.62,12.21",
+            "6,223.99,391.68,8.03,12.21",
+            "6,223.99,401.15,21.86,12.21",
+            "6,223.99,410.62,22.71,12.21",
+            "6,223.99,420.10,37.78,12.21",
+            "6,55.24,501.32,96.98,8.64",
+            "6,156.20,501.32,131.23,8.64",
+            "6,54.99,513.47,232.44,8.64",
+            "6,54.99,525.63,115.32,8.64",
+            "6,177.46,525.63,109.97,8.64",
+            "6,54.99,537.78,232.44,8.64",
+            "6,54.99,549.94,232.44,8.64",
+            "6,54.99,562.09,232.44,8.64",
+            "6,54.99,574.25,232.44,8.64",
+            "6,54.99,586.40,232.44,8.64",
+            "6,54.99,598.56,232.44,8.64",
+            "6,54.99,610.71,232.44,8.64",
+            "6,54.99,622.86,232.44,8.64",
+            "6,54.99,635.02,232.44,8.64",
+            "6,54.99,647.17,232.44,8.64",
+            "6,54.99,659.33,232.44,8.64",
+            "6,54.99,671.48,232.44,8.64",
+            "6,54.99,683.64,232.44,8.64",
+            "6,54.99,695.79,232.44,8.64",
+            "6,54.99,707.95,232.44,8.64",
+            "6,54.99,720.10,232.44,8.64",
+            "6,54.99,732.25,232.44,8.64",
+            "6,54.99,744.41,232.44,8.64",
+            "6,54.99,756.56,232.44,8.64",
+            "6,310.11,198.66,232.44,8.64",
+            "6,310.11,210.81,232.44,8.64",
+            "6,310.11,222.97,232.44,8.64",
+            "6,310.11,235.12,232.44,8.64",
+            "6,310.11,247.28,211.42,8.64",
+            "6,538.73,247.28,3.82,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "3 12.1 1.0 1.7 3.9 0.3 0.6 2.7 0.6 3.0 4.8 0.8 2.5 3.2 0.6 0.9 2.1 FE: frozen encoder, DA: data augmentation, BS: balanced sampling, SSQ: same-song query, Q1: lower quartile, Q2: median, Q3: upper quartile 8 6 4 2 0 2 4 6 8 SNR (dB) Female Vox Male Vox Background Vox Drums Bass Gtr.",
+              "coords": [
+                "6,283.48,167.07,258.08,6.32",
+                "6,67.76,177.76,460.29,6.91",
+                "6,92.39,435.38,3.29,9.77",
+                "6,111.91,435.38,3.29,9.77",
+                "6,131.44,435.38,3.29,9.77",
+                "6,150.96,435.38,20.65,9.77",
+                "6,187.85,435.38,3.29,9.77",
+                "6,207.38,435.38,3.29,9.77",
+                "6,226.90,435.38,3.29,9.77",
+                "6,246.43,435.38,3.29,9.77",
+                "6,158.35,200.82,23.23,9.77",
+                "6,76.54,202.50,29.52,9.77",
+                "6,76.54,214.86,23.09,9.77",
+                "6,76.54,227.22,41.68,9.77",
+                "6,76.54,239.58,17.10,9.77",
+                "6,76.54,251.94,23.05,9.77"
+              ]
+            },
+            {
+              "text": "Bass Synth Acoustic Gtr.",
+              "coords": [
+                "6,76.54,264.30,28.65,9.77",
+                "6,76.54,276.66,32.67,9.77"
+              ]
+            },
+            {
+              "text": "Clean E. Gtr.",
+              "coords": [
+                "6,76.54,289.02,32.17,9.77"
+              ]
+            },
+            {
+              "text": "Distorted E. Gtr.",
+              "coords": [
+                "6,76.54,301.38,41.41,9.77"
+              ]
+            },
+            {
+              "text": "Grand Piano E. Piano Pitched Perc.",
+              "coords": [
+                "6,76.54,313.74,31.53,9.77",
+                "6,76.54,326.10,20.59,9.77",
+                "6,76.54,338.46,33.29,9.77"
+              ]
+            },
+            {
+              "text": "Organ & E. Organ String Section Brass Reeds Synth Pad Synth Lead Fx. variant FE FE+BS TE TE+BS TE+DA TE+DA+EM Q:ALL are shown in Fig. 3.",
+              "coords": [
+                "6,76.54,350.82,45.50,9.77",
+                "6,76.54,363.18,36.26,9.77",
+                "6,76.54,375.54,14.22,9.77",
+                "6,76.54,387.90,15.68,9.77",
+                "6,76.54,400.26,25.88,9.77",
+                "6,76.54,412.62,28.96,9.77",
+                "6,76.54,424.98,7.67,9.77",
+                "6,222.44,363.26,22.81,12.21",
+                "6,223.99,372.73,7.79,12.21",
+                "6,223.99,382.20,21.62,12.21",
+                "6,223.99,391.68,8.03,12.21",
+                "6,223.99,401.15,21.86,12.21",
+                "6,223.99,410.62,22.71,12.21",
+                "6,223.99,420.10,37.78,12.21",
+                "6,55.24,501.32,104.94,8.64"
+              ]
+            },
+            {
+              "text": "The performances of the model trained on Q:ALL on the stems from the Q:VDBGP setup are similar to those in Table 4, with the exception of the significant drop in performance for the balanced-sampled trainable-encoder model.",
+              "coords": [
+                "6,163.20,501.32,124.23,8.64",
+                "6,54.99,513.47,232.44,8.64",
+                "6,54.99,525.63,232.44,8.64",
+                "6,54.99,537.78,232.44,8.64",
+                "6,54.99,549.94,99.23,8.64"
+              ]
+            },
+            {
+              "text": "Amongst the newly added stems, there are significant variations in performance, but they are all still very weak in terms of SNR, with no sample performing above 5 dB SNR.",
+              "coords": [
+                "6,157.18,549.94,130.25,8.64",
+                "6,54.99,562.09,232.44,8.64",
+                "6,54.99,574.25,232.44,8.64",
+                "6,54.99,586.40,104.02,8.64"
+              ]
+            },
+            {
+              "text": "For organs, background vocals, and both synth stems, the trainable-encoder model yielded the better upper quartile and maximum performance, but is also very unreliable.",
+              "coords": [
+                "6,161.78,586.40,125.65,8.64",
+                "6,54.99,598.56,232.44,8.64",
+                "6,54.99,610.71,232.44,8.64",
+                "6,54.99,622.86,81.24,8.64"
+              ]
+            },
+            {
+              "text": "Unfortunately, balanced sampling on a trainable encoder model only worsened the performance.",
+              "coords": [
+                "6,139.80,622.86,147.63,8.64",
+                "6,54.99,635.02,232.44,8.64"
+              ]
+            },
+            {
+              "text": "DA on a trainable-encoder model with default sampling slightly improved the lower quartile performance, but is also accompanied by lower maximum and upper quartile performance.",
+              "coords": [
+                "6,54.99,647.17,232.44,8.64",
+                "6,54.99,659.33,232.44,8.64",
+                "6,54.99,671.48,232.44,8.64",
+                "6,54.99,683.64,52.83,8.64"
+              ]
+            },
+            {
+              "text": "Frozen-encoder system collapsed for most long-tail stems in default sampling, but balanced sampling interestingly was more stable and performed the best for bass synth, pitched percussion, reeds, and brass.",
+              "coords": [
+                "6,114.23,683.64,173.20,8.64",
+                "6,54.99,695.79,232.44,8.64",
+                "6,54.99,707.95,232.44,8.64",
+                "6,54.99,720.10,205.82,8.64"
+              ]
+            },
+            {
+              "text": "Evidently, the classical tradeoffs are at play here; allowing the model more flexibility with a trainable encoder also comes with a higher risk of model collapse or unreliable performance.",
+              "coords": [
+                "6,270.27,720.10,17.16,8.64",
+                "6,54.99,732.25,232.44,8.64",
+                "6,54.99,744.41,232.44,8.64",
+                "6,54.99,756.56,232.44,8.64",
+                "6,310.11,198.66,52.83,8.64"
+              ]
+            },
+            {
+              "text": "More surprisingly, the fact that even a frozen encoder trained on a VDBO setup was able to function at all beyond Q:VDB indicates that the embedding space of a Bandit encoder already contains information that is partially generalizable beyond VDBO, as also observed in [28].",
+              "coords": [
+                "6,365.93,198.66,176.62,8.64",
+                "6,310.11,210.81,232.44,8.64",
+                "6,310.11,222.97,232.44,8.64",
+                "6,310.11,235.12,232.44,8.64",
+                "6,310.11,247.28,232.44,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The results of the long-tail stems are somewhat unsurprising given that the genre distribution in MoisesDB skewed heavily toward pop, rock, and singer-songwriter. In addition to the low track counts, these long-tail instruments also tend to have infrequent active segments and relatively softer levels within a song. In fact, of the long-tail stems, reeds and pitched percussion are the only ones with median RMS above -35 dBFS. Analysis of the SNR distribution shows that the model performance is quite correlated to the track-level RMS of the target signal (Spearman's ρ between 0.78 and 0.81). This is likely due to a combination of low data availability and the inherent difficulty associated with cleanly extracting these \"supporting\" stems when there are significant spectral overlaps from more prominent co-occurring stems. In light of the recently published analysis in [54], we may have been too conservative with our DA setup. In particular, we made a conscious choice to only perform gain augmentation close to the original levels, instead of significantly amplifying softer stems. Whether the latter may improve the result at all will have to be addressed in future work. Moreover, given that [34] saw partial success with the predominantly classical instrumentation of URMP, there may also be an opportunity for a much more aggressive cross-dataset DA.",
+          "coords": [
+            "6,322.07,262.50,220.48,8.64",
+            "6,310.11,274.65,232.44,8.64",
+            "6,310.11,286.80,232.44,8.64",
+            "6,310.11,298.96,232.44,8.64",
+            "6,310.11,311.11,232.44,8.64",
+            "6,310.11,323.27,232.44,8.64",
+            "6,310.11,335.42,232.44,8.64",
+            "6,310.11,347.58,232.44,8.64",
+            "6,310.11,359.73,232.44,8.64",
+            "6,310.11,371.89,232.44,8.64",
+            "6,310.11,383.72,232.44,8.96",
+            "6,310.11,396.19,232.44,8.64",
+            "6,310.11,408.35,232.44,8.64",
+            "6,310.11,420.50,232.44,8.64",
+            "6,310.11,432.66,232.44,8.64",
+            "6,310.11,444.81,113.40,8.64",
+            "6,442.27,444.81,100.28,8.64",
+            "6,310.11,456.97,232.44,8.64",
+            "6,310.11,469.12,232.44,8.64",
+            "6,310.11,481.28,232.44,8.64",
+            "6,310.11,493.43,232.44,8.64",
+            "6,310.11,505.58,232.44,8.64",
+            "6,310.11,517.74,39.24,8.64",
+            "6,371.07,517.74,171.48,8.64",
+            "6,310.11,529.89,232.44,8.64",
+            "6,310.11,542.05,232.17,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The results of the long-tail stems are somewhat unsurprising given that the genre distribution in MoisesDB skewed heavily toward pop, rock, and singer-songwriter.",
+              "coords": [
+                "6,322.07,262.50,220.48,8.64",
+                "6,310.11,274.65,232.44,8.64",
+                "6,310.11,286.80,232.44,8.64"
+              ]
+            },
+            {
+              "text": "In addition to the low track counts, these long-tail instruments also tend to have infrequent active segments and relatively softer levels within a song.",
+              "coords": [
+                "6,310.11,298.96,232.44,8.64",
+                "6,310.11,311.11,232.44,8.64",
+                "6,310.11,323.27,137.38,8.64"
+              ]
+            },
+            {
+              "text": "In fact, of the long-tail stems, reeds and pitched percussion are the only ones with median RMS above -35 dBFS.",
+              "coords": [
+                "6,451.47,323.27,91.08,8.64",
+                "6,310.11,335.42,232.44,8.64",
+                "6,310.11,347.58,125.56,8.64"
+              ]
+            },
+            {
+              "text": "Analysis of the SNR distribution shows that the model performance is quite correlated to the track-level RMS of the target signal (Spearman's ρ between 0.78 and 0.81).",
+              "coords": [
+                "6,440.54,347.58,102.01,8.64",
+                "6,310.11,359.73,232.44,8.64",
+                "6,310.11,371.89,232.44,8.64",
+                "6,310.11,383.72,134.94,8.96"
+              ]
+            },
+            {
+              "text": "This is likely due to a combination of low data availability and the inherent difficulty associated with cleanly extracting these \"supporting\" stems when there are significant spectral overlaps from more prominent co-occurring stems.",
+              "coords": [
+                "6,451.31,384.04,91.24,8.64",
+                "6,310.11,396.19,232.44,8.64",
+                "6,310.11,408.35,232.44,8.64",
+                "6,310.11,420.50,232.44,8.64",
+                "6,310.11,432.66,149.88,8.64"
+              ]
+            },
+            {
+              "text": "In light of the recently published analysis in [54], we may have been too conservative with our DA setup.",
+              "coords": [
+                "6,467.97,432.66,74.58,8.64",
+                "6,310.11,444.81,232.44,8.64",
+                "6,310.11,456.97,129.96,8.64"
+              ]
+            },
+            {
+              "text": "In particular, we made a conscious choice to only perform gain augmentation close to the original levels, instead of significantly amplifying softer stems.",
+              "coords": [
+                "6,444.50,456.97,98.05,8.64",
+                "6,310.11,469.12,232.44,8.64",
+                "6,310.11,481.28,232.44,8.64",
+                "6,310.11,493.43,50.64,8.64"
+              ]
+            },
+            {
+              "text": "Whether the latter may improve the result at all will have to be addressed in future work.",
+              "coords": [
+                "6,364.67,493.43,177.88,8.64",
+                "6,310.11,505.58,184.58,8.64"
+              ]
+            },
+            {
+              "text": "Moreover, given that [34] saw partial success with the predominantly classical instrumentation of URMP, there may also be an opportunity for a much more aggressive cross-dataset DA.",
+              "coords": [
+                "6,501.47,505.58,41.08,8.64",
+                "6,310.11,517.74,232.44,8.64",
+                "6,310.11,529.89,232.44,8.64",
+                "6,310.11,542.05,232.17,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "CONCLUSION",
+          "coords": [
+            "6,385.84,586.36,80.98,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work, Banquet, a stem-agnostic single-decoder query-based source separation system was proposed to address MSS beyond the VDBO stems. At 24.9 M trainable parameters, this highly modularized model with a single stream of information flow provided strong performance for vocals, drums, and bass; outperformed significantly more complex HT-Demucs on guitar and piano; and provided a proof-of-concept for extractions of additional longtail and/or fine-grained stems at no additional complexity. While there remains room for improvements for long-tail stems with low data availability, this work demonstrated the opportunity for further research on single-decoder systems toward supporting a large and diverse set of stems.",
+          "coords": [
+            "6,310.11,610.71,232.44,8.64",
+            "6,310.11,622.86,232.44,8.64",
+            "6,310.11,635.02,232.44,8.64",
+            "6,310.11,647.17,232.44,8.64",
+            "6,310.11,659.33,232.44,8.64",
+            "6,310.11,671.48,232.44,8.64",
+            "6,310.11,683.64,232.44,8.64",
+            "6,310.11,695.79,232.44,8.64",
+            "6,310.11,707.95,232.44,8.64",
+            "6,310.11,720.10,232.44,8.64",
+            "6,310.11,732.25,232.44,8.64",
+            "6,310.11,744.41,232.44,8.64",
+            "6,310.11,756.56,222.64,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In this work, Banquet, a stem-agnostic single-decoder query-based source separation system was proposed to address MSS beyond the VDBO stems.",
+              "coords": [
+                "6,310.11,610.71,232.44,8.64",
+                "6,310.11,622.86,232.44,8.64",
+                "6,310.11,635.02,147.05,8.64"
+              ]
+            },
+            {
+              "text": "At 24.9 M trainable parameters, this highly modularized model with a single stream of information flow provided strong performance for vocals, drums, and bass; outperformed significantly more complex HT-Demucs on guitar and piano; and provided a proof-of-concept for extractions of additional longtail and/or fine-grained stems at no additional complexity.",
+              "coords": [
+                "6,462.11,635.02,80.44,8.64",
+                "6,310.11,647.17,232.44,8.64",
+                "6,310.11,659.33,232.44,8.64",
+                "6,310.11,671.48,232.44,8.64",
+                "6,310.11,683.64,232.44,8.64",
+                "6,310.11,695.79,232.44,8.64",
+                "6,310.11,707.95,232.44,8.64"
+              ]
+            },
+            {
+              "text": "While there remains room for improvements for long-tail stems with low data availability, this work demonstrated the opportunity for further research on single-decoder systems toward supporting a large and diverse set of stems.",
+              "coords": [
+                "6,310.11,720.10,232.44,8.64",
+                "6,310.11,732.25,232.44,8.64",
+                "6,310.11,744.41,232.44,8.64",
+                "6,310.11,756.56,222.64,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appendices": [],
+  "pages": [
+    {
+      "page": 1,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 2,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 3,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 4,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 5,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 6,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 7,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 8,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 9,
+      "width": 595.276,
+      "height": 841.89
+    }
+  ]
+}

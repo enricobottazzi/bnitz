@@ -1,0 +1,3532 @@
+{
+  "source": "https://arxiv.org/pdf/2410.13641v2",
+  "title": "An Active Learning Framework for Inclusive Generation by Large Language Models",
+  "abstract": [
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "Ensuring that Large Language Models (LLMs) generate text representative of diverse subpopulations is essential, particularly when key concepts related to under-represented groups are scarce in the training data. We address this challenge with a novel clustering-based active learning framework, enhanced with knowledge distillation. The proposed framework transforms the intermediate outputs of the learner model, enabling effective active learning for generative tasks for the first time. Integration of clustering and knowledge distillation yields more representative models without prior knowledge of underlying data distribution and overbearing human efforts. We validate our approach in practice through case studies in counter-narration and style transfer. We construct two new datasets in tandem with model training, showing a performance improvement of 2%-10% over baseline models. Our results also show more consistent performance across various data subgroups and increased lexical diversity, underscoring our model's resilience to skewness in available data. Further, our results show that the data acquired via our approach improves the performance of secondary models not involved in the learning loop, showcasing practical utility of the framework.",
+          "coords": [
+            "1,87.87,241.64,184.92,8.64",
+            "1,87.87,253.59,185.90,8.64",
+            "1,87.87,265.55,184.60,8.64",
+            "1,87.87,277.51,184.25,8.64",
+            "1,87.87,289.46,184.26,8.64",
+            "1,87.87,301.42,184.25,8.64",
+            "1,87.87,313.37,184.25,8.64",
+            "1,87.87,325.33,185.90,8.64",
+            "1,87.87,337.28,184.42,8.64",
+            "1,87.87,349.24,184.42,8.64",
+            "1,87.87,361.19,185.90,8.64",
+            "1,87.87,373.15,184.25,8.64",
+            "1,87.63,385.10,184.67,8.64",
+            "1,87.87,397.06,184.25,8.64",
+            "1,87.87,409.01,184.42,8.64",
+            "1,87.87,420.97,184.25,8.64",
+            "1,87.87,432.92,185.90,8.64",
+            "1,87.87,444.88,184.25,8.64",
+            "1,87.87,456.83,184.25,8.64",
+            "1,87.87,468.79,184.25,8.64",
+            "1,87.87,480.74,184.25,8.64",
+            "1,87.63,492.70,186.16,8.64",
+            "1,87.63,504.65,184.50,8.64",
+            "1,87.87,516.61,184.25,8.64",
+            "1,87.87,528.56,184.25,8.64",
+            "1,87.87,540.52,184.25,8.64",
+            "1,87.87,552.47,184.25,8.64",
+            "1,87.87,564.43,134.40,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Ensuring that Large Language Models (LLMs) generate text representative of diverse subpopulations is essential, particularly when key concepts related to under-represented groups are scarce in the training data.",
+              "coords": [
+                "1,87.87,241.64,184.92,8.64",
+                "1,87.87,253.59,185.90,8.64",
+                "1,87.87,265.55,184.60,8.64",
+                "1,87.87,277.51,184.25,8.64",
+                "1,87.87,289.46,119.09,8.64"
+              ]
+            },
+            {
+              "text": "We address this challenge with a novel clustering-based active learning framework, enhanced with knowledge distillation.",
+              "coords": [
+                "1,210.06,289.46,62.07,8.64",
+                "1,87.87,301.42,184.25,8.64",
+                "1,87.87,313.37,184.25,8.64",
+                "1,87.87,325.33,46.02,8.64"
+              ]
+            },
+            {
+              "text": "The proposed framework transforms the intermediate outputs of the learner model, enabling effective active learning for generative tasks for the first time.",
+              "coords": [
+                "1,141.44,325.33,132.34,8.64",
+                "1,87.87,337.28,184.42,8.64",
+                "1,87.87,349.24,184.42,8.64",
+                "1,87.87,361.19,145.02,8.64"
+              ]
+            },
+            {
+              "text": "Integration of clustering and knowledge distillation yields more representative models without prior knowledge of underlying data distribution and overbearing human efforts.",
+              "coords": [
+                "1,241.77,361.19,32.01,8.64",
+                "1,87.87,373.15,184.25,8.64",
+                "1,87.63,385.10,184.67,8.64",
+                "1,87.87,397.06,184.25,8.64",
+                "1,87.87,409.01,111.94,8.64"
+              ]
+            },
+            {
+              "text": "We validate our approach in practice through case studies in counter-narration and style transfer.",
+              "coords": [
+                "1,206.28,409.01,66.01,8.64",
+                "1,87.87,420.97,184.25,8.64",
+                "1,87.87,432.92,146.53,8.64"
+              ]
+            },
+            {
+              "text": "We construct two new datasets in tandem with model training, showing a performance improvement of 2%-10% over baseline models.",
+              "coords": [
+                "1,239.32,432.92,34.46,8.64",
+                "1,87.87,444.88,184.25,8.64",
+                "1,87.87,456.83,184.25,8.64",
+                "1,87.87,468.79,136.90,8.64"
+              ]
+            },
+            {
+              "text": "Our results also show more consistent performance across various data subgroups and increased lexical diversity, underscoring our model's resilience to skewness in available data.",
+              "coords": [
+                "1,227.88,468.79,44.25,8.64",
+                "1,87.87,480.74,184.25,8.64",
+                "1,87.63,492.70,186.16,8.64",
+                "1,87.63,504.65,184.50,8.64",
+                "1,87.87,516.61,106.13,8.64"
+              ]
+            },
+            {
+              "text": "Further, our results show that the data acquired via our approach improves the performance of secondary models not involved in the learning loop, showcasing practical utility of the framework.",
+              "coords": [
+                "1,197.12,516.61,75.01,8.64",
+                "1,87.87,528.56,184.25,8.64",
+                "1,87.87,540.52,184.25,8.64",
+                "1,87.87,552.47,184.25,8.64",
+                "1,87.87,564.43,134.40,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Introduction",
+          "coords": [
+            "1,70.87,581.92,82.81,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Despite advancements, Large Language Models (LLMs) have been under scrutiny for exhibiting bias toward under-represented groups (Nozza et al., 2022;Baffour et al., 2023). Standard fine-tuning may not mitigate this (Zhou et al., 2023) as a random sample drawn from skewed data would mirror biases and the fine-tuned model may fail for underrepresented groups. To address this, we introduce a novel active learning framework for generative tasks, combining clustering and knowledge distillation to yield more inclusive generative models.",
+          "coords": [
+            "1,70.87,603.14,218.27,9.46",
+            "1,70.51,616.69,218.63,9.46",
+            "1,70.87,630.24,160.29,9.46",
+            "1,188.43,643.79,100.71,9.46",
+            "1,70.87,657.34,94.07,9.46",
+            "1,253.36,657.34,37.58,9.46",
+            "1,70.87,670.89,218.46,9.46",
+            "1,70.87,684.44,220.08,9.46",
+            "1,70.87,697.99,218.27,9.46",
+            "1,70.87,711.11,218.26,9.88",
+            "1,70.87,724.66,220.08,9.88",
+            "1,70.87,738.63,212.14,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Despite advancements, Large Language Models (LLMs) have been under scrutiny for exhibiting bias toward under-represented groups (Nozza et al., 2022;Baffour et al., 2023).",
+              "coords": [
+                "1,70.87,603.14,218.27,9.46",
+                "1,70.51,616.69,218.63,9.46",
+                "1,70.87,630.24,219.63,9.46",
+                "1,70.87,643.79,122.36,9.46"
+              ]
+            },
+            {
+              "text": "Standard fine-tuning may not mitigate this (Zhou et al., 2023) as a random sample drawn from skewed data would mirror biases and the fine-tuned model may fail for underrepresented groups.",
+              "coords": [
+                "1,197.66,643.79,91.48,9.46",
+                "1,70.87,657.34,220.08,9.46",
+                "1,70.87,670.89,218.46,9.46",
+                "1,70.87,684.44,220.08,9.46",
+                "1,70.87,697.99,86.34,9.46"
+              ]
+            },
+            {
+              "text": "To address this, we introduce a novel active learning framework for generative tasks, combining clustering and knowledge distillation to yield more inclusive generative models.",
+              "coords": [
+                "1,160.58,697.99,128.56,9.46",
+                "1,70.87,711.11,218.26,9.88",
+                "1,70.87,724.66,220.08,9.88",
+                "1,70.87,738.63,212.14,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Active learning alternates between dataset construction and model training, focusing on the most Figure 1: The training loop of our framework uses an auxiliary model to transform the interim output of a learner LLM, and selects informative instances from clustered unlabeled data. A distillation model then generates outputs, verified by humans, to iteratively refine the learner LLM.",
+          "coords": [
+            "1,81.78,752.18,209.17,9.46",
+            "1,70.87,765.73,218.27,9.46",
+            "1,306.14,425.76,26.53,8.64",
+            "1,339.32,425.76,185.09,8.64",
+            "1,306.14,437.72,218.27,8.64",
+            "1,306.14,449.67,218.27,8.64",
+            "1,306.14,461.63,219.92,8.64",
+            "1,306.14,473.58,218.27,8.64",
+            "1,306.14,485.54,68.33,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Active learning alternates between dataset construction and model training, focusing on the most Figure 1: The training loop of our framework uses an auxiliary model to transform the interim output of a learner LLM, and selects informative instances from clustered unlabeled data.",
+              "coords": [
+                "1,81.78,752.18,209.17,9.46",
+                "1,70.87,765.73,218.27,9.46",
+                "1,306.14,425.76,218.27,8.64",
+                "1,306.14,437.72,218.27,8.64",
+                "1,306.14,449.67,218.27,8.64",
+                "1,306.14,461.63,98.09,8.64"
+              ]
+            },
+            {
+              "text": "A distillation model then generates outputs, verified by humans, to iteratively refine the learner LLM.",
+              "coords": [
+                "1,407.32,461.63,118.74,8.64",
+                "1,306.14,473.58,218.27,8.64",
+                "1,306.14,485.54,68.33,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "informative instances (Settles, 2009). Unlike classification tasks, active learning for generative tasks faces two key challenges: i) traditional informativeness measures like entropy are ineffective due to vast output spaces, and ii) such measures provide only token-level feedback, complicating fullsequence aggregation. To address these, we propose a new informativeness measure (Section 3), computed by an auxiliary model that transforms intermediate output token sequences into a 1D latent space, conditioned on a regulated attribute. This measure is not dependent on singular tokens and can be applied to large output space of LLMs.",
+          "coords": [
+            "1,306.14,521.03,93.84,9.46",
+            "1,464.80,521.03,61.43,9.46",
+            "1,306.14,534.58,218.27,9.46",
+            "1,306.14,548.13,220.08,9.46",
+            "1,306.14,561.68,218.27,9.46",
+            "1,306.14,575.23,220.08,9.46",
+            "1,305.87,588.77,220.35,9.46",
+            "1,306.14,602.32,220.08,9.46",
+            "1,306.14,615.87,219.63,9.46",
+            "1,306.14,629.42,220.08,9.46",
+            "1,306.14,642.55,218.27,9.88",
+            "1,306.14,656.52,218.27,9.46",
+            "1,306.14,670.07,218.27,9.46",
+            "1,306.14,683.62,200.67,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "informative instances (Settles, 2009).",
+              "coords": [
+                "1,306.14,521.03,163.39,9.46"
+              ]
+            },
+            {
+              "text": "Unlike classification tasks, active learning for generative tasks faces two key challenges: i) traditional informativeness measures like entropy are ineffective due to vast output spaces, and ii) such measures provide only token-level feedback, complicating fullsequence aggregation.",
+              "coords": [
+                "1,472.95,521.03,53.28,9.46",
+                "1,306.14,534.58,218.27,9.46",
+                "1,306.14,548.13,220.08,9.46",
+                "1,306.14,561.68,218.27,9.46",
+                "1,306.14,575.23,220.08,9.46",
+                "1,305.87,588.77,220.35,9.46",
+                "1,306.14,602.32,99.23,9.46"
+              ]
+            },
+            {
+              "text": "To address these, we propose a new informativeness measure (Section 3), computed by an auxiliary model that transforms intermediate output token sequences into a 1D latent space, conditioned on a regulated attribute.",
+              "coords": [
+                "1,410.63,602.32,115.59,9.46",
+                "1,306.14,615.87,219.63,9.46",
+                "1,306.14,629.42,220.08,9.46",
+                "1,306.14,642.55,218.27,9.88",
+                "1,306.14,656.52,193.48,9.46"
+              ]
+            },
+            {
+              "text": "This measure is not dependent on singular tokens and can be applied to large output space of LLMs.",
+              "coords": [
+                "1,504.63,656.52,19.78,9.46",
+                "1,306.14,670.07,218.27,9.46",
+                "1,306.14,683.62,200.67,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We advocate for clustering-based active learning in our framework, hypothesizing that informative samples from diverse regions would guard against distributional skewness in real-world data, leading to more inclusive generation. As opposed to traditional bias mitigation approaches that often require extensive post-hoc analysis and rebalancing (Han et al., 2022;Sun et al., 2019), our method would proactively identify underrepresented groups in data without knowing the underlying distribution beforehand. Additionally, we incorporate knowledge distillation with an external LLM in our framework, leveraging its repository of commonsense and expert knowledge (West et al., 2022;Hsieh et al., 2023) to aid the active learner model. The output of the external LLM are verified by human annotators before being passed on to the learner model, reducing necessary human efforts in the active learning paradigm.",
+          "coords": [
+            "1,317.05,697.99,207.36,9.46",
+            "1,306.14,711.54,218.26,9.46",
+            "1,306.14,725.09,218.27,9.46",
+            "1,306.14,738.63,220.08,9.46",
+            "1,306.14,752.18,218.27,9.46",
+            "1,306.14,765.73,218.27,9.46",
+            "2,70.87,74.72,220.08,9.46",
+            "2,70.87,88.27,13.66,9.46",
+            "2,232.85,88.27,56.28,9.46",
+            "2,70.47,101.82,218.66,9.46",
+            "2,70.87,115.37,218.27,9.46",
+            "2,70.87,128.92,220.08,9.46",
+            "2,70.87,142.47,220.08,9.46",
+            "2,70.47,156.02,218.66,9.46",
+            "2,70.87,169.57,100.08,9.46",
+            "2,127.92,183.12,161.22,9.46",
+            "2,70.87,196.67,218.26,9.46",
+            "2,70.87,210.22,218.45,9.46",
+            "2,70.87,223.76,218.27,9.46",
+            "2,70.87,237.31,110.75,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We advocate for clustering-based active learning in our framework, hypothesizing that informative samples from diverse regions would guard against distributional skewness in real-world data, leading to more inclusive generation.",
+              "coords": [
+                "1,317.05,697.99,207.36,9.46",
+                "1,306.14,711.54,218.26,9.46",
+                "1,306.14,725.09,218.27,9.46",
+                "1,306.14,738.63,220.08,9.46",
+                "1,306.14,752.18,148.45,9.46"
+              ]
+            },
+            {
+              "text": "As opposed to traditional bias mitigation approaches that often require extensive post-hoc analysis and rebalancing (Han et al., 2022;Sun et al., 2019), our method would proactively identify underrepresented groups in data without knowing the underlying distribution beforehand.",
+              "coords": [
+                "1,459.70,752.18,64.72,9.46",
+                "1,306.14,765.73,218.27,9.46",
+                "2,70.87,74.72,220.08,9.46",
+                "2,70.87,88.27,218.27,9.46",
+                "2,70.47,101.82,218.66,9.46",
+                "2,70.87,115.37,218.27,9.46",
+                "2,70.87,128.92,52.83,9.46"
+              ]
+            },
+            {
+              "text": "Additionally, we incorporate knowledge distillation with an external LLM in our framework, leveraging its repository of commonsense and expert knowledge (West et al., 2022;Hsieh et al., 2023) to aid the active learner model.",
+              "coords": [
+                "2,128.26,128.92,162.68,9.46",
+                "2,70.87,142.47,220.08,9.46",
+                "2,70.47,156.02,218.66,9.46",
+                "2,70.87,169.57,218.27,9.46",
+                "2,70.87,183.12,196.30,9.46"
+              ]
+            },
+            {
+              "text": "The output of the external LLM are verified by human annotators before being passed on to the learner model, reducing necessary human efforts in the active learning paradigm.",
+              "coords": [
+                "2,271.84,183.12,17.30,9.46",
+                "2,70.87,196.67,218.26,9.46",
+                "2,70.87,210.22,218.45,9.46",
+                "2,70.87,223.76,218.27,9.46",
+                "2,70.87,237.31,110.75,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We validate our approach with case studies of counter narration (Fanton et al., 2021) and styletransfer of offensive text (Nogueira dos Santos et al., 2018). We choose these tasks as it is crucial to ensure inclusivity of under-represented groups when addressing harmful text. We construct two novel datasets of 1K counter-narrations and 1K style transfers, with an emphasis on social acceptability. The datasets contain multiple splits obtained using our framework and baseline methods. This highlights a key difference with prior work as we evaluate the practical viability of active learning beyond mainly simulation-based evaluations (Zhang et al., 2022). Practical evaluation of active learning is challenging as it requires developing multiple splits of data from scratch. While this restricts range of datasets, models and settings compared to simulations, our work answers the critical question of whether active learning can be viable in practice. Our results show that the learner LLMs not only perform well with small datasets but also exhibit greater diversity and lower ratio of errors for under-represented groups (Section 5), suggesting a higher degree of inclusivity. We also validate transferability of acquired data to models outside active learning, showcasing genarliazability. Thus, key contributions in this paper are threefold:",
+          "coords": [
+            "2,81.78,250.86,207.36,9.46",
+            "2,70.87,264.41,76.92,9.46",
+            "2,246.77,264.41,44.18,9.46",
+            "2,70.87,277.96,114.24,9.46",
+            "2,121.02,291.51,168.11,9.46",
+            "2,70.87,305.06,218.27,9.46",
+            "2,70.47,318.61,218.66,9.46",
+            "2,70.87,331.73,218.69,9.88",
+            "2,70.87,345.71,220.08,9.46",
+            "2,70.87,359.26,220.08,9.46",
+            "2,70.87,372.81,220.18,9.46",
+            "2,70.53,386.36,218.87,9.46",
+            "2,70.87,399.48,218.27,9.88",
+            "2,70.87,413.03,220.08,9.88",
+            "2,70.87,427.00,21.64,9.46",
+            "2,181.30,427.00,107.84,9.46",
+            "2,70.87,440.55,220.08,9.46",
+            "2,70.87,454.10,218.27,9.46",
+            "2,70.87,467.65,220.08,9.46",
+            "2,70.87,481.20,218.26,9.46",
+            "2,70.87,494.75,218.27,9.46",
+            "2,70.87,508.30,218.27,9.46",
+            "2,70.87,521.85,218.27,9.46",
+            "2,70.87,535.40,218.27,9.46",
+            "2,70.87,548.95,220.08,9.46",
+            "2,70.87,562.49,218.27,9.46",
+            "2,70.87,576.04,218.27,9.46",
+            "2,70.87,589.59,219.63,9.46",
+            "2,70.87,603.14,193.42,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We validate our approach with case studies of counter narration (Fanton et al., 2021) and styletransfer of offensive text (Nogueira dos Santos et al., 2018).",
+              "coords": [
+                "2,81.78,250.86,207.36,9.46",
+                "2,70.87,264.41,220.08,9.46",
+                "2,70.87,277.96,218.27,9.46",
+                "2,70.87,291.51,54.85,9.46"
+              ]
+            },
+            {
+              "text": "We choose these tasks as it is crucial to ensure inclusivity of under-represented groups when addressing harmful text.",
+              "coords": [
+                "2,129.11,291.51,160.03,9.46",
+                "2,70.87,305.06,218.27,9.46",
+                "2,70.47,318.61,135.71,9.46"
+              ]
+            },
+            {
+              "text": "We construct two novel datasets of 1K counter-narrations and 1K style transfers, with an emphasis on social acceptability.",
+              "coords": [
+                "2,210.87,318.61,78.27,9.46",
+                "2,70.87,331.73,218.69,9.88",
+                "2,70.87,345.71,220.08,9.46",
+                "2,70.87,359.26,30.51,9.46"
+              ]
+            },
+            {
+              "text": "The datasets contain multiple splits obtained using our framework and baseline methods.",
+              "coords": [
+                "2,109.20,359.26,181.74,9.46",
+                "2,70.87,372.81,220.18,9.46"
+              ]
+            },
+            {
+              "text": "This highlights a key difference with prior work as we evaluate the practical viability of active learning beyond mainly simulation-based evaluations (Zhang et al., 2022).",
+              "coords": [
+                "2,70.53,386.36,218.87,9.46",
+                "2,70.87,399.48,218.27,9.88",
+                "2,70.87,413.03,220.08,9.88",
+                "2,70.87,427.00,115.22,9.46"
+              ]
+            },
+            {
+              "text": "Practical evaluation of active learning is challenging as it requires developing multiple splits of data from scratch.",
+              "coords": [
+                "2,189.58,427.00,99.56,9.46",
+                "2,70.87,440.55,220.08,9.46",
+                "2,70.87,454.10,170.18,9.46"
+              ]
+            },
+            {
+              "text": "While this restricts range of datasets, models and settings compared to simulations, our work answers the critical question of whether active learning can be viable in practice.",
+              "coords": [
+                "2,244.42,454.10,44.71,9.46",
+                "2,70.87,467.65,220.08,9.46",
+                "2,70.87,481.20,218.26,9.46",
+                "2,70.87,494.75,218.27,9.46",
+                "2,70.87,508.30,47.37,9.46"
+              ]
+            },
+            {
+              "text": "Our results show that the learner LLMs not only perform well with small datasets but also exhibit greater diversity and lower ratio of errors for under-represented groups (Section 5), suggesting a higher degree of inclusivity.",
+              "coords": [
+                "2,121.55,508.30,167.58,9.46",
+                "2,70.87,521.85,218.27,9.46",
+                "2,70.87,535.40,218.27,9.46",
+                "2,70.87,548.95,220.08,9.46",
+                "2,70.87,562.49,144.25,9.46"
+              ]
+            },
+            {
+              "text": "We also validate transferability of acquired data to models outside active learning, showcasing genarliazability.",
+              "coords": [
+                "2,218.51,562.49,70.63,9.46",
+                "2,70.87,576.04,218.27,9.46",
+                "2,70.87,589.59,191.83,9.46"
+              ]
+            },
+            {
+              "text": "Thus, key contributions in this paper are threefold:",
+              "coords": [
+                "2,266.07,589.59,24.42,9.46",
+                "2,70.87,603.14,193.42,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Introducing a novel active learning framework for generative tasks, enhanced with clustering and knowledge distillation.",
+          "coords": [
+            "2,83.89,621.16,205.52,9.46",
+            "2,92.68,634.70,196.45,9.46",
+            "2,92.68,648.25,118.21,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "• Introducing a novel active learning framework for generative tasks, enhanced with clustering and knowledge distillation.",
+              "coords": [
+                "2,83.89,621.16,205.52,9.46",
+                "2,92.68,634.70,196.45,9.46",
+                "2,92.68,648.25,118.21,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Case studies of style-transfer and counternarration with two publicly available datasets.",
+          "coords": [
+            "2,83.89,668.97,207.06,9.46",
+            "2,92.68,682.52,198.33,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "• Case studies of style-transfer and counternarration with two publicly available datasets.",
+              "coords": [
+                "2,83.89,668.97,207.06,9.46",
+                "2,92.68,682.52,198.33,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Demonstrating effectiveness of active learning for generative tasks in practice and its transferability to models outside the learning loop.",
+          "coords": [
+            "2,83.89,703.23,205.24,9.46",
+            "2,92.68,716.78,198.27,9.46",
+            "2,92.68,730.33,198.35,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "• Demonstrating effectiveness of active learning for generative tasks in practice and its transferability to models outside the learning loop.",
+              "coords": [
+                "2,83.89,703.23,205.24,9.46",
+                "2,92.68,716.78,198.27,9.46",
+                "2,92.68,730.33,198.35,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Our datasets are made publicly available. 1",
+          "coords": [
+            "2,70.87,748.34,179.47,9.46",
+            "2,253.71,746.30,3.99,6.91"
+          ],
+          "sentences": [
+            {
+              "text": "Our datasets are made publicly available.",
+              "coords": [
+                "2,70.87,748.34,179.47,9.46"
+              ]
+            },
+            {
+              "text": "1",
+              "coords": [
+                "2,253.71,746.30,3.99,6.91"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "1 https://github.com/sabithsn/generative-AL",
+          "coords": [
+            "2,83.52,765.13,2.99,5.18",
+            "2,87.01,767.19,184.31,7.20"
+          ],
+          "sentences": [
+            {
+              "text": "1 https://github.com/sabithsn/generative-AL",
+              "coords": [
+                "2,83.52,765.13,2.99,5.18"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Related Work",
+          "coords": [
+            "2,306.14,73.58,89.09,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Active Learning in NLP Although active learning has been studied for a multitude of NLP tasks (Zhang et al., 2022), almost all existing works target classification scenarios (Rotman and Reichart, 2022;Ein-Dor et al., 2020). Recent efforts in introducing LLMs with active learning (Hassan et al., 2024;Diao et al., 2023;Margatina et al., 2023), assume a fixed set of outputs -still classification tasks, albeit with LLMs. Active learning for generative tasks remains mostly unexplored. Perlitz et al. (2023) show that standard active learning methods for classification do not translate well to generative tasks and call for further investigation. Our work is the first to make significant inroads in active learning for generative tasks. Different from works that propose LLMs as annotators (Xiao et al., 2023), our work is the first to utilize knowledge distillation of LLMs, coupled with clustering, for generative active learning. Our work is also one of the first to evaluate active learning in practice as opposed to simulations (Zhang et al., 2022).",
+          "coords": [
+            "2,306.14,96.53,220.07,9.88",
+            "2,306.14,110.51,218.27,9.46",
+            "2,390.87,124.05,135.35,9.46",
+            "2,306.14,137.60,117.14,9.46",
+            "2,420.45,151.15,105.77,9.46",
+            "2,306.14,164.70,152.88,9.46",
+            "2,520.98,178.25,4.79,9.46",
+            "2,306.14,191.80,218.27,9.46",
+            "2,306.14,205.16,220.08,9.64",
+            "2,306.14,218.71,165.81,9.64",
+            "2,337.41,232.45,187.00,9.46",
+            "2,306.14,246.00,220.08,9.46",
+            "2,306.14,259.55,218.45,9.46",
+            "2,305.75,273.10,220.48,9.46",
+            "2,306.14,286.64,218.27,9.46",
+            "2,305.75,300.19,167.84,9.46",
+            "2,330.09,313.74,194.32,9.46",
+            "2,306.14,327.29,218.45,9.46",
+            "2,306.14,340.66,218.26,9.64",
+            "2,306.14,354.39,218.27,9.46",
+            "2,306.14,367.94,100.61,9.46",
+            "2,493.86,367.94,4.70,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Active Learning in NLP Although active learning has been studied for a multitude of NLP tasks (Zhang et al., 2022), almost all existing works target classification scenarios (Rotman and Reichart, 2022;Ein-Dor et al., 2020).",
+              "coords": [
+                "2,306.14,96.53,220.07,9.88",
+                "2,306.14,110.51,218.27,9.46",
+                "2,305.78,124.05,220.44,9.46",
+                "2,306.14,137.60,219.63,9.46",
+                "2,306.14,151.15,118.92,9.46"
+              ]
+            },
+            {
+              "text": "Recent efforts in introducing LLMs with active learning (Hassan et al., 2024;Diao et al., 2023;Margatina et al., 2023), assume a fixed set of outputs -still classification tasks, albeit with LLMs.",
+              "coords": [
+                "2,428.45,151.15,97.78,9.46",
+                "2,306.14,164.70,219.63,9.46",
+                "2,306.14,178.25,219.63,9.46",
+                "2,306.14,191.80,218.27,9.46",
+                "2,306.14,205.35,104.87,9.46"
+              ]
+            },
+            {
+              "text": "Active learning for generative tasks remains mostly unexplored.",
+              "coords": [
+                "2,414.39,205.16,111.83,9.64",
+                "2,306.14,218.71,165.81,9.64"
+              ]
+            },
+            {
+              "text": "Perlitz et al. (2023) show that standard active learning methods for classification do not translate well to generative tasks and call for further investigation.",
+              "coords": [
+                "2,475.26,218.90,51.06,9.46",
+                "2,305.78,232.45,218.63,9.46",
+                "2,306.14,246.00,220.08,9.46",
+                "2,306.14,259.55,195.14,9.46"
+              ]
+            },
+            {
+              "text": "Our work is the first to make significant inroads in active learning for generative tasks.",
+              "coords": [
+                "2,507.29,259.55,17.30,9.46",
+                "2,305.75,273.10,220.48,9.46",
+                "2,306.14,286.64,148.78,9.46"
+              ]
+            },
+            {
+              "text": "Different from works that propose LLMs as annotators (Xiao et al., 2023), our work is the first to utilize knowledge distillation of LLMs, coupled with clustering, for generative active learning.",
+              "coords": [
+                "2,459.24,286.64,65.17,9.46",
+                "2,305.75,300.19,220.02,9.46",
+                "2,306.14,313.74,218.27,9.46",
+                "2,306.14,327.29,218.45,9.46",
+                "2,306.14,340.66,119.94,9.39"
+              ]
+            },
+            {
+              "text": "Our work is also one of the first to evaluate active learning in practice as opposed to simulations (Zhang et al., 2022).",
+              "coords": [
+                "2,430.56,340.84,93.85,9.46",
+                "2,306.14,354.39,218.27,9.46",
+                "2,306.14,367.94,192.41,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Countering Distributional Bias NLP models have been under scrutiny for exhibiting bias (Lu et al., 2020;Ahn and Oh, 2021;Sap et al., 2019) but reducing such biases has been challenging. First, bias can manifest in a multifaceted way: a model can be biased against gender while also exhibiting linguistic bias (Savoldi et al., 2022). Existing approaches often focus on mitigating particular kind of bias such as gender bias (Sun et al., 2019) by training gender neutral embeddings (Zhao et al., 2018) or removing gender direction in embeddding subspace (Liang et al., 2020). These methods however, cannot be generalized to address the different types of bias. Another critical challenge is that true distribution of a data is often unknown. As such, existing approaches are often expensive that includes rebalancing (Han et al., 2022) or re-annotating a large amount of data (Sun et al., 2019). Our approach offers a generalizable efficent method that does not assume availability of additional data or modification of the model itself.",
+          "coords": [
+            "2,306.14,390.27,218.26,9.88",
+            "2,306.14,404.25,198.82,9.46",
+            "2,503.80,417.80,20.61,9.46",
+            "2,306.14,431.34,219.63,9.46",
+            "2,306.14,444.89,218.27,9.46",
+            "2,306.14,458.44,218.27,9.46",
+            "2,306.14,471.99,62.30,9.46",
+            "2,463.11,471.99,63.11,9.46",
+            "2,306.14,485.54,218.27,9.46",
+            "2,306.14,499.09,121.99,9.46",
+            "2,513.67,499.09,11.13,9.46",
+            "2,306.14,512.64,160.50,9.46",
+            "2,333.64,526.19,190.77,9.46",
+            "2,306.14,539.74,38.87,9.46",
+            "2,428.71,539.74,97.51,9.46",
+            "2,306.14,553.29,218.27,9.46",
+            "2,306.14,566.84,218.27,9.46",
+            "2,306.14,580.39,220.08,9.46",
+            "2,306.14,593.93,218.27,9.46",
+            "2,306.14,607.48,51.91,9.46",
+            "2,444.30,607.48,80.12,9.46",
+            "2,306.14,621.03,93.80,9.46",
+            "2,480.63,621.03,45.58,9.46",
+            "2,306.14,634.58,218.27,9.46",
+            "2,306.14,648.13,218.45,9.46",
+            "2,306.14,661.68,140.30,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Countering Distributional Bias NLP models have been under scrutiny for exhibiting bias (Lu et al., 2020;Ahn and Oh, 2021;Sap et al., 2019) but reducing such biases has been challenging.",
+              "coords": [
+                "2,306.14,390.27,218.26,9.88",
+                "2,306.14,404.25,218.27,9.46",
+                "2,306.14,417.80,218.27,9.46",
+                "2,306.14,431.34,192.18,9.46"
+              ]
+            },
+            {
+              "text": "First, bias can manifest in a multifaceted way: a model can be biased against gender while also exhibiting linguistic bias (Savoldi et al., 2022).",
+              "coords": [
+                "2,502.58,431.34,23.19,9.46",
+                "2,306.14,444.89,218.27,9.46",
+                "2,306.14,458.44,218.27,9.46",
+                "2,306.14,471.99,161.76,9.46"
+              ]
+            },
+            {
+              "text": "Existing approaches often focus on mitigating particular kind of bias such as gender bias (Sun et al., 2019) by training gender neutral embeddings (Zhao et al., 2018) or removing gender direction in embeddding subspace (Liang et al., 2020).",
+              "coords": [
+                "2,471.96,471.99,54.26,9.46",
+                "2,306.14,485.54,218.27,9.46",
+                "2,306.14,499.09,218.65,9.46",
+                "2,306.14,512.64,219.63,9.46",
+                "2,306.14,526.19,218.27,9.46",
+                "2,306.14,539.74,127.20,9.46"
+              ]
+            },
+            {
+              "text": "These methods however, cannot be generalized to address the different types of bias.",
+              "coords": [
+                "2,436.73,539.74,89.50,9.46",
+                "2,306.14,553.29,218.27,9.46",
+                "2,306.14,566.84,56.53,9.46"
+              ]
+            },
+            {
+              "text": "Another critical challenge is that true distribution of a data is often unknown.",
+              "coords": [
+                "2,366.01,566.84,158.40,9.46",
+                "2,306.14,580.39,164.81,9.46"
+              ]
+            },
+            {
+              "text": "As such, existing approaches are often expensive that includes rebalancing (Han et al., 2022) or re-annotating a large amount of data (Sun et al., 2019).",
+              "coords": [
+                "2,474.15,580.39,52.08,9.46",
+                "2,306.14,593.93,218.27,9.46",
+                "2,306.14,607.48,218.27,9.46",
+                "2,306.14,621.03,179.28,9.46"
+              ]
+            },
+            {
+              "text": "Our approach offers a generalizable efficent method that does not assume availability of additional data or modification of the model itself.",
+              "coords": [
+                "2,491.19,621.03,35.03,9.46",
+                "2,306.14,634.58,218.27,9.46",
+                "2,306.14,648.13,218.45,9.46",
+                "2,306.14,661.68,140.30,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Counter Narration and Style Transfer Counter narration and style transfer have been suggested as alternative approaches (Mathew et al., 2018;Nogueira dos Santos et al., 2018) to filtering-based approaches (Ye et al., 2023;Hassan et al., 2020) for addressing harmful text. Prior work in counternarration primarily address social-media (Hassan and Alikhani, 2023b;Mathew et al., 2018) or nichesourced setting (Fanton et al., 2021;Chung et al., 2021). Style-transferring offensive text has been limited to social media context (Nogueira dos Santos et al., 2018;Atwell et al., 2022). The output of both of these tasks may not be deemed appropriate when generated by LLMs. Our datasets are the first to consider social acceptability of the generations.",
+          "coords": [
+            "2,306.14,684.01,218.45,9.88",
+            "2,306.14,697.99,218.27,9.46",
+            "2,306.14,711.54,114.67,9.46",
+            "2,451.53,725.09,72.88,9.46",
+            "2,306.14,738.63,50.05,9.46",
+            "2,306.14,752.18,220.08,9.46",
+            "2,306.14,765.73,179.76,9.46",
+            "3,252.98,74.72,37.97,9.46",
+            "3,70.87,88.27,67.11,9.46",
+            "3,94.82,101.82,194.32,9.46",
+            "3,70.87,115.37,197.54,9.46",
+            "3,222.11,128.92,67.02,9.46",
+            "3,70.87,142.47,218.27,9.46",
+            "3,70.47,156.02,218.66,9.46",
+            "3,70.87,169.57,218.44,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Counter Narration and Style Transfer Counter narration and style transfer have been suggested as alternative approaches (Mathew et al., 2018;Nogueira dos Santos et al., 2018) to filtering-based approaches (Ye et al., 2023;Hassan et al., 2020) for addressing harmful text.",
+              "coords": [
+                "2,306.14,684.01,218.45,9.88",
+                "2,306.14,697.99,218.27,9.46",
+                "2,306.14,711.54,219.17,9.46",
+                "2,306.14,725.09,218.26,9.46",
+                "2,306.14,738.63,219.00,9.46",
+                "2,306.14,752.18,120.32,9.46"
+              ]
+            },
+            {
+              "text": "Prior work in counternarration primarily address social-media (Hassan and Alikhani, 2023b;Mathew et al., 2018) or nichesourced setting (Fanton et al., 2021;Chung et al., 2021).",
+              "coords": [
+                "2,429.85,752.18,96.38,9.46",
+                "2,306.14,765.73,218.27,9.46",
+                "3,70.87,74.72,220.08,9.46",
+                "3,70.87,88.27,219.63,9.46",
+                "3,70.87,101.82,28.74,9.46"
+              ]
+            },
+            {
+              "text": "Style-transferring offensive text has been limited to social media context (Nogueira dos Santos et al., 2018;Atwell et al., 2022).",
+              "coords": [
+                "3,104.57,101.82,184.57,9.46",
+                "3,70.87,115.37,220.08,9.46",
+                "3,70.87,128.92,155.90,9.46"
+              ]
+            },
+            {
+              "text": "The output of both of these tasks may not be deemed appropriate when generated by LLMs.",
+              "coords": [
+                "3,230.16,128.92,58.97,9.46",
+                "3,70.87,142.47,218.27,9.46",
+                "3,70.47,156.02,112.23,9.46"
+              ]
+            },
+            {
+              "text": "Our datasets are the first to consider social acceptability of the generations.",
+              "coords": [
+                "3,186.00,156.02,103.14,9.46",
+                "3,70.87,169.57,218.44,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Framework",
+          "coords": [
+            "3,70.87,193.72,78.23,10.75"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Background",
+          "coords": [
+            "3,70.87,216.46,81.94,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Most popular active learning paradigms iteratively add informative samples to training data (Settles, 2009), offering performance boost over randomly choosing samples. In a randomly chosen sample of skewed real-world data, under-represented groups would remain under-sampled. On the other hand, standard active learning can ignore underrepresented groups in data if the learner model is confidently incorrect (Hassan et al., 2018). Integrating clustering with active learning can address this challenge and lead to more inclusive models by enforcing informative samples to be chosen from diverse regions in data. In this work, we propose to extend the standard active learning paradigm by applying knowledge distillation to informative samples from each cluster. LLMs like GPT-4 (OpenAI et al., 2023), which already contain vast amounts of information, can serve to distill knowledge to train other models, reducing exposure to harmful content for human annotators. This approach, while promising, faces the critical challenge of identifying informative samples. As classification models typically deal with a manageable number of classes, using probabilities in measures such as entropy (Eq. 1) can gauge informativeness. For generative tasks however, the choices at each timestep match the extensive vocabulary size, typically on the order of 10 4 (Perlitz et al., 2023), making probability-based measures less reliable. Further, the vocabulary choices are often interchangeable and dependent on previous tokens, which are not taken into account by measures such as entropy. Thus, we propose a novel method to implement active learning for generative tasks next.",
+          "coords": [
+            "3,70.87,235.24,218.65,9.46",
+            "3,70.87,248.79,180.43,9.46",
+            "3,94.63,262.34,194.88,9.46",
+            "3,70.87,275.89,220.08,9.46",
+            "3,70.87,289.44,218.27,9.46",
+            "3,70.87,302.99,218.46,9.46",
+            "3,70.87,316.53,220.08,9.46",
+            "3,70.87,330.08,218.27,9.46",
+            "3,70.87,343.63,93.12,9.46",
+            "3,259.43,343.63,31.51,9.46",
+            "3,70.87,357.18,218.27,9.46",
+            "3,70.87,370.73,218.65,9.46",
+            "3,70.87,384.28,218.27,9.46",
+            "3,70.87,397.83,218.27,9.46",
+            "3,70.87,411.38,218.64,9.46",
+            "3,70.87,424.93,220.08,9.46",
+            "3,70.87,438.48,146.17,9.46",
+            "3,122.11,452.03,167.03,9.46",
+            "3,70.87,465.58,218.27,9.46",
+            "3,70.87,479.12,218.27,9.46",
+            "3,70.87,492.67,130.89,9.46",
+            "3,81.78,506.67,209.17,9.46",
+            "3,70.87,520.22,220.18,9.46",
+            "3,70.47,533.77,220.48,9.46",
+            "3,70.87,547.31,218.27,9.46",
+            "3,70.87,560.86,220.08,9.46",
+            "3,70.87,574.41,218.27,9.46",
+            "3,70.87,587.96,220.08,9.46",
+            "3,70.87,601.16,179.20,9.81",
+            "3,250.06,599.21,4.23,6.99",
+            "3,122.51,615.06,166.63,9.46",
+            "3,70.87,628.61,218.27,9.46",
+            "3,70.87,642.16,218.27,9.46",
+            "3,70.87,655.71,220.08,9.46",
+            "3,70.87,669.26,218.27,9.46",
+            "3,70.87,682.81,218.27,9.46",
+            "3,70.87,696.36,45.89,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Most popular active learning paradigms iteratively add informative samples to training data (Settles, 2009), offering performance boost over randomly choosing samples.",
+              "coords": [
+                "3,70.87,235.24,218.65,9.46",
+                "3,70.87,248.79,219.63,9.46",
+                "3,70.87,262.34,218.65,9.46",
+                "3,70.87,275.89,83.40,9.46"
+              ]
+            },
+            {
+              "text": "In a randomly chosen sample of skewed real-world data, under-represented groups would remain under-sampled.",
+              "coords": [
+                "3,163.21,275.89,127.73,9.46",
+                "3,70.87,289.44,218.27,9.46",
+                "3,70.87,302.99,161.02,9.46"
+              ]
+            },
+            {
+              "text": "On the other hand, standard active learning can ignore underrepresented groups in data if the learner model is confidently incorrect (Hassan et al., 2018).",
+              "coords": [
+                "3,235.30,302.99,54.02,9.46",
+                "3,70.87,316.53,220.08,9.46",
+                "3,70.87,330.08,218.27,9.46",
+                "3,70.87,343.63,193.36,9.46"
+              ]
+            },
+            {
+              "text": "Integrating clustering with active learning can address this challenge and lead to more inclusive models by enforcing informative samples to be chosen from diverse regions in data.",
+              "coords": [
+                "3,269.93,343.63,21.01,9.46",
+                "3,70.87,357.18,218.27,9.46",
+                "3,70.87,370.73,218.65,9.46",
+                "3,70.87,384.28,218.27,9.46",
+                "3,70.87,397.83,103.16,9.46"
+              ]
+            },
+            {
+              "text": "In this work, we propose to extend the standard active learning paradigm by applying knowledge distillation to informative samples from each cluster.",
+              "coords": [
+                "3,178.12,397.83,111.02,9.46",
+                "3,70.87,411.38,218.64,9.46",
+                "3,70.87,424.93,220.08,9.46",
+                "3,70.87,438.48,97.07,9.46"
+              ]
+            },
+            {
+              "text": "LLMs like GPT-4 (OpenAI et al., 2023), which already contain vast amounts of information, can serve to distill knowledge to train other models, reducing exposure to harmful content for human annotators.",
+              "coords": [
+                "3,171.32,438.48,117.82,9.46",
+                "3,70.87,452.03,218.27,9.46",
+                "3,70.87,465.58,218.27,9.46",
+                "3,70.87,479.12,218.27,9.46",
+                "3,70.87,492.67,130.89,9.46"
+              ]
+            },
+            {
+              "text": "This approach, while promising, faces the critical challenge of identifying informative samples.",
+              "coords": [
+                "3,81.78,506.67,209.17,9.46",
+                "3,70.87,520.22,220.18,9.46"
+              ]
+            },
+            {
+              "text": "As classification models typically deal with a manageable number of classes, using probabilities in measures such as entropy (Eq. 1) can gauge informativeness.",
+              "coords": [
+                "3,70.47,533.77,220.48,9.46",
+                "3,70.87,547.31,218.27,9.46",
+                "3,70.87,560.86,220.08,9.46",
+                "3,70.87,574.41,64.77,9.46"
+              ]
+            },
+            {
+              "text": "For generative tasks however, the choices at each timestep match the extensive vocabulary size, typically on the order of 10 4 (Perlitz et al., 2023), making probability-based measures less reliable.",
+              "coords": [
+                "3,139.93,574.41,149.21,9.46",
+                "3,70.87,587.96,220.08,9.46",
+                "3,70.87,601.16,179.20,9.81",
+                "3,250.06,599.21,4.23,6.99",
+                "3,257.53,601.51,31.60,9.46",
+                "3,70.87,615.06,218.27,9.46",
+                "3,70.87,628.61,56.03,9.46"
+              ]
+            },
+            {
+              "text": "Further, the vocabulary choices are often interchangeable and dependent on previous tokens, which are not taken into account by measures such as entropy.",
+              "coords": [
+                "3,131.63,628.61,157.51,9.46",
+                "3,70.87,642.16,218.27,9.46",
+                "3,70.87,655.71,220.08,9.46",
+                "3,70.87,669.26,98.05,9.46"
+              ]
+            },
+            {
+              "text": "Thus, we propose a novel method to implement active learning for generative tasks next.",
+              "coords": [
+                "3,173.68,669.26,115.46,9.46",
+                "3,70.87,682.81,218.27,9.46",
+                "3,70.87,696.36,45.89,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Active Learning for Generative Tasks",
+          "coords": [
+            "3,70.87,719.85,199.01,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Preliminaries We assume there is a large pool of unlabeled dataset U but only a small subset of labeled training data L can be obtained. L is itera-tively constructed by querying label for the mostinformative instance with respect to a learner model G. While other active learning scenarios exist (Settles, 2009), we focus on pool-based active learning because for many NLP tasks a large amount of unlabeled text data can be obtained from the web. The most commonly used measure of informativeness is the uncertainty metric entropy and the instance with highest entropy is defined as:",
+          "coords": [
+            "3,70.87,738.21,218.27,9.88",
+            "3,70.87,752.00,218.27,9.64",
+            "3,70.87,765.55,220.08,9.64",
+            "3,306.14,74.54,220.08,9.64",
+            "3,306.14,88.09,218.26,9.64",
+            "3,306.14,101.47,220.08,9.81",
+            "3,306.14,115.37,218.27,9.46",
+            "3,306.14,128.92,220.08,9.46",
+            "3,306.14,142.47,218.27,9.46",
+            "3,306.14,156.02,218.27,9.46",
+            "3,306.14,169.57,218.27,9.46",
+            "3,305.75,183.12,149.28,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Preliminaries We assume there is a large pool of unlabeled dataset U but only a small subset of labeled training data L can be obtained.",
+              "coords": [
+                "3,70.87,738.21,218.27,9.88",
+                "3,70.87,752.00,218.27,9.64",
+                "3,70.87,765.55,174.28,9.64"
+              ]
+            },
+            {
+              "text": "L is itera-tively constructed by querying label for the mostinformative instance with respect to a learner model G.",
+              "coords": [
+                "3,248.53,765.55,42.42,9.64",
+                "3,306.14,74.54,220.08,9.64",
+                "3,306.14,88.09,218.26,9.64",
+                "3,306.14,101.47,11.25,9.57"
+              ]
+            },
+            {
+              "text": "While other active learning scenarios exist (Settles, 2009), we focus on pool-based active learning because for many NLP tasks a large amount of unlabeled text data can be obtained from the web.",
+              "coords": [
+                "3,320.80,101.82,205.42,9.46",
+                "3,306.14,115.37,218.27,9.46",
+                "3,306.14,128.92,220.08,9.46",
+                "3,306.14,142.47,198.41,9.46"
+              ]
+            },
+            {
+              "text": "The most commonly used measure of informativeness is the uncertainty metric entropy and the instance with highest entropy is defined as:",
+              "coords": [
+                "3,507.78,142.47,16.62,9.46",
+                "3,306.14,156.02,218.27,9.46",
+                "3,306.14,169.57,218.27,9.46",
+                "3,305.75,183.12,149.28,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "x * E = argmax x - i P θ (y i |x)logP θ (y i |x) (1)",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "In Eq. 1, i ranges over all possible outputs. For an instance x, the probability of class y i is denoted as P θ (y i |x). Entropy is higher when probabilities are evenly distributed, indicating greater model uncertainty in class selection. However, as discussed earlier, this approach does not translate well to generative tasks. Thus, we propose a new measure for informativeness next.",
+          "coords": [
+            "3,306.14,244.57,218.45,9.46",
+            "3,306.14,257.77,218.27,10.63",
+            "3,306.14,271.32,218.26,10.77",
+            "3,306.14,285.22,220.08,9.46",
+            "3,306.14,298.77,218.27,9.46",
+            "3,306.14,312.32,220.08,9.46",
+            "3,306.14,325.86,218.45,9.46",
+            "3,306.14,339.41,93.33,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In Eq. 1, i ranges over all possible outputs.",
+              "coords": [
+                "3,306.14,244.57,197.55,9.46"
+              ]
+            },
+            {
+              "text": "For an instance x, the probability of class y i is denoted as P θ (y i |x).",
+              "coords": [
+                "3,509.30,244.57,15.29,9.46",
+                "3,306.14,257.77,218.27,10.63",
+                "3,306.14,271.32,52.92,10.77"
+              ]
+            },
+            {
+              "text": "Entropy is higher when probabilities are evenly distributed, indicating greater model uncertainty in class selection.",
+              "coords": [
+                "3,362.45,271.67,161.95,9.46",
+                "3,306.14,285.22,220.08,9.46",
+                "3,306.14,298.77,117.24,9.46"
+              ]
+            },
+            {
+              "text": "However, as discussed earlier, this approach does not translate well to generative tasks.",
+              "coords": [
+                "3,426.76,298.77,97.65,9.46",
+                "3,306.14,312.32,220.08,9.46",
+                "3,306.14,325.86,56.14,9.46"
+              ]
+            },
+            {
+              "text": "Thus, we propose a new measure for informativeness next.",
+              "coords": [
+                "3,365.66,325.86,158.94,9.46",
+                "3,306.14,339.41,93.33,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Infromativeness Measure for Generative Tasks To formulate a new measure of informativeness, we introduce the concept of a regulated attribute H. We define a regulated attribute as a property an LLM is expected to preserve during generation. For instance, when style-transferring offensive text or generating counter-narration, we expect the text to be inoffensive post generation. Thus, inoffensiveness would be the regulated attribute of the task. While we focus on a single regulated attribute in this work due to the nature of the tasks, it can be a weighted combination of multiple attributes. We propose training an auxiliary model R, to estimate the value of regulated attribute on interim output of the learner model. We can imagine the interim output to be in a 2-D space, where each token is a vector. R maps the 2-D interim output G(X i ) to a 1-D latent space conditioned on regulated attribute H. Then, a softmax over this 1-D space would inform how well the learner model is adhering to regulated attribute on an instance. While there are no restrictions on R's internal structure (e.g., it can be another pretrained transformer), it is required that the final output layer is a linear layer so that softmax can be applied. Formally, we define the informativeness of a sample as follows:",
+          "coords": [
+            "3,306.14,361.14,218.26,9.81",
+            "3,305.80,375.12,219.96,9.46",
+            "3,305.75,388.48,218.67,9.64",
+            "3,306.14,401.87,218.65,9.81",
+            "3,306.14,415.77,220.18,9.46",
+            "3,306.14,429.31,218.27,9.46",
+            "3,306.14,442.86,218.27,9.46",
+            "3,306.14,456.41,220.08,9.46",
+            "3,306.14,469.96,220.18,9.46",
+            "3,305.63,483.51,218.78,9.46",
+            "3,306.14,497.06,218.27,9.46",
+            "3,305.75,510.61,194.02,9.46",
+            "3,317.05,524.17,207.36,9.81",
+            "3,306.14,538.07,218.27,9.46",
+            "3,306.14,551.62,220.08,9.46",
+            "3,306.14,564.74,218.27,9.88",
+            "3,306.14,578.29,219.54,10.71",
+            "3,306.14,591.84,220.08,9.88",
+            "3,306.14,605.39,218.27,9.88",
+            "3,305.75,619.36,220.47,9.46",
+            "3,306.14,632.91,218.27,9.46",
+            "3,306.14,646.11,218.27,9.81",
+            "3,305.78,660.01,218.63,9.46",
+            "3,306.14,673.56,218.45,9.46",
+            "3,306.14,687.11,218.27,9.46",
+            "3,306.14,700.66,188.36,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Infromativeness Measure for Generative Tasks To formulate a new measure of informativeness, we introduce the concept of a regulated attribute H.",
+              "coords": [
+                "3,306.14,361.14,218.26,9.81",
+                "3,305.80,375.12,219.96,9.46",
+                "3,305.75,388.48,218.67,9.64",
+                "3,306.14,401.87,12.74,9.57"
+              ]
+            },
+            {
+              "text": "We define a regulated attribute as a property an LLM is expected to preserve during generation.",
+              "coords": [
+                "3,324.27,402.22,200.51,9.46",
+                "3,306.14,415.77,220.18,9.46"
+              ]
+            },
+            {
+              "text": "For instance, when style-transferring offensive text or generating counter-narration, we expect the text to be inoffensive post generation.",
+              "coords": [
+                "3,306.14,429.31,218.27,9.46",
+                "3,306.14,442.86,218.27,9.46",
+                "3,306.14,456.41,150.45,9.46"
+              ]
+            },
+            {
+              "text": "Thus, inoffensiveness would be the regulated attribute of the task.",
+              "coords": [
+                "3,462.04,456.41,64.18,9.46",
+                "3,306.14,469.96,220.18,9.46"
+              ]
+            },
+            {
+              "text": "While we focus on a single regulated attribute in this work due to the nature of the tasks, it can be a weighted combination of multiple attributes.",
+              "coords": [
+                "3,305.63,483.51,218.78,9.46",
+                "3,306.14,497.06,218.27,9.46",
+                "3,305.75,510.61,194.02,9.46"
+              ]
+            },
+            {
+              "text": "We propose training an auxiliary model R, to estimate the value of regulated attribute on interim output of the learner model.",
+              "coords": [
+                "3,317.05,524.17,207.36,9.81",
+                "3,306.14,538.07,218.27,9.46",
+                "3,306.14,551.62,118.48,9.46"
+              ]
+            },
+            {
+              "text": "We can imagine the interim output to be in a 2-D space, where each token is a vector.",
+              "coords": [
+                "3,427.93,551.62,98.29,9.46",
+                "3,306.14,564.74,218.27,9.88",
+                "3,306.14,578.71,47.46,9.46"
+              ]
+            },
+            {
+              "text": "R maps the 2-D interim output G(X i ) to a 1-D latent space conditioned on regulated attribute H.",
+              "coords": [
+                "3,356.98,578.29,168.70,10.71",
+                "3,306.14,591.84,220.08,9.88",
+                "3,306.14,605.46,45.30,9.81"
+              ]
+            },
+            {
+              "text": "Then, a softmax over this 1-D space would inform how well the learner model is adhering to regulated attribute on an instance.",
+              "coords": [
+                "3,357.82,605.39,166.59,9.88",
+                "3,305.75,619.36,220.47,9.46",
+                "3,306.14,632.91,184.53,9.46"
+              ]
+            },
+            {
+              "text": "While there are no restrictions on R's internal structure (e.g., it can be another pretrained transformer), it is required that the final output layer is a linear layer so that softmax can be applied.",
+              "coords": [
+                "3,497.22,632.91,27.20,9.46",
+                "3,306.14,646.11,218.27,9.81",
+                "3,305.78,660.01,218.63,9.46",
+                "3,306.14,673.56,218.45,9.46",
+                "3,306.14,687.11,130.69,9.46"
+              ]
+            },
+            {
+              "text": "Formally, we define the informativeness of a sample as follows:",
+              "coords": [
+                "3,440.08,687.11,84.33,9.46",
+                "3,306.14,700.66,188.36,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "E i = Sof tmax(R(G(x i ), H))(2)",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "In the equation, G(x i ) is the LLM generated output on input x i . R is an auxiliary model with a linear output layer that transforms G(x i ) with respect to regulated attribute H. Since R(G(x i ), H) is a vector with a single dimension, we can apply softmax over this vector. We replace the entropy portion of Eq. 1 with this measure to obtain most important sample for generative tasks:",
+          "coords": [
+            "3,317.05,751.83,209.17,10.63",
+            "3,306.14,765.38,218.26,10.63",
+            "4,70.87,74.37,220.08,10.63",
+            "4,70.87,87.92,219.54,10.63",
+            "4,70.87,101.82,218.65,9.46",
+            "4,70.87,115.37,218.65,9.46",
+            "4,70.87,128.92,218.27,9.46",
+            "4,70.87,142.47,166.81,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In the equation, G(x i ) is the LLM generated output on input x i .",
+              "coords": [
+                "3,317.05,751.83,209.17,10.63",
+                "3,306.14,765.38,71.64,10.63"
+              ]
+            },
+            {
+              "text": "R is an auxiliary model with a linear output layer that transforms G(x i ) with respect to regulated attribute H. Since R(G(x i ), H) is a vector with a single dimension, we can apply softmax over this vector.",
+              "coords": [
+                "3,383.99,765.38,140.41,9.81",
+                "4,70.87,74.37,220.08,10.63",
+                "4,70.87,87.92,219.54,10.63",
+                "4,70.87,101.82,218.65,9.46",
+                "4,70.87,115.37,110.56,9.46"
+              ]
+            },
+            {
+              "text": "We replace the entropy portion of Eq. 1 with this measure to obtain most important sample for generative tasks:",
+              "coords": [
+                "4,185.98,115.37,103.54,9.46",
+                "4,70.87,128.92,218.27,9.46",
+                "4,70.87,142.47,166.81,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "x * E = argmax x -Sof tmax(R(G(x), H)) (3)",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "Clustering-based and Knowledge Distillation While the proposed measure is applicable to standard active learning paradigm (Section 5), we advocate for using it in conjunction with clustering as outlined in Section 3.1. The unlabeled data is vectorized and split into m clusters {C 1 , C 2 , ...C m } and most informative samples according to our measure (Eq. 3) are chosen from each cluster. Next, we apply knowledge distillation on these samples. We assume we have access to a large language model, S, and we want to leverage knowledge distillation of S to assist training of learner model G. In our approach, we apply knowledge distillation with the concept of a template T : T(x) : on input x, prompt S to generate f (x) while respecting instruction I(x). f (x) is the target task, e.g., \"style transfer input text from offensive to inoffensive\". And I is instruction specific to the task. I can be in different forms depending on the task. For instance, I(x) can be \"ensure generated output respects social acceptability\". Instead of standard human labeling step, we pass this template to S on instances corresponding to Eq.3 for each cluster C i . The generated content is then verified by a human and added to the training data. The learner model is retrained and this process is repeated until resources runs out. We consolidate our approach in algorithm 1.",
+          "coords": [
+            "4,70.87,209.87,218.27,9.81",
+            "4,70.35,223.84,220.59,9.46",
+            "4,70.87,237.39,220.08,9.46",
+            "4,70.59,250.94,218.54,9.46",
+            "4,70.87,264.49,220.08,9.46",
+            "4,70.87,277.69,218.27,10.63",
+            "4,70.87,291.59,218.45,9.46",
+            "4,70.87,305.14,199.68,9.46",
+            "4,81.78,318.75,207.35,9.46",
+            "4,70.87,332.30,218.27,9.46",
+            "4,70.87,345.50,220.08,9.81",
+            "4,70.87,359.05,218.46,9.81",
+            "4,70.87,372.60,218.27,9.81",
+            "4,70.87,386.15,194.85,9.81",
+            "4,92.07,408.93,175.24,9.57",
+            "4,92.68,422.48,171.20,9.57",
+            "4,70.87,445.26,218.26,9.81",
+            "4,70.87,458.81,218.27,9.81",
+            "4,70.87,472.36,218.27,9.81",
+            "4,70.87,485.91,218.27,9.81",
+            "4,70.87,499.81,220.08,9.46",
+            "4,70.87,513.36,218.27,9.46",
+            "4,70.87,526.56,218.26,9.81",
+            "4,70.87,540.11,218.26,10.63",
+            "4,70.87,554.01,220.08,9.46",
+            "4,70.87,567.56,218.27,9.46",
+            "4,70.87,581.10,218.27,9.46",
+            "4,70.87,594.65,176.95,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Clustering-based and Knowledge Distillation While the proposed measure is applicable to standard active learning paradigm (Section 5), we advocate for using it in conjunction with clustering as outlined in Section 3.1.",
+              "coords": [
+                "4,70.87,209.87,218.27,9.81",
+                "4,70.35,223.84,220.59,9.46",
+                "4,70.87,237.39,220.08,9.46",
+                "4,70.59,250.94,218.54,9.46",
+                "4,70.87,264.49,101.90,9.46"
+              ]
+            },
+            {
+              "text": "The unlabeled data is vectorized and split into m clusters {C 1 , C 2 , ...C m } and most informative samples according to our measure (Eq. 3) are chosen from each cluster.",
+              "coords": [
+                "4,176.17,264.49,114.78,9.46",
+                "4,70.87,277.69,218.27,10.63",
+                "4,70.87,291.59,218.45,9.46",
+                "4,70.87,305.14,199.68,9.46"
+              ]
+            },
+            {
+              "text": "Next, we apply knowledge distillation on these samples.",
+              "coords": [
+                "4,81.78,318.75,207.35,9.46",
+                "4,70.87,332.30,38.63,9.46"
+              ]
+            },
+            {
+              "text": "We assume we have access to a large language model, S, and we want to leverage knowledge distillation of S to assist training of learner model G.",
+              "coords": [
+                "4,116.53,332.30,172.61,9.46",
+                "4,70.87,345.50,220.08,9.81",
+                "4,70.87,359.05,218.46,9.81",
+                "4,70.87,372.60,42.49,9.81"
+              ]
+            },
+            {
+              "text": "In our approach, we apply knowledge distillation with the concept of a template T : T(x) : on input x, prompt S to generate f (x) while respecting instruction I(x).",
+              "coords": [
+                "4,118.50,372.95,170.64,9.46",
+                "4,70.87,386.15,194.85,9.81",
+                "4,92.07,408.93,175.24,9.57",
+                "4,92.68,422.48,171.20,9.57"
+              ]
+            },
+            {
+              "text": "f (x) is the target task, e.g., \"style transfer input text from offensive to inoffensive\".",
+              "coords": [
+                "4,70.87,445.26,218.26,9.81",
+                "4,70.87,459.16,130.31,9.46"
+              ]
+            },
+            {
+              "text": "And I is instruction specific to the task.",
+              "coords": [
+                "4,204.50,458.81,84.63,9.81",
+                "4,70.87,472.71,88.37,9.46"
+              ]
+            },
+            {
+              "text": "I can be in different forms depending on the task.",
+              "coords": [
+                "4,165.86,472.36,123.28,9.81",
+                "4,70.87,486.26,100.89,9.46"
+              ]
+            },
+            {
+              "text": "For instance, I(x) can be \"ensure generated output respects social acceptability\".",
+              "coords": [
+                "4,176.06,485.91,113.07,9.81",
+                "4,70.87,499.81,220.08,9.46",
+                "4,70.87,513.36,19.07,9.46"
+              ]
+            },
+            {
+              "text": "Instead of standard human labeling step, we pass this template to S on instances corresponding to Eq.3 for each cluster C i .",
+              "coords": [
+                "4,93.49,513.36,195.65,9.46",
+                "4,70.87,526.56,218.26,9.81",
+                "4,70.87,540.11,118.03,10.63"
+              ]
+            },
+            {
+              "text": "The generated content is then verified by a human and added to the training data.",
+              "coords": [
+                "4,192.29,540.46,96.84,9.46",
+                "4,70.87,554.01,220.08,9.46",
+                "4,70.87,567.56,38.78,9.46"
+              ]
+            },
+            {
+              "text": "The learner model is retrained and this process is repeated until resources runs out.",
+              "coords": [
+                "4,114.56,567.56,174.58,9.46",
+                "4,70.87,581.10,198.02,9.46"
+              ]
+            },
+            {
+              "text": "We consolidate our approach in algorithm 1.",
+              "coords": [
+                "4,274.56,581.10,14.58,9.46",
+                "4,70.87,594.65,176.95,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "4 Case Studies 4.1 Task Definitions Counter-Narration When faced with offensive or sensitive content, an LLM may opt to not respond, potentially allowing harmful ideologies to persist. Counter-narration (Fanton et al., 2021), also known as counterspeech (Mathew et al., 2018), has been proposed as an alternative to address this issue. (Benesch, 2014) suggest that counterspeech can be more effective long-term in addressing offensive language. However, these approaches are Algorithm 1 Knowledge Distilled Clustering-Based Active Learning for Generative Tasks U, L ← unlabeled data, labeled data",
+          "coords": [
+            "4,70.87,617.50,82.69,10.75",
+            "4,70.87,639.30,99.62,9.81",
+            "4,70.87,656.91,218.27,9.88",
+            "4,70.87,670.89,220.08,9.46",
+            "4,70.87,684.44,218.26,9.46",
+            "4,70.87,697.99,118.65,9.46",
+            "4,285.71,697.99,4.79,9.46",
+            "4,70.87,711.54,123.31,9.46",
+            "4,285.90,711.54,4.60,9.46",
+            "4,70.87,725.09,218.27,9.46",
+            "4,70.87,738.63,24.45,9.46",
+            "4,172.64,738.63,116.49,9.46",
+            "4,70.87,752.18,220.08,9.46",
+            "4,70.87,765.73,218.27,9.46",
+            "4,305.75,73.64,220.47,9.88",
+            "4,306.14,87.62,193.05,9.46",
+            "4,317.05,103.65,157.54,9.81"
+          ],
+          "sentences": [
+            {
+              "text": "4 Case Studies 4.1 Task Definitions Counter-Narration When faced with offensive or sensitive content, an LLM may opt to not respond, potentially allowing harmful ideologies to persist.",
+              "coords": [
+                "4,70.87,617.50,82.69,10.75",
+                "4,70.87,639.30,99.62,9.81",
+                "4,70.87,656.91,218.27,9.88",
+                "4,70.87,670.89,220.08,9.46",
+                "4,70.87,684.44,218.26,9.46",
+                "4,70.87,697.99,31.84,9.46"
+              ]
+            },
+            {
+              "text": "Counter-narration (Fanton et al., 2021), also known as counterspeech (Mathew et al., 2018), has been proposed as an alternative to address this issue.",
+              "coords": [
+                "4,110.01,697.99,180.48,9.46",
+                "4,70.87,711.54,219.63,9.46",
+                "4,70.87,725.09,218.27,9.46",
+                "4,70.87,738.63,24.45,9.46"
+              ]
+            },
+            {
+              "text": "(Benesch, 2014) suggest that counterspeech can be more effective long-term in addressing offensive language.",
+              "coords": [
+                "4,98.69,738.63,190.44,9.46",
+                "4,70.87,752.18,220.08,9.46",
+                "4,70.87,765.73,77.43,9.46"
+              ]
+            },
+            {
+              "text": "However, these approaches are Algorithm 1 Knowledge Distilled Clustering-Based Active Learning for Generative Tasks U, L ← unlabeled data, labeled data",
+              "coords": [
+                "4,151.85,765.73,137.29,9.46",
+                "4,305.75,73.64,220.47,9.88",
+                "4,306.14,87.62,193.05,9.46",
+                "4,317.05,103.65,157.54,9.81"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "S ← LLM for distillation G ← bootstrapped model R ← auxiliary model H ← regulated attribute B ← labeling budget N ← annotation batch size m ← initial number of clusters V ← vectorize U Cluster V into {C 1 , C 2 , ... C m } while B ≥ 0 do for i=0,1,...m do for j=0,1,...|C i | do E ij ← R(G(X ij ), H) end for x * i ← argmax j (E ij ) T * i ← generation template T for x * i {(x * ik , y * ik )} ← Distill S with T i (x i ) Add {(x * ik , y * i )} to L end for G ← retrain on L B = B -N end while",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "often discussed within the context of online hate. From an LLM's safety perspective, overly aggressive responses may alienate users. Therefore, the scope of counter-narration needs to be adjusted to be appropriate for an LLM response in a socially acceptable manner. For social acceptability, an LLM needs to generate counters that are polite and respectful (Brown and Levinson, 1987), focusing on non-imposition and the preservation of freedom and desire. We propose utilizing the template to prompt distillation model to adhere to social acceptability and craft more appropriate counter-narration for the learner model. Examples of this approach is illustrated in Table 1 alongside examples from existing works.",
+          "coords": [
+            "4,306.14,445.40,220.18,9.46",
+            "4,306.14,458.95,220.08,9.46",
+            "4,306.14,472.50,218.27,9.46",
+            "4,306.14,486.05,218.27,9.46",
+            "4,306.14,499.60,218.65,9.46",
+            "4,306.14,513.15,218.27,9.46",
+            "4,306.14,526.70,218.27,9.46",
+            "4,306.14,540.25,43.87,9.46",
+            "4,478.58,540.25,45.84,9.46",
+            "4,306.14,553.80,218.26,9.46",
+            "4,306.14,567.35,218.27,9.46",
+            "4,306.14,580.90,220.08,9.46",
+            "4,306.14,594.45,218.27,9.46",
+            "4,306.14,607.99,218.27,9.46",
+            "4,306.14,621.54,94.27,9.46",
+            "4,412.12,621.54,112.30,9.46",
+            "4,306.14,635.09,66.39,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "often discussed within the context of online hate.",
+              "coords": [
+                "4,306.14,445.40,220.18,9.46"
+              ]
+            },
+            {
+              "text": "From an LLM's safety perspective, overly aggressive responses may alienate users.",
+              "coords": [
+                "4,306.14,458.95,220.08,9.46",
+                "4,306.14,472.50,151.49,9.46"
+              ]
+            },
+            {
+              "text": "Therefore, the scope of counter-narration needs to be adjusted to be appropriate for an LLM response in a socially acceptable manner.",
+              "coords": [
+                "4,461.31,472.50,63.10,9.46",
+                "4,306.14,486.05,218.27,9.46",
+                "4,306.14,499.60,218.65,9.46",
+                "4,306.14,513.15,86.73,9.46"
+              ]
+            },
+            {
+              "text": "For social acceptability, an LLM needs to generate counters that are polite and respectful (Brown and Levinson, 1987), focusing on non-imposition and the preservation of freedom and desire.",
+              "coords": [
+                "4,400.71,513.15,123.70,9.46",
+                "4,306.14,526.70,218.27,9.46",
+                "4,306.14,540.25,218.27,9.46",
+                "4,306.14,553.80,218.26,9.46",
+                "4,306.14,567.35,48.77,9.46"
+              ]
+            },
+            {
+              "text": "We propose utilizing the template to prompt distillation model to adhere to social acceptability and craft more appropriate counter-narration for the learner model.",
+              "coords": [
+                "4,360.18,567.35,164.24,9.46",
+                "4,306.14,580.90,220.08,9.46",
+                "4,306.14,594.45,218.27,9.46",
+                "4,306.14,607.99,96.40,9.46"
+              ]
+            },
+            {
+              "text": "Examples of this approach is illustrated in Table 1 alongside examples from existing works.",
+              "coords": [
+                "4,406.07,607.99,118.35,9.46",
+                "4,306.14,621.54,218.27,9.46",
+                "4,306.14,635.09,66.39,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Style-Transfer Simply censoring model output when it generates offensive language can detract from user experience. Style transfer -the task of rephrasing text to retain specific stylistic properties without altering the underlying intent (Prabhumoye et al., 2018), has been suggested as an alternative method to mitigate offensiveness (Nogueira dos Santos et al., 2018;Atwell et al., 2022). However, existing models primarily address social media con- tent and may not ensure a non-aggressive stance essential for LLM safety. We propose adapting style-transfer to not only remove offensiveness but also to ensure it conforms to social expectations that LLMs should not be aggressive toward users. Like counter-narration, we advocate for integrating this social acceptability into the style-transfer process. Table 1 demonstrates how our proposed style-transfer differs from prior work.",
+          "coords": [
+            "4,306.14,656.91,218.27,9.88",
+            "4,305.75,670.89,218.66,9.46",
+            "4,306.14,684.44,218.27,9.46",
+            "4,306.14,697.99,218.27,9.46",
+            "4,305.75,711.54,158.75,9.46",
+            "4,357.19,725.09,167.23,9.46",
+            "4,306.14,738.63,218.27,9.46",
+            "4,475.80,752.18,49.98,9.46",
+            "4,306.14,765.73,220.08,9.46",
+            "5,70.87,213.80,218.27,9.46",
+            "5,70.87,227.35,218.27,9.46",
+            "5,70.87,240.90,218.26,9.46",
+            "5,70.87,254.45,218.27,9.46",
+            "5,70.87,268.00,220.17,9.46",
+            "5,70.87,281.55,220.08,9.46",
+            "5,70.87,295.10,218.45,9.46",
+            "5,70.87,308.65,64.68,9.46",
+            "5,147.03,308.65,142.11,9.46",
+            "5,70.87,322.20,164.12,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Style-Transfer Simply censoring model output when it generates offensive language can detract from user experience.",
+              "coords": [
+                "4,306.14,656.91,218.27,9.88",
+                "4,305.75,670.89,218.66,9.46",
+                "4,306.14,684.44,95.88,9.46"
+              ]
+            },
+            {
+              "text": "Style transfer -the task of rephrasing text to retain specific stylistic properties without altering the underlying intent (Prabhumoye et al., 2018), has been suggested as an alternative method to mitigate offensiveness (Nogueira dos Santos et al., 2018;Atwell et al., 2022).",
+              "coords": [
+                "4,405.40,684.44,119.01,9.46",
+                "4,306.14,697.99,218.27,9.46",
+                "4,305.75,711.54,218.66,9.46",
+                "4,306.14,725.09,218.27,9.46",
+                "4,306.14,738.63,218.27,9.46",
+                "4,306.14,752.18,174.38,9.46"
+              ]
+            },
+            {
+              "text": "However, existing models primarily address social media con- tent and may not ensure a non-aggressive stance essential for LLM safety.",
+              "coords": [
+                "4,483.91,752.18,41.87,9.46",
+                "4,306.14,765.73,220.08,9.46",
+                "5,70.87,213.80,218.27,9.46",
+                "5,70.87,227.35,115.25,9.46"
+              ]
+            },
+            {
+              "text": "We propose adapting style-transfer to not only remove offensiveness but also to ensure it conforms to social expectations that LLMs should not be aggressive toward users.",
+              "coords": [
+                "5,193.13,227.35,96.01,9.46",
+                "5,70.87,240.90,218.26,9.46",
+                "5,70.87,254.45,218.27,9.46",
+                "5,70.87,268.00,220.17,9.46"
+              ]
+            },
+            {
+              "text": "Like counter-narration, we advocate for integrating this social acceptability into the style-transfer process.",
+              "coords": [
+                "5,70.87,281.55,220.08,9.46",
+                "5,70.87,295.10,218.45,9.46",
+                "5,70.87,308.65,36.15,9.46"
+              ]
+            },
+            {
+              "text": "Table 1 demonstrates how our proposed style-transfer differs from prior work.",
+              "coords": [
+                "5,111.09,308.65,178.05,9.46",
+                "5,70.87,322.20,164.12,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Datasets",
+          "coords": [
+            "5,70.87,343.32,63.93,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We contribute two datasets constructed using our framework for counter narration and styletransferring offensive text into inoffensive ones. To construct the datasets, we start with an unlabeled pool of data. From this unlabeled pool of data, instances are chosen either randomly (for baseline) or informative instances added to the train data iteratively following our proposed active learning paradigm. Number of instances in train data is kept small as the goal of active learning is to train models with limited resources. We construct three training splits for each task:",
+          "coords": [
+            "5,70.35,361.22,218.78,9.46",
+            "5,70.87,374.77,220.08,9.46",
+            "5,70.87,388.32,218.27,9.46",
+            "5,70.87,401.87,218.27,9.46",
+            "5,70.87,415.42,220.07,9.46",
+            "5,70.87,428.97,219.00,9.46",
+            "5,70.87,442.52,220.08,9.46",
+            "5,70.87,456.07,218.27,9.46",
+            "5,70.87,469.62,218.27,9.46",
+            "5,70.87,483.16,218.27,9.46",
+            "5,70.87,496.71,218.27,9.46",
+            "5,70.87,510.26,121.20,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We contribute two datasets constructed using our framework for counter narration and styletransferring offensive text into inoffensive ones.",
+              "coords": [
+                "5,70.35,361.22,218.78,9.46",
+                "5,70.87,374.77,220.08,9.46",
+                "5,70.87,388.32,203.94,9.46"
+              ]
+            },
+            {
+              "text": "To construct the datasets, we start with an unlabeled pool of data.",
+              "coords": [
+                "5,278.13,388.32,11.00,9.46",
+                "5,70.87,401.87,218.27,9.46",
+                "5,70.87,415.42,55.39,9.46"
+              ]
+            },
+            {
+              "text": "From this unlabeled pool of data, instances are chosen either randomly (for baseline) or informative instances added to the train data iteratively following our proposed active learning paradigm.",
+              "coords": [
+                "5,129.65,415.42,161.29,9.46",
+                "5,70.87,428.97,219.00,9.46",
+                "5,70.87,442.52,220.08,9.46",
+                "5,70.87,456.07,218.27,9.46",
+                "5,70.87,469.62,44.81,9.46"
+              ]
+            },
+            {
+              "text": "Number of instances in train data is kept small as the goal of active learning is to train models with limited resources.",
+              "coords": [
+                "5,123.12,469.62,166.02,9.46",
+                "5,70.87,483.16,218.27,9.46",
+                "5,70.87,496.71,133.57,9.46"
+              ]
+            },
+            {
+              "text": "We construct three training splits for each task:",
+              "coords": [
+                "5,207.83,496.71,81.30,9.46",
+                "5,70.87,510.26,121.20,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "1. Standard: Samples are chosen randomly from unlabeled data for fine-tuning.",
+          "coords": [
+            "5,79.52,528.68,210.00,9.88",
+            "5,92.68,542.66,156.03,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "1. Standard: Samples are chosen randomly from unlabeled data for fine-tuning.",
+              "coords": [
+                "5,79.52,528.68,210.00,9.88",
+                "5,92.68,542.66,156.03,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "2. TopN-AL: N most informative samples are added to training data without clustering.",
+          "coords": [
+            "5,79.52,563.05,209.61,9.88",
+            "5,92.68,577.03,179.38,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "2. TopN-AL: N most informative samples are added to training data without clustering.",
+              "coords": [
+                "5,79.52,563.05,209.61,9.88",
+                "5,92.68,577.03,179.38,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Cluster-AL:",
+          "coords": [
+            "5,79.52,597.42,70.34,9.88"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The unlabeled data is clustered into K regions. N/K most informative instances are chosen from each region.",
+          "coords": [
+            "5,152.60,597.85,136.53,9.46",
+            "5,92.68,611.21,198.26,9.64",
+            "5,92.68,624.94,160.39,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "The unlabeled data is clustered into K regions.",
+              "coords": [
+                "5,152.60,597.85,136.53,9.46",
+                "5,92.68,611.21,70.29,9.64"
+              ]
+            },
+            {
+              "text": "N/K most informative instances are chosen from each region.",
+              "coords": [
+                "5,172.55,611.21,118.40,9.64",
+                "5,92.68,624.94,160.39,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Standard fine-tuning with randomly chosen samples serves as baseline. TopN-AL relies solely on informativeness to obtain fine-tuning data but does not utilize clustering. Cluster-AL is the paradigm of our framework, outlined in Algorithm 1. All three approaches have access to GPT-4 as distillation model. To evaluate these different paradigms, we choose a randomly chosen subset of the unlabeled data as the test set. The test set is kept fixed with all splits for consistent results.",
+          "coords": [
+            "5,81.78,643.79,209.17,9.46",
+            "5,70.87,657.34,218.27,9.46",
+            "5,70.87,670.89,218.27,9.46",
+            "5,70.87,684.44,218.27,9.46",
+            "5,70.87,697.99,218.27,9.46",
+            "5,70.87,711.54,220.08,9.46",
+            "5,70.87,725.09,219.64,9.46",
+            "5,70.47,738.63,220.48,9.46",
+            "5,70.87,752.18,218.27,9.46",
+            "5,70.47,765.73,154.55,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Standard fine-tuning with randomly chosen samples serves as baseline.",
+              "coords": [
+                "5,81.78,643.79,209.17,9.46",
+                "5,70.87,657.34,101.79,9.46"
+              ]
+            },
+            {
+              "text": "TopN-AL relies solely on informativeness to obtain fine-tuning data but does not utilize clustering.",
+              "coords": [
+                "5,176.05,657.34,113.09,9.46",
+                "5,70.87,670.89,218.27,9.46",
+                "5,70.87,684.44,93.73,9.46"
+              ]
+            },
+            {
+              "text": "Cluster-AL is the paradigm of our framework, outlined in Algorithm 1.",
+              "coords": [
+                "5,167.99,684.44,121.15,9.46",
+                "5,70.87,697.99,197.70,9.46"
+              ]
+            },
+            {
+              "text": "All three approaches have access to GPT-4 as distillation model.",
+              "coords": [
+                "5,274.92,697.99,14.22,9.46",
+                "5,70.87,711.54,220.08,9.46",
+                "5,70.87,725.09,49.87,9.46"
+              ]
+            },
+            {
+              "text": "To evaluate these different paradigms, we choose a randomly chosen subset of the unlabeled data as the test set.",
+              "coords": [
+                "5,124.11,725.09,166.39,9.46",
+                "5,70.47,738.63,220.48,9.46",
+                "5,70.87,752.18,108.63,9.46"
+              ]
+            },
+            {
+              "text": "The test set is kept fixed with all splits for consistent results.",
+              "coords": [
+                "5,182.90,752.18,106.24,9.46",
+                "5,70.47,765.73,154.55,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Counter-Narration Dataset We start by creating unlabeled pool of data from the source text of (Hassan and Alikhani, 2023b) and (Fanton et al., 2021). Hassan and Alikhani (2023b) contains 250 offensive texts and Fanton et al. ( 2021) contains 5K hatespeech targeting women, LGBTQ+, muslims, migrants, disabled and jews. While both of the original datasets contain counter-speech data, we do not use them and create new set of counternarrations according to Section 4.1 as counters in (Hassan and Alikhani, 2023b;Fanton et al., 2021) may not be socially acceptable for use in context of LLM safety (Table 1).",
+          "coords": [
+            "5,306.14,213.38,220.08,9.88",
+            "5,306.14,227.35,218.27,9.46",
+            "5,443.91,240.90,16.07,9.46",
+            "5,329.67,254.45,194.74,9.46",
+            "5,306.14,268.00,152.99,9.46",
+            "5,478.91,268.00,45.50,9.46",
+            "5,306.14,281.55,220.08,9.46",
+            "5,306.14,295.10,218.27,9.46",
+            "5,306.14,308.65,219.63,9.46",
+            "5,305.75,322.20,220.47,9.46",
+            "5,306.14,335.74,218.27,9.46",
+            "5,306.14,362.84,218.27,9.46",
+            "5,306.14,376.39,93.95,9.46",
+            "5,406.76,376.39,7.88,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Counter-Narration Dataset We start by creating unlabeled pool of data from the source text of (Hassan and Alikhani, 2023b) and (Fanton et al., 2021).",
+              "coords": [
+                "5,306.14,213.38,220.08,9.88",
+                "5,306.14,227.35,218.27,9.46",
+                "5,305.78,240.90,219.99,9.46",
+                "5,306.14,254.45,28.23,9.46"
+              ]
+            },
+            {
+              "text": "Hassan and Alikhani (2023b) contains 250 offensive texts and Fanton et al. ( 2021) contains 5K hatespeech targeting women, LGBTQ+, muslims, migrants, disabled and jews.",
+              "coords": [
+                "5,337.75,254.45,186.66,9.46",
+                "5,306.14,268.00,218.27,9.46",
+                "5,306.14,281.55,220.08,9.46",
+                "5,306.14,295.10,151.85,9.46"
+              ]
+            },
+            {
+              "text": "While both of the original datasets contain counter-speech data, we do not use them and create new set of counternarrations according to Section 4.1 as counters in (Hassan and Alikhani, 2023b;Fanton et al., 2021) may not be socially acceptable for use in context of LLM safety (Table 1).",
+              "coords": [
+                "5,462.17,295.10,62.25,9.46",
+                "5,306.14,308.65,219.63,9.46",
+                "5,305.75,322.20,220.47,9.46",
+                "5,306.14,335.74,218.27,9.46",
+                "5,305.78,349.29,219.36,9.46",
+                "5,306.14,362.84,218.27,9.46",
+                "5,306.14,376.39,108.49,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Utilizing the template with GPT-4 (OpenAI et al., 2023), we generate counter-narrations of 400 random samples to create the test set. To build the train splits, we use 100 random instances for bootstrapping the learner model. 100 more are added according to definitions of Standard, TopN-AL and Cluster-AL splits. The total count of this dataset is 3X200 + 400 = 1000 pairs. Style-Transfer Dataset Similar to counternarration, we start with a set of offensive texts as our unlabeled pool of data. For this, we use offensive-text portion of APPDIA (Atwell et al., 2022) and a subset of the OLID dataset (Zampieri et al., 2019). The APPDIA portion of the data contains 2K offensive comments from Reddit and the OLID portion of the data contains 2K offensive posts from Twitter. Similar to the counternarration scenario, Atwell et al. (2022) do contain style-transferred counterparts but we do not use them as they may not be socially acceptable for LLMs.",
+          "coords": [
+            "5,317.05,390.93,208.72,9.46",
+            "5,306.14,404.47,220.08,9.46",
+            "5,306.14,418.02,218.27,9.46",
+            "5,306.14,431.57,220.08,9.46",
+            "5,306.14,445.12,218.27,9.46",
+            "5,306.14,458.67,218.27,9.46",
+            "5,306.14,472.22,218.27,9.46",
+            "5,306.14,485.77,117.75,9.46",
+            "5,306.14,509.67,220.08,9.88",
+            "5,306.14,523.64,218.27,9.46",
+            "5,306.14,537.19,218.27,9.46",
+            "5,306.14,550.74,153.27,9.46",
+            "5,334.42,564.29,143.47,9.46",
+            "5,360.06,577.84,164.36,9.46",
+            "5,306.14,591.39,218.27,9.46",
+            "5,306.14,604.94,220.08,9.46",
+            "5,306.14,618.48,220.08,9.46",
+            "5,306.14,632.03,81.35,9.46",
+            "5,478.57,632.03,45.84,9.46",
+            "5,306.14,645.58,218.27,9.46",
+            "5,306.14,659.13,218.45,9.46",
+            "5,306.14,672.68,30.00,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Utilizing the template with GPT-4 (OpenAI et al., 2023), we generate counter-narrations of 400 random samples to create the test set.",
+              "coords": [
+                "5,317.05,390.93,208.72,9.46",
+                "5,306.14,404.47,220.08,9.46",
+                "5,306.14,418.02,157.02,9.46"
+              ]
+            },
+            {
+              "text": "To build the train splits, we use 100 random instances for bootstrapping the learner model.",
+              "coords": [
+                "5,469.35,418.02,55.07,9.46",
+                "5,306.14,431.57,220.08,9.46",
+                "5,306.14,445.12,125.45,9.46"
+              ]
+            },
+            {
+              "text": "100 more are added according to definitions of Standard, TopN-AL and Cluster-AL splits.",
+              "coords": [
+                "5,435.74,445.12,88.67,9.46",
+                "5,306.14,458.67,218.27,9.46",
+                "5,306.14,472.22,77.05,9.46"
+              ]
+            },
+            {
+              "text": "The total count of this dataset is 3X200 + 400 = 1000 pairs.",
+              "coords": [
+                "5,386.57,472.22,137.84,9.46",
+                "5,306.14,485.77,117.75,9.46"
+              ]
+            },
+            {
+              "text": "Style-Transfer Dataset Similar to counternarration, we start with a set of offensive texts as our unlabeled pool of data.",
+              "coords": [
+                "5,306.14,509.67,220.08,9.88",
+                "5,306.14,523.64,218.27,9.46",
+                "5,306.14,537.19,137.31,9.46"
+              ]
+            },
+            {
+              "text": "For this, we use offensive-text portion of APPDIA (Atwell et al., 2022) and a subset of the OLID dataset (Zampieri et al., 2019).",
+              "coords": [
+                "5,450.41,537.19,74.01,9.46",
+                "5,306.14,550.74,219.63,9.46",
+                "5,306.14,564.29,218.27,9.46",
+                "5,306.14,577.84,58.71,9.46"
+              ]
+            },
+            {
+              "text": "The APPDIA portion of the data contains 2K offensive comments from Reddit and the OLID portion of the data contains 2K offensive posts from Twitter.",
+              "coords": [
+                "5,372.55,577.84,151.87,9.46",
+                "5,306.14,591.39,218.27,9.46",
+                "5,306.14,604.94,220.08,9.46",
+                "5,306.14,618.48,108.38,9.46"
+              ]
+            },
+            {
+              "text": "Similar to the counternarration scenario, Atwell et al. (2022) do contain style-transferred counterparts but we do not use them as they may not be socially acceptable for LLMs.",
+              "coords": [
+                "5,422.03,618.48,104.18,9.46",
+                "5,306.14,632.03,218.27,9.46",
+                "5,306.14,645.58,218.27,9.46",
+                "5,306.14,659.13,218.45,9.46",
+                "5,306.14,672.68,30.00,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The construction of the training and test sets follow the same process as counter narration, yielding a total of 3X200 + 400 = 1000 pairs in the dataset.",
+          "coords": [
+            "5,317.05,687.21,209.17,9.46",
+            "5,306.14,700.76,218.27,9.46",
+            "5,306.14,714.31,219.56,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "The construction of the training and test sets follow the same process as counter narration, yielding a total of 3X200 + 400 = 1000 pairs in the dataset.",
+              "coords": [
+                "5,317.05,687.21,209.17,9.46",
+                "5,306.14,700.76,218.27,9.46",
+                "5,306.14,714.31,219.56,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Dataset Validation",
+          "coords": [
+            "5,306.14,738.21,86.87,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Two graduate student annotators were hired to verify the counter-narrations and style-transfers distilled from GPT-4. The anno-tators were provided with definitions of counternarration and style-transfer from (Hassan and Alikhani, 2023b) and (Atwell et al., 2022) respectively, with the additional constraint that the generations should be socially acceptable (i.e., not aggressive). The distilled generations were found to be reliable in > 98% cases. The annotators were hired and paid according to our institution's guidelines.",
+          "coords": [
+            "5,403.92,738.63,122.30,9.46",
+            "5,306.14,752.18,218.27,9.46",
+            "5,306.14,765.73,220.08,9.46",
+            "6,70.87,74.72,220.08,9.46",
+            "6,70.87,88.27,154.45,9.46",
+            "6,148.59,101.82,15.94,9.46",
+            "6,259.07,101.82,31.87,9.46",
+            "6,70.87,115.37,220.08,9.46",
+            "6,70.87,128.92,220.08,9.46",
+            "6,70.87,142.47,218.27,9.46",
+            "6,70.87,155.67,218.27,9.81",
+            "6,70.87,169.57,216.05,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Two graduate student annotators were hired to verify the counter-narrations and style-transfers distilled from GPT-4.",
+              "coords": [
+                "5,403.92,738.63,122.30,9.46",
+                "5,306.14,752.18,218.27,9.46",
+                "5,306.14,765.73,172.96,9.46"
+              ]
+            },
+            {
+              "text": "The anno-tators were provided with definitions of counternarration and style-transfer from (Hassan and Alikhani, 2023b) and (Atwell et al., 2022) respectively, with the additional constraint that the generations should be socially acceptable (i.e., not aggressive).",
+              "coords": [
+                "5,482.51,765.73,43.72,9.46",
+                "6,70.87,74.72,220.08,9.46",
+                "6,70.87,88.27,218.27,9.46",
+                "6,70.47,101.82,220.47,9.46",
+                "6,70.87,115.37,220.08,9.46",
+                "6,70.87,128.92,220.08,9.46",
+                "6,70.87,142.47,23.98,9.46"
+              ]
+            },
+            {
+              "text": "The distilled generations were found to be reliable in > 98% cases.",
+              "coords": [
+                "6,99.34,142.47,189.80,9.46",
+                "6,70.87,155.67,104.12,9.81"
+              ]
+            },
+            {
+              "text": "The annotators were hired and paid according to our institution's guidelines.",
+              "coords": [
+                "6,178.24,156.02,110.90,9.46",
+                "6,70.87,169.57,216.05,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Experiments",
+          "coords": [
+            "6,70.87,193.31,83.02,10.75"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Experiment Setup",
+          "coords": [
+            "6,70.87,215.75,109.09,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In our experiment setup, we aim to evaluate active learning in practice rather than simulation. To this end, learner models are trained over five iterations of active learning while constructing the train splits, before evaluation on the fixed test. The transfer models reside outside the active learning setting. The success of our framework would be indicated by not only performance on the two tasks, but also by being inclusive of different groups in data.",
+          "coords": [
+            "6,70.87,234.29,218.27,9.46",
+            "6,70.87,247.84,218.27,9.46",
+            "6,70.87,261.39,218.27,9.46",
+            "6,70.87,274.94,219.63,9.46",
+            "6,70.87,288.31,218.27,9.64",
+            "6,70.87,301.85,220.17,9.64",
+            "6,70.53,315.59,218.60,9.46",
+            "6,70.87,329.14,218.27,9.46",
+            "6,70.87,342.69,198.65,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In our experiment setup, we aim to evaluate active learning in practice rather than simulation.",
+              "coords": [
+                "6,70.87,234.29,218.27,9.46",
+                "6,70.87,247.84,185.19,9.46"
+              ]
+            },
+            {
+              "text": "To this end, learner models are trained over five iterations of active learning while constructing the train splits, before evaluation on the fixed test.",
+              "coords": [
+                "6,259.44,247.84,29.70,9.46",
+                "6,70.87,261.39,218.27,9.46",
+                "6,70.87,274.94,219.63,9.46",
+                "6,70.87,288.49,156.73,9.46"
+              ]
+            },
+            {
+              "text": "The transfer models reside outside the active learning setting.",
+              "coords": [
+                "6,233.27,288.31,55.86,9.64",
+                "6,70.87,301.85,220.17,9.64"
+              ]
+            },
+            {
+              "text": "The success of our framework would be indicated by not only performance on the two tasks, but also by being inclusive of different groups in data.",
+              "coords": [
+                "6,70.53,315.59,218.60,9.46",
+                "6,70.87,329.14,218.27,9.46",
+                "6,70.87,342.69,198.65,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Models",
+          "coords": [
+            "6,70.87,365.77,58.48,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Learner Model: We use FLAN-T5-base (Chung et al., 2022) as the learner model. FLAN-T5 is an instruction-tuned model with 220 million parameters. We choose FLAN-T5 as learner model as instruction-tuning makes it a capable LLM while its relative smaller size makes it easily deployable. The model is fine-tuned at each iteration of active learning for 10 epochs with learning rate of 3e-5.",
+          "coords": [
+            "6,70.87,383.89,183.42,9.88",
+            "6,126.17,397.87,162.97,9.46",
+            "6,70.87,411.42,220.08,9.46",
+            "6,70.87,424.96,218.27,9.46",
+            "6,70.87,438.51,218.27,9.46",
+            "6,70.87,452.06,220.17,9.46",
+            "6,70.53,465.61,218.61,9.46",
+            "6,70.87,479.16,214.19,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Learner Model: We use FLAN-T5-base (Chung et al., 2022) as the learner model.",
+              "coords": [
+                "6,70.87,383.89,218.26,9.88",
+                "6,70.87,397.87,147.00,9.46"
+              ]
+            },
+            {
+              "text": "FLAN-T5 is an instruction-tuned model with 220 million parameters.",
+              "coords": [
+                "6,221.25,397.87,67.88,9.46",
+                "6,70.87,411.42,220.08,9.46",
+                "6,70.87,424.96,23.79,9.46"
+              ]
+            },
+            {
+              "text": "We choose FLAN-T5 as learner model as instruction-tuning makes it a capable LLM while its relative smaller size makes it easily deployable.",
+              "coords": [
+                "6,100.33,424.96,188.81,9.46",
+                "6,70.87,438.51,218.27,9.46",
+                "6,70.87,452.06,220.17,9.46"
+              ]
+            },
+            {
+              "text": "The model is fine-tuned at each iteration of active learning for 10 epochs with learning rate of 3e-5.",
+              "coords": [
+                "6,70.53,465.61,218.61,9.46",
+                "6,70.87,479.16,214.19,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Distillation Model:",
+          "coords": [
+            "6,70.87,500.77,87.40,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We choose GPT-4 (OpenAI et al., 2023) for knowledge distillation due its vast knowledge base and advanced generation ability.",
+          "coords": [
+            "6,169.18,501.20,47.20,9.46",
+            "6,125.57,514.75,163.56,9.46",
+            "6,70.87,528.30,213.24,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We choose GPT-4 (OpenAI et al., 2023) for knowledge distillation due its vast knowledge base and advanced generation ability.",
+              "coords": [
+                "6,169.18,501.20,119.96,9.46",
+                "6,70.87,514.75,218.27,9.46",
+                "6,70.87,528.30,213.24,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Auxiliary Model:",
+          "coords": [
+            "6,70.87,549.91,88.25,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work, we use lightweight transformers with attached linear layers as auxiliary models. For counter-narration, we use a DistillBERT (Sanh et al., 2020), presented in Kim et al. (2023), trained to determine if a bot-response is safe in with respect to a human prompt.",
+          "coords": [
+            "6,170.03,550.33,119.11,9.46",
+            "6,70.87,563.88,218.27,9.46",
+            "6,70.87,577.43,218.27,9.46",
+            "6,70.87,590.98,60.46,9.46",
+            "6,209.25,590.98,58.57,9.46",
+            "6,121.26,604.53,167.87,9.46",
+            "6,70.87,618.08,182.71,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In this work, we use lightweight transformers with attached linear layers as auxiliary models.",
+              "coords": [
+                "6,170.03,550.33,119.11,9.46",
+                "6,70.87,563.88,218.27,9.46",
+                "6,70.87,577.43,87.01,9.46"
+              ]
+            },
+            {
+              "text": "For counter-narration, we use a DistillBERT (Sanh et al., 2020), presented in Kim et al. (2023), trained to determine if a bot-response is safe in with respect to a human prompt.",
+              "coords": [
+                "6,161.28,577.43,127.86,9.46",
+                "6,70.87,590.98,218.27,9.46",
+                "6,70.87,604.53,218.27,9.46",
+                "6,70.87,618.08,182.71,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "For style-transfer, we are only interested in the offensiveness of text post-style transfer, not the input text. We fine-tune a bert-base-cased (Devlin et al., 2019) on the Jigsaw datasetfoot_0 , achieving 93% macro-averaged F1 score on the Jigsaw test set.",
+          "coords": [
+            "6,81.78,631.95,207.36,9.46",
+            "6,70.87,645.50,218.27,9.46",
+            "6,70.87,659.05,182.31,9.46",
+            "6,124.26,672.60,90.04,9.46",
+            "6,221.33,672.60,68.71,9.46",
+            "6,70.87,686.15,207.28,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "For style-transfer, we are only interested in the offensiveness of text post-style transfer, not the input text.",
+              "coords": [
+                "6,81.78,631.95,207.36,9.46",
+                "6,70.87,645.50,218.27,9.46",
+                "6,70.87,659.05,44.32,9.46"
+              ]
+            },
+            {
+              "text": "We fine-tune a bert-base-cased (Devlin et al., 2019) on the Jigsaw datasetfoot_0 , achieving 93% macro-averaged F1 score on the Jigsaw test set.",
+              "coords": [
+                "6,118.55,659.05,170.59,9.46",
+                "6,70.87,672.60,219.18,9.46",
+                "6,70.87,686.15,207.28,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Clustering: For vectorizing the data, we use sentence transformer MiniLM-V2 (Wang et al., 2020). The vectorized data is clustered using KMeans with default parameters of scikit-learnfoot_1 . Number of clusters is set to 10, similar to prior work in classification domain (Hassan and Alikhani, 2023a).",
+          "coords": [
+            "6,70.87,707.76,220.07,9.88",
+            "6,70.87,721.73,132.13,9.46",
+            "6,286.41,721.73,4.63,9.46",
+            "6,70.53,735.28,218.61,9.46",
+            "6,306.14,74.72,150.61,9.46",
+            "6,465.13,74.72,59.29,9.46",
+            "6,306.14,88.27,220.08,9.46",
+            "6,306.14,101.82,68.18,9.46",
+            "6,505.34,101.82,4.72,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Clustering: For vectorizing the data, we use sentence transformer MiniLM-V2 (Wang et al., 2020).",
+              "coords": [
+                "6,70.87,707.76,220.07,9.88",
+                "6,70.87,721.73,220.17,9.46"
+              ]
+            },
+            {
+              "text": "The vectorized data is clustered using KMeans with default parameters of scikit-learnfoot_1 .",
+              "coords": [
+                "6,70.53,735.28,218.61,9.46",
+                "6,306.14,74.72,161.77,9.46"
+              ]
+            },
+            {
+              "text": "Number of clusters is set to 10, similar to prior work in classification domain (Hassan and Alikhani, 2023a).",
+              "coords": [
+                "6,474.79,74.72,49.63,9.46",
+                "6,306.14,88.27,220.08,9.46",
+                "6,306.14,101.82,203.91,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Transfer Models: Data acquired by the learner model is used to fine-tune a DialoGPT-large (Zhang et al., 2020) and a Mistral-7B model (Jiang et al., 2023). While Flan-T5 is an encoder-decoder model, DialoGPT is an earlier decoder-only model with 774 million parameters. Mistral-7B on the other hand, is a modern and larger model with 7 billion parameters that utilizes group query attention. These models are chosen to be significantly different from the learner FLAN-T5, and span different generations of LLMs. Transferability across generations would validate ubiquity of our approach.",
+          "coords": [
+            "6,306.14,122.96,218.46,9.88",
+            "6,306.14,136.94,185.22,9.46",
+            "6,362.25,150.49,106.19,9.46",
+            "6,329.15,164.04,196.62,9.46",
+            "6,306.14,177.58,218.27,9.46",
+            "6,305.87,191.13,218.73,9.46",
+            "6,306.14,204.68,220.08,9.46",
+            "6,306.14,218.23,220.18,9.46",
+            "6,305.80,231.78,220.42,9.46",
+            "6,306.14,245.33,218.26,9.46",
+            "6,306.14,258.88,220.08,9.46",
+            "6,306.14,272.43,206.56,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Transfer Models: Data acquired by the learner model is used to fine-tune a DialoGPT-large (Zhang et al., 2020) and a Mistral-7B model (Jiang et al., 2023).",
+              "coords": [
+                "6,306.14,122.96,218.46,9.88",
+                "6,306.14,136.94,218.27,9.46",
+                "6,306.14,150.49,219.63,9.46",
+                "6,306.14,164.04,27.61,9.46"
+              ]
+            },
+            {
+              "text": "While Flan-T5 is an encoder-decoder model, DialoGPT is an earlier decoder-only model with 774 million parameters.",
+              "coords": [
+                "6,336.94,164.04,188.83,9.46",
+                "6,306.14,177.58,218.27,9.46",
+                "6,305.87,191.13,107.11,9.46"
+              ]
+            },
+            {
+              "text": "Mistral-7B on the other hand, is a modern and larger model with 7 billion parameters that utilizes group query attention.",
+              "coords": [
+                "6,418.18,191.13,106.42,9.46",
+                "6,306.14,204.68,220.08,9.46",
+                "6,306.14,218.23,220.18,9.46"
+              ]
+            },
+            {
+              "text": "These models are chosen to be significantly different from the learner FLAN-T5, and span different generations of LLMs.",
+              "coords": [
+                "6,305.80,231.78,220.42,9.46",
+                "6,306.14,245.33,218.26,9.46",
+                "6,306.14,258.88,93.57,9.46"
+              ]
+            },
+            {
+              "text": "Transferability across generations would validate ubiquity of our approach.",
+              "coords": [
+                "6,403.10,258.88,123.12,9.46",
+                "6,306.14,272.43,206.56,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Counter-Narration Results",
+          "coords": [
+            "6,306.14,295.04,149.88,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Evaluation Since there is no clear automated way to evaluate counter-narration (Hassan and Alikhani, 2023b), we conducted human evaluation of 3600 model outputs (400 per model and data split). Table 2 presents examples of generated counter-narration. We randomized the outputs from the baselines and our proposed model, and tasked two graduate student annotators from earlier (Section 4.2) with determining if the generated counternarration effectively counters the offensive text. A counter-narration is deemed inaccurate if it concurs with the offensive text, strays off-topic, or is incoherent. We also calculate the error-ratio-variance with respect to the different target groups present in the original data (e.g., MUSLIM, MIGRANT). This metric is computed by first calculating the error percentage for each group and then the variance across these percentages. A lower variance would suggest that the model is more inclusive by not failing disproportionately for certain groups.",
+          "coords": [
+            "6,306.14,312.89,218.27,9.88",
+            "6,305.75,326.87,156.30,9.46",
+            "6,381.43,340.42,144.79,9.46",
+            "6,306.14,353.97,218.27,9.46",
+            "6,306.14,367.51,72.57,9.46",
+            "6,389.53,367.51,134.88,9.46",
+            "6,306.14,381.06,218.27,9.46",
+            "6,306.14,394.61,218.27,9.46",
+            "6,306.14,408.16,220.07,9.46",
+            "6,306.14,421.71,220.08,9.46",
+            "6,306.14,435.26,218.66,9.46",
+            "6,306.14,448.81,218.27,9.46",
+            "6,305.75,462.36,220.47,9.46",
+            "6,306.14,475.91,218.27,9.46",
+            "6,305.75,489.46,218.66,9.46",
+            "6,306.14,503.01,220.18,9.46",
+            "6,305.80,516.56,220.42,9.46",
+            "6,306.14,530.11,218.27,9.46",
+            "6,306.14,543.65,218.26,9.46",
+            "6,306.14,557.20,218.27,9.46",
+            "6,306.14,570.75,194.11,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Evaluation Since there is no clear automated way to evaluate counter-narration (Hassan and Alikhani, 2023b), we conducted human evaluation of 3600 model outputs (400 per model and data split).",
+              "coords": [
+                "6,306.14,312.89,218.27,9.88",
+                "6,305.75,326.87,218.66,9.46",
+                "6,305.75,340.42,220.48,9.46",
+                "6,306.14,353.97,218.27,9.46",
+                "6,306.14,367.51,45.53,9.46"
+              ]
+            },
+            {
+              "text": "Table 2 presents examples of generated counter-narration.",
+              "coords": [
+                "6,355.04,367.51,169.37,9.46",
+                "6,306.14,381.06,76.66,9.46"
+              ]
+            },
+            {
+              "text": "We randomized the outputs from the baselines and our proposed model, and tasked two graduate student annotators from earlier (Section 4.2) with determining if the generated counternarration effectively counters the offensive text.",
+              "coords": [
+                "6,386.00,381.06,138.40,9.46",
+                "6,306.14,394.61,218.27,9.46",
+                "6,306.14,408.16,220.07,9.46",
+                "6,306.14,421.71,220.08,9.46",
+                "6,306.14,435.26,207.42,9.46"
+              ]
+            },
+            {
+              "text": "A counter-narration is deemed inaccurate if it concurs with the offensive text, strays off-topic, or is incoherent.",
+              "coords": [
+                "6,516.95,435.26,7.85,9.46",
+                "6,306.14,448.81,218.27,9.46",
+                "6,305.75,462.36,220.47,9.46",
+                "6,306.14,475.91,30.59,9.46"
+              ]
+            },
+            {
+              "text": "We also calculate the error-ratio-variance with respect to the different target groups present in the original data (e.g., MUSLIM, MIGRANT).",
+              "coords": [
+                "6,340.59,475.91,183.82,9.46",
+                "6,305.75,489.46,218.66,9.46",
+                "6,306.14,503.01,220.18,9.46"
+              ]
+            },
+            {
+              "text": "This metric is computed by first calculating the error percentage for each group and then the variance across these percentages.",
+              "coords": [
+                "6,305.80,516.56,220.42,9.46",
+                "6,306.14,530.11,218.27,9.46",
+                "6,306.14,543.65,109.89,9.46"
+              ]
+            },
+            {
+              "text": "A lower variance would suggest that the model is more inclusive by not failing disproportionately for certain groups.",
+              "coords": [
+                "6,419.44,543.65,104.97,9.46",
+                "6,306.14,557.20,218.27,9.46",
+                "6,306.14,570.75,194.11,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Clustering-based AL yields more effective counters. From Table 3 we can observe that our proposed approach, Cluster-AL, outperforms the baseline active learning (without clustering) by 5.5% and random sampling by 10.8% for the learner FLAN-T5. while having access to the same amount of fine-tuning data.",
+          "coords": [
+            "6,306.14,591.89,220.08,9.81",
+            "6,306.14,605.44,82.77,9.88",
+            "6,399.91,605.87,126.31,9.46",
+            "6,306.14,619.42,220.08,9.46",
+            "6,306.14,632.54,219.36,9.88",
+            "6,306.14,646.09,218.45,9.88",
+            "6,306.14,660.06,218.27,9.46",
+            "6,306.14,673.61,83.32,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Clustering-based AL yields more effective counters.",
+              "coords": [
+                "6,306.14,591.89,220.08,9.81",
+                "6,306.14,605.44,20.66,9.81"
+              ]
+            },
+            {
+              "text": "From Table 3 we can observe that our proposed approach, Cluster-AL, outperforms the baseline active learning (without clustering) by 5.5% and random sampling by 10.8% for the learner FLAN-T5.",
+              "coords": [
+                "6,337.71,605.87,188.52,9.46",
+                "6,306.14,619.42,220.08,9.46",
+                "6,306.14,632.54,219.36,9.88",
+                "6,306.14,646.09,218.45,9.88",
+                "6,306.14,660.06,46.02,9.46"
+              ]
+            },
+            {
+              "text": "while having access to the same amount of fine-tuning data.",
+              "coords": [
+                "6,355.40,660.06,169.01,9.46",
+                "6,306.14,673.61,83.32,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Clustering-based AL is more inclusive. We can also observe a substantial reduction in error-ratiovariance; from 0.01 in standard fine-tuning with random sampling to 0.0049 for Cluster-AL, which Offensive Text 'All children from the age of 4 will have mandatory lessons on same sex relationships.' -This is not about Education, this is about willingly confusing and indoctrinating kids... Random: everyone has the right to express their identity.... we should foster understanding and understanding. TopN-AL: it's important to remember that every child, regardless of their sexual orientation deserves respect... Cluster-AL: everyone has the right to learn about same sex relationships, which also includes children. promoting diversity enhances our society. Offensive Text Children with Down syndrome are retarded, so more likely to abuse drugs and alcohol. Random: actually, down syndrome doesn't identify any specific group, like children, who are more likely to abuse drugs... TopN-AL: down syndrome is not a genetic disorder, it's a medical condition that affects individuals with... Cluster-AL: people with down syndrome, like anyone, have diverse abilities and temperaments. they deserve respect... Table 3: CS-Score is the precentange of generated text evaluated to be proper counters. Error Var. denotes variance of error ratios across different targets of hatespeech. A lower value would indicate the errors are less skewed. Our active learning based approach shows efficacy over standard fine-tuning. Clustering-based active learning yields the best results. # marks the learner model and * shows transferability to other models.",
+          "coords": [
+            "6,306.14,694.75,218.27,9.88",
+            "6,306.14,708.73,220.08,9.46",
+            "6,305.87,721.85,218.54,9.88",
+            "6,306.14,735.40,218.27,9.88",
+            "7,76.52,72.07,453.86,8.04",
+            "7,76.57,82.21,248.59,7.72",
+            "7,76.84,91.98,398.21,8.12",
+            "7,76.55,101.94,397.80,8.12",
+            "7,76.84,111.90,453.86,8.12",
+            "7,76.84,122.21,76.36,7.77",
+            "7,76.52,132.24,367.32,8.04",
+            "7,76.84,142.19,441.11,8.12",
+            "7,76.55,152.15,383.42,8.12",
+            "7,76.84,162.11,427.62,8.12",
+            "7,70.56,310.66,453.85,8.64",
+            "7,70.87,322.61,453.72,8.64",
+            "7,70.87,334.57,453.54,8.64",
+            "7,70.87,346.52,47.04,8.64",
+            "7,121.00,344.85,3.49,6.05",
+            "7,127.47,346.52,113.43,8.64",
+            "7,243.40,344.85,3.49,6.05",
+            "7,249.87,346.52,150.01,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Clustering-based AL is more inclusive.",
+              "coords": [
+                "6,306.14,694.75,175.96,9.81"
+              ]
+            },
+            {
+              "text": "We can also observe a substantial reduction in error-ratiovariance; from 0.01 in standard fine-tuning with random sampling to 0.0049 for Cluster-AL, which Offensive Text 'All children from the age of 4 will have mandatory lessons on same sex relationships.' -This is not about Education, this is about willingly confusing and indoctrinating kids... Random: everyone has the right to express their identity.... we should foster understanding and understanding.",
+              "coords": [
+                "6,493.01,695.18,31.40,9.46",
+                "6,306.14,708.73,220.08,9.46",
+                "6,305.87,721.85,218.54,9.88",
+                "6,306.14,735.40,218.27,9.88",
+                "7,76.52,72.07,453.86,8.04",
+                "7,76.57,82.21,248.59,7.72",
+                "7,76.84,91.98,398.21,8.12"
+              ]
+            },
+            {
+              "text": "TopN-AL: it's important to remember that every child, regardless of their sexual orientation deserves respect... Cluster-AL: everyone has the right to learn about same sex relationships, which also includes children.",
+              "coords": [
+                "7,76.55,101.94,397.80,8.12",
+                "7,76.84,111.90,378.84,8.12"
+              ]
+            },
+            {
+              "text": "promoting diversity enhances our society.",
+              "coords": [
+                "7,458.64,112.25,72.06,7.77",
+                "7,76.84,122.21,76.36,7.77"
+              ]
+            },
+            {
+              "text": "Offensive Text Children with Down syndrome are retarded, so more likely to abuse drugs and alcohol.",
+              "coords": [
+                "7,76.52,132.24,367.32,8.04"
+              ]
+            },
+            {
+              "text": "Random: actually, down syndrome doesn't identify any specific group, like children, who are more likely to abuse drugs... TopN-AL: down syndrome is not a genetic disorder, it's a medical condition that affects individuals with... Cluster-AL: people with down syndrome, like anyone, have diverse abilities and temperaments.",
+              "coords": [
+                "7,76.84,142.19,441.11,8.12",
+                "7,76.55,152.15,383.42,8.12",
+                "7,76.84,162.11,345.69,8.12"
+              ]
+            },
+            {
+              "text": "they deserve respect... Table 3: CS-Score is the precentange of generated text evaluated to be proper counters.",
+              "coords": [
+                "7,425.31,162.46,79.16,7.77",
+                "7,70.56,310.66,343.11,8.64"
+              ]
+            },
+            {
+              "text": "Error Var.",
+              "coords": [
+                "7,416.76,310.66,38.85,8.64"
+              ]
+            },
+            {
+              "text": "denotes variance of error ratios across different targets of hatespeech.",
+              "coords": [
+                "7,458.70,310.66,65.71,8.64",
+                "7,70.87,322.61,207.40,8.64"
+              ]
+            },
+            {
+              "text": "A lower value would indicate the errors are less skewed.",
+              "coords": [
+                "7,281.35,322.61,224.62,8.64"
+              ]
+            },
+            {
+              "text": "Our active learning based approach shows efficacy over standard fine-tuning.",
+              "coords": [
+                "7,509.06,322.61,15.52,8.64",
+                "7,70.87,334.57,283.70,8.64"
+              ]
+            },
+            {
+              "text": "Clustering-based active learning yields the best results.",
+              "coords": [
+                "7,357.66,334.57,166.75,8.64",
+                "7,70.87,346.52,47.04,8.64"
+              ]
+            },
+            {
+              "text": "# marks the learner model and * shows transferability to other models.",
+              "coords": [
+                "7,121.00,344.85,3.49,6.05",
+                "7,127.47,346.52,113.43,8.64",
+                "7,243.40,344.85,3.49,6.05",
+                "7,249.87,346.52,150.01,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "is also lower than baseline active learning (0.0061).",
+          "coords": [
+            "7,70.87,379.95,220.18,9.88"
+          ],
+          "sentences": [
+            {
+              "text": "is also lower than baseline active learning (0.0061).",
+              "coords": [
+                "7,70.87,379.95,220.18,9.88"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Lower error-ratio-variance coupled with enhanced performance suggests that our method not only produces more accurate counter narrations but also performs more consistently across various groups. This consistency is illustrated in Figure 2, which displays the error ratio for each class alongside the class's ratio in the original dataset. The initial data pool had few instances targeting Persons of Color (POC) and Disabilities, leading to high error rates with standard fine-tuning with random samples. However, our method reduces error rates for these underrepresented groups, likely due to the clustering step ensuring that active learning selects informative instances from diverse data regions. In skewed data regions (e.g., POC), where random sampling would likely overlook valuable samples, our framework effectively includes them.",
+          "coords": [
+            "7,70.87,393.93,218.27,9.46",
+            "7,70.87,407.48,220.08,9.46",
+            "7,70.87,421.03,218.27,9.46",
+            "7,70.87,434.57,220.17,9.46",
+            "7,70.53,448.12,176.75,9.46",
+            "7,254.56,448.12,34.57,9.46",
+            "7,70.87,461.67,218.27,9.46",
+            "7,70.87,475.22,218.27,9.46",
+            "7,70.87,488.77,218.27,9.46",
+            "7,70.87,502.32,218.45,9.46",
+            "7,70.87,515.87,220.08,9.46",
+            "7,70.87,529.42,218.45,9.46",
+            "7,70.87,542.97,218.27,9.46",
+            "7,70.87,556.52,218.27,9.46",
+            "7,70.87,570.07,218.27,9.46",
+            "7,70.87,583.62,218.27,9.46",
+            "7,70.87,597.16,219.63,9.46",
+            "7,70.87,610.71,179.77,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Lower error-ratio-variance coupled with enhanced performance suggests that our method not only produces more accurate counter narrations but also performs more consistently across various groups.",
+              "coords": [
+                "7,70.87,393.93,218.27,9.46",
+                "7,70.87,407.48,220.08,9.46",
+                "7,70.87,421.03,218.27,9.46",
+                "7,70.87,434.57,220.17,9.46"
+              ]
+            },
+            {
+              "text": "This consistency is illustrated in Figure 2, which displays the error ratio for each class alongside the class's ratio in the original dataset.",
+              "coords": [
+                "7,70.53,448.12,218.61,9.46",
+                "7,70.87,461.67,218.27,9.46",
+                "7,70.87,475.22,169.11,9.46"
+              ]
+            },
+            {
+              "text": "The initial data pool had few instances targeting Persons of Color (POC) and Disabilities, leading to high error rates with standard fine-tuning with random samples.",
+              "coords": [
+                "7,243.38,475.22,45.76,9.46",
+                "7,70.87,488.77,218.27,9.46",
+                "7,70.87,502.32,218.45,9.46",
+                "7,70.87,515.87,220.08,9.46",
+                "7,70.87,529.42,20.48,9.46"
+              ]
+            },
+            {
+              "text": "However, our method reduces error rates for these underrepresented groups, likely due to the clustering step ensuring that active learning selects informative instances from diverse data regions.",
+              "coords": [
+                "7,94.73,529.42,194.59,9.46",
+                "7,70.87,542.97,218.27,9.46",
+                "7,70.87,556.52,218.27,9.46",
+                "7,70.87,570.07,205.93,9.46"
+              ]
+            },
+            {
+              "text": "In skewed data regions (e.g., POC), where random sampling would likely overlook valuable samples, our framework effectively includes them.",
+              "coords": [
+                "7,280.20,570.07,8.93,9.46",
+                "7,70.87,583.62,218.27,9.46",
+                "7,70.87,597.16,219.63,9.46",
+                "7,70.87,610.71,179.77,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Style-Transfer Results",
+          "coords": [
+            "7,70.87,636.97,128.27,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Evaluation Unlike counter-narration, the offensive counterparts in the original datasets used for style-transfer unlabeled data (Atwell et al., 2022;Zampieri et al., 2019) lack tags for offensiveness classes. Therefore, we adopt the Measure of Textual Lexical Diversity (MTLD) (McCarthy and Jarvis, 2010) to assess diversity. Although MTLD doesn't directly measure bias, a higher MTLD, if other metrics are stable, would suggest that more diverse samples are selected. We also use a BERTbased classifier fine-tuned on the OLID dataset (Zampieri et al., 2019) (F1 score 89%) to compute automated SafeScore -the percentage of styletransferred text predicted to be inoffensive.",
+          "coords": [
+            "7,70.87,656.91,220.08,9.88",
+            "7,70.87,670.89,218.45,9.46",
+            "7,70.87,684.44,126.41,9.46",
+            "7,171.02,697.99,118.12,9.46",
+            "7,70.87,711.54,220.08,9.46",
+            "7,70.87,725.09,218.27,9.46",
+            "7,70.66,738.63,218.47,9.46",
+            "7,70.87,752.18,218.27,9.46",
+            "7,70.87,765.73,218.27,9.46",
+            "7,306.14,592.96,220.08,9.46",
+            "7,306.14,606.51,218.27,9.46",
+            "7,406.37,620.06,118.03,9.46",
+            "7,306.14,633.61,220.08,9.46",
+            "7,306.14,647.16,187.56,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Evaluation Unlike counter-narration, the offensive counterparts in the original datasets used for style-transfer unlabeled data (Atwell et al., 2022;Zampieri et al., 2019) lack tags for offensiveness classes.",
+              "coords": [
+                "7,70.87,656.91,220.08,9.88",
+                "7,70.87,670.89,218.45,9.46",
+                "7,70.87,684.44,219.17,9.46",
+                "7,70.87,697.99,218.27,9.46",
+                "7,70.87,711.54,33.68,9.46"
+              ]
+            },
+            {
+              "text": "Therefore, we adopt the Measure of Textual Lexical Diversity (MTLD) (McCarthy and Jarvis, 2010) to assess diversity.",
+              "coords": [
+                "7,108.26,711.54,182.68,9.46",
+                "7,70.87,725.09,218.27,9.46",
+                "7,70.66,738.63,139.96,9.46"
+              ]
+            },
+            {
+              "text": "Although MTLD doesn't directly measure bias, a higher MTLD, if other metrics are stable, would suggest that more diverse samples are selected.",
+              "coords": [
+                "7,214.00,738.63,75.14,9.46",
+                "7,70.87,752.18,218.27,9.46",
+                "7,70.87,765.73,218.27,9.46",
+                "7,306.14,592.96,125.08,9.46"
+              ]
+            },
+            {
+              "text": "We also use a BERTbased classifier fine-tuned on the OLID dataset (Zampieri et al., 2019) (F1 score 89%) to compute automated SafeScore -the percentage of styletransferred text predicted to be inoffensive.",
+              "coords": [
+                "7,434.60,592.96,91.62,9.46",
+                "7,306.14,606.51,218.27,9.46",
+                "7,305.78,620.06,218.63,9.46",
+                "7,306.14,633.61,220.08,9.46",
+                "7,306.14,647.16,187.56,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Clustering-based AL yields less offensive styletransfers. Table 5 shows that our approach reduces offensiveness more effectively. For the learner model FLAN-T5, SafeScore increased from 94.9% to 97%. Additionally, the MTLD value significantly increased from 60.89 to 99.81, indicating that our method acquired more diverse samples compared to standard fine-tuning with random",
+          "coords": [
+            "7,306.14,670.46,220.08,9.81",
+            "7,306.14,684.01,80.80,9.88",
+            "7,399.67,684.44,126.55,9.46",
+            "7,306.14,697.99,218.27,9.46",
+            "7,306.14,711.54,218.27,9.46",
+            "7,306.14,724.66,218.27,9.88",
+            "7,306.14,738.21,220.08,9.88",
+            "7,306.14,752.18,220.08,9.46",
+            "7,306.14,765.73,218.27,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Clustering-based AL yields less offensive styletransfers.",
+              "coords": [
+                "7,306.14,670.46,220.08,9.81",
+                "7,306.14,684.01,45.42,9.81"
+              ]
+            },
+            {
+              "text": "Table 5 shows that our approach reduces offensiveness more effectively.",
+              "coords": [
+                "7,362.47,684.44,163.75,9.46",
+                "7,306.14,697.99,172.93,9.46"
+              ]
+            },
+            {
+              "text": "For the learner model FLAN-T5, SafeScore increased from 94.9% to 97%.",
+              "coords": [
+                "7,490.21,697.99,34.21,9.46",
+                "7,306.14,711.54,218.27,9.46",
+                "7,306.14,724.66,72.09,9.88"
+              ]
+            },
+            {
+              "text": "Additionally, the MTLD value significantly increased from 60.89 to 99.81, indicating that our method acquired more diverse samples compared to standard fine-tuning with random",
+              "coords": [
+                "7,385.13,725.09,139.28,9.46",
+                "7,306.14,738.21,220.08,9.88",
+                "7,306.14,752.18,220.08,9.46",
+                "7,306.14,765.73,218.27,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Offensive Text what the f*** Random: what the f***? TopN-AL: i'm sorry, but i can't assist with that Cluster-AL: it seems like there might be some misunderstanding here. let's try to clarify this together. Offensive Text And when they met he looked at her and said I'm in charge in you're my b**** Random: when they met, he expressed he's in charge of you're my b****. TopN-AL: when they met he stated he was in charge in her position and he tried to control the situation Cluster-AL: when they came across each other, he looked at her and said he would take the lead Table 5: SafeScore is the percentage of style-transferred text predicted to be inoffensive. MTLD measures lexical diversity in generated output. Our proposed approach has more substantial improvement for smaller models FLAN-T5 and DialoGPT. # marks the learner model and * shows transferability to other models. sampling. While TopN-AL surpasses the standard approach, Cluster-AL exceeds both. Clustering-based AL is more robust across data types. Our analysis of instances deemed offensive post style-transfer in Figure 3 reveals that random sampling often fails for under-represented groups like Persons of Color, and overlooks use of uncommon swear words. Both TopN and Cluster-AL approaches reduce offensiveness more effectively, with Cluster-AL showing greater robustness across most data types.",
+          "coords": [
+            "8,75.53,72.07,103.91,8.04",
+            "8,75.85,82.01,91.93,8.12",
+            "8,75.55,91.98,170.35,8.12",
+            "8,75.85,101.94,367.95,8.12",
+            "8,75.53,112.32,338.00,8.04",
+            "8,75.85,122.26,269.10,8.12",
+            "8,75.55,132.23,372.10,8.12",
+            "8,75.85,142.19,347.01,8.12",
+            "8,70.56,290.73,453.85,8.64",
+            "8,70.87,302.69,453.54,8.64",
+            "8,70.87,314.64,102.48,8.64",
+            "8,175.83,312.97,3.49,6.05",
+            "8,182.31,314.64,113.43,8.64",
+            "8,298.23,312.97,3.49,6.05",
+            "8,304.71,314.64,150.01,8.64",
+            "8,70.87,556.25,218.27,9.46",
+            "8,70.87,569.80,156.85,9.46",
+            "8,70.87,590.12,218.27,9.81",
+            "8,70.87,603.67,220.08,9.88",
+            "8,70.87,617.64,218.27,9.46",
+            "8,70.87,631.19,218.26,9.46",
+            "8,70.87,644.74,218.27,9.46",
+            "8,70.87,658.29,220.08,9.46",
+            "8,70.47,671.84,220.48,9.46",
+            "8,70.87,685.39,218.27,9.46",
+            "8,70.87,698.94,100.59,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Offensive Text what the f*** Random: what the f***?",
+              "coords": [
+                "8,75.53,72.07,103.91,8.04",
+                "8,75.85,82.01,91.93,8.12"
+              ]
+            },
+            {
+              "text": "TopN-AL: i'm sorry, but i can't assist with that Cluster-AL: it seems like there might be some misunderstanding here.",
+              "coords": [
+                "8,75.55,91.98,170.35,8.12",
+                "8,75.85,101.94,254.59,8.12"
+              ]
+            },
+            {
+              "text": "let's try to clarify this together.",
+              "coords": [
+                "8,333.22,102.29,110.58,7.77"
+              ]
+            },
+            {
+              "text": "Offensive Text And when they met he looked at her and said I'm in charge in you're my b**** Random: when they met, he expressed he's in charge of you're my b****.",
+              "coords": [
+                "8,75.53,112.32,338.00,8.04",
+                "8,75.85,122.26,269.10,8.12"
+              ]
+            },
+            {
+              "text": "TopN-AL: when they met he stated he was in charge in her position and he tried to control the situation Cluster-AL: when they came across each other, he looked at her and said he would take the lead Table 5: SafeScore is the percentage of style-transferred text predicted to be inoffensive.",
+              "coords": [
+                "8,75.55,132.23,372.10,8.12",
+                "8,75.85,142.19,347.01,8.12",
+                "8,70.56,290.73,353.55,8.64"
+              ]
+            },
+            {
+              "text": "MTLD measures lexical diversity in generated output.",
+              "coords": [
+                "8,427.19,290.73,97.22,8.64",
+                "8,70.87,302.69,121.81,8.64"
+              ]
+            },
+            {
+              "text": "Our proposed approach has more substantial improvement for smaller models FLAN-T5 and DialoGPT.",
+              "coords": [
+                "8,199.02,302.69,325.39,8.64",
+                "8,70.87,314.64,102.48,8.64"
+              ]
+            },
+            {
+              "text": "# marks the learner model and * shows transferability to other models.",
+              "coords": [
+                "8,175.83,312.97,3.49,6.05",
+                "8,182.31,314.64,113.43,8.64",
+                "8,298.23,312.97,3.49,6.05",
+                "8,304.71,314.64,150.01,8.64"
+              ]
+            },
+            {
+              "text": "sampling.",
+              "coords": [
+                "8,70.87,556.25,42.82,9.46"
+              ]
+            },
+            {
+              "text": "While TopN-AL surpasses the standard approach, Cluster-AL exceeds both.",
+              "coords": [
+                "8,117.06,556.25,172.07,9.46",
+                "8,70.87,569.80,156.85,9.46"
+              ]
+            },
+            {
+              "text": "Clustering-based AL is more robust across data types.",
+              "coords": [
+                "8,70.87,590.12,218.27,9.81",
+                "8,70.87,603.67,27.51,9.81"
+              ]
+            },
+            {
+              "text": "Our analysis of instances deemed offensive post style-transfer in Figure 3 reveals that random sampling often fails for under-represented groups like Persons of Color, and overlooks use of uncommon swear words.",
+              "coords": [
+                "8,109.28,604.09,181.66,9.46",
+                "8,70.87,617.64,218.27,9.46",
+                "8,70.87,631.19,218.26,9.46",
+                "8,70.87,644.74,218.27,9.46",
+                "8,70.87,658.29,110.70,9.46"
+              ]
+            },
+            {
+              "text": "Both TopN and Cluster-AL approaches reduce offensiveness more effectively, with Cluster-AL showing greater robustness across most data types.",
+              "coords": [
+                "8,184.95,658.29,105.99,9.46",
+                "8,70.47,671.84,220.48,9.46",
+                "8,70.87,685.39,218.27,9.46",
+                "8,70.87,698.94,100.59,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Transferability of Active Learning",
+          "coords": [
+            "8,70.87,720.73,184.25,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 3 and 5 demonstrate the transferability of active learning. For counter-narration, Cluster-AL shows substantial gains, improving efficacy by 10% over standard fine-tuning for DialoGPT.",
+          "coords": [
+            "8,70.53,738.63,24.47,9.46",
+            "8,108.35,738.63,180.78,9.46",
+            "8,70.87,752.18,220.08,9.46",
+            "8,70.47,765.73,219.04,9.46",
+            "8,306.14,348.07,220.17,9.88"
+          ],
+          "sentences": [
+            {
+              "text": "Table 3 and 5 demonstrate the transferability of active learning.",
+              "coords": [
+                "8,70.53,738.63,218.61,9.46",
+                "8,70.87,752.18,70.09,9.46"
+              ]
+            },
+            {
+              "text": "For counter-narration, Cluster-AL shows substantial gains, improving efficacy by 10% over standard fine-tuning for DialoGPT.",
+              "coords": [
+                "8,150.29,752.18,140.65,9.46",
+                "8,70.47,765.73,219.04,9.46",
+                "8,306.14,348.07,220.17,9.88"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Although less pronounced, a similar pattern is observed for Mistral 7B, where efficacy increases to 89.3% from 85.8%, and the error ratio variance also decreases significantly for both models (from 0.0238 to 0.0155 and from 0.0130 to 0.0018), suggesting that the models are more inclusive of different subgroups in data.",
+          "coords": [
+            "8,305.75,362.05,220.47,9.46",
+            "8,306.14,375.60,218.27,9.46",
+            "8,306.14,388.72,220.08,9.88",
+            "8,306.14,402.69,218.27,9.46",
+            "8,305.78,415.82,219.99,9.88",
+            "8,306.14,429.79,218.27,9.46",
+            "8,306.14,443.34,119.71,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Although less pronounced, a similar pattern is observed for Mistral 7B, where efficacy increases to 89.3% from 85.8%, and the error ratio variance also decreases significantly for both models (from 0.0238 to 0.0155 and from 0.0130 to 0.0018), suggesting that the models are more inclusive of different subgroups in data.",
+              "coords": [
+                "8,305.75,362.05,220.47,9.46",
+                "8,306.14,375.60,218.27,9.46",
+                "8,306.14,388.72,220.08,9.88",
+                "8,306.14,402.69,218.27,9.46",
+                "8,305.78,415.82,219.99,9.88",
+                "8,306.14,429.79,218.27,9.46",
+                "8,306.14,443.34,119.71,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The transferability for style-transfer is less pronounced. While we do see a higher MTLD score for DialoGPT and Mistral 7B, the performance improvement is modest. This can be attributed to the fact that the models were already achieving very high SafeScore. This suggest that the data acquired by active learning is more useful to other models when the task is more challenging.",
+          "coords": [
+            "8,317.05,457.86,209.17,9.46",
+            "8,306.14,471.41,218.27,9.46",
+            "8,306.14,484.96,220.08,9.46",
+            "8,306.14,498.51,218.27,9.46",
+            "8,306.14,512.06,218.65,9.46",
+            "8,306.14,525.61,218.27,9.46",
+            "8,306.14,539.16,218.27,9.46",
+            "8,305.75,552.70,151.49,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "The transferability for style-transfer is less pronounced.",
+              "coords": [
+                "8,317.05,457.86,209.17,9.46",
+                "8,306.14,471.41,40.48,9.46"
+              ]
+            },
+            {
+              "text": "While we do see a higher MTLD score for DialoGPT and Mistral 7B, the performance improvement is modest.",
+              "coords": [
+                "8,350.44,471.41,173.98,9.46",
+                "8,306.14,484.96,220.08,9.46",
+                "8,306.14,498.51,93.14,9.46"
+              ]
+            },
+            {
+              "text": "This can be attributed to the fact that the models were already achieving very high SafeScore.",
+              "coords": [
+                "8,402.70,498.51,121.71,9.46",
+                "8,306.14,512.06,218.65,9.46",
+                "8,306.14,525.61,67.55,9.46"
+              ]
+            },
+            {
+              "text": "This suggest that the data acquired by active learning is more useful to other models when the task is more challenging.",
+              "coords": [
+                "8,377.00,525.61,147.41,9.46",
+                "8,306.14,539.16,218.27,9.46",
+                "8,305.75,552.70,151.49,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Conclusion and Future Work",
+          "coords": [
+            "8,306.14,578.68,167.28,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We presented a novel framework for active learning, making significant inroads toward making active learning viable for generative tasks. By integrating an auxiliary model that transforms interim output, along with clustering and knowledge distillation, our framework effectively generates counter-narrations and style-transfers. The results show that our approach prevents high error rates for under-represented groups and achieves greater lexical diversity. Our approach achieves this without having prior knowledge of the data distribution, highlighting the framework's potential as a method for more inclusive LLM generation. Creation of two novel datasets and their use across different models validate the practical viability.",
+          "coords": [
+            "8,305.63,603.14,220.59,9.46",
+            "8,306.14,616.69,220.07,9.46",
+            "8,306.14,630.24,220.08,9.46",
+            "8,306.14,643.79,220.08,9.46",
+            "8,306.14,657.34,218.27,9.46",
+            "8,306.14,670.89,218.27,9.46",
+            "8,306.14,684.44,218.27,9.46",
+            "8,306.14,697.99,218.27,9.46",
+            "8,306.14,711.54,218.45,9.46",
+            "8,306.14,725.09,220.08,9.46",
+            "8,306.14,738.63,219.63,9.46",
+            "8,306.14,752.18,218.27,9.46",
+            "8,306.14,765.73,218.27,9.46",
+            "9,70.87,74.72,218.27,9.46",
+            "9,70.87,88.27,165.97,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We presented a novel framework for active learning, making significant inroads toward making active learning viable for generative tasks.",
+              "coords": [
+                "8,305.63,603.14,220.59,9.46",
+                "8,306.14,616.69,220.07,9.46",
+                "8,306.14,630.24,183.67,9.46"
+              ]
+            },
+            {
+              "text": "By integrating an auxiliary model that transforms interim output, along with clustering and knowledge distillation, our framework effectively generates counter-narrations and style-transfers.",
+              "coords": [
+                "8,496.91,630.24,29.31,9.46",
+                "8,306.14,643.79,220.08,9.46",
+                "8,306.14,657.34,218.27,9.46",
+                "8,306.14,670.89,218.27,9.46",
+                "8,306.14,684.44,166.44,9.46"
+              ]
+            },
+            {
+              "text": "The results show that our approach prevents high error rates for under-represented groups and achieves greater lexical diversity.",
+              "coords": [
+                "8,475.96,684.44,48.45,9.46",
+                "8,306.14,697.99,218.27,9.46",
+                "8,306.14,711.54,218.45,9.46",
+                "8,306.14,725.09,71.95,9.46"
+              ]
+            },
+            {
+              "text": "Our approach achieves this without having prior knowledge of the data distribution, highlighting the framework's potential as a method for more inclusive LLM generation.",
+              "coords": [
+                "8,381.47,725.09,144.76,9.46",
+                "8,306.14,738.63,219.63,9.46",
+                "8,306.14,752.18,218.27,9.46",
+                "8,306.14,765.73,162.15,9.46"
+              ]
+            },
+            {
+              "text": "Creation of two novel datasets and their use across different models validate the practical viability.",
+              "coords": [
+                "8,473.49,765.73,50.93,9.46",
+                "9,70.87,74.72,218.27,9.46",
+                "9,70.87,88.27,165.97,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Our findings pave the way for further research in expanding active learning to different generative tasks. Future applications could include dialogue systems (Sicilia et al., 2023), digital health interventions (Wang et al., 2023) and multimodal generative tasks such as signed language generation (Inan et al., 2022). Future research could explore different ways of integrating knowledge distillation and clustering and expand on our use of auxiliary models to integrate more complex models. The proposed framework could also be adapted to address specific biases, like behavioral or gender biases.",
+          "coords": [
+            "9,81.78,102.19,207.36,9.46",
+            "9,70.87,115.74,218.26,9.46",
+            "9,70.87,129.29,218.27,9.46",
+            "9,70.87,142.84,35.24,9.46",
+            "9,196.79,142.84,94.15,9.46",
+            "9,70.59,156.39,37.47,9.46",
+            "9,198.52,156.39,92.43,9.46",
+            "9,70.87,169.94,218.27,9.46",
+            "9,148.08,183.49,141.05,9.46",
+            "9,70.87,197.04,218.27,9.46",
+            "9,70.87,210.58,218.65,9.46",
+            "9,70.87,224.13,220.08,9.46",
+            "9,70.87,237.68,218.26,9.46",
+            "9,70.87,251.23,209.32,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Our findings pave the way for further research in expanding active learning to different generative tasks.",
+              "coords": [
+                "9,81.78,102.19,207.36,9.46",
+                "9,70.87,115.74,218.26,9.46",
+                "9,70.87,129.29,25.04,9.46"
+              ]
+            },
+            {
+              "text": "Future applications could include dialogue systems (Sicilia et al., 2023), digital health interventions (Wang et al., 2023) and multimodal generative tasks such as signed language generation (Inan et al., 2022).",
+              "coords": [
+                "9,99.42,129.29,189.72,9.46",
+                "9,70.87,142.84,220.08,9.46",
+                "9,70.59,156.39,220.35,9.46",
+                "9,70.87,169.94,218.27,9.46",
+                "9,70.51,183.49,82.36,9.46"
+              ]
+            },
+            {
+              "text": "Future research could explore different ways of integrating knowledge distillation and clustering and expand on our use of auxiliary models to integrate more complex models.",
+              "coords": [
+                "9,156.58,183.49,132.56,9.46",
+                "9,70.87,197.04,218.27,9.46",
+                "9,70.87,210.58,218.65,9.46",
+                "9,70.87,224.13,180.11,9.46"
+              ]
+            },
+            {
+              "text": "The proposed framework could also be adapted to address specific biases, like behavioral or gender biases.",
+              "coords": [
+                "9,254.22,224.13,36.73,9.46",
+                "9,70.87,237.68,218.26,9.46",
+                "9,70.87,251.23,209.32,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Limitations",
+          "coords": [
+            "9,70.87,275.13,59.12,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We presented a novel framework for active learning for generation and applied the framework in practice by constructing two datasets with multiple splits and training models simultaneously. When applying active learning in practice, it is necessary to construct the dataset splits from scratch. Thus, a larger number of simulated experiments and datasets, as seen in prior work, is not feasible in practice. We hope our work can initiate a trend of evaluating active learning in practice so that active learning for generative tasks is adopted broadly in practical applications.",
+          "coords": [
+            "9,70.35,298.10,220.59,9.46",
+            "9,70.87,311.65,218.27,9.46",
+            "9,70.87,325.20,218.27,9.46",
+            "9,70.87,338.75,218.27,9.46",
+            "9,70.87,352.30,220.08,9.46",
+            "9,70.87,365.85,220.18,9.46",
+            "9,70.53,379.40,218.61,9.46",
+            "9,70.87,392.95,218.27,9.46",
+            "9,70.87,406.49,218.27,9.46",
+            "9,70.87,420.04,220.08,9.46",
+            "9,70.87,433.59,218.65,9.46",
+            "9,70.87,447.14,106.95,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We presented a novel framework for active learning for generation and applied the framework in practice by constructing two datasets with multiple splits and training models simultaneously.",
+              "coords": [
+                "9,70.35,298.10,220.59,9.46",
+                "9,70.87,311.65,218.27,9.46",
+                "9,70.87,325.20,218.27,9.46",
+                "9,70.87,338.75,187.62,9.46"
+              ]
+            },
+            {
+              "text": "When applying active learning in practice, it is necessary to construct the dataset splits from scratch.",
+              "coords": [
+                "9,262.57,338.75,26.57,9.46",
+                "9,70.87,352.30,220.08,9.46",
+                "9,70.87,365.85,220.18,9.46"
+              ]
+            },
+            {
+              "text": "Thus, a larger number of simulated experiments and datasets, as seen in prior work, is not feasible in practice.",
+              "coords": [
+                "9,70.53,379.40,218.61,9.46",
+                "9,70.87,392.95,218.27,9.46",
+                "9,70.87,406.49,49.02,9.46"
+              ]
+            },
+            {
+              "text": "We hope our work can initiate a trend of evaluating active learning in practice so that active learning for generative tasks is adopted broadly in practical applications.",
+              "coords": [
+                "9,123.26,406.49,165.88,9.46",
+                "9,70.87,420.04,220.08,9.46",
+                "9,70.87,433.59,218.65,9.46",
+                "9,70.87,447.14,106.95,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Additionally, as seen from our results, our proposed approach can draw out under-represented groups from data without knowing underlying distribution. While this improves representation of minority groups, it cannot eliminate the problem of representation completely. Thus, it is still important to monitor behavior of these models before deploying.",
+          "coords": [
+            "9,81.78,461.06,209.17,9.46",
+            "9,70.87,474.61,218.27,9.46",
+            "9,70.87,488.16,220.08,9.46",
+            "9,70.87,501.71,218.27,9.46",
+            "9,70.87,515.26,218.27,9.46",
+            "9,70.87,528.81,220.08,9.46",
+            "9,70.87,542.36,218.27,9.46",
+            "9,70.87,555.90,46.25,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Additionally, as seen from our results, our proposed approach can draw out under-represented groups from data without knowing underlying distribution.",
+              "coords": [
+                "9,81.78,461.06,209.17,9.46",
+                "9,70.87,474.61,218.27,9.46",
+                "9,70.87,488.16,220.08,9.46",
+                "9,70.87,501.71,40.89,9.46"
+              ]
+            },
+            {
+              "text": "While this improves representation of minority groups, it cannot eliminate the problem of representation completely.",
+              "coords": [
+                "9,117.89,501.71,171.25,9.46",
+                "9,70.87,515.26,218.27,9.46",
+                "9,70.87,528.81,130.51,9.46"
+              ]
+            },
+            {
+              "text": "Thus, it is still important to monitor behavior of these models before deploying.",
+              "coords": [
+                "9,206.61,528.81,84.33,9.46",
+                "9,70.87,542.36,218.27,9.46",
+                "9,70.87,555.90,46.25,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Ethical Considerations",
+          "coords": [
+            "9,70.87,579.80,116.58,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We presented an annotation efficient approach for drawing out under-represented groups from data. While this comes with better representativeness of minority groups and inclusivity in behavior of generative models, it is important to use the approach responsibly and not change the algorithm to exacerbate biases against minority groups.",
+          "coords": [
+            "9,70.35,602.77,218.96,9.46",
+            "9,70.87,616.32,220.18,9.46",
+            "9,70.35,629.87,218.78,9.46",
+            "9,70.87,643.42,220.08,9.46",
+            "9,70.87,656.97,218.27,9.46",
+            "9,70.87,670.52,220.08,9.46",
+            "9,70.87,683.88,166.44,9.64"
+          ],
+          "sentences": [
+            {
+              "text": "We presented an annotation efficient approach for drawing out under-represented groups from data.",
+              "coords": [
+                "9,70.35,602.77,218.96,9.46",
+                "9,70.87,616.32,220.18,9.46"
+              ]
+            },
+            {
+              "text": "While this comes with better representativeness of minority groups and inclusivity in behavior of generative models, it is important to use the approach responsibly and not change the algorithm to exacerbate biases against minority groups.",
+              "coords": [
+                "9,70.35,629.87,218.78,9.46",
+                "9,70.87,643.42,220.08,9.46",
+                "9,70.87,656.97,218.27,9.46",
+                "9,70.87,670.52,220.08,9.46",
+                "9,70.87,683.88,166.44,9.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Since our approach also comes with the benefit of lower involvement of human annotators due to integration of knowledge distillation with clustering-based active learning, we advocate for considering reallocation of saved annotation resources. The saved resources could be used for continued evaluation and training purposes rather than simply reducing human involvement.",
+          "coords": [
+            "9,81.78,697.99,209.17,9.46",
+            "9,70.87,711.54,218.27,9.46",
+            "9,70.87,725.09,218.27,9.46",
+            "9,70.87,738.63,218.45,9.46",
+            "9,70.87,752.18,220.08,9.46",
+            "9,70.87,765.73,218.45,9.46",
+            "9,306.14,74.72,218.45,9.46",
+            "9,306.14,88.27,183.72,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Since our approach also comes with the benefit of lower involvement of human annotators due to integration of knowledge distillation with clustering-based active learning, we advocate for considering reallocation of saved annotation resources.",
+              "coords": [
+                "9,81.78,697.99,209.17,9.46",
+                "9,70.87,711.54,218.27,9.46",
+                "9,70.87,725.09,218.27,9.46",
+                "9,70.87,738.63,218.45,9.46",
+                "9,70.87,752.18,220.08,9.46",
+                "9,70.87,765.73,36.15,9.46"
+              ]
+            },
+            {
+              "text": "The saved resources could be used for continued evaluation and training purposes rather than simply reducing human involvement.",
+              "coords": [
+                "9,113.63,765.73,175.69,9.46",
+                "9,306.14,74.72,218.45,9.46",
+                "9,306.14,88.27,183.72,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appendices": [],
+  "pages": [
+    {
+      "page": 1,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 2,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 3,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 4,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 5,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 6,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 7,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 8,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 9,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 10,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 11,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 12,
+      "width": 595.276,
+      "height": 841.89
+    }
+  ]
+}

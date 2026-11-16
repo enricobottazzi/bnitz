@@ -1,0 +1,1598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct status="extracted">
+					<analytic>
+						<title level="a" type="main">DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">47F3580DCEC8FD2B1EF3134211232A00</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.9.1" ident="GROBID" when="2026-11-16T07:58+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">0.9.1</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[s, p, head], flavor=null, debugLabelingCollector=disabled</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p coords="1,70.32,290.48,456.01,10.54;1,70.87,304.83,455.36,10.54;1,70.56,319.18,455.76,10.54;1,70.53,333.52,453.89,10.54;1,70.87,347.87,453.54,10.54;1,70.87,362.22,453.54,10.54;1,70.87,376.56,455.36,10.54;1,70.87,390.91,453.54,10.54;1,70.87,405.25,453.54,10.54;1,70.50,419.60,403.43,10.54"><s coords="1,70.32,290.48,456.01,10.54">We introduce our first-generation reasoning models, DeepSeek-R1-Zero and DeepSeek-R1.</s><s coords="1,70.87,304.83,455.36,10.54;1,70.56,319.18,455.76,10.54">DeepSeek-R1-Zero, a model trained via large-scale reinforcement learning (RL) without supervised fine-tuning (SFT) as a preliminary step, demonstrates remarkable reasoning capabilities.</s><s coords="1,70.53,333.52,453.89,10.54;1,70.87,347.87,99.25,10.54">Through RL, DeepSeek-R1-Zero naturally emerges with numerous powerful and intriguing reasoning behaviors.</s><s coords="1,173.56,347.87,350.85,10.54;1,70.87,362.22,37.66,10.54">However, it encounters challenges such as poor readability, and language mixing.</s><s coords="1,113.87,362.22,410.54,10.54;1,70.87,376.56,401.96,10.54">To address these issues and further enhance reasoning performance, we introduce DeepSeek-R1, which incorporates multi-stage training and cold-start data before RL.</s><s coords="1,475.55,376.56,50.67,10.54;1,70.87,390.91,378.08,10.54">DeepSeek-R1 achieves performance comparable to OpenAI-o1-1217 on reasoning tasks.</s><s coords="1,452.37,390.91,72.03,10.54;1,70.87,405.25,453.54,10.54;1,70.50,419.60,403.43,10.54">To support the research community, we open-source DeepSeek-R1-Zero, DeepSeek-R1, and six dense models (1.5B, 7B, 8B, 14B, 32B, 70B) distilled from DeepSeek-R1 based on Qwen and Llama.</s></p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<facsimile>
+		<surface n="1" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="2" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="3" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="4" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="5" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="6" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="7" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="8" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="9" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="10" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="11" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="12" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="13" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="14" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="15" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="16" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="17" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="18" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="19" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="20" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="21" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+		<surface n="22" ulx="0.0" uly="0.0" lrx="595.276" lry="841.89"/>
+	</facsimile>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1." coords="3,70.87,87.30,91.01,12.15">Introduction</head><p coords="3,70.87,113.89,453.55,10.49;3,70.87,127.43,46.78,10.49;3,349.71,127.43,175.02,10.49;3,70.87,140.98,217.73,10.49"><s coords="3,70.87,113.89,453.55,10.49;3,70.87,127.43,453.87,10.49;3,70.87,140.98,217.73,10.49">In recent years, Large Language Models (LLMs) have been undergoing rapid iteration and evolution <ref type="bibr" target="#b0">(Anthropic, 2024;</ref><ref type="bibr">Google, 2024;</ref><ref type="bibr">OpenAI, 2024a)</ref>, progressively diminishing the gap towards Artificial General Intelligence (AGI).</s></p><p coords="3,87.80,161.31,438.52,10.49;3,70.87,174.86,453.54,10.49;3,70.87,188.41,453.55,10.49;3,70.54,201.95,307.65,10.49;3,460.74,201.95,63.68,10.49;3,70.41,215.50,455.82,10.49;3,70.53,229.05,453.89,10.49;3,70.87,242.60,453.55,10.49;3,70.87,256.15,453.77,10.49;3,70.41,269.70,399.83,10.49;3,304.56,283.25,119.92,10.49;3,520.98,283.25,4.79,10.49;3,70.87,296.80,342.32,10.49;3,199.61,310.35,324.80,10.49;3,70.54,323.90,267.14,10.49"><s coords="3,87.80,161.31,438.52,10.49">Recently, post-training has emerged as an important component of the full training pipeline.</s><s coords="3,70.87,174.86,453.54,10.49;3,70.87,188.41,453.55,10.49;3,70.54,201.95,59.47,10.49">It has been shown to enhance accuracy on reasoning tasks, align with social values, and adapt to user preferences, all while requiring relatively minimal computational resources against pre-training.</s><s coords="3,133.29,201.95,391.12,10.49;3,70.41,215.50,455.82,10.49;3,70.53,229.05,135.00,10.49">In the context of reasoning capabilities, OpenAI's o1 <ref type="bibr">(OpenAI, 2024b)</ref> series models were the first to introduce inference-time scaling by increasing the length of the Chain-of-Thought reasoning process.</s><s coords="3,208.91,229.05,315.51,10.49;3,70.87,242.60,337.44,10.49">This approach has achieved significant improvements in various reasoning tasks, such as mathematics, coding, and scientific reasoning.</s><s coords="3,411.73,242.60,112.68,10.49;3,70.87,256.15,389.44,10.49">However, the challenge of effective test-time scaling remains an open question for the research community.</s><s coords="3,463.64,256.15,60.99,10.49;3,70.41,269.70,454.00,10.49;3,70.87,283.25,454.91,10.49;3,70.87,296.80,453.54,10.49;3,70.87,310.35,133.51,10.49">Several prior works have explored various approaches, including process-based reward models <ref type="bibr" target="#b16">(Lightman et al., 2023;</ref><ref type="bibr" target="#b31">Uesato et al., 2022;</ref><ref type="bibr" target="#b32">Wang et al., 2023)</ref>, reinforcement learning <ref type="bibr" target="#b13">(Kumar et al., 2024)</ref>, and search algorithms such as Monte Carlo Tree Search and Beam Search <ref type="bibr" target="#b4">(Feng et al., 2024;</ref><ref type="bibr">Trinh et al., 2024;</ref><ref type="bibr" target="#b36">Xin et al., 2024)</ref>.</s><s coords="3,207.78,310.35,316.63,10.49;3,70.54,323.90,267.14,10.49">However, none of these methods has achieved general reasoning performance comparable to OpenAI's o1 series models.</s></p><p coords="3,87.80,344.22,436.61,10.49;3,70.87,357.77,453.87,10.49;3,70.87,371.32,453.55,10.49;3,70.87,384.87,453.97,10.49;3,70.87,398.42,31.39,10.49;3,195.75,398.42,330.57,10.49;3,70.87,411.97,453.54,10.49;3,70.87,425.52,453.54,10.49;3,70.87,439.07,453.54,10.49;3,70.87,452.62,453.54,10.49;3,70.87,466.16,94.41,10.49"><s coords="3,87.80,344.22,436.61,10.49;3,70.87,357.77,189.24,10.49">In this paper, we take the first step toward improving language model reasoning capabilities using pure reinforcement learning (RL).</s><s coords="3,262.83,357.77,261.91,10.49;3,70.87,371.32,453.55,10.49;3,70.87,384.87,94.25,10.49">Our goal is to explore the potential of LLMs to develop reasoning capabilities without any supervised data, focusing on their self-evolution through a pure RL process.</s><s coords="3,172.40,384.87,352.43,10.49;3,70.87,398.42,455.45,10.49">Specifically, we use DeepSeek-V3-Base as the base model and employ GRPO <ref type="bibr" target="#b26">(Shao et al., 2024)</ref> as the RL framework to improve model performance in reasoning.</s><s coords="3,70.87,411.97,453.54,10.49;3,70.87,425.52,97.46,10.49">During training, DeepSeek-R1-Zero naturally emerged with numerous powerful and interesting reasoning behaviors.</s><s coords="3,171.49,425.52,352.92,10.49;3,70.87,439.07,124.40,10.49">After thousands of RL steps, DeepSeek-R1-Zero exhibits super performance on reasoning benchmarks.</s><s coords="3,198.67,439.07,325.74,10.49;3,70.87,452.62,453.54,10.49;3,70.87,466.16,94.41,10.49">For instance, the pass@1 score on AIME 2024 increases from 15.6% to 71.0%, and with majority voting, the score further improves to 86.7%, matching the performance of OpenAI-o1-0912.</s></p><p coords="3,87.80,486.49,436.60,10.49;3,70.87,500.04,453.55,10.49;3,70.87,513.59,453.54,10.49;3,70.54,527.14,453.87,10.49;3,70.87,540.68,455.36,10.49;3,70.87,554.23,453.54,10.49;3,70.87,567.78,453.55,10.49;3,70.87,581.33,455.45,10.49;3,70.44,594.88,453.97,10.49;3,70.87,608.43,453.54,10.49;3,70.87,621.98,363.96,10.49"><s coords="3,87.80,486.49,436.60,10.49;3,70.87,500.04,37.49,10.49">However, DeepSeek-R1-Zero encounters challenges such as poor readability, and language mixing.</s><s coords="3,114.14,500.04,410.27,10.49;3,70.87,513.59,453.54,10.49;3,70.54,527.14,43.01,10.49">To address these issues and further enhance reasoning performance, we introduce DeepSeek-R1, which incorporates a small amount of cold-start data and a multi-stage training pipeline.</s><s coords="3,121.06,527.14,403.35,10.49;3,70.87,540.68,124.25,10.49">Specifically, we begin by collecting thousands of cold-start data to fine-tune the DeepSeek-V3-Base model.</s><s coords="3,198.50,540.68,327.73,10.49;3,70.87,554.23,25.58,10.49">Following this, we perform reasoning-oriented RL like DeepSeek-R1-Zero.</s><s coords="3,99.83,554.23,424.58,10.49;3,70.87,567.78,453.55,10.49;3,70.87,581.33,455.45,10.49">Upon nearing convergence in the RL process, we create new SFT data through rejection sampling on the RL checkpoint, combined with supervised data from DeepSeek-V3 in domains such as writing, factual QA, and self-cognition, and then retrain the DeepSeek-V3-Base model.</s><s coords="3,70.44,594.88,453.97,10.49;3,70.87,608.43,191.12,10.49">After fine-tuning with the new data, the checkpoint undergoes an additional RL process, taking into account prompts from all scenarios.</s><s coords="3,265.37,608.43,259.04,10.49;3,70.87,621.98,363.96,10.49">After these steps, we obtained a checkpoint referred to as DeepSeek-R1, which achieves performance on par with OpenAI-o1-1217.</s></p><p coords="3,87.80,642.30,438.42,10.49;3,70.87,655.85,17.22,10.49;3,160.54,655.85,363.87,10.49;3,70.87,669.40,455.36,10.49;3,70.87,682.95,415.97,10.49;3,128.39,696.50,396.02,10.49;3,70.87,710.05,89.68,10.49;3,226.70,710.05,297.71,10.49;3,70.87,723.60,306.60,10.49"><s coords="3,87.80,642.30,357.64,10.49">We further explore distillation from DeepSeek-R1 to smaller dense models.</s><s coords="3,448.83,642.30,77.40,10.49;3,70.87,655.85,17.22,10.49">Using Qwen2.5-32B</s><s coords="3,90.32,655.85,434.08,10.49;3,70.87,669.40,39.88,10.49"><ref type="bibr">(Qwen, 2024b)</ref> as the base model, direct distillation from DeepSeek-R1 outperforms applying RL on it.</s><s coords="3,114.03,669.40,412.20,10.49;3,70.87,682.95,193.43,10.49">This demonstrates that the reasoning patterns discovered by larger base models are crucial for improving reasoning capabilities.</s><s coords="3,267.72,682.95,257.12,10.49;3,70.87,696.50,88.04,10.49">We open-source the distilled Qwen and Llama <ref type="bibr" target="#b2">(Dubey et al., 2024)</ref> series.</s><s coords="3,162.34,696.50,362.07,10.49;3,70.87,710.05,453.54,10.49;3,70.87,723.60,306.60,10.49">Notably, our distilled 14B model outperforms state-of-the-art open-source QwQ-32B-Preview <ref type="bibr">(Qwen, 2024a</ref>) by a large margin, and the distilled 32B and 70B models set a new record on the reasoning benchmarks among dense models.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1." coords="4,70.87,88.67,92.11,10.23">Contributions</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="4,70.87,110.98,350.32,10.23">Post-Training: Large-Scale Reinforcement Learning on the Base Model</head><p coords="4,86.07,131.22,438.33,10.49;4,98.14,144.77,426.49,10.49;4,98.14,158.32,428.08,10.49;4,98.14,171.87,426.28,10.49;4,98.14,185.42,426.27,10.49;4,98.14,198.97,426.28,10.49;4,97.81,212.52,426.60,10.49;4,98.14,226.06,127.93,10.49"><s coords="4,86.07,131.22,438.33,10.49;4,98.14,144.77,89.96,10.49">• We directly apply RL to the base model without relying on supervised fine-tuning (SFT) as a preliminary step.</s><s coords="4,191.48,144.77,333.15,10.49;4,98.14,158.32,374.21,10.49">This approach allows the model to explore chain-of-thought (CoT) for solving complex problems, resulting in the development of DeepSeek-R1-Zero.</s><s coords="4,475.76,158.32,50.45,10.49;4,98.14,171.87,426.28,10.49;4,98.14,185.42,343.96,10.49">DeepSeek-R1-Zero demonstrates capabilities such as self-verification, reflection, and generating long CoTs, marking a significant milestone for the research community.</s><s coords="4,445.48,185.42,78.93,10.49;4,98.14,198.97,426.28,10.49;4,97.81,212.52,215.51,10.49">Notably, it is the first open research to validate that reasoning capabilities of LLMs can be incentivized purely through RL, without the need for SFT.</s><s coords="4,316.06,212.52,208.35,10.49;4,98.14,226.06,127.93,10.49">This breakthrough paves the way for future advancements in this area.</s></p><p coords="4,86.07,239.61,438.67,10.49;4,98.14,253.16,428.09,10.49;4,98.14,266.71,426.28,10.49;4,98.14,280.26,426.27,10.49;4,98.14,293.81,68.64,10.49"><s coords="4,86.07,239.61,268.06,10.49">• We introduce our pipeline to develop DeepSeek-R1.</s><s coords="4,358.68,239.61,166.06,10.49;4,98.14,253.16,428.09,10.49;4,98.14,266.71,426.28,10.49;4,98.14,280.26,131.41,10.49">The pipeline incorporates two RL stages aimed at discovering improved reasoning patterns and aligning with human preferences, as well as two SFT stages that serve as the seed for the model's reasoning and non-reasoning capabilities.</s><s coords="4,232.96,280.26,291.45,10.49;4,98.14,293.81,68.64,10.49">We believe the pipeline will benefit the industry by creating better models.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="4,70.87,329.48,250.63,10.23">Distillation: Smaller Models Can Be Powerful Too</head><p coords="4,86.07,349.72,438.55,10.49;4,98.14,363.27,426.28,10.49"><s coords="4,86.07,349.72,438.55,10.49;4,98.14,363.27,426.28,10.49">• We demonstrate that the reasoning patterns of larger models can be distilled into smaller models, resulting in better performance compared to the reasoning patterns discovered</s></p><p coords="4,98.14,376.82,426.27,10.49;4,98.14,390.37,331.05,10.49;4,86.07,403.92,438.33,10.49;4,98.14,417.47,426.27,10.49;4,98.14,431.01,428.08,10.49;4,98.14,444.56,428.08,10.49;4,98.14,458.11,427.64,10.49;4,98.14,471.66,428.08,10.49;4,98.14,485.21,427.64,10.49;4,98.14,498.76,393.25,10.49;4,70.87,531.96,179.68,10.23;4,86.07,554.19,438.77,10.49;4,98.14,567.74,427.63,10.49;4,97.81,581.29,427.69,10.49;4,98.14,594.84,427.64,10.49;4,98.14,608.39,426.27,10.49;4,98.14,621.94,426.28,10.49;4,98.14,635.49,304.42,10.49;4,86.07,649.04,440.15,10.49;4,98.14,662.59,426.28,10.49;4,98.14,676.13,426.28,10.49;4,97.81,689.68,427.14,10.49;4,98.14,703.23,426.27,10.49;4,98.14,716.78,427.63,10.49;4,98.14,730.33,426.27,10.49;4,97.68,743.88,245.32,10.49;5,86.07,88.58,439.70,10.49;5,98.14,102.13,426.27,10.49;5,98.14,115.68,428.08,10.49;5,98.14,129.23,428.18,10.49;5,97.71,142.78,426.70,10.49;5,98.14,156.33,426.27,10.49;5,98.14,169.88,61.61,10.49"><s coords="4,98.14,376.82,136.92,10.49">through RL on small models.</s><s coords="4,238.38,376.82,286.02,10.49;4,98.14,390.37,331.05,10.49">The open source DeepSeek-R1, as well as its API, will benefit the research community to distill better smaller models in the future.</s><s coords="4,86.07,403.92,438.33,10.49;4,98.14,417.47,231.23,10.49">• Using the reasoning data generated by DeepSeek-R1, we fine-tuned several dense models that are widely used in the research community.</s><s coords="4,332.77,417.47,191.64,10.49;4,98.14,431.01,373.79,10.49">The evaluation results demonstrate that the distilled smaller dense models perform exceptionally well on benchmarks.</s><s coords="4,475.30,431.01,50.92,10.49;4,98.14,444.56,395.86,10.49">DeepSeek-R1-Distill-Qwen-7B achieves 55.5% on AIME 2024, surpassing QwQ-32B-Preview.</s><s coords="4,497.43,444.56,28.80,10.49;4,98.14,458.11,427.64,10.49;4,98.14,471.66,152.20,10.49">Additionally, DeepSeek-R1-Distill-Qwen-32B scores 72.6% on AIME 2024, 94.3% on MATH-500, and 57.2% on LiveCodeBench.</s><s coords="4,256.98,471.66,269.24,10.49;4,98.14,485.21,221.85,10.49">These results significantly outperform previous opensource models and are comparable to o1-mini.</s><s coords="4,323.36,485.21,202.42,10.49;4,98.14,498.76,393.25,10.49">We open-source distilled 1.5B, 7B, 8B, 14B, 32B, and 70B checkpoints based on Qwen2.5 and Llama3 series to the community.</s><s coords="4,70.87,531.96,16.36,10.23">1.2.</s><s coords="4,92.68,531.96,157.87,10.23;4,86.07,554.19,438.77,10.49;4,98.14,567.74,141.32,10.49">Summary of Evaluation Results • Reasoning tasks: (1) DeepSeek-R1 achieves a score of 79.8% Pass@1 on AIME 2024, slightly surpassing OpenAI-o1-1217.</s><s coords="4,247.20,567.74,278.57,10.49;4,97.81,581.29,411.94,10.49">On MATH-500, it attains an impressive score of 97.3%, performing on par with OpenAI-o1-1217 and significantly outperforming other models.</s><s coords="4,513.04,581.29,12.47,10.49;4,98.14,594.84,427.64,10.49;4,98.14,608.39,426.27,10.49;4,98.14,621.94,77.29,10.49">(2) On coding-related tasks, DeepSeek-R1 demonstrates expert level in code competition tasks, as it achieves 2,029 Elo rating on Codeforces outperforming 96.3% human participants in the competition.</s><s coords="4,178.83,621.94,345.58,10.49;4,98.14,635.49,304.42,10.49">For engineering-related tasks, DeepSeek-R1 performs slightly better than DeepSeek-V3, which could help developers in real world tasks.</s><s coords="4,86.07,649.04,440.15,10.49;4,98.14,662.59,426.28,10.49;4,98.14,676.13,375.19,10.49">• Knowledge: On benchmarks such as MMLU, MMLU-Pro, and GPQA Diamond, DeepSeek-R1 achieves outstanding results, significantly outperforming DeepSeek-V3 with scores of 90.8% on MMLU, 84.0% on MMLU-Pro, and 71.5% on GPQA Diamond.</s><s coords="4,479.69,676.13,44.72,10.49;4,97.81,689.68,427.14,10.49;4,98.14,703.23,426.27,10.49;4,98.14,716.78,27.60,10.49">While its performance is slightly below that of OpenAI-o1-1217 on these benchmarks, DeepSeek-R1 surpasses other closed-source models, demonstrating its competitive edge in educational tasks.</s><s coords="4,131.59,716.78,394.18,10.49;4,98.14,730.33,290.29,10.49">On the factual benchmark SimpleQA, DeepSeek-R1 outperforms DeepSeek-V3, demonstrating its capability in handling fact-based queries.</s><s coords="4,391.81,730.33,132.60,10.49;4,97.68,743.88,245.32,10.49">A similar trend is observed where OpenAI-o1 surpasses 4o on this benchmark.</s><s coords="5,86.07,88.58,439.70,10.49;5,98.14,102.13,303.28,10.49">• Others: DeepSeek-R1 also excels in a wide range of tasks, including creative writing, general question answering, editing, summarization, and more.</s><s coords="5,404.79,102.13,119.61,10.49;5,98.14,115.68,428.08,10.49;5,98.14,129.23,428.18,10.49">It achieves an impressive length-controlled win-rate of 87.6% on AlpacaEval 2.0 and a win-rate of 92.3% on Are-naHard, showcasing its strong ability to intelligently handle non-exam-oriented queries.</s><s coords="5,97.71,142.78,426.70,10.49;5,98.14,156.33,426.27,10.49;5,98.14,169.88,61.61,10.49">Additionally, DeepSeek-R1 demonstrates outstanding performance on tasks requiring long-context understanding, substantially outperforming DeepSeek-V3 on long-context benchmarks.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2." coords="5,70.87,202.02,74.47,12.15">Approach</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1." coords="5,70.87,229.81,70.91,10.23">Overview</head><p coords="5,70.87,252.04,453.55,10.49;5,70.54,265.59,454.29,10.49;5,70.87,279.14,453.55,10.49;5,70.87,292.69,453.55,10.49;5,70.87,306.24,247.34,10.49"><s coords="5,70.87,252.04,453.55,10.49;5,70.54,265.59,65.51,10.49">Previous work has heavily relied on large amounts of supervised data to enhance model performance.</s><s coords="5,142.08,265.59,382.76,10.49;5,70.87,279.14,453.55,10.49;5,70.87,292.69,162.14,10.49">In this study, we demonstrate that reasoning capabilities can be significantly improved through large-scale reinforcement learning (RL), even without using supervised fine-tuning (SFT) as a cold start.</s><s coords="5,239.79,292.69,284.62,10.49;5,70.87,306.24,247.34,10.49">Furthermore, performance can be further enhanced with the inclusion of a small amount of cold-start data.</s></p><p coords="5,323.08,306.24,202.43,10.49;5,70.87,319.78,453.55,10.49;5,70.51,333.33,453.90,10.49;5,70.87,346.88,453.55,10.49;5,70.87,360.43,97.61,10.49"><s coords="5,323.08,306.24,202.43,10.49;5,70.87,319.78,453.55,10.49;5,70.51,333.33,453.90,10.49;5,70.87,346.88,189.95,10.49">In the following sections, we present: (1) DeepSeek-R1-Zero, which applies RL directly to the base model without any SFT data, and (2) DeepSeek-R1, which applies RL starting from a checkpoint fine-tuned with thousands of long Chain-of-Thought (CoT) examples.</s><s coords="5,264.21,346.88,260.20,10.49;5,70.87,360.43,97.61,10.49">3) Distill the reasoning capability from DeepSeek-R1 to small dense models.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2." coords="5,70.87,391.87,341.85,10.23">DeepSeek-R1-Zero: Reinforcement Learning on the Base Model</head><p coords="5,70.87,414.10,455.35,10.49;5,70.87,427.65,155.36,10.49;5,403.93,427.65,120.48,10.49;5,70.87,441.20,453.55,10.49;5,70.87,454.75,454.91,10.49;5,70.87,468.30,453.55,10.49;5,70.87,481.85,453.54,10.49;5,70.87,495.39,278.37,10.49"><s coords="5,70.87,414.10,455.35,10.49;5,70.87,427.65,337.86,10.49">Reinforcement learning has demonstrated significant effectiveness in reasoning tasks, as evidenced by our previous works <ref type="bibr" target="#b26">(Shao et al., 2024;</ref><ref type="bibr" target="#b32">Wang et al., 2023)</ref>.</s><s coords="5,413.70,427.65,110.72,10.49;5,70.87,441.20,361.43,10.49">However, these works heavily depended on supervised data, which are time-intensive to gather.</s><s coords="5,435.90,441.20,88.52,10.49;5,70.87,454.75,454.91,10.49;5,70.87,468.30,378.07,10.49">In this section, we explore the potential of LLMs to develop reasoning capabilities without any supervised data, focusing on their self-evolution through a pure reinforcement learning process.</s><s coords="5,452.35,468.30,72.07,10.49;5,70.87,481.85,453.54,10.49;5,70.87,495.39,278.37,10.49">We start with a brief overview of our RL algorithm, followed by the presentation of some exciting results, and hope this provides the community with valuable insights.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.1." coords="5,70.87,524.75,198.88,10.09">Reinforcement Learning Algorithm</head><p coords="5,70.87,546.94,453.87,10.49;5,70.87,560.49,179.24,10.49;5,334.23,560.49,190.18,10.49;5,70.87,574.04,455.45,10.49;5,70.87,587.30,331.82,10.79;5,402.69,587.30,53.75,11.67;5,457.53,587.30,66.88,10.79;5,70.54,601.14,51.14,10.49;5,125.71,601.14,190.34,10.49;5,319.27,601.14,187.92,10.49"><s coords="5,70.87,546.94,453.87,10.49;5,70.87,560.49,453.55,10.49;5,70.87,574.04,455.45,10.49">Group Relative Policy Optimization In order to save the training costs of RL, we adopt Group Relative Policy Optimization (GRPO) <ref type="bibr" target="#b26">(Shao et al., 2024)</ref>, which foregoes the critic model that is typically the same size as the policy model, and estimates the baseline from group scores instead.</s><s coords="5,70.87,587.30,331.82,10.79;5,402.69,587.30,53.75,11.67;5,457.53,587.30,66.88,10.79;5,70.54,601.14,51.14,10.49;5,125.71,601.14,190.34,10.49;5,319.27,601.14,187.92,10.49">Specifically, for each question 𝑞, GRPO samples a group of outputs {𝑜 1 , 𝑜 2 , • • • , 𝑜 𝐺 } from the old policy 𝜋 𝜃 𝑜𝑙𝑑 and then optimizes the policy model 𝜋 𝜃 by maximizing the following objective:</s></p><formula xml:id="formula_0">J 𝐺𝑅𝑃𝑂 (𝜃) = E[𝑞 ∼ 𝑃(𝑄), {𝑜 𝑖 } 𝐺 𝑖=1 ∼ 𝜋 𝜃 𝑜𝑙𝑑 (𝑂|𝑞)] 1 𝐺 𝐺 ∑︁ 𝑖=1 min 𝜋 𝜃 (𝑜 𝑖 |𝑞) 𝜋 𝜃 𝑜𝑙𝑑 (𝑜 𝑖 |𝑞) 𝐴 𝑖 , clip 𝜋 𝜃 (𝑜 𝑖 |𝑞) 𝜋 𝜃 𝑜𝑙𝑑 (𝑜 𝑖 |𝑞) , 1 -𝜀, 1 + 𝜀 𝐴 𝑖 -𝛽D 𝐾𝐿 𝜋 𝜃 ||𝜋 𝑟𝑒 𝑓 , (<label>1</label></formula><formula xml:id="formula_1">)</formula><formula xml:id="formula_2">D 𝐾𝐿 𝜋 𝜃 ||𝜋 𝑟𝑒 𝑓 = 𝜋 𝑟𝑒 𝑓 (𝑜 𝑖 |𝑞) 𝜋 𝜃 (𝑜 𝑖 |𝑞) -log 𝜋 𝑟𝑒 𝑓 (𝑜 𝑖 |𝑞) 𝜋 𝜃 (𝑜 𝑖 |𝑞) -1,<label>(2)</label></formula><p coords="5,70.41,706.89,222.16,10.49;5,297.01,706.89,227.41,10.49;5,70.87,720.15,51.05,10.79;5,121.91,720.44,50.29,11.38;5,173.29,720.15,241.66,10.79"><s coords="5,70.41,706.89,222.16,10.49;5,297.01,706.89,227.41,10.49;5,70.87,720.15,51.05,10.79;5,121.91,720.44,34.96,11.38">where 𝜀 and 𝛽 are hyper-parameters, and 𝐴 𝑖 is the advantage, computed using a group of rewards {𝑟 1 , 𝑟 2 , . . .</s><s coords="5,158.87,720.44,13.33,10.49;5,173.29,720.15,241.66,10.79">, 𝑟 𝐺 } corresponding to the outputs within each group:</s></p><formula xml:id="formula_3">𝐴 𝑖 = 𝑟 𝑖 -m𝑒𝑎𝑛({𝑟 1 , 𝑟 2 , • • • , 𝑟 𝐺 }) s𝑡𝑑({𝑟 1 , 𝑟 2 , • • • , 𝑟 𝐺 }) .<label>(3)</label></formula><p coords="6,84.02,90.55,427.25,9.58;6,84.02,102.51,405.98,9.58;6,84.02,114.46,416.91,9.58;6,84.02,126.42,378.46,9.58;6,84.02,138.37,266.54,9.58"><s coords="6,84.02,90.55,194.61,9.58">A conversation between User and Assistant.</s><s coords="6,281.71,90.55,229.55,9.58">The user asks a question, and the Assistant solves it.</s><s coords="6,84.02,102.51,405.98,9.58;6,84.02,114.46,72.83,9.58">The assistant first thinks about the reasoning process in the mind and then provides the user with the answer.</s><s coords="6,159.93,114.46,341.00,9.58;6,84.02,126.42,378.46,9.58;6,84.02,138.37,155.31,9.58">The reasoning process and answer are enclosed within &lt;think&gt; &lt;/think&gt; and &lt;answer&gt; &lt;/answer&gt; tags, respectively, i.e., &lt;think&gt; reasoning process here &lt;/think&gt; &lt;answer&gt; answer here &lt;/answer&gt;.</s><s coords="6,242.41,138.37,61.97,9.58">User: prompt.</s><s coords="6,307.47,138.37,43.09,9.58">Assistant:</s></p><p coords="6,72.67,163.51,25.57,10.49;6,109.59,163.22,412.68,10.79;6,236.82,177.06,121.33,10.49"><s coords="6,72.67,163.22,199.12,10.79">Table <ref type="table">1</ref> | Template for DeepSeek-R1-Zero.</s><s coords="6,275.18,163.51,247.09,10.49;6,236.82,177.06,121.33,10.49">prompt will be replaced with the specific reasoning question during training.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.2." coords="6,70.87,212.13,116.97,10.09">Reward Modeling</head><p coords="6,70.53,234.32,455.79,10.49"><s coords="6,70.53,234.32,455.79,10.49">The reward is the source of the training signal, which decides the optimization direction of RL.</s></p><p coords="6,70.53,247.87,453.88,10.49;6,70.87,261.42,83.09,10.49"><s coords="6,70.53,247.87,453.88,10.49;6,70.87,261.42,83.09,10.49">To train DeepSeek-R1-Zero, we adopt a rule-based reward system that mainly consists of two types of rewards:</s></p><p coords="6,86.07,281.75,440.24,10.49;6,98.14,295.30,426.27,10.49;6,98.14,308.85,426.28,10.49;6,98.14,322.39,426.27,10.49;6,98.14,335.94,276.38,10.49"><s coords="6,86.07,281.75,440.24,10.49">• Accuracy rewards: The accuracy reward model evaluates whether the response is correct.</s><s coords="6,98.14,295.30,426.27,10.49;6,98.14,308.85,426.28,10.49;6,98.14,322.39,177.28,10.49">For example, in the case of math problems with deterministic results, the model is required to provide the final answer in a specified format (e.g., within a box), enabling reliable rule-based verification of correctness.</s><s coords="6,278.85,322.39,245.57,10.49;6,98.14,335.94,276.38,10.49">Similarly, for LeetCode problems, a compiler can be used to generate feedback based on predefined test cases.</s></p><p coords="6,86.07,349.49,438.34,10.49;6,98.14,363.04,428.40,10.49;6,98.14,376.59,22.43,10.49"><s coords="6,86.07,349.49,438.34,10.49;6,98.14,363.04,428.40,10.49;6,98.14,376.59,22.43,10.49">• Format rewards: In addition to the accuracy reward model, we employ a format reward model that enforces the model to put its thinking process between '&lt;think&gt;' and '&lt;/think&gt;' tags.</s></p><p coords="6,70.32,396.91,455.45,10.49;6,70.87,410.46,453.54,10.49;6,70.87,424.01,453.55,10.49;6,70.87,437.56,272.17,10.49"><s coords="6,70.32,396.91,455.45,10.49;6,70.87,410.46,453.54,10.49;6,70.87,424.01,453.55,10.49;6,70.87,437.56,272.17,10.49">We do not apply the outcome or process neural reward model in developing DeepSeek-R1-Zero, because we find that the neural reward model may suffer from reward hacking in the large-scale reinforcement learning process, and retraining the reward model needs additional training resources and it complicates the whole training pipeline.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.3." coords="6,70.87,468.24,117.79,10.09">Training Template</head><p coords="6,70.53,490.44,453.88,10.49;6,70.87,503.98,374.42,10.49;6,452.59,503.98,71.83,10.49;6,70.87,517.53,455.46,10.49;6,70.32,531.08,454.09,10.49;6,70.87,544.63,455.36,10.49;6,70.87,558.18,453.89,10.49;6,70.54,571.73,38.67,10.49"><s coords="6,70.53,490.44,453.88,10.49;6,70.87,503.98,268.50,10.49">To train DeepSeek-R1-Zero, we begin by designing a straightforward template that guides the base model to adhere to our specified instructions.</s><s coords="6,343.95,503.98,180.46,10.49;6,70.87,517.53,455.46,10.49">As depicted in Table <ref type="table">1</ref>, this template requires DeepSeek-R1-Zero to first produce a reasoning process, followed by the final answer.</s><s coords="6,70.32,531.08,454.09,10.49;6,70.87,544.63,455.36,10.49;6,70.87,558.18,453.89,10.49;6,70.54,571.73,38.67,10.49">We intentionally limit our constraints to this structural format, avoiding any content-specific biases-such as mandating reflective reasoning or promoting particular problem-solving strategies-to ensure that we can accurately observe the model's natural progression during the RL process.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.4." coords="6,70.87,602.41,397.51,10.09">Performance, Self-evolution Process and Aha Moment of DeepSeek-R1-Zero</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="6,70.87,624.60,455.35,10.49;6,70.87,638.15,454.91,10.49">Performance of DeepSeek-R1-Zero Figure 2 depicts the performance trajectory of DeepSeek-R1-Zero on the AIME 2024 benchmark throughout the RL training process. As illustrated,</head><p coords="6,70.87,651.70,453.54,10.49;6,70.87,665.25,453.55,10.49;6,70.87,678.80,453.55,10.49;6,70.87,692.35,453.88,10.49;6,70.87,705.90,290.29,10.49"><s coords="6,70.87,651.70,453.54,10.49;6,70.87,665.25,108.19,10.49">DeepSeek-R1-Zero demonstrates a steady and consistent enhancement in performance as the RL training advances.</s><s coords="6,183.70,665.25,340.72,10.49;6,70.87,678.80,453.55,10.49;6,70.87,692.35,152.82,10.49">Notably, the average pass@1 score on AIME 2024 shows a significant increase, jumping from an initial 15.6% to an impressive 71.0%, reaching performance levels comparable to OpenAI-o1-0912.</s><s coords="6,227.08,692.35,297.67,10.49;6,70.87,705.90,290.29,10.49">This significant improvement highlights the efficacy of our RL algorithm in optimizing the model's performance over time.</s></p><p coords="6,87.80,726.22,436.61,10.49;6,70.87,739.77,453.54,10.49;7,73.58,104.60,32.63,10.20;7,196.12,97.85,54.69,10.20;7,279.07,97.85,54.59,10.20;7,352.54,91.10,33.23,10.20;7,404.64,91.10,47.74,10.20;7,464.29,97.85,57.41,10.20;7,345.59,104.60,47.13,10.20;7,413.10,104.60,30.81,10.20;7,179.76,123.27,87.40,10.46;7,288.99,123.27,34.76,10.46;7,351.77,123.27,34.76,10.46;7,411.12,123.27,34.76,10.46;7,478.58,123.27,28.82,10.46;7,73.58,142.32,82.77,10.20;7,187.63,142.23,19.03,10.46;7,237.28,142.23,19.03,10.46;7,296.85,142.23,19.03,10.46;7,359.63,142.23,19.03,10.46;7,418.99,142.23,19.03,10.46;7,482.12,142.23,21.75,10.46;7,73.58,155.83,80.97,10.20;7,187.63,155.74,19.03,10.46;7,237.28,155.74,19.03,10.46;7,296.85,155.74,19.03,10.46;7,359.63,155.74,19.03,10.46;7,418.99,155.74,19.03,10.46;7,482.12,155.74,21.75,10.46;7,73.58,174.79,94.26,10.20;7,187.63,174.71,19.03,10.46;7,237.28,174.71,19.03,10.46;7,296.85,174.71,19.03,10.46;7,359.63,174.71,19.03,10.46;7,418.99,174.71,19.03,10.46;7,482.12,174.71,21.75,10.46;7,85.28,200.63,424.39,10.79;7,266.83,214.47,61.61,10.49;7,70.87,517.42,453.54,10.49;7,70.87,530.97,453.55,10.49;7,70.87,544.52,455.36,10.49;7,70.87,558.07,454.91,10.49;7,70.41,571.62,454.00,10.49;7,70.87,585.17,453.55,10.49;7,70.87,598.72,453.55,10.49;7,70.87,612.27,453.76,10.49;7,70.87,625.82,161.62,10.49"><s coords="6,87.80,726.22,436.61,10.49;6,70.87,739.77,269.96,10.49">Table 2 provides a comparative analysis between DeepSeek-R1-Zero and OpenAI's o1-0912 models across a variety of reasoning-related benchmarks.</s><s coords="6,344.14,739.77,180.27,10.49;7,73.58,104.60,32.63,10.20;7,196.12,97.85,54.69,10.20;7,279.07,97.85,54.59,10.20;7,352.54,91.10,33.23,10.20;7,404.64,91.10,47.74,10.20;7,464.29,97.85,57.41,10.20;7,345.59,104.60,47.13,10.20;7,413.10,104.60,30.81,10.20;7,179.76,123.27,87.40,10.46;7,288.99,123.27,34.76,10.46;7,351.77,123.27,34.76,10.46;7,411.12,123.27,34.76,10.46;7,478.58,123.27,28.82,10.46;7,73.58,142.32,82.77,10.20;7,187.63,142.23,19.03,10.46;7,237.28,142.23,19.03,10.46;7,296.85,142.23,19.03,10.46;7,359.63,142.23,19.03,10.46;7,418.99,142.23,19.03,10.46;7,482.12,142.23,21.75,10.46;7,73.58,155.83,80.97,10.20;7,187.63,155.74,19.03,10.46;7,237.28,155.74,19.03,10.46;7,296.85,155.74,19.03,10.46;7,359.63,155.74,19.03,10.46;7,418.99,155.74,19.03,10.46;7,482.12,155.74,21.75,10.46;7,73.58,174.79,94.26,10.20;7,187.63,174.71,19.03,10.46;7,237.28,174.71,19.03,10.46;7,296.85,174.71,19.03,10.46;7,359.63,174.71,19.03,10.46;7,418.99,174.71,19.03,10.46;7,482.12,174.71,21.75,10.46;7,85.28,200.63,424.39,10.79;7,266.83,214.47,61.61,10.49">The findings reveal that RL empowers Model AIME 2024 MATH-500 GPQA LiveCode CodeForces Diamond Bench pass@1 cons@64 pass@1 pass@1 pass@1 rating OpenAI-o1-mini 63.6 80.0 90.0 60.0 53.8 1820 OpenAI-o1-0912 74.4 83.3 94.8 77.3 63.4 1843 DeepSeek-R1-Zero 71.0 86.7 95.9 73.3 50.0 1444 Table 2 | Comparison of DeepSeek-R1-Zero and OpenAI o1 models on reasoning-related benchmarks.</s><s coords="7,70.87,517.42,453.54,10.49;7,70.87,530.97,82.56,10.49">DeepSeek-R1-Zero to attain robust reasoning capabilities without the need for any supervised fine-tuning data.</s><s coords="7,158.45,530.97,365.97,10.49;7,70.87,544.52,240.31,10.49">This is a noteworthy achievement, as it underscores the model's ability to learn and generalize effectively through RL alone.</s><s coords="7,314.56,544.52,211.66,10.49;7,70.87,558.07,386.16,10.49">Additionally, the performance of DeepSeek-R1-Zero can be further augmented through the application of majority voting.</s><s coords="7,461.52,558.07,64.25,10.49;7,70.41,571.62,454.00,10.49;7,70.87,585.17,429.50,10.49">For example, when majority voting is employed on the AIME benchmark, DeepSeek-R1-Zero's performance escalates from 71.0% to 86.7%, thereby exceeding the performance of OpenAI-o1-0912.</s><s coords="7,505.79,585.17,18.63,10.49;7,70.87,598.72,453.55,10.49;7,70.87,612.27,453.76,10.49;7,70.87,625.82,161.62,10.49">The ability of DeepSeek-R1-Zero to achieve such competitive performance, both with and without majority voting, highlights its strong foundational capabilities and its potential for further advancements in reasoning tasks.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="7,70.87,661.45,216.58,10.23">Self-evolution Process of DeepSeek-R1-Zero</head><p coords="7,298.29,661.36,226.11,10.49;7,70.87,674.91,453.54,10.49;7,70.87,688.46,453.54,10.49;7,70.54,702.01,453.87,10.49;7,70.87,715.56,453.55,10.49;7,70.87,729.11,120.84,10.49"><s coords="7,298.29,661.36,226.11,10.49;7,70.87,674.91,453.54,10.49;7,70.87,688.46,69.95,10.49">The self-evolution process of DeepSeek-R1-Zero is a fascinating demonstration of how RL can drive a model to improve its reasoning capabilities autonomously.</s><s coords="7,144.07,688.46,380.34,10.49;7,70.54,702.01,336.26,10.49">By initiating RL directly from the base model, we can closely monitor the model's progression without the influence of the supervised fine-tuning stage.</s><s coords="7,410.17,702.01,114.24,10.49;7,70.87,715.56,453.55,10.49;7,70.87,729.11,120.84,10.49">This approach provides a clear view of how the model evolves over time, particularly in terms of its ability to handle complex reasoning tasks.</s></p><p coords="7,87.80,749.43,104.12,10.49;7,198.74,749.43,327.48,10.49;8,113.70,324.31,409.60,10.49"><s coords="7,87.80,749.43,438.42,10.49;8,113.70,324.31,409.60,10.49">As depicted in Figure <ref type="figure" target="#fig_1">3</ref>, the thinking time of DeepSeek-R1-Zero shows consistent improve- DeepSeek-R1-Zero naturally learns to solve reasoning tasks with more thinking time.</s></p><p coords="8,70.87,359.25,453.54,10.49;8,70.87,372.80,453.55,10.49;8,70.87,386.35,455.36,10.49;8,70.87,399.90,454.91,10.49;8,70.87,413.45,382.45,10.49"><s coords="8,70.87,359.25,177.64,10.49">ment throughout the training process.</s><s coords="8,251.74,359.25,272.67,10.49;8,70.87,372.80,255.60,10.49">This improvement is not the result of external adjustments but rather an intrinsic development within the model.</s><s coords="8,329.84,372.80,194.57,10.49;8,70.87,386.35,455.36,10.49;8,70.87,399.90,31.24,10.49">DeepSeek-R1-Zero naturally acquires the ability to solve increasingly complex reasoning tasks by leveraging extended test-time computation.</s><s coords="8,105.48,399.90,420.30,10.49;8,70.87,413.45,382.45,10.49">This computation ranges from generating hundreds to thousands of reasoning tokens, allowing the model to explore and refine its thought processes in greater depth.</s></p><p coords="8,87.80,433.78,436.61,10.49;8,70.87,447.32,453.54,10.49;8,70.87,460.87,453.55,10.49;8,70.54,474.42,453.87,10.49;8,70.87,487.97,453.54,10.49;8,70.87,501.52,454.91,10.49;8,70.87,515.07,386.14,10.49"><s coords="8,87.80,433.78,436.61,10.49;8,70.87,447.32,230.27,10.49">One of the most remarkable aspects of this self-evolution is the emergence of sophisticated behaviors as the test-time computation increases.</s><s coords="8,304.42,447.32,219.99,10.49;8,70.87,460.87,453.55,10.49;8,70.54,474.42,175.41,10.49">Behaviors such as reflection-where the model revisits and reevaluates its previous steps-and the exploration of alternative approaches to problem-solving arise spontaneously.</s><s coords="8,249.14,474.42,275.27,10.49;8,70.87,487.97,429.63,10.49">These behaviors are not explicitly programmed but instead emerge as a result of the model's interaction with the reinforcement learning environment.</s><s coords="8,503.89,487.97,20.52,10.49;8,70.87,501.52,454.91,10.49;8,70.87,515.07,386.14,10.49">This spontaneous development significantly enhances DeepSeek-R1-Zero's reasoning capabilities, enabling it to tackle more challenging tasks with greater efficiency and accuracy.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="8,70.87,550.74,175.18,10.23">Aha Moment of DeepSeek-R1-Zero</head><p coords="8,256.89,550.66,267.52,10.49;8,70.87,564.20,453.55,10.49;8,70.87,577.75,94.72,10.49;8,173.97,577.75,351.80,10.49;8,70.87,591.30,453.54,10.49;8,70.87,604.85,453.55,10.49;8,70.87,618.40,453.55,10.49;8,70.87,631.95,115.59,10.49;8,87.80,652.27,436.61,10.49;8,70.87,665.82,453.77,10.49;8,70.87,679.37,453.55,10.49;8,70.87,692.92,453.55,10.49;8,69.23,706.47,455.18,10.49;8,70.87,720.02,453.55,10.49;8,70.87,733.57,50.27,10.49"><s coords="8,256.89,550.66,267.52,10.49;8,70.87,564.20,364.33,10.49">A particularly intriguing phenomenon observed during the training of DeepSeek-R1-Zero is the occurrence of an "aha moment".</s><s coords="8,441.38,564.20,83.03,10.49;8,70.87,577.75,353.42,10.49">This moment, as illustrated in Table <ref type="table">3</ref>, occurs in an intermediate version of the model.</s><s coords="8,432.12,577.75,93.65,10.49;8,70.87,591.30,453.54,10.49;8,70.87,604.85,48.97,10.49">During this phase, DeepSeek-R1-Zero learns to allocate more thinking time to a problem by reevaluating its initial approach.</s><s coords="8,125.51,604.85,398.90,10.49;8,70.87,618.40,453.55,10.49;8,70.87,631.95,115.59,10.49">This behavior is not only a testament to the model's growing reasoning abilities but also a captivating example of how reinforcement learning can lead to unexpected and sophisticated outcomes.</s><s coords="8,87.80,652.27,436.61,10.49;8,70.87,665.82,110.15,10.49">This moment is not only an "aha moment" for the model but also for the researchers observing its behavior.</s><s coords="8,184.43,665.82,340.21,10.49;8,70.87,679.37,453.55,10.49;8,70.87,692.92,428.01,10.49">It underscores the power and beauty of reinforcement learning: rather than explicitly teaching the model on how to solve a problem, we simply provide it with the right incentives, and it autonomously develops advanced problem-solving strategies.</s><s coords="8,505.79,692.92,18.63,10.49;8,69.23,706.47,455.18,10.49;8,70.87,720.02,453.55,10.49;8,70.87,733.57,50.27,10.49">The "aha moment" serves as a powerful reminder of the potential of RL to unlock new levels of intelligence in artificial systems, paving the way for more autonomous and adaptive models in the future.</s></p><p coords="9,103.02,93.08,262.30,10.49;9,368.05,89.57,7.99,3.34;9,376.25,92.79,14.33,9.37;9,392.70,84.59,7.67,9.37;9,400.59,92.79,91.67,10.79;9,103.02,112.10,90.68,10.49;9,103.02,127.71,102.50,10.49;9,208.25,124.20,7.99,3.34;9,216.45,127.42,14.33,9.37;9,232.90,119.22,7.67,9.37;9,240.79,127.42,188.86,10.79;9,107.99,143.30,7.99,3.34;9,116.20,146.51,14.33,9.37;9,132.65,138.32,7.67,9.37;9,140.53,146.51,20.78,9.37;9,166.90,139.22,3.99,7.67;9,174.41,146.74,14.60,9.41;9,189.63,144.85,47.27,11.31;9,239.01,138.32,7.67,9.37;9,246.90,146.51,39.02,9.64;9,286.54,144.85,3.99,7.67;9,291.02,146.81,2.73,10.49;9,103.02,163.35,227.13,10.49;9,103.56,176.65,25.85,9.37;9,130.03,174.98,81.00,11.31;9,211.02,174.98,31.72,12.46;9,243.35,174.98,105.84,11.31;9,349.81,174.98,31.72,12.46;9,382.14,174.98,85.19,12.46;9,103.02,190.49,11.45,10.49;9,103.02,204.04,263.47,10.49;9,103.02,217.29,346.24,10.79;9,103.02,231.14,141.87,10.49;9,103.02,243.23,7.99,3.34;9,111.22,246.45,14.33,9.37;9,127.67,238.25,7.67,9.37;9,135.56,246.45,39.03,9.64;9,103.02,260.29,136.03,10.49;9,103.24,273.55,14.33,9.37;9,119.69,265.35,7.67,9.37;9,127.57,273.55,39.02,9.64;9,167.21,271.88,26.66,11.31;9,199.93,265.35,7.67,9.37;9,207.82,273.55,55.69,9.64;9,264.12,271.88,3.99,7.67;9,103.02,287.10,302.68,10.79;9,103.02,300.94,11.45,10.49"><s coords="9,103.02,93.08,262.30,10.49;9,368.05,89.57,7.99,3.34;9,376.25,92.79,14.33,9.37;9,392.70,84.59,7.67,9.37;9,400.59,92.79,91.67,10.79;9,103.02,112.10,90.68,10.49;9,103.02,127.71,102.50,10.49;9,208.25,124.20,7.99,3.34;9,216.45,127.42,14.33,9.37;9,232.90,119.22,7.67,9.37;9,240.79,127.42,188.86,10.79;9,107.99,143.30,7.99,3.34;9,116.20,146.51,14.33,9.37;9,132.65,138.32,7.67,9.37;9,140.53,146.51,20.78,9.37;9,166.90,139.22,3.99,7.67;9,174.41,146.74,14.60,9.41;9,189.63,144.85,47.27,11.31;9,239.01,138.32,7.67,9.37;9,246.90,146.51,39.02,9.64;9,286.54,144.85,3.99,7.67;9,291.02,146.81,2.73,10.49">Question: If 𝑎 &gt; 1, then the sum of the real solutions of √︁ 𝑎 -√ 𝑎 + 𝑥 = 𝑥 is equal to Response: &lt;think&gt; To solve the equation √︁ 𝑎 -√ 𝑎 + 𝑥 = 𝑥, let's start by squaring both • • • √︁ 𝑎 -√ 𝑎 + 𝑥 2 = 𝑥 2 =⇒ 𝑎 -√ 𝑎 + 𝑥 = 𝑥 2 .</s><s coords="9,103.02,163.35,227.13,10.49;9,103.56,176.65,25.85,9.37;9,130.03,174.98,81.00,11.31;9,211.02,174.98,31.72,12.46;9,243.35,174.98,105.84,11.31;9,349.81,174.98,31.72,12.46;9,382.14,174.98,85.19,12.46;9,103.02,190.49,11.45,10.49">Rearrange to isolate the inner square root term: (𝑎 -𝑥 2 ) 2 = 𝑎 + 𝑥 =⇒ 𝑎 2 -2𝑎𝑥 2 + (𝑥 2 ) 2 = 𝑎 + 𝑥 =⇒ 𝑥 4 -2𝑎𝑥 2 -𝑥 + (𝑎 2 -𝑎) = 0 . . .</s><s coords="9,103.02,204.04,51.56,10.49">Wait, wait.</s><s coords="9,157.96,204.04,24.82,10.49">Wait.</s><s coords="9,186.16,204.04,180.33,10.49">That's an aha moment I can flag here.</s><s coords="9,103.02,217.29,346.24,10.79;9,103.02,231.14,141.87,10.49;9,103.02,243.23,7.99,3.34;9,111.22,246.45,14.33,9.37;9,127.67,238.25,7.67,9.37;9,135.56,246.45,39.03,9.64;9,103.02,260.29,136.03,10.49;9,103.24,273.55,14.33,9.37;9,119.69,265.35,7.67,9.37;9,127.57,273.55,39.02,9.64;9,167.21,271.88,26.66,11.31;9,199.93,265.35,7.67,9.37;9,207.82,273.55,55.69,9.64;9,264.12,271.88,3.99,7.67;9,103.02,287.10,302.68,10.79;9,103.02,300.94,11.45,10.49">Let's reevaluate this step-by-step to identify if the correct sum can be • • • We started with the equation: √︁ 𝑎 -√ 𝑎 + 𝑥 = 𝑥 First, let's square both sides: 𝑎 -√ 𝑎 + 𝑥 = 𝑥 2 =⇒ √ 𝑎 + 𝑥 = 𝑎 -𝑥 2 Next, I could square both sides again, treating the equation: • • • . . .</s></p><p coords="9,75.19,324.56,422.91,10.79"><s coords="9,75.19,324.56,422.91,10.79">Table 3 | An interesting "aha moment" of an intermediate version of DeepSeek-R1-Zero.</s></p><p coords="9,501.49,324.85,18.26,10.49;9,79.16,338.40,438.32,10.49;9,125.36,351.95,344.56,10.49"><s coords="9,501.49,324.85,18.26,10.49;9,79.16,338.40,270.75,10.49">The model learns to rethink using an anthropomorphic tone.</s><s coords="9,353.30,338.40,164.18,10.49;9,125.36,351.95,344.56,10.49">This is also an aha moment for us, allowing us to witness the power and beauty of reinforcement learning.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="9,70.87,386.90,226.31,10.49">Drawback of DeepSeek-R1-Zero Although</head><p coords="9,301.45,386.90,222.96,10.49;9,70.87,400.45,453.55,10.49;9,70.87,414.00,454.91,10.49;9,70.87,427.54,453.55,10.49;9,70.87,441.09,453.97,10.49;9,70.87,454.64,72.36,10.49"><s coords="9,301.45,386.90,222.96,10.49;9,70.87,400.45,453.55,10.49;9,70.87,414.00,68.73,10.49">DeepSeek-R1-Zero exhibits strong reasoning capabilities and autonomously develops unexpected and powerful reasoning behaviors, it faces several issues.</s><s coords="9,142.97,414.00,382.81,10.49;9,70.87,427.54,107.83,10.49">For instance, DeepSeek-R1-Zero struggles with challenges like poor readability, and language mixing.</s><s coords="9,183.30,427.54,341.12,10.49;9,70.87,441.09,453.97,10.49;9,70.87,454.64,72.36,10.49">To make reasoning processes more readable and share them with the open community, we explore DeepSeek-R1, a method that utilizes RL with human-friendly cold-start data.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3." coords="9,70.87,487.85,296.37,10.23">DeepSeek-R1: Reinforcement Learning with Cold Start</head><p coords="9,70.87,510.07,453.55,10.49;9,70.87,523.62,453.54,10.49;9,70.87,537.17,453.55,10.49;9,70.87,550.72,453.55,10.49;9,70.87,564.27,453.54,10.49;9,70.54,577.82,247.73,10.49"><s coords="9,70.87,510.07,453.55,10.49;9,70.87,523.62,453.54,10.49;9,70.87,537.17,215.71,10.49">Inspired by the promising results of DeepSeek-R1-Zero, two natural questions arise: 1) Can reasoning performance be further improved or convergence accelerated by incorporating a small amount of high-quality data as a cold start?</s><s coords="9,290.96,537.17,233.45,10.49;9,70.87,550.72,453.55,10.49;9,70.87,564.27,95.79,10.49">2) How can we train a user-friendly model that not only produces clear and coherent Chains of Thought (CoT) but also demonstrates strong general capabilities?</s><s coords="9,170.00,564.27,333.17,10.49">To address these questions, we design a pipeline to train DeepSeek-R1.</s><s coords="9,506.51,564.27,17.90,10.49;9,70.54,577.82,247.73,10.49">The pipeline consists of four stages, outlined as follows.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.1." coords="9,70.87,608.50,80.83,10.09">Cold Start</head><p coords="9,70.87,630.69,453.55,10.49;9,70.87,644.24,453.55,10.49;9,70.87,657.79,453.55,10.49;9,70.87,671.34,453.55,10.49;9,70.87,684.89,455.35,10.49;9,70.87,698.44,453.54,10.49;9,70.87,711.99,54.29,10.49"><s coords="9,70.87,630.69,453.55,10.49;9,70.87,644.24,453.55,10.49;9,70.87,657.79,220.52,10.49">Unlike DeepSeek-R1-Zero, to prevent the early unstable cold start phase of RL training from the base model, for DeepSeek-R1 we construct and collect a small amount of long CoT data to fine-tune the model as the initial RL actor.</s><s coords="9,295.82,657.79,228.60,10.49;9,70.87,671.34,453.55,10.49;9,70.87,684.89,455.35,10.49;9,70.87,698.44,453.54,10.49;9,70.87,711.99,54.29,10.49">To collect such data, we have explored several approaches: using few-shot prompting with a long CoT as an example, directly prompting models to generate detailed answers with reflection and verification, gathering DeepSeek-R1-Zero outputs in a readable format, and refining the results through post-processing by human annotators.</s></p><p coords="9,87.80,732.31,436.61,10.49;9,70.87,745.86,453.55,10.49;10,70.87,88.58,38.74,10.49"><s coords="9,87.80,732.31,436.61,10.49;9,70.87,745.86,122.90,10.49">In this work, we collect thousands of cold-start data to fine-tune the DeepSeek-V3-Base as the starting point for RL.</s><s coords="9,196.85,745.86,327.56,10.49;10,70.87,88.58,38.74,10.49">Compared to DeepSeek-R1-Zero, the advantages of cold start data include:</s></p><p coords="10,86.07,108.90,438.33,10.49;10,98.14,122.45,426.28,10.49;10,98.14,136.00,427.63,10.49;10,97.68,149.55,426.73,10.49;10,98.14,163.10,426.28,10.49;10,98.14,176.65,426.27,10.49;10,97.81,190.20,426.60,10.49;10,98.14,203.75,34.63,10.49"><s coords="10,86.07,108.90,438.33,10.49;10,98.14,122.45,58.23,10.49">• Readability: A key limitation of DeepSeek-R1-Zero is that its content is often not suitable for reading.</s><s coords="10,161.99,122.45,362.43,10.49;10,98.14,136.00,136.13,10.49">Responses may mix multiple languages or lack markdown formatting to highlight answers for users.</s><s coords="10,237.65,136.00,288.12,10.49;10,97.68,149.55,426.73,10.49;10,98.14,163.10,238.18,10.49">In contrast, when creating cold-start data for DeepSeek-R1, we design a readable pattern that includes a summary at the end of each response and filters out responses that are not reader-friendly.</s><s coords="10,340.94,163.10,183.48,10.49;10,98.14,176.65,426.27,10.49;10,97.81,190.20,426.60,10.49;10,98.14,203.75,34.63,10.49">Here, we define the output format as |special_token|&lt;reasoning_process&gt;|special_token|&lt;summary&gt;, where the reasoning process is the CoT for the query, and the summary is used to summarize the reasoning results.</s></p><p coords="10,86.07,217.30,438.34,10.49;10,98.14,230.85,426.28,10.49;10,98.14,244.40,166.83,10.49"><s coords="10,86.07,217.30,438.34,10.49;10,98.14,230.85,261.22,10.49">• Potential: By carefully designing the pattern for cold-start data with human priors, we observe better performance against DeepSeek-R1-Zero.</s><s coords="10,362.77,230.85,161.65,10.49;10,98.14,244.40,166.83,10.49">We believe the iterative training is a better way for reasoning models.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.2." coords="10,70.87,275.07,243.74,10.09">Reasoning-oriented Reinforcement Learning</head><p coords="10,70.44,297.27,453.97,10.49;10,70.87,310.82,453.55,10.49;10,70.87,324.37,453.55,10.49;10,70.87,337.92,453.54,10.49;10,70.87,351.47,454.91,10.49;10,70.54,365.01,453.87,10.49;10,70.87,378.56,453.55,10.49;10,70.87,392.11,454.00,10.49;10,70.87,405.66,453.55,10.49;10,70.87,419.21,453.54,10.49;10,70.87,432.76,453.54,10.49;10,70.87,446.31,453.54,10.49;10,70.87,459.86,92.13,10.49"><s coords="10,70.44,297.27,453.97,10.49;10,70.87,310.82,360.56,10.49">After fine-tuning DeepSeek-V3-Base on the cold start data, we apply the same large-scale reinforcement learning training process as employed in DeepSeek-R1-Zero.</s><s coords="10,434.79,310.82,89.62,10.49;10,70.87,324.37,453.55,10.49;10,70.87,337.92,453.54,10.49;10,70.87,351.47,70.72,10.49">This phase focuses on enhancing the model's reasoning capabilities, particularly in reasoning-intensive tasks such as coding, mathematics, science, and logic reasoning, which involve well-defined problems with clear solutions.</s><s coords="10,144.85,351.47,380.93,10.49;10,70.54,365.01,289.23,10.49">During the training process, we observe that CoT often exhibits language mixing, particularly when RL prompts involve multiple languages.</s><s coords="10,363.15,365.01,161.26,10.49;10,70.87,378.56,453.55,10.49;10,70.87,392.11,267.81,10.49">To mitigate the issue of language mixing, we introduce a language consistency reward during RL training, which is calculated as the proportion of target language words in the CoT.</s><s coords="10,341.57,392.11,183.30,10.49;10,70.87,405.66,453.55,10.49;10,70.87,419.21,277.34,10.49">Although ablation experiments show that such alignment results in a slight degradation in the model's performance, this reward aligns with human preferences, making it more readable.</s><s coords="10,351.59,419.21,172.82,10.49;10,70.87,432.76,453.54,10.49;10,70.87,446.31,61.65,10.49">Finally, we combine the accuracy of reasoning tasks and the reward for language consistency by directly summing them to form the final reward.</s><s coords="10,135.92,446.31,388.49,10.49;10,70.87,459.86,92.13,10.49">We then apply RL training on the fine-tuned model until it achieves convergence on reasoning tasks.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.3." coords="10,70.87,490.54,261.75,10.09">Rejection Sampling and Supervised Fine-Tuning</head><p coords="10,70.32,512.73,454.43,10.49;10,70.51,526.28,453.90,10.49;10,70.54,539.83,453.87,10.49;10,70.87,553.38,453.55,10.49;10,70.87,566.93,298.05,10.49"><s coords="10,70.32,512.73,454.43,10.49;10,70.51,526.28,266.91,10.49">When reasoning-oriented RL converges, we utilize the resulting checkpoint to collect SFT (Supervised Fine-Tuning) data for the subsequent round.</s><s coords="10,340.70,526.28,183.71,10.49;10,70.54,539.83,453.87,10.49;10,70.87,553.38,376.35,10.49">Unlike the initial cold-start data, which primarily focuses on reasoning, this stage incorporates data from other domains to enhance the model's capabilities in writing, role-playing, and other general-purpose tasks.</s><s coords="10,450.59,553.38,73.83,10.49;10,70.87,566.93,298.05,10.49">Specifically, we generate the data and fine-tune the model as described below.</s></p><p coords="10,70.87,602.51,455.35,10.49;10,70.87,616.06,454.91,10.49;10,70.41,629.61,455.37,10.49;10,70.41,643.16,454.01,10.49;10,70.87,656.71,455.45,10.49"><s coords="10,70.87,602.51,455.35,10.49;10,70.87,616.06,346.86,10.49">Reasoning data We curate reasoning prompts and generate reasoning trajectories by performing rejection sampling from the checkpoint from the above RL training.</s><s coords="10,421.12,616.06,104.65,10.49;10,70.41,629.61,344.24,10.49">In the previous stage, we only included data that could be evaluated using rule-based rewards.</s><s coords="10,418.00,629.61,107.78,10.49;10,70.41,643.16,454.01,10.49;10,70.87,656.71,455.45,10.49">However, in this stage, we expand the dataset by incorporating additional data, some of which use a generative reward model by feeding the ground-truth and model predictions into DeepSeek-V3 for judgment.</s></p><p coords="10,70.44,670.26,453.97,10.49;10,70.87,683.81,453.76,10.49;10,70.87,697.36,453.55,10.49;10,70.87,710.91,224.83,10.49"><s coords="10,70.44,670.26,453.97,10.49;10,70.87,683.81,431.98,10.49">Additionally, because the model output is sometimes chaotic and difficult to read, we have filtered out chain-of-thought with mixed languages, long parapraphs, and code blocks.</s><s coords="10,507.97,683.81,16.66,10.49;10,70.87,697.36,363.69,10.49">For each prompt, we sample multiple responses and retain only the correct ones.</s><s coords="10,437.94,697.36,86.47,10.49;10,70.87,710.91,224.83,10.49">In total, we collect about 600k reasoning related training samples.</s></p><p coords="11,70.87,88.58,454.90,10.49;11,70.87,102.13,453.55,10.49;11,70.87,115.68,453.55,10.49;11,70.87,129.23,454.91,10.49;11,70.87,142.78,453.55,10.49;11,70.87,156.33,332.13,10.49"><s coords="11,70.87,88.58,454.90,10.49;11,70.87,102.13,453.55,10.49;11,70.87,115.68,68.73,10.49">Non-Reasoning data For non-reasoning data, such as writing, factual QA, self-cognition, and translation, we adopt the DeepSeek-V3 pipeline and reuse portions of the SFT dataset of DeepSeek-V3.</s><s coords="11,144.44,115.68,379.97,10.49;11,70.87,129.23,305.93,10.49">For certain non-reasoning tasks, we call DeepSeek-V3 to generate a potential chain-of-thought before answering the question by prompting.</s><s coords="11,380.23,129.23,145.55,10.49;11,70.87,142.78,274.31,10.49">However, for simpler queries, such as "hello" we do not provide a CoT in response.</s><s coords="11,352.69,142.78,171.73,10.49;11,70.87,156.33,332.13,10.49">In the end, we collected a total of approximately 200k training samples that are unrelated to reasoning.</s></p><p coords="11,87.80,176.65,436.61,10.49;11,70.87,190.20,67.18,10.49"><s coords="11,87.80,176.65,436.61,10.49;11,70.87,190.20,67.18,10.49">We fine-tune DeepSeek-V3-Base for two epochs using the above curated dataset of about 800k samples.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.4." coords="11,70.87,220.88,227.98,10.09">Reinforcement Learning for all Scenarios</head><p coords="11,70.53,243.07,453.88,10.49;11,70.87,256.62,455.36,10.49;11,70.87,270.17,453.55,10.49;11,70.87,283.72,453.55,10.49;11,70.87,297.27,453.55,10.49;11,70.87,310.82,453.54,10.49;11,70.87,324.37,453.55,10.49;11,70.87,337.92,455.36,10.49;11,70.87,351.47,453.55,10.49;11,70.87,365.01,453.55,10.49;11,70.87,378.56,453.55,10.49;11,70.87,392.11,453.55,10.49;11,70.87,405.66,453.55,10.49;11,70.54,419.21,453.87,10.49;11,70.87,432.76,428.88,10.49"><s coords="11,70.53,243.07,453.88,10.49;11,70.87,256.62,455.36,10.49;11,70.87,270.17,194.50,10.49">To further align the model with human preferences, we implement a secondary reinforcement learning stage aimed at improving the model's helpfulness and harmlessness while simultaneously refining its reasoning capabilities.</s><s coords="11,268.78,270.17,255.63,10.49;11,70.87,283.72,260.41,10.49">Specifically, we train the model using a combination of reward signals and diverse prompt distributions.</s><s coords="11,338.13,283.72,186.28,10.49;11,70.87,297.27,453.55,10.49;11,70.87,310.82,306.98,10.49">For reasoning data, we adhere to the methodology outlined in DeepSeek-R1-Zero, which utilizes rule-based rewards to guide the learning process in math, code, and logical reasoning domains.</s><s coords="11,381.23,310.82,143.17,10.49;11,70.87,324.37,403.49,10.49">For general data, we resort to reward models to capture human preferences in complex and nuanced scenarios.</s><s coords="11,479.50,324.37,44.91,10.49;11,70.87,337.92,455.36,10.49;11,70.87,351.47,63.75,10.49">We build upon the DeepSeek-V3 pipeline and adopt a similar distribution of preference pairs and training prompts.</s><s coords="11,139.57,351.47,384.85,10.49;11,70.87,365.01,453.55,10.49;11,70.87,378.56,252.16,10.49">For helpfulness, we focus exclusively on the final summary, ensuring that the assessment emphasizes the utility and relevance of the response to the user while minimizing interference with the underlying reasoning process.</s><s coords="11,326.43,378.56,197.98,10.49;11,70.87,392.11,453.55,10.49;11,70.87,405.66,453.55,10.49;11,70.54,419.21,38.56,10.49">For harmlessness, we evaluate the entire response of the model, including both the reasoning process and the summary, to identify and mitigate any potential risks, biases, or harmful content that may arise during the generation process.</s><s coords="11,112.48,419.21,411.93,10.49;11,70.87,432.76,428.88,10.49">Ultimately, the integration of reward signals and diverse data distributions enables us to train a model that excels in reasoning while prioritizing helpfulness and harmlessness.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4." coords="11,70.87,465.96,342.10,10.23">Distillation: Empower Small Models with Reasoning Capability</head><p coords="11,70.53,488.19,454.31,10.49;11,70.87,501.74,207.79,10.49;11,356.49,501.74,167.92,10.49;11,70.87,515.29,453.55,10.49;11,70.87,528.84,453.76,10.49;11,70.87,542.39,455.35,10.49;11,70.32,555.94,454.09,10.49;11,70.87,569.49,289.10,10.49"><s coords="11,70.53,488.19,454.31,10.49;11,70.87,501.74,453.55,10.49;11,70.87,515.29,322.44,10.49">To equip more efficient smaller models with reasoning capabilities like DeepSeek-R1, we directly fine-tuned open-source models like Qwen <ref type="bibr">(Qwen, 2024b)</ref> and Llama (AI@Meta, 2024) using the 800k samples curated with DeepSeek-R1, as detailed in §2.3.3.</s><s coords="11,396.96,515.29,127.45,10.49;11,70.87,528.84,453.76,10.49;11,70.87,542.39,38.77,10.49">Our findings indicate that this straightforward distillation method significantly enhances the reasoning abilities of smaller models.</s><s coords="11,113.94,542.39,266.28,10.49">The base models we use here are Qwen2.5-Math-1.5B,</s><s coords="11,383.25,542.39,92.48,10.49">Qwen2.5-Math-7B,</s><s coords="11,478.77,542.39,47.45,10.49;11,70.32,555.94,20.59,10.49">Qwen2.5-14B,</s><s coords="11,93.62,555.94,67.75,10.49">Qwen2.5-32B,</s><s coords="11,164.07,555.94,205.41,10.49">Llama-3.1-8B, and Llama-3.3-70B-Instruct.</s><s coords="11,372.85,555.94,151.56,10.49;11,70.87,569.49,289.10,10.49">We select Llama-3.3 because its reasoning capability is slightly better than that of Llama-3.1.</s></p><p coords="11,87.80,589.81,436.61,10.49;11,70.87,603.36,453.55,10.49;11,70.87,616.91,453.88,10.49;11,70.87,630.46,198.22,10.49"><s coords="11,87.80,589.81,436.61,10.49;11,70.87,603.36,313.98,10.49">For distilled models, we apply only SFT and do not include an RL stage, even though incorporating RL could substantially boost model performance.</s><s coords="11,389.11,603.36,135.31,10.49;11,70.87,616.91,453.88,10.49;11,70.87,630.46,198.22,10.49">Our primary goal here is to demonstrate the effectiveness of the distillation technique, leaving the exploration of the RL stage to the broader research community.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3." coords="11,70.87,665.24,84.53,12.15">Experiment</head><p coords="11,70.87,691.83,224.52,10.49;11,410.32,691.83,78.84,10.49;11,122.63,705.38,63.44,10.49;11,274.66,705.38,40.22,10.49;11,409.21,705.38,72.09,10.49;11,94.77,718.93,39.29,10.49;11,222.52,718.93,52.88,10.49;11,376.11,718.93,89.30,10.49;11,94.21,732.48,205.21,10.49;11,374.27,732.48,151.51,10.49;12,70.87,88.58,67.18,10.49;12,145.63,88.58,83.75,10.49;12,316.94,88.58,154.42,10.49;12,478.96,88.58,45.45,10.49;12,70.87,102.13,287.93,10.49;12,363.28,102.13,162.94,10.49;12,70.87,115.68,453.55,10.49;12,70.87,129.23,453.54,10.49;12,70.87,142.78,259.57,10.49;12,429.69,142.78,78.69,10.49;12,123.63,156.33,400.79,10.49;12,70.87,169.88,453.55,10.49;12,70.87,183.42,453.55,10.49;12,70.87,196.97,78.97,10.49"><s coords="11,70.87,691.83,453.54,10.49;11,70.87,705.38,454.91,10.49;11,70.87,718.93,454.90,10.49;11,70.87,732.48,454.91,10.49;12,70.87,88.58,453.55,10.49;12,70.87,102.13,455.35,10.49;12,70.87,115.68,256.71,10.49">Benchmarks We evaluate models on MMLU <ref type="bibr" target="#b9">(Hendrycks et al., 2020)</ref>, MMLU-Redux <ref type="bibr" target="#b6">(Gema et al., 2024)</ref>, MMLU-Pro <ref type="bibr" target="#b34">(Wang et al., 2024)</ref>, C-Eval <ref type="bibr" target="#b10">(Huang et al., 2023)</ref>, and CMMLU <ref type="bibr" target="#b14">(Li et al., 2023)</ref>, IFEval <ref type="bibr" target="#b37">(Zhou et al., 2023)</ref>, FRAMES <ref type="bibr">(Krishna et al., 2024)</ref>, GPQA Diamond <ref type="bibr" target="#b25">(Rein et al., 2023)</ref>, SimpleQA (OpenAI, 2024c), C-SimpleQA <ref type="bibr" target="#b8">(He et al., 2024)</ref>, SWE-Bench Verified (OpenAI, 2024d), Aider<ref type="foot" target="#foot_0">foot_0</ref> , LiveCodeBench <ref type="bibr" target="#b11">(Jain et al., 2024)</ref> (2024-08 -2025-01), Codeforces<ref type="foot" target="#foot_1">foot_1</ref> , Chinese National High School Mathematics Olympiad (CNMO 2024)<ref type="foot" target="#foot_2">foot_2</ref> , and American Invitational Mathematics Examination 2024 (AIME 2024) (MAA, 2024).</s><s coords="12,330.99,115.68,193.42,10.49;12,70.87,129.23,378.43,10.49">In addition to standard benchmarks, we also evaluate our models on open-ended generation tasks using LLMs as judges.</s><s coords="12,452.61,129.23,71.80,10.49;12,70.87,142.78,453.54,10.49;12,70.87,156.33,405.86,10.49">Specifically, we adhere to the original configurations of AlpacaEval 2.0 <ref type="bibr" target="#b3">(Dubois et al., 2024)</ref> and Arena-Hard <ref type="bibr" target="#b15">(Li et al., 2024)</ref>, which leverage GPT-4-Turbo-1106 as judges for pairwise comparisons.</s><s coords="12,480.15,156.33,44.26,10.49;12,70.87,169.88,329.83,10.49">Here, we only feed the final summary to evaluation to avoid the length bias.</s><s coords="12,404.98,169.88,119.43,10.49;12,70.87,183.42,453.55,10.49;12,70.87,196.97,78.97,10.49">For distilled models, we report representative results on AIME 2024, MATH-500, GPQA Diamond, Codeforces, and LiveCodeBench.</s></p><p coords="12,70.87,232.37,453.54,10.49;12,70.87,245.92,455.36,10.49;12,70.87,259.47,378.09,10.49;12,506.33,259.47,18.08,10.49;12,70.87,273.02,453.54,10.49;12,70.87,286.56,453.55,10.49;12,70.87,300.11,453.55,10.49;12,70.54,313.66,453.87,10.49;12,70.87,327.21,454.91,10.49;12,70.87,340.76,453.55,10.49;12,70.87,354.31,453.55,10.49;12,70.87,367.86,454.90,10.49;12,70.87,381.41,453.55,10.49;12,70.56,394.96,286.54,10.49;12,439.77,394.96,84.64,10.49;12,70.87,408.51,453.54,10.49;12,70.87,422.06,177.76,10.49"><s coords="12,70.87,232.37,453.54,10.49;12,70.87,245.92,455.36,10.49;12,70.87,259.47,85.48,10.49">Evaluation Prompts Following the setup in DeepSeek-V3, standard benchmarks such as MMLU, DROP, GPQA Diamond, and SimpleQA are evaluated using prompts from the simpleevals framework.</s><s coords="12,159.95,259.47,364.46,10.49;12,70.87,273.02,83.77,10.49">For MMLU-Redux, we adopt the Zero-Eval prompt format <ref type="bibr" target="#b17">(Lin, 2024)</ref> in a zero-shot setting.</s><s coords="12,158.03,273.02,366.38,10.49;12,70.87,286.56,344.37,10.49">In terms of MMLU-Pro, C-Eval and CLUE-WSC, since the original prompts are few-shot, we slightly modify the prompt to the zero-shot setting.</s><s coords="12,421.40,286.56,103.02,10.49;12,70.87,300.11,216.46,10.49">The CoT in few-shot may hurt the performance of DeepSeek-R1.</s><s coords="12,293.09,300.11,231.33,10.49;12,70.54,313.66,279.01,10.49">Other datasets follow their original evaluation protocols with default prompts provided by their creators.</s><s coords="12,352.94,313.66,171.47,10.49;12,70.87,327.21,454.91,10.49;12,70.87,340.76,203.81,10.49">For code and math benchmarks, the HumanEval-Mul dataset covers eight mainstream programming languages (Python, Java, C++, C#, JavaScript, TypeScript, PHP, and Bash).</s><s coords="12,278.08,340.76,246.33,10.49;12,70.87,354.31,375.62,10.49">Model performance on LiveCodeBench is evaluated using CoT format, with data collected between August 2024 and January 2025.</s><s coords="12,449.87,354.31,74.54,10.49;12,70.87,367.86,454.90,10.49;12,70.87,381.41,391.38,10.49">The Codeforces dataset is evaluated using problems from 10 Div.2 contests along with expert-crafted test cases, after which the expected ratings and percentages of competitors are calculated.</s><s coords="12,466.92,381.41,57.49,10.49;12,70.56,394.96,374.00,10.49">SWE-Bench verified results are obtained via the agentless framework <ref type="bibr" target="#b35">(Xia et al., 2024)</ref>.</s><s coords="12,451.37,394.96,73.04,10.49;12,70.87,408.51,224.12,10.49">AIDER-related benchmarks are measured using a "diff" format.</s><s coords="12,298.27,408.51,226.13,10.49;12,70.87,422.06,177.76,10.49">DeepSeek-R1 outputs are capped at a maximum of 32,768 tokens for each benchmark.</s></p><p coords="12,70.87,457.45,453.54,10.49;12,70.87,471.00,455.45,10.49;12,70.87,484.55,455.35,10.49;12,70.87,498.10,453.54,10.49;12,70.87,511.65,90.68,10.49;12,231.43,511.65,4.80,10.49"><s coords="12,70.87,457.45,453.54,10.49;12,70.87,471.00,191.16,10.49">Baselines We conduct comprehensive evaluations against several strong baselines, including DeepSeek-V3, Claude-Sonnet-3.5-1022,</s><s coords="12,265.03,471.00,261.29,10.49">GPT-4o-0513, OpenAI-o1-mini, and OpenAI-o1-1217.</s><s coords="12,70.87,484.55,455.35,10.49;12,70.87,498.10,153.11,10.49">Since accessing the OpenAI-o1-1217 API is challenging in mainland China, we report its performance based on official reports.</s><s coords="12,227.35,498.10,297.06,10.49;12,70.87,511.65,165.37,10.49">For distilled models, we also compare the open-source model QwQ-32B-Preview <ref type="bibr">(Qwen, 2024a)</ref>.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="12,70.87,547.13,87.97,10.23">Evaluation Setup</head><p coords="12,169.68,547.04,356.63,10.49;12,70.32,560.59,454.09,10.49;12,70.87,574.14,453.55,10.49;12,70.87,587.69,135.02,10.49;12,294.80,587.69,231.51,10.49;12,70.87,601.24,453.43,10.49;12,70.87,614.79,454.09,10.49;12,70.87,628.34,96.51,10.49"><s coords="12,169.68,547.04,356.63,10.49">We set the maximum generation length to 32,768 tokens for the models.</s><s coords="12,70.32,560.59,454.09,10.49;12,70.87,574.14,381.70,10.49">We found that using greedy decoding to evaluate long-output reasoning models results in higher repetition rates and significant variability across different checkpoints.</s><s coords="12,456.57,574.14,67.84,10.49;12,70.87,587.69,455.45,10.49">Therefore, we default to pass@𝑘 evaluation <ref type="bibr">(Chen et al., 2021)</ref> and report pass@1 using a non-zero temperature.</s><s coords="12,70.87,601.24,453.43,10.49;12,70.87,614.79,416.30,10.49">Specifically, we use a sampling temperature of 0.6 and a top-𝑝 value of 0.95 to generate 𝑘 responses (typically between 4 and 64, depending on the test set size) for each question.</s><s coords="12,490.54,614.79,34.41,10.49;12,70.87,628.34,96.51,10.49">Pass@1 is then calculated as</s></p><formula xml:id="formula_4">pass@1 = 1 𝑘 𝑘 ∑︁ 𝑖=1 𝑝 𝑖 ,</formula><p coords="12,70.41,678.24,42.68,10.49;12,117.52,678.24,406.88,10.49;12,70.54,691.79,420.00,10.49;12,127.36,705.34,186.64,10.49;13,87.80,639.87,436.60,10.49;13,70.87,653.42,453.54,10.49;13,70.87,666.97,453.88,10.49;13,70.87,680.52,454.90,10.49;13,70.87,694.07,453.55,10.49;13,70.87,707.62,453.54,10.49;13,70.87,721.17,453.55,10.49;13,70.87,734.72,453.55,10.49;13,70.87,748.26,453.55,10.49"><s coords="12,70.41,678.24,42.68,10.49;12,117.52,678.24,220.23,10.49">where 𝑝 𝑖 denotes the correctness of the 𝑖-th response.</s><s coords="12,344.53,678.24,179.87,10.49;12,70.54,691.79,111.15,10.49">This method provides more reliable performance estimates.</s><s coords="12,185.07,691.79,339.34,10.49;12,70.87,705.34,243.14,10.49">For AIME 2024, we also report consensus (majority vote) results <ref type="bibr" target="#b33">(Wang et al., 2022)</ref> using 64 samples, denoted as cons@64.</s><s coords="13,87.80,639.87,436.60,10.49;13,70.87,653.42,210.73,10.49">DeepSeek-R1 also delivers impressive results on IF-Eval, a benchmark designed to assess a model's ability to follow format instructions.</s><s coords="13,284.93,653.42,239.48,10.49;13,70.87,666.97,453.88,10.49;13,70.87,680.52,41.04,10.49">These improvements can be linked to the inclusion of instruction-following data during the final stages of supervised fine-tuning (SFT) and RL training.</s><s coords="13,115.32,680.52,410.45,10.49;13,70.87,694.07,438.29,10.49">Furthermore, remarkable performance is observed on AlpacaEval2.0 and ArenaHard, indicating DeepSeek-R1's strengths in writing tasks and open-domain question answering.</s><s coords="13,512.53,694.07,11.88,10.49;13,70.87,707.62,453.54,10.49;13,70.87,721.17,453.55,10.49;13,70.87,734.72,45.48,10.49">Its significant outperformance of DeepSeek-V3 underscores the generalization benefits of large-scale RL, which not only boosts reasoning capabilities but also improves performance across diverse domains.</s><s coords="13,122.73,734.72,401.68,10.49;13,70.87,748.26,363.26,10.49">Moreover, the summary lengths generated by DeepSeek-R1 are concise, with an average of 689 tokens on ArenaHard and 2,218 characters on AlpacaEval 2.0.</s><s coords="13,437.53,748.26,86.88,10.49">This indicates that</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1." coords="13,70.87,88.67,146.35,10.23">DeepSeek-R1 Evaluation</head><p coords="14,70.87,88.58,453.55,10.49;14,70.87,102.13,171.70,10.49"><s coords="14,70.87,88.58,453.55,10.49;14,70.87,102.13,171.70,10.49">DeepSeek-R1 avoids introducing length bias during GPT-based evaluations, further solidifying its robustness across multiple tasks.</s></p><p coords="14,87.80,122.45,437.97,10.49;14,70.87,136.00,453.55,10.49;14,70.87,149.55,453.54,10.49;14,70.87,163.10,454.09,10.49;14,70.87,176.65,453.54,10.49;14,70.54,190.20,454.20,10.49;14,70.87,203.75,215.08,10.49;14,465.22,526.79,59.61,10.49;14,70.87,540.34,455.35,10.49;14,70.87,553.89,453.77,10.49;14,70.87,567.44,453.55,10.49;14,70.87,580.99,160.44,10.49"><s coords="14,87.80,122.45,437.97,10.49;14,70.87,136.00,212.91,10.49">On math tasks, DeepSeek-R1 demonstrates performance on par with OpenAI-o1-1217, surpassing other models by a large margin.</s><s coords="14,287.44,136.00,236.98,10.49;14,70.87,149.55,453.54,10.49;14,70.87,163.10,60.57,10.49">A similar trend is observed on coding algorithm tasks, such as LiveCodeBench and Codeforces, where reasoning-focused models dominate these benchmarks.</s><s coords="14,134.80,163.10,390.16,10.49;14,70.87,176.65,318.08,10.49">On engineering-oriented coding tasks, OpenAI-o1-1217 outperforms DeepSeek-R1 on Aider but achieves comparable performance on SWE Verified.</s><s coords="14,392.33,176.65,132.08,10.49;14,70.54,190.20,454.20,10.49;14,70.87,203.75,215.08,10.49">We believe the engineering performance of DeepSeek-R1 will improve in the next version, as the amount of related RL training data currently remains very limited.</s><s coords="14,465.22,526.79,59.61,10.49;14,70.87,540.34,178.17,10.49">significantly exceed o1-mini on most benchmarks.</s><s coords="14,252.47,540.34,273.74,10.49;14,70.87,553.89,21.33,10.49">These results demonstrate the strong potential of distillation.</s><s coords="14,95.55,553.89,429.08,10.49;14,70.87,567.44,28.11,10.49">Additionally, we found that applying RL to these distilled models yields significant further gains.</s><s coords="14,102.39,567.44,422.02,10.49;14,70.87,580.99,160.44,10.49">We believe this warrants further exploration and therefore present only the results of the simple SFT-distilled models here.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2." coords="14,70.87,236.95,158.15,10.23">Distilled Model Evaluation</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4." coords="14,70.87,615.78,81.63,12.15">Discussion</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1." coords="14,70.87,643.57,222.13,10.23">Distillation v.s. Reinforcement Learning</head><p coords="14,70.87,665.80,453.54,10.49;14,70.87,679.35,453.54,10.49;14,70.87,692.90,379.68,10.49"><s coords="14,70.87,665.80,453.54,10.49;14,70.87,679.35,33.93,10.49">In Section 3.2, we can see that by distilling DeepSeek-R1, the small model can achieve impressive results.</s><s coords="14,108.16,679.35,416.25,10.49;14,70.87,692.90,379.68,10.49">However, there is still one question left: can the model achieve comparable performance through the large-scale RL training discussed in the paper without distillation?</s></p><p coords="14,87.80,713.22,437.97,10.49;14,70.87,726.77,453.54,10.49;14,70.87,740.32,149.64,10.49;15,87.80,251.72,436.83,10.49;15,70.87,265.27,453.54,10.49;15,70.87,278.82,453.54,10.49;15,70.87,292.37,453.55,10.49;15,70.87,305.92,455.35,10.49;15,70.87,319.47,139.00,10.49"><s coords="14,87.80,713.22,437.97,10.49;14,70.87,726.77,453.54,10.49;14,70.87,740.32,149.64,10.49;15,87.80,251.72,436.83,10.49;15,70.87,265.27,453.54,10.49;15,70.87,278.82,453.54,10.49;15,70.87,292.37,65.98,10.49">To answer this question, we conduct large-scale RL training on Qwen-32B-Base using math, code, and STEM data, training for over 10K steps, resulting in DeepSeek-R1-Zero-Qwen-32B. The experimental results, shown in Therefore, we can draw two conclusions: First, distilling more powerful models into smaller ones yields excellent results, whereas smaller models relying on the large-scale RL mentioned in this paper require enormous computational power and may not even achieve the performance of distillation.</s><s coords="15,140.23,292.37,384.19,10.49;15,70.87,305.92,455.35,10.49;15,70.87,319.47,139.00,10.49">Second, while distillation strategies are both economical and effective, advancing beyond the boundaries of intelligence may still require more powerful base models and largerscale reinforcement learning.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2." coords="15,70.87,351.90,136.63,10.23">Unsuccessful Attempts</head><p coords="15,70.87,374.13,453.55,10.49;15,70.87,387.68,453.55,10.49;15,70.87,401.23,352.94,10.49"><s coords="15,70.87,374.13,453.55,10.49;15,70.87,387.68,39.79,10.49">In the early stages of developing DeepSeek-R1, we also encountered failures and setbacks along the way.</s><s coords="15,114.05,387.68,410.37,10.49;15,70.87,401.23,352.94,10.49">We share our failure experiences here to provide insights, but this does not imply that these approaches are incapable of developing effective reasoning models.</s></p><p coords="15,70.87,436.45,453.76,10.49;15,70.87,450.00,190.63,10.49;15,94.70,463.55,431.52,10.49;15,70.87,477.10,454.91,10.49;15,70.87,490.65,453.55,10.49;15,70.87,504.20,455.35,10.49;15,70.87,517.75,453.54,10.49;15,70.87,531.30,38.03,10.49;15,189.09,531.30,335.32,10.49;15,70.87,544.84,453.54,10.49;15,70.87,558.39,423.15,10.49;15,123.39,571.94,401.02,10.49;15,70.87,585.49,406.94,10.49;15,434.82,620.71,71.70,10.49;15,150.14,634.26,374.27,10.49;15,70.87,647.81,453.55,10.49;15,70.87,661.36,453.55,10.49;15,70.87,674.91,453.76,10.49;15,70.87,688.46,453.54,10.49;15,70.87,702.01,453.55,10.49;15,70.87,715.56,253.43,10.49"><s coords="15,70.87,436.45,453.76,10.49;15,70.87,450.00,454.91,10.49;15,70.87,463.55,28.60,10.49">Process Reward Model (PRM) PRM is a reasonable method to guide the model toward better approaches for solving reasoning tasks <ref type="bibr" target="#b16">(Lightman et al., 2023;</ref><ref type="bibr" target="#b31">Uesato et al., 2022;</ref><ref type="bibr" target="#b32">Wang et al., 2023)</ref>.</s><s coords="15,102.84,463.55,423.38,10.49;15,70.87,477.10,22.49,10.49">However, in practice, PRM has three main limitations that may hinder its ultimate success.</s><s coords="15,96.80,477.10,387.27,10.49">First, it is challenging to explicitly define a fine-grain step in general reasoning.</s><s coords="15,487.53,477.10,38.24,10.49;15,70.87,490.65,394.90,10.49">Second, determining whether the current intermediate step is correct is a challenging task.</s><s coords="15,469.19,490.65,55.22,10.49;15,70.87,504.20,455.35,10.49;15,70.87,517.75,97.34,10.49">Automated annotation using models may not yield satisfactory results, while manual annotation is not conducive to scaling up.</s><s coords="15,171.51,517.75,352.90,10.49;15,70.87,531.30,453.54,10.49;15,70.87,544.84,223.42,10.49">Third, once a model-based PRM is introduced, it inevitably leads to reward hacking <ref type="bibr" target="#b5">(Gao et al., 2022)</ref>, and retraining the reward model needs additional training resources and it complicates the whole training pipeline.</s><s coords="15,297.67,544.84,226.74,10.49;15,70.87,558.39,453.55,10.49;15,70.87,571.94,453.54,10.49;15,70.87,585.49,406.94,10.49">In conclusion, while PRM demonstrates a good ability to rerank the top-N responses generated by the model or assist in guided search <ref type="bibr" target="#b29">(Snell et al., 2024)</ref>, its advantages are limited compared to the additional computational overhead it introduces during the large-scale reinforcement learning process in our experiments.</s><s coords="15,342.49,620.71,185.07,10.49;15,70.56,634.26,453.85,10.49;15,70.87,647.81,97.10,10.49"><ref type="bibr">(Silver et al., 2017b)</ref> and AlphaZero <ref type="bibr">(Silver et al., 2017a)</ref>, we explored using Monte Carlo Tree Search (MCTS) to enhance test-time compute scalability.</s><s coords="15,171.35,647.81,353.07,10.49;15,70.87,661.36,248.25,10.49">This approach involves breaking answers into smaller parts to allow the model to explore the solution space systematically.</s><s coords="15,322.50,661.36,201.92,10.49;15,70.87,674.91,434.07,10.49">To facilitate this, we prompt the model to generate multiple tags that correspond to specific reasoning steps necessary for the search.</s><s coords="15,508.33,674.91,16.30,10.49;15,70.87,688.46,453.54,10.49;15,70.87,702.01,33.38,10.49">For training, we first use collected prompts to find answers via MCTS guided by a pre-trained value model.</s><s coords="15,107.63,702.01,416.78,10.49;15,70.87,715.56,253.43,10.49">Subsequently, we use the resulting question-answer pairs to train both the actor model and the value model, iteratively refining the process.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="15,70.87,620.71,269.55,10.49">Monte Carlo Tree Search (MCTS) Inspired by AlphaGo</head><p coords="15,87.80,735.88,437.97,10.49;15,70.87,749.43,453.55,10.49;16,70.87,88.58,453.54,10.49;16,70.87,102.13,453.55,10.49;16,70.87,115.68,455.45,10.49;16,70.53,129.23,453.88,10.49;16,70.87,142.78,453.55,10.49;16,70.54,156.33,454.19,10.49;16,70.87,169.88,211.39,10.49"><s coords="15,87.80,735.88,409.82,10.49">However, this approach encounters several challenges when scaling up the training.</s><s coords="15,501.00,735.88,24.78,10.49;15,70.87,749.43,453.55,10.49;16,70.87,88.58,163.80,10.49">First, unlike chess, where the search space is relatively well-defined, token generation presents an exponentially larger search space.</s><s coords="16,238.04,88.58,286.37,10.49;16,70.87,102.13,326.72,10.49">To address this, we set a maximum extension limit for each node, but this can lead to the model getting stuck in local optima.</s><s coords="16,402.50,102.13,121.91,10.49;16,70.87,115.68,455.45,10.49">Second, the value model directly influences the quality of generation since it guides each step of the search process.</s><s coords="16,70.53,129.23,453.88,10.49;16,70.87,142.78,139.41,10.49">Training a fine-grained value model is inherently difficult, which makes it challenging for the model to iteratively improve.</s><s coords="16,213.68,142.78,310.74,10.49;16,70.54,156.33,454.19,10.49;16,70.87,169.88,211.39,10.49">While AlphaGo's core success relied on training a value model to progressively enhance its performance, this principle proves difficult to replicate in our setup due to the complexities of token generation.</s></p><p coords="16,87.80,190.20,436.60,10.49;16,70.54,203.75,453.87,10.49;16,70.87,217.30,101.51,10.49"><s coords="16,87.80,190.20,436.60,10.49;16,70.54,203.75,453.87,10.49;16,70.87,217.30,101.51,10.49">In conclusion, while MCTS can improve performance during inference when paired with a pre-trained value model, iteratively boosting model performance through self-search remains a significant challenge.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5." coords="16,70.87,252.08,264.87,12.15">Conclusion, Limitations, and Future Work</head><p coords="16,70.87,278.67,453.54,10.49;16,70.87,292.22,453.55,10.49;16,70.87,305.77,454.91,10.49;16,70.87,319.32,453.55,10.49;16,70.54,332.87,310.64,10.49"><s coords="16,70.87,278.67,453.54,10.49;16,70.87,292.22,43.69,10.49">In this work, we share our journey in enhancing model reasoning abilities through reinforcement learning.</s><s coords="16,122.23,292.22,402.18,10.49;16,70.87,305.77,287.02,10.49">DeepSeek-R1-Zero represents a pure RL approach without relying on cold-start data, achieving strong performance across various tasks.</s><s coords="16,365.96,305.77,159.81,10.49;16,70.87,319.32,288.37,10.49">DeepSeek-R1 is more powerful, leveraging cold-start data alongside iterative RL fine-tuning.</s><s coords="16,362.67,319.32,161.74,10.49;16,70.54,332.87,310.64,10.49">Ultimately, DeepSeek-R1 achieves performance comparable to OpenAI-o1-1217 on a range of tasks.</s></p><p coords="16,87.80,353.19,436.61,10.49;16,70.87,366.74,453.54,10.49;16,70.87,380.29,453.55,10.49;16,70.87,393.84,453.76,10.49;16,70.87,407.39,455.35,10.49;16,70.87,420.94,277.35,10.49"><s coords="16,87.80,353.19,393.88,10.49">We further explore distillation the reasoning capability to small dense models.</s><s coords="16,488.37,353.19,36.04,10.49;16,70.87,366.74,453.54,10.49;16,70.87,380.29,68.33,10.49">We use DeepSeek-R1 as the teacher model to generate 800K training samples, and fine-tune several small dense models.</s><s coords="16,142.58,380.29,381.83,10.49;16,70.87,393.84,124.91,10.49">The results are promising: DeepSeek-R1-Distill-Qwen-1.5B outperforms GPT-4o and Claude-3.5-Sonnet</s><s coords="16,198.52,393.84,295.40,10.49">on math benchmarks with 28.9% on AIME and 83.9% on MATH.</s><s coords="16,496.67,393.84,27.96,10.49;16,70.87,407.39,455.35,10.49;16,70.87,420.94,277.35,10.49">Other dense models also achieve impressive results, significantly outperforming other instructiontuned models based on the same underlying checkpoints.</s></p><p coords="16,87.80,441.26,438.52,10.49"><s coords="16,87.80,441.26,438.52,10.49">In the future, we plan to invest in research across the following directions for DeepSeek-R1.</s></p><p coords="16,86.07,461.59,438.34,10.49;16,98.14,475.14,428.18,10.49"><s coords="16,86.07,461.59,438.34,10.49;16,98.14,475.14,428.18,10.49">• General Capability: Currently, the capabilities of DeepSeek-R1 fall short of DeepSeek-V3 in tasks such as function calling, multi-turn, complex role-playing, and JSON output.</s></p><p coords="16,98.14,488.69,426.27,10.49;16,98.14,502.24,56.73,10.49"><s coords="16,98.14,488.69,426.27,10.49;16,98.14,502.24,56.73,10.49">Moving forward, we plan to explore how long CoT can be leveraged to enhance tasks in these fields.</s></p><p coords="16,86.07,515.78,438.33,10.49;16,98.14,529.33,426.49,10.49;16,98.14,542.88,426.27,10.49;16,98.14,556.43,426.27,10.49;16,98.14,569.98,41.39,10.49"><s coords="16,86.07,515.78,438.33,10.49;16,98.14,529.33,403.96,10.49">• Language Mixing: DeepSeek-R1 is currently optimized for Chinese and English, which may result in language mixing issues when handling queries in other languages.</s><s coords="16,507.97,529.33,16.66,10.49;16,98.14,542.88,426.27,10.49;16,98.14,556.43,216.57,10.49">For instance, DeepSeek-R1 might use English for reasoning and responses, even if the query is in a language other than English or Chinese.</s><s coords="16,318.11,556.43,206.30,10.49;16,98.14,569.98,41.39,10.49">We aim to address this limitation in future updates.</s></p><p coords="16,86.07,583.53,438.33,10.49;16,98.14,597.08,426.28,10.49;16,98.14,610.63,426.28,10.49;16,98.14,624.18,174.36,10.49"><s coords="16,86.07,583.53,438.33,10.49;16,98.14,597.08,57.18,10.49">• Prompting Engineering: When evaluating DeepSeek-R1, we observe that it is sensitive to prompts.</s><s coords="16,159.15,597.08,293.66,10.49">Few-shot prompting consistently degrades its performance.</s><s coords="16,456.64,597.08,67.78,10.49;16,98.14,610.63,426.28,10.49;16,98.14,624.18,174.36,10.49">Therefore, we recommend users directly describe the problem and specify the output format using a zero-shot setting for optimal results.</s></p><p coords="16,86.07,637.73,440.15,10.49;16,98.14,651.28,426.28,10.49;16,98.14,664.83,426.27,10.49;16,98.14,678.37,426.28,10.49;16,98.14,691.92,426.27,10.49;16,98.14,705.47,340.58,10.49"><s coords="16,86.07,637.73,440.15,10.49;16,98.14,651.28,426.28,10.49;16,98.14,664.83,88.06,10.49">• Software Engineering Tasks: Due to the long evaluation times, which impact the efficiency of the RL process, large-scale RL has not been applied extensively in software engineering tasks.</s><s coords="16,189.61,664.83,334.80,10.49;16,98.14,678.37,280.66,10.49">As a result, DeepSeek-R1 has not demonstrated a huge improvement over DeepSeek-V3 on software engineering benchmarks.</s><s coords="16,383.65,678.37,140.76,10.49;16,98.14,691.92,426.27,10.49;16,98.14,705.47,340.58,10.49">Future versions will address this by implementing rejection sampling on software engineering data or incorporating asynchronous evaluations during the RL process to improve efficiency.</s></p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 2 |</head><label>2</label><figDesc><div><p><s coords="7,71.12,468.80,307.25,10.79">Figure 2 | AIME accuracy of DeepSeek-R1-Zero during training.</s><s coords="7,381.75,469.09,142.41,10.49;7,92.59,482.64,409.56,10.49">For each question, we sample 16 responses and calculate the overall average accuracy to ensure a stable evaluation.</s></p></div></figDesc><graphic coords="7,127.56,237.82,340.16,219.24" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 3 |</head><label>3</label><figDesc><div><p><s coords="8,72.03,310.46,451.56,10.79;8,71.65,324.31,38.67,10.49">Figure 3 | The average response length of DeepSeek-R1-Zero on the training set during the RL process.</s><s coords="8,113.70,324.31,409.60,10.49">DeepSeek-R1-Zero naturally learns to solve reasoning tasks with more thinking time.</s></p></div></figDesc><graphic coords="8,127.56,85.04,340.16,213.69" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 4 |</head><label>4</label><figDesc><div><p><s coords="13,152.94,445.00,331.33,10.49;13,87.80,470.51,437.04,10.49;13,70.87,484.06,413.29,10.49">Comparison between DeepSeek-R1 and other representative models.For education-oriented knowledge benchmarks such as MMLU, MMLU-Pro, and GPQA Diamond, DeepSeek-R1 demonstrates superior performance compared to DeepSeek-V3.</s><s coords="13,487.39,484.06,38.83,10.49;13,70.54,497.60,455.68,10.49;13,70.87,511.15,322.18,10.49">This improvement is primarily attributed to enhanced accuracy in STEM-related questions, where significant gains are achieved through large-scale reinforcement learning.</s><s coords="13,396.43,511.15,128.53,10.49;13,70.87,524.70,453.54,10.49;13,70.87,538.25,58.32,10.49">Additionally, DeepSeek-R1 excels on FRAMES, a long-context-dependent QA task, showcasing its strong document analysis capabilities.</s><s coords="13,134.16,538.25,390.26,10.49;13,70.87,551.80,68.96,10.49">This highlights the potential of reasoning models in AI-driven search and data analysis tasks.</s><s coords="13,143.21,551.80,382.57,10.49;13,70.87,565.35,286.51,10.49">On the factual benchmark SimpleQA, DeepSeek-R1 outperforms DeepSeek-V3, demonstrating its capability in handling fact-based queries.</s><s coords="13,360.75,565.35,163.66,10.49;13,70.87,578.90,235.03,10.49">A similar trend is observed where OpenAI-o1 surpasses GPT-4o on this benchmark.</s><s coords="13,309.31,578.90,215.10,10.49;13,70.87,592.45,453.55,10.49;13,70.87,606.00,204.47,10.49">However, DeepSeek-R1 performs worse than DeepSeek-V3 on the Chinese SimpleQA benchmark, primarily due to its tendency to refuse answering certain queries after safety RL.</s><s coords="13,278.25,606.00,246.17,10.49;13,70.87,619.55,104.62,10.49">Without safety RL, DeepSeek-R1 could achieve an accuracy of over 70%.</s></p></div></figDesc><table><row><cell></cell><cell>Benchmark (Metric)</cell><cell cols="6">Claude-3.5-GPT-4o DeepSeek OpenAI OpenAI DeepSeek Sonnet-1022 0513 V3 o1-mini o1-1217 R1</cell></row><row><cell></cell><cell>Architecture</cell><cell>-</cell><cell>-</cell><cell>MoE</cell><cell>-</cell><cell>-</cell><cell>MoE</cell></row><row><cell></cell><cell># Activated Params</cell><cell>-</cell><cell>-</cell><cell>37B</cell><cell>-</cell><cell>-</cell><cell>37B</cell></row><row><cell></cell><cell># Total Params</cell><cell>-</cell><cell>-</cell><cell>671B</cell><cell>-</cell><cell>-</cell><cell>671B</cell></row><row><cell></cell><cell>MMLU (Pass@1)</cell><cell>88.3</cell><cell>87.2</cell><cell>88.5</cell><cell>85.2</cell><cell>91.8</cell><cell>90.8</cell></row><row><cell></cell><cell>MMLU-Redux (EM)</cell><cell>88.9</cell><cell>88.0</cell><cell>89.1</cell><cell>86.7</cell><cell>-</cell><cell>92.9</cell></row><row><cell></cell><cell>MMLU-Pro (EM)</cell><cell>78.0</cell><cell>72.6</cell><cell>75.9</cell><cell>80.3</cell><cell>-</cell><cell>84.0</cell></row><row><cell></cell><cell>DROP (3-shot F1)</cell><cell>88.3</cell><cell>83.7</cell><cell>91.6</cell><cell>83.9</cell><cell>90.2</cell><cell>92.2</cell></row><row><cell>English</cell><cell>IF-Eval (Prompt Strict) GPQA Diamond (Pass@1)</cell><cell>86.5 65.0</cell><cell>84.3 49.9</cell><cell>86.1 59.1</cell><cell>84.8 60.0</cell><cell>-75.7</cell><cell>83.3 71.5</cell></row><row><cell></cell><cell>SimpleQA (Correct)</cell><cell>28.4</cell><cell>38.2</cell><cell>24.9</cell><cell>7.0</cell><cell>47.0</cell><cell>30.1</cell></row><row><cell></cell><cell>FRAMES (Acc.)</cell><cell>72.5</cell><cell>80.5</cell><cell>73.3</cell><cell>76.9</cell><cell>-</cell><cell>82.5</cell></row><row><cell></cell><cell>AlpacaEval2.0 (LC-winrate)</cell><cell>52.0</cell><cell>51.1</cell><cell>70.0</cell><cell>57.8</cell><cell>-</cell><cell>87.6</cell></row><row><cell></cell><cell>ArenaHard (GPT-4-1106)</cell><cell>85.2</cell><cell>80.4</cell><cell>85.5</cell><cell>92.0</cell><cell>-</cell><cell>92.3</cell></row><row><cell></cell><cell>LiveCodeBench (Pass@1-COT)</cell><cell>38.9</cell><cell>32.9</cell><cell>36.2</cell><cell>53.8</cell><cell>63.4</cell><cell>65.9</cell></row><row><cell>Code</cell><cell>Codeforces (Percentile) Codeforces (Rating)</cell><cell>20.3 717</cell><cell>23.6 759</cell><cell>58.7 1134</cell><cell>93.4 1820</cell><cell>96.6 2061</cell><cell>96.3 2029</cell></row><row><cell></cell><cell>SWE Verified (Resolved)</cell><cell>50.8</cell><cell>38.8</cell><cell>42.0</cell><cell>41.6</cell><cell>48.9</cell><cell>49.2</cell></row><row><cell></cell><cell>Aider-Polyglot (Acc.)</cell><cell>45.3</cell><cell>16.0</cell><cell>49.6</cell><cell>32.9</cell><cell>61.7</cell><cell>53.3</cell></row><row><cell></cell><cell>AIME 2024 (Pass@1)</cell><cell>16.0</cell><cell>9.3</cell><cell>39.2</cell><cell>63.6</cell><cell>79.2</cell><cell>79.8</cell></row><row><cell>Math</cell><cell>MATH-500 (Pass@1)</cell><cell>78.3</cell><cell>74.6</cell><cell>90.2</cell><cell>90.0</cell><cell>96.4</cell><cell>97.3</cell></row><row><cell></cell><cell>CNMO 2024 (Pass@1)</cell><cell>13.1</cell><cell>10.8</cell><cell>43.2</cell><cell>67.6</cell><cell>-</cell><cell>78.8</cell></row><row><cell></cell><cell>CLUEWSC (EM)</cell><cell>85.4</cell><cell>87.9</cell><cell>90.9</cell><cell>89.9</cell><cell>-</cell><cell>92.8</cell></row><row><cell>Chinese</cell><cell>C-Eval (EM)</cell><cell>76.7</cell><cell>76.0</cell><cell>86.5</cell><cell>68.9</cell><cell>-</cell><cell>91.8</cell></row><row><cell></cell><cell>C-SimpleQA (Correct)</cell><cell>55.4</cell><cell>58.7</cell><cell>68.0</cell><cell>40.3</cell><cell>-</cell><cell>63.7</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 5 |</head><label>5</label><figDesc><div><p><s coords="14,128.22,447.09,380.76,10.49;14,223.29,460.64,148.70,10.49">Comparison of DeepSeek-R1 distilled models and other comparable models onreasoning-related benchmarks.</s></p></div></figDesc><table><row><cell>Model</cell><cell cols="2">AIME 2024</cell><cell>MATH-500</cell><cell>GPQA Diamond</cell><cell cols="2">LiveCode CodeForces Bench</cell></row><row><cell></cell><cell cols="2">pass@1 cons@64</cell><cell>pass@1</cell><cell>pass@1</cell><cell>pass@1</cell><cell>rating</cell></row><row><cell>GPT-4o-0513</cell><cell>9.3</cell><cell>13.4</cell><cell>74.6</cell><cell>49.9</cell><cell>32.9</cell><cell>759</cell></row><row><cell>Claude-3.5-Sonnet-1022</cell><cell>16.0</cell><cell>26.7</cell><cell>78.3</cell><cell>65.0</cell><cell>38.9</cell><cell>717</cell></row><row><cell>OpenAI-o1-mini</cell><cell>63.6</cell><cell>80.0</cell><cell>90.0</cell><cell>60.0</cell><cell>53.8</cell><cell>1820</cell></row><row><cell>QwQ-32B-Preview</cell><cell>50.0</cell><cell>60.0</cell><cell>90.6</cell><cell>54.5</cell><cell>41.9</cell><cell>1316</cell></row><row><cell>DeepSeek-R1-Distill-Qwen-1.5B</cell><cell>28.9</cell><cell>52.7</cell><cell>83.9</cell><cell>33.8</cell><cell>16.9</cell><cell>954</cell></row><row><cell>DeepSeek-R1-Distill-Qwen-7B</cell><cell>55.5</cell><cell>83.3</cell><cell>92.8</cell><cell>49.1</cell><cell>37.6</cell><cell>1189</cell></row><row><cell>DeepSeek-R1-Distill-Qwen-14B</cell><cell>69.7</cell><cell>80.0</cell><cell>93.9</cell><cell>59.1</cell><cell>53.1</cell><cell>1481</cell></row><row><cell>DeepSeek-R1-Distill-Qwen-32B</cell><cell>72.6</cell><cell>83.3</cell><cell>94.3</cell><cell>62.1</cell><cell>57.2</cell><cell>1691</cell></row><row><cell>DeepSeek-R1-Distill-Llama-8B</cell><cell>50.4</cell><cell>80.0</cell><cell>89.1</cell><cell>49.0</cell><cell>39.6</cell><cell>1205</cell></row><row><cell>DeepSeek-R1-Distill-Llama-70B</cell><cell>70.0</cell><cell>86.7</cell><cell>94.5</cell><cell>65.2</cell><cell>57.5</cell><cell>1633</cell></row><row><cell cols="7">As shown in Table 5, simply distilling DeepSeek-R1's outputs enables the efficient DeepSeek-</cell></row><row><cell cols="7">R1-7B (i.e., DeepSeek-R1-Distill-Qwen-7B, abbreviated similarly below) to outperform non-</cell></row><row><cell cols="7">reasoning models like GPT-4o-0513 across the board. DeepSeek-R1-14B surpasses QwQ-32B-</cell></row><row><cell cols="6">Preview on all evaluation metrics, while DeepSeek-R1-32B and DeepSeek-R1-70B</cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 6 ,</head><label>6</label><figDesc><div><p><s coords="14,262.81,740.32,261.59,10.49">demonstrate that the 32B base model, after large-scale</s></p></div></figDesc><table><row><cell></cell><cell cols="2">AIME 2024</cell><cell cols="3">MATH-500 GPQA Diamond LiveCodeBench</cell></row><row><cell>Model</cell><cell cols="2">pass@1 cons@64</cell><cell>pass@1</cell><cell>pass@1</cell><cell>pass@1</cell></row><row><cell>QwQ-32B-Preview</cell><cell>50.0</cell><cell>60.0</cell><cell>90.6</cell><cell>54.5</cell><cell>41.9</cell></row><row><cell>DeepSeek-R1-Zero-Qwen-32B</cell><cell>47.0</cell><cell>60.0</cell><cell>91.6</cell><cell>55.0</cell><cell>40.2</cell></row><row><cell>DeepSeek-R1-Distill-Qwen-32B</cell><cell>72.6</cell><cell>83.3</cell><cell>94.3</cell><cell>62.1</cell><cell>57.2</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 6 |</head><label>6</label><figDesc><div><p><s coords="15,136.48,170.89,364.24,10.49">Comparison of distilled and RL Models on Reasoning-Related Benchmarks.</s></p></div></figDesc><table><row><cell>RL training, achieves performance on par with QwQ-32B-Preview. However, DeepSeek-R1-</cell></row><row><cell>Distill-Qwen-32B, which is distilled from DeepSeek-R1, performs significantly better than</cell></row><row><cell>DeepSeek-R1-Zero-Qwen-32B across all benchmarks.</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_0" coords="12,90.39,727.77,93.21,8.11"><p><s coords="12,90.39,727.77,93.21,8.11">https://aider.chat</s></p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_1" coords="12,90.39,739.35,113.92,8.11"><p><s coords="12,90.39,739.35,113.92,8.11">https://codeforces.com</s></p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_2" coords="12,90.39,750.93,253.73,8.11"><p><s coords="12,90.39,750.93,253.73,8.11">https://www.cms.org.cn/Home/comp/comp/cid/12.html</s></p></note>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="20,70.87,87.30,58.99,12.15;20,70.87,113.00,243.53,12.15">Appendix A. Contributions and Acknowledgments</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="20,70.87,144.86,90.60,10.23">Core Contributors</head><formula xml:id="formula_5">Daya Guo Dejian Yang Haowei Zhang Junxiao Song Ruoyu Zhang Runxin Xu Qihao Zhu Shirong Ma Peiyi Wang Xiao Bi Xiaokang Zhang Xingkai Yu Yu Wu Z.F. Wu Zhibin Gou Zhihong Shao Zhuoshu Li Ziyi Gao Contributors Aixin Liu Bing Xue Bingxuan Wang Bochao Wu Bei Feng Chengda Lu Chenggang Zhao Chengqi Deng Chong Ruan Damai Dai Deli Chen Dongjie Ji Erhang Li Fangyun Lin Fucong Dai Fuli Luo* Guangbo Hao Guanting Chen Guowei Li H. Zhang Hanwei Xu Honghui Ding Huazuo Gao Hui Qu Hui Li Jianzhong Guo Jiashi Li Jingchang Chen Jingyang Yuan Jinhao Tu Junjie Qiu Junlong Li J.L. Cai Jiaqi Ni Jian Liang Jin Chen Kai Dong Kai Hu* Kaichao You Kaige Gao Kang Guan Kexin Huang Kuai Yu Lean Wang Lecong Zhang Liang Zhao Litong Wang Liyue Zhang Lei Xu Leyi Xia Mingchuan Zhang Minghua Zhang Minghui Tang Mingxu Zhou Meng Li Miaojun</formula><p coords="20,348.22,564.79,27.77,10.49;20,305.11,578.34,63.70,10.49;20,305.11,591.89,48.45,10.49;20,305.11,605.44,73.00,10.49;20,305.11,618.99,58.45,10.49;20,305.11,632.54,82.89,10.49;20,305.11,646.09,59.13,10.49;20,305.11,659.64,50.23,10.49;20,305.11,673.19,46.84,10.49;20,305.11,686.74,74.26,10.49;20,305.11,700.29,55.19,10.49;20,305.11,713.84,56.44,10.49;20,305.11,727.38,44.76,10.49;20,305.11,740.93,35.29,10.49;21,70.87,88.58,51.49,10.49;21,70.87,102.13,63.68,10.49;21,70.87,115.68,76.70,10.49;21,70.87,129.23,83.06,10.49;21,70.87,142.78,65.21,10.49;21,70.87,156.33,58.40,10.49;21,70.87,169.88,59.57,10.49;21,70.87,183.42,75.16,10.49;21,70.87,196.97,58.92,10.49;21,70.87,210.52,29.48,10.49;21,70.87,224.07,65.41,10.49;21,70.87,237.62,64.85,10.49;21,70.87,251.17,65.21,10.49;21,70.53,264.72,39.04,10.49;21,70.53,278.27,38.78,10.49;21,70.53,291.82,55.09,10.49;21,70.53,305.37,39.11,10.49;21,70.32,318.92,77.67,10.49;21,70.32,332.47,40.63,10.49;21,70.32,346.01,73.19,10.49;21,70.32,359.56,59.42,10.49;21,70.32,373.11,56.96,10.49;21,70.32,386.66,70.67,10.49;21,70.32,400.21,46.61,10.49;21,70.32,413.76,35.87,10.49;21,70.51,427.31,66.04,10.49;21,70.51,440.86,70.52,10.49;21,70.51,454.41,74.18,10.49;21,70.51,467.96,57.02,10.49;21,70.51,481.51,51.25,10.49;21,70.51,495.06,35.95,10.49;21,70.51,508.60,35.20,10.49;21,70.51,522.15,64.61,10.49;21,70.51,535.70,56.31,10.49;21,70.51,549.25,53.81,10.49;21,70.51,562.80,62.95,10.49;21,70.51,576.35,56.76,10.49;21,70.51,589.90,33.87,10.49;21,70.51,603.45,62.07,10.49;21,70.51,617.00,60.32,10.49;21,70.51,630.55,66.68,10.49;21,70.51,644.10,63.92,10.49;21,70.51,657.65,79.04,10.49;21,70.51,671.20,61.78,10.49;21,70.51,684.74,54.93,10.49;21,70.51,698.29,64.79,10.49;21,70.51,711.84,57.67,10.49"><s coords="20,348.22,564.79,27.77,10.49;20,305.11,578.34,63.70,10.49;20,305.11,591.89,48.45,10.49;20,305.11,605.44,73.00,10.49;20,305.11,618.99,58.45,10.49;20,305.11,632.54,82.89,10.49;20,305.11,646.09,59.13,10.49;20,305.11,659.64,50.23,10.49;20,305.11,673.19,46.84,10.49;20,305.11,686.74,74.26,10.49;20,305.11,700.29,55.19,10.49;20,305.11,713.84,56.44,10.49;20,305.11,727.38,44.76,10.49;20,305.11,740.93,35.29,10.49;21,70.87,88.58,51.49,10.49;21,70.87,102.13,63.68,10.49;21,70.87,115.68,76.70,10.49;21,70.87,129.23,83.06,10.49;21,70.87,142.78,65.21,10.49;21,70.87,156.33,58.40,10.49;21,70.87,169.88,59.57,10.49;21,70.87,183.42,75.16,10.49;21,70.87,196.97,58.92,10.49;21,70.87,210.52,29.48,10.49;21,70.87,224.07,65.41,10.49;21,70.87,237.62,64.85,10.49;21,70.87,251.17,65.21,10.49;21,70.53,264.72,39.04,10.49;21,70.53,278.27,38.78,10.49;21,70.53,291.82,55.09,10.49;21,70.53,305.37,39.11,10.49;21,70.32,318.92,77.67,10.49;21,70.32,332.47,40.63,10.49;21,70.32,346.01,73.19,10.49;21,70.32,359.56,59.42,10.49;21,70.32,373.11,56.96,10.49;21,70.32,386.66,70.67,10.49;21,70.32,400.21,46.61,10.49;21,70.32,413.76,35.87,10.49;21,70.51,427.31,66.04,10.49;21,70.51,440.86,70.52,10.49;21,70.51,454.41,74.18,10.49;21,70.51,467.96,57.02,10.49;21,70.51,481.51,51.25,10.49;21,70.51,495.06,35.95,10.49;21,70.51,508.60,35.20,10.49;21,70.51,522.15,64.61,10.49;21,70.51,535.70,56.31,10.49;21,70.51,549.25,53.81,10.49;21,70.51,562.80,62.95,10.49;21,70.51,576.35,56.76,10.49;21,70.51,589.90,21.31,10.49">Wang Mingming Li Ning Tian Panpan Huang Peng Zhang Qiancheng Wang Qinyu Chen Qiushi Du Ruiqi Ge* Ruisong Zhang Ruizhe Pan Runji Wang R.J. Chen R.L. Jin Ruyi Chen Shanghao Lu Shangyan Zhou Shanhuang Chen Shengfeng Ye Shiyu Wang Shuiping Yu Shunfeng Zhou Shuting Pan S.S. Li Shuang Zhou Shaoqing Wu Shengfeng Ye Tao Yun Tian Pei Tianyu Sun T. Wang Wangding Zeng Wen Liu Wenfeng Liang Wenjun Gao Wenqin Yu* Wentao Zhang W.L. Xiao Wei An Xiaodong Liu Xiaohan Wang Xiaokang Chen Xiaotao Nie Xin Cheng Xin Liu Xin Xie Xingchao Liu Xinyu Yang Xinyuan Li Xuecheng Su Xuheng Lin X.Q.</s><s coords="21,94.54,589.90,9.84,10.49;21,70.51,603.45,62.07,10.49;21,70.51,617.00,60.32,10.49;21,70.51,630.55,66.68,10.49;21,70.51,644.10,63.92,10.49;21,70.51,657.65,79.04,10.49;21,70.51,671.20,61.78,10.49;21,70.51,684.74,54.93,10.49;21,70.51,698.29,64.79,10.49;21,70.51,711.84,57.67,10.49">Li Xiangyue Jin Xiaojin Shen Xiaosha Chen Xiaowen Sun Xiaoxiang Wang Xinnan Song Xinyi Zhou Xianzu Wang Xinxia Shan</s></p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct status="extracted" xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Claude 3.5 sonnet</title>
+		<author>
+			<persName><surname>Anthropic</surname></persName>
+		</author>
+		<ptr target="https://www.anthropic.com/news/claude-3-5-sonnet" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b1">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tworek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">P</forename><surname>De Oliveira Pinto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kaplan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Edwards</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Burda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Joseph</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Brockman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Puri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Krueger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Petrov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Khlaaf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Sastry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Mishkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Ryder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pavlov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Power</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Kaiser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Bavarian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Winter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Tillet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">P</forename><surname>Such</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Cummings</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Plappert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Chantzis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Barnes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Herbert-Voss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">H</forename><surname>Guss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Nichol</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Paino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Tezak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Babuschkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Balaji</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Saunders</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hesse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">N</forename><surname>Carr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Leike</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Achiam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Misra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Morikawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Radford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Knight</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Brundage</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Murati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Mayer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Welinder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Mcgrew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Amodei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mccandlish</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Sutskever</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zaremba</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/2107.03374" />
+		<imprint/>
+	</monogr>
+	<note>Evaluating large language models trained on code. CoRR, abs/2107.03374, 2021</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b2">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dubey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jauhri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pandey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kadian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Al-Dahle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Letman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mathur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schelten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fan</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2407.21783</idno>
+		<title level="m">The llama 3 herd of models</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b3">
+	<monogr>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Dubois</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Galambosi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">B</forename><surname>Hashimoto</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2404.04475</idno>
+		<title level="m">Length-controlled alpacaeval: A simple way to debias automatic evaluators</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b4">
+	<monogr>
+		<title level="m" type="main">Alphazero-like tree-search can guide large language model decoding and training</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Mcaleer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/2309.17179" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Scaling laws for reward model overoptimization</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Schulman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hilton</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/2210.10760" />
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b6">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Gema</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">O J</forename><surname>Leang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Devoto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C M</forename><surname>Mancino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Saxena</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R G</forename><surname>Madani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Barale</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mchardy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Harris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kaddour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Van Krieken</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Minervini</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/arXiv.2406.04127</idno>
+		<ptr target="https://doi.org/10.48550/arXiv.2406.04127" />
+		<title level="m">Are we done with mmlu? CoRR, abs/2406.04127</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Our next-generation model: Gemini 1.5, 2024</title>
+		<author>
+			<persName><surname>Google</surname></persName>
+		</author>
+		<ptr target="https://blog.google/technology/ai/google-gemini-next-generation-model-february-2024" />
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Chinese simpleqa: A chinese factuality evaluation for large language models</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Bu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zheng</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2411.07140</idno>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b9">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hendrycks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Burns</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Basart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mazeika</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Steinhardt</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2009.03300</idno>
+		<title level="m">Measuring massive multitask language understanding</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b10">
+	<monogr>
+		<title level="m" type="main">C-Eval: A multi-level multi-discipline chinese evaluation suite for foundation models</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Bai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lv</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lei</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2305.08322</idno>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b11">
+	<monogr>
+		<title level="m" type="main">Livecodebench: Holistic and contamination free evaluation of large language models for code</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Jain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Solar-Lezama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Sen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Stoica</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/arXiv.2403.07974</idno>
+		<idno>CoRR, abs/2403.07974</idno>
+		<ptr target="https://doi.org/10.48550/arXiv.2403.07974" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Fact, fetch, and reason: A unified evaluation of retrieval-augmented generation</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Krishna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Krishna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mohananey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Schwarcz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Stambler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Upadhyay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Faruqui</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/arXiv.2409.12941</idno>
+		<ptr target="https://doi.org/10.48550/arXiv.2409.12941" />
+		<imprint>
+			<biblScope unit="page">2024</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Training language models to self-correct via reinforcement learning</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Zhuang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Agarwal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Co-Reyes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Singh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Baumli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Iqbal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Bishop</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Roelofs</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2409.12917</idno>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b14">
+	<monogr>
+		<title level="m" type="main">CMMLU: Measuring massive multitask language understanding in Chinese</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Koto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Gong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Duan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Baldwin</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2306.09212</idno>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b15">
+	<monogr>
+		<author>
+			<persName><forename type="first">T</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W.-L</forename><surname>Chiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Frick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Dunlap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Gonzalez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Stoica</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2406.11939</idno>
+		<title level="m">From crowdsourced data to high-quality benchmarks: Arena-hard and benchbuilder pipeline</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b16">
+	<monogr>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lightman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Kosaraju</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Burda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Edwards</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Baker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Leike</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Schulman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Sutskever</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Cobbe</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2305.20050</idno>
+		<title level="m">Let&apos;s verify step by step</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b17">
+	<monogr>
+		<title level="m" type="main">ZeroEval: A Unified Framework for Evaluating Language Models</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">Y</forename><surname>Lin</surname></persName>
+		</author>
+		<ptr target="https://github.com/WildEval/ZeroEval" />
+		<imprint>
+			<date type="published" when="2024-07">July 2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b18">
+	<analytic>
+		<title level="a" type="main">American invitational mathematics examination -aime</title>
+		<author>
+			<persName><surname>Maa</surname></persName>
+		</author>
+		<ptr target="https://maa.org/math-competitions/american-invitational-mathematics-examination-aime" />
+	</analytic>
+	<monogr>
+		<title level="m">American Invitational Mathematics Examination -AIME 2024</title>
+		<imprint>
+			<date type="published" when="2024-02">February 2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b19">
+	<analytic>
+		<title/>
+		<ptr target="https://openai.com/index/hello-gpt-4o/" />
+	</analytic>
+	<monogr>
+		<title level="j">OpenAI. Hello GPT-4o</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b20">
+	<monogr>
+		<title level="m" type="main">Learning to reason with llms</title>
+		<author>
+			<persName><surname>Openai</surname></persName>
+		</author>
+		<ptr target="https://openai.com/index/learning-to-reason-with-llms/" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b21">
+	<monogr>
+		<title level="m" type="main">Introducing SimpleQA</title>
+		<author>
+			<persName><surname>Openai</surname></persName>
+		</author>
+		<ptr target="https://openai.com/index/introducing-simpleqa/" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b22">
+	<monogr>
+		<title level="m" type="main">Introducing SWE-bench verified we&apos;re releasing a human-validated subset of swebench that more</title>
+		<ptr target="https://openai.com/index/introducing-swe-bench-verified/" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+		<respStmt>
+			<orgName>OpenAI</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b23">
+	<monogr>
+		<title level="m" type="main">Qwq: Reflect deeply on the boundaries of the unknown</title>
+		<author>
+			<persName><surname>Qwen</surname></persName>
+		</author>
+		<ptr target="https://qwenlm.github.io/blog/qwq-32b-preview/" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b24">
+	<monogr>
+		<title level="m" type="main">Qwen2.5: A party of foundation models</title>
+		<author>
+			<persName><surname>Qwen</surname></persName>
+		</author>
+		<ptr target="https://qwenlm.github.io/blog/qwen2.5" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b25">
+	<monogr>
+		<title level="m" type="main">GPQA: A graduate-level google-proof q&amp;a benchmark</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">L</forename><surname>Hou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Stickland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Petty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">Y</forename><surname>Pang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Dirani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Michael</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Bowman</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2311.12022</idno>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b26">
+	<monogr>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Shao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Guo</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2402.03300</idno>
+		<title level="m">Deepseekmath: Pushing the limits of mathematical reasoning in open language models</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b27">
+	<monogr>
+		<title level="m" type="main">Mastering chess and shogi by self-play with a general reinforcement learning algorithm</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Silver</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Schrittwieser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Antonoglou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Guez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lanctot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Sifre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kumaran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Graepel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">P</forename><surname>Lillicrap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Simonyan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hassabis</surname></persName>
+		</author>
+		<idno>CoRR, abs/1712.01815</idno>
+		<ptr target="http://arxiv.org/abs/1712.01815" />
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Mastering the game of go without human knowledge</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Silver</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Schrittwieser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Simonyan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Antonoglou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Guez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Baker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bolton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">P</forename><surname>Lillicrap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Sifre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Van Den Driessche</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Graepel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hassabis</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nature24270</idno>
+		<ptr target="https://doi.org/10.1038/nature24270" />
+	</analytic>
+	<monogr>
+		<title level="j">Nat</title>
+		<imprint>
+			<biblScope unit="volume">550</biblScope>
+			<biblScope unit="issue">7676</biblScope>
+			<biblScope unit="page" from="354" to="359" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b29">
+	<monogr>
+		<title level="m" type="main">Scaling llm test-time compute optimally can be more effective than scaling model parameters</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Snell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kumar</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/2408.033" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Solving olympiad geometry without human demonstrations</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Trinh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Le</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Luong</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41586-023-06747-5</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="page">2024</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b31">
+	<monogr>
+		<title level="m" type="main">Solving math word problems with process-and outcome-based feedback</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Uesato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Kushman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Siegel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Creswell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Irving</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Higgins</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2211.14275</idno>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b32">
+	<monogr>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Shao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Sui</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2312.08935</idno>
+		<title level="m">Math-shepherd: A labelfree step-by-step verifier for llms in mathematical reasoning</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b33">
+	<monogr>
+		<title level="m" type="main">Self-consistency improves chain of thought reasoning in language models</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Schuurmans</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Le</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Chi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Narang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Chowdhery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zhou</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2203.11171</idno>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b34">
+	<monogr>
+		<title level="m" type="main">Mmlu-pro: A more robust and challenging multi-task language understanding benchmark</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Chandra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Ren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Arulraj</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ku</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zhuang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/arXiv.2406.01574</idno>
+		<idno>CoRR, abs/2406.01574</idno>
+		<ptr target="https://doi.org/10.48550/arXiv.2406.01574" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b35">
+	<monogr>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">S</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Dunn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<title level="m">Agentless: Demystifying llm-based software engineering agents</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b36">
+	<monogr>
+		<title level="m" type="main">Deepseek-prover-v1.5: Harnessing proof assistant feedback for reinforcement learning and monte-carlo tree search</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Xin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">Z</forename><surname>Ren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Shao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Gou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">F</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ruan</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/2408.08152" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b37">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mishra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Brahma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Basu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Luan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hou</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2311.07911</idno>
+		<title level="m">Instruction-following evaluation for large language models</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Yiliang Xiong Ying He Yishi Piao Yisong Wang Yixuan Tan Yiyang Ma* Yiyuan Liu Yongqiang Guo Yuan Ou Yuduan Wang Yue Gong Yuheng Zou Yujia He Yunfan Xiong Yuxiang Luo Yuxiang You Yuxuan Liu</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">K</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">Q</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">X</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yang</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yanhong</forename><forename type="middle">Xu</forename><surname>Yao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li</forename><forename type="middle">Yao</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yaofeng</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yaohui</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yi</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yichao</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yifan</forename><surname>Shi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Ziyang Song Zizheng Pan Zhen Huang Zhipeng Xu Zhongyu Zhang Zhen Zhang Within each role</title>
+		<editor>
+			<persName><forename type="first">Yuyang</forename><surname>Zhou</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Y</forename><forename type="middle">X</forename><surname>Zhu</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Yanping</forename><surname>Huang</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Yaohui</forename><surname>Li</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Yi</forename><surname>Zheng</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Yuchen</forename><surname>Zhu</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Yunxian</forename><surname>Ma</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Ying</forename><surname>Tang</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Yukun</forename><surname>Zha</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Yuting</forename><surname>Yan</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Z</forename><forename type="middle">Z</forename><surname>Ren Zehui Ren</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zhangli</forename><surname>Sha</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zhe</forename><surname>Fu</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zhean</forename><surname>Xu</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zhenda</forename><surname>Xie</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zhengyan</forename><surname>Zhang</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zhewen</forename><surname>Hao</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zhicheng</forename><surname>Ma</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zhigang</forename><surname>Yan</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zhiyu</forename><surname>Wu</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zihui</forename><surname>Gu</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zijia</forename><surname>Zhu</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Zijun</forename><surname>Liu* Zilin</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Li</forename><forename type="middle">Ziwei</forename><surname>Xie</surname></persName>
+		</editor>
+		<imprint/>
+	</monogr>
+	<note>authors are listed alphabetically by the first name. Names marked with * denote individuals who have departed from our team</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>
