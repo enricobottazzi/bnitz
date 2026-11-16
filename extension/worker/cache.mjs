@@ -1,14 +1,10 @@
-import {arxivPaper} from '../reader/arxiv.mjs';
-
 const ttl = 30 * 24 * 60 * 60;
 
-export async function openGenerationCache(namespace, arxivId, revision, operation, input) {
-  if (!namespace || typeof arxivId !== 'string' || arxivId.length > 128 || !arxivPaper(arxivId)?.version) {
-    return null;
-  }
+export async function openGenerationCache(namespace, arxivId, revision, input) {
+  if (!namespace || arxivId.length > 128) return null;
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(input)));
   const hash = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
-  const key = `generation:${revision}:${encodeURIComponent(arxivId)}:${operation}:${hash}`;
+  const key = `generation:${revision}:${encodeURIComponent(arxivId)}:${hash}`;
 
   return {
     async get() {

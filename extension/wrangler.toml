@@ -5,7 +5,7 @@ preview_urls = false
 
 [build]
 command = "node worker/build.mjs"
-watch_dir = ["worker", "../examples", "../lang"]
+watch_dir = ["worker", "../lang"]
 
 [[kv_namespaces]]
 binding = "GENERATION_CACHE"

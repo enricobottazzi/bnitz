@@ -38,7 +38,9 @@ body { margin: 0; }
   padding: 40px 24px;
   text-align: center;
 }
-#status { color: #555; }
+#progress[hidden], #status:empty { display: none; }
+#status { color: #555; margin: 48px 16px 0; }
+#status:not(:empty) + #map { padding-top: 16px; min-height: auto; }
 #loading-orbit {
   position: relative;
   display: grid;

@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 .DS_Store
 /extension/dist/
+/extension/artifacts/
 /extension/node_modules/
 /extension/worker-dist/
 /extension/.wrangler/

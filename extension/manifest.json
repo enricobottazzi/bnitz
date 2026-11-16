@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "BNITZ",
-  "description": "Map arXiv abstracts and highlight related passages throughout the full PDF.",
+  "description": "Map and highlight abstracts on arXiv HTML pages.",
   "version": "0.1.4",
-  "minimum_chrome_version": "151",
+  "minimum_chrome_version": "116",
   "icons": {
     "16": "icons/bnitz-16.png",
     "32": "icons/bnitz-32.png",
@@ -13,7 +13,11 @@
   "action": {"default_title": "BNITZ", "default_icon": {"16": "icons/bnitz-16.png", "32": "icons/bnitz-32.png"}},
   "background": {"service_worker": "dist/reader/background.mjs", "type": "module"},
   "side_panel": {"default_path": "dist/reader/index.html"},
-  "mime_types_handler": {"application/pdf": {"handler_url": "dist/reader/pdf.html"}},
+  "content_scripts": [{
+    "matches": ["https://arxiv.org/html/*", "https://www.arxiv.org/html/*"],
+    "js": ["dist/reader/html.js"],
+    "css": ["dist/reader/html.css"]
+  }],
   "permissions": ["sidePanel"],
   "host_permissions": ["https://arxiv.org/*", "https://www.arxiv.org/*", "https://bnitz-routing.enricobottazzi.workers.dev/*"]
 }
