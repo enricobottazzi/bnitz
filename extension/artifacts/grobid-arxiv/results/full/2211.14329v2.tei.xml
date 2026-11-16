@@ -1,0 +1,1927 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Detection of stellar light from quasar host galaxies at redshifts above 6</title>
+				<funder ref="#_ZxQamkD">
+					<orgName type="full">National Science Foundation</orgName>
+					<orgName type="abbreviated">NSF</orgName>
+				</funder>
+				<funder ref="#_2haMquE">
+					<orgName type="full">MIUR</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Association of Universities for Research in Astronomy, Inc</orgName>
+				</funder>
+				<funder ref="#_qFTD5tM #_kcAcu4B #_CPvSap9">
+					<orgName type="full">European Research Council</orgName>
+					<orgName type="abbreviated">ERC</orgName>
+				</funder>
+				<funder ref="#_KN74Rbz">
+					<orgName type="full">National Natural Science Foundation of China</orgName>
+				</funder>
+				<funder ref="#_pVXuka7 #_KxHta3C #_7r7fvmm #_dTYepUP #_pPUyEAC">
+					<orgName type="full">NASA</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">MEXT, Japan</orgName>
+				</funder>
+				<funder ref="#_e63DdqR">
+					<orgName type="full">NWO</orgName>
+				</funder>
+				<funder ref="#_nDFpc8G">
+					<orgName type="full">Independent Research Fund Denmark</orgName>
+				</funder>
+				<funder ref="#_2h3RHvv">
+					<orgName type="full">Mitsubishi Foundation</orgName>
+				</funder>
+				<funder ref="#_DqBbuhk">
+					<orgName type="full">Spanish MCIN</orgName>
+				</funder>
+				<funder ref="#_TSRQWQx">
+					<orgName type="full">Israel Science Foundation</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">World Premier International Research Center Initiative</orgName>
+					<orgName type="abbreviated">WPI</orgName>
+				</funder>
+				<funder ref="#_GyAH4xp #_g5nacdE #_yJBjPfA #_pzajSja #_KGwScTz #_yW8qJNg #_KbFtkS2 #_GuWVSdJ">
+					<orgName type="full">Japan Society for the Promotion of Science</orgName>
+					<orgName type="abbreviated">JSPS</orgName>
+				</funder>
+				<funder ref="#_9K9aEH3">
+					<orgName type="full">European Union</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2023-06-24">24 Jun 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct status="extracted">
+					<analytic>
+						<author>
+							<persName><forename type="first">Xuheng</forename><surname>Ding</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Kavli Institute for the Physics and Mathematics of the Universe (Kavli IPMU</orgName>
+								<orgName type="department" key="dep2">WPI)</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<postCode>277-8583</postCode>
+									<settlement>Chiba</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Center for Data-Driven Discovery</orgName>
+								<orgName type="department" key="dep2">Kavli IPMU (WPI)</orgName>
+								<orgName type="institution" key="instit1">UTIAS</orgName>
+								<orgName type="institution" key="instit2">The University of Tokyo</orgName>
+								<address>
+									<postCode>277-8583</postCode>
+									<settlement>Kashiwa</settlement>
+									<region>Chiba</region>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Masafusa</forename><surname>Onoue</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="institution" key="instit1">Kavli Institute for Astronomy and Astrophysics</orgName>
+								<orgName type="institution" key="instit2">Peking University</orgName>
+								<address>
+									<postCode>100871</postCode>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Kavli Institute for the Physics and Mathematics of the Universe (Kavli IPMU</orgName>
+								<orgName type="department" key="dep2">WPI)</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<postCode>277-8583</postCode>
+									<settlement>Chiba</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="department">Max-Planck-Institut f ür Astronomie</orgName>
+								<address>
+									<addrLine>K önigstuhl 17</addrLine>
+									<postCode>D-69117</postCode>
+									<settlement>Heidelberg</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff26">
+								<address>
+									<postCode>722-8506</postCode>
+									<settlement>Onomichi Hiroshima</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">John</forename><forename type="middle">D</forename><surname>Silverman</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Kavli Institute for the Physics and Mathematics of the Universe (Kavli IPMU</orgName>
+								<orgName type="department" key="dep2">WPI)</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<postCode>277-8583</postCode>
+									<settlement>Chiba</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Center for Data-Driven Discovery</orgName>
+								<orgName type="department" key="dep2">Kavli IPMU (WPI)</orgName>
+								<orgName type="institution" key="instit1">UTIAS</orgName>
+								<orgName type="institution" key="instit2">The University of Tokyo</orgName>
+								<address>
+									<postCode>277-8583</postCode>
+									<settlement>Kashiwa</settlement>
+									<region>Chiba</region>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff4">
+								<orgName type="department" key="dep1">Department of Astronomy</orgName>
+								<orgName type="department" key="dep2">School of Science</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<addrLine>7-3-1 Hongo Bunkyo-ku</addrLine>
+									<postCode>113-0033</postCode>
+									<settlement>Tokyo</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Yoshiki</forename><surname>Matsuoka</surname></persName>
+							<affiliation key="aff5">
+								<orgName type="department">Research Center for Space and Cosmic Evolution</orgName>
+								<orgName type="institution">Ehime University</orgName>
+								<address>
+									<addrLine>2-5 Bunkyo-cho</addrLine>
+									<postCode>790-8577</postCode>
+									<settlement>Matsuyama</settlement>
+									<region>Ehime</region>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Takuma</forename><surname>Izumi</surname></persName>
+							<affiliation key="aff6">
+								<orgName type="institution">National Astronomical Observatory of Japan</orgName>
+								<address>
+									<addrLine>Osawa</addrLine>
+									<postCode>181-8588</postCode>
+									<settlement>Mitaka</settlement>
+									<region>Tokyo</region>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff7">
+								<orgName type="department" key="dep1">Department of Physics</orgName>
+								<orgName type="department" key="dep2">Graduate School of Science</orgName>
+								<orgName type="institution">Tokyo Metropolitan University</orgName>
+								<address>
+									<addrLine>1-1 Minami-Osawa</addrLine>
+									<postCode>192-0397</postCode>
+									<settlement>Hachioji Tokyo</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Michael</forename><forename type="middle">A</forename><surname>Strauss</surname></persName>
+							<affiliation key="aff8">
+								<orgName type="department">Department of Astrophysical Sciences</orgName>
+								<orgName type="institution">Princeton University</orgName>
+								<address>
+									<addrLine>4 Ivy Lane</addrLine>
+									<postCode>08544</postCode>
+									<settlement>Princeton</settlement>
+									<region>NJ</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Knud</forename><surname>Jahnke</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="department">Max-Planck-Institut f ür Astronomie</orgName>
+								<address>
+									<addrLine>K önigstuhl 17</addrLine>
+									<postCode>D-69117</postCode>
+									<settlement>Heidelberg</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Camryn</forename><forename type="middle">L</forename><surname>Phillips</surname></persName>
+							<affiliation key="aff8">
+								<orgName type="department">Department of Astrophysical Sciences</orgName>
+								<orgName type="institution">Princeton University</orgName>
+								<address>
+									<addrLine>4 Ivy Lane</addrLine>
+									<postCode>08544</postCode>
+									<settlement>Princeton</settlement>
+									<region>NJ</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Junyao</forename><surname>Li</surname></persName>
+							<affiliation key="aff9">
+								<orgName type="department">Department of Astronomy</orgName>
+								<orgName type="institution">University of Illinois at Urbana-Champaign</orgName>
+								<address>
+									<postCode>61801</postCode>
+									<settlement>Urbana</settlement>
+									<region>IL</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Marta</forename><surname>Volonteri</surname></persName>
+							<affiliation key="aff10">
+								<orgName type="department">Institut d&apos;Astrophysique de Paris</orgName>
+								<orgName type="institution" key="instit1">CNRS</orgName>
+								<orgName type="institution" key="instit2">Sorbonne Universit é</orgName>
+								<address>
+									<addrLine>UMR7095 98bis bd Arago</addrLine>
+									<postCode>75014</postCode>
+									<settlement>Paris</settlement>
+									<country key="FR">France</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Zoltan</forename><surname>Haiman</surname></persName>
+							<affiliation key="aff11">
+								<orgName type="department">Department of Astronomy</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<postCode>10027</postCode>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff12">
+								<orgName type="department">Department of Physics</orgName>
+								<orgName type="institution">Columbia University</orgName>
+								<address>
+									<postCode>10027</postCode>
+									<settlement>New York</settlement>
+									<region>NY</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Irham</forename><surname>Taufik Andika</surname></persName>
+							<affiliation key="aff13">
+								<orgName type="department">Physik-Department</orgName>
+								<orgName type="institution">Technische Universit ät M ünchen</orgName>
+								<address>
+									<addrLine>James-Franck-Str. 1</addrLine>
+									<postCode>D-85748</postCode>
+									<settlement>Garching bei M ünchen</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff14">
+								<orgName type="department">Max-Planck-Institut f ür Astrophysik</orgName>
+								<address>
+									<addrLine>Karl-Schwarzschild-Str. 1</addrLine>
+									<postCode>D-85748</postCode>
+									<settlement>Garching bei M ünchen</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Kentaro</forename><surname>Aoki</surname></persName>
+							<affiliation key="aff15">
+								<orgName type="department">Subaru Telescope</orgName>
+								<orgName type="institution">National Astronomical Observatory of Japan</orgName>
+								<address>
+									<addrLine>650 North A&apos;ohoku Place</addrLine>
+									<postCode>96720</postCode>
+									<settlement>Hilo</settlement>
+									<region>Hawaii</region>
+									<country key="US">U.S.A</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Shunsuke</forename><surname>Baba</surname></persName>
+							<affiliation key="aff16">
+								<orgName type="department">Graduate School of Science and Engineering</orgName>
+								<orgName type="institution">Kagoshima University</orgName>
+								<address>
+									<addrLine>1-21-35 Korimoto</addrLine>
+									<postCode>890-0065</postCode>
+									<settlement>Kagoshima</settlement>
+									<region>Kagoshima</region>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Rebekka</forename><surname>Bieri</surname></persName>
+							<affiliation key="aff17">
+								<orgName type="department">Institute for Computational Science</orgName>
+								<orgName type="institution">University of Zurich</orgName>
+								<address>
+									<addrLine>Wintherthurerstrasse 190</addrLine>
+									<postCode>8057 Z</postCode>
+									<settlement>ürich</settlement>
+									<country key="CH">Switzerland</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Sarah</forename><forename type="middle">E I</forename><surname>Bosman</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="department">Max-Planck-Institut f ür Astronomie</orgName>
+								<address>
+									<addrLine>K önigstuhl 17</addrLine>
+									<postCode>D-69117</postCode>
+									<settlement>Heidelberg</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Connor</forename><surname>Bottrell</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Kavli Institute for the Physics and Mathematics of the Universe (Kavli IPMU</orgName>
+								<orgName type="department" key="dep2">WPI)</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<postCode>277-8583</postCode>
+									<settlement>Chiba</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Center for Data-Driven Discovery</orgName>
+								<orgName type="department" key="dep2">Kavli IPMU (WPI)</orgName>
+								<orgName type="institution" key="instit1">UTIAS</orgName>
+								<orgName type="institution" key="instit2">The University of Tokyo</orgName>
+								<address>
+									<postCode>277-8583</postCode>
+									<settlement>Kashiwa</settlement>
+									<region>Chiba</region>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Anna-Christina</forename><surname>Eilers</surname></persName>
+							<affiliation key="aff18">
+								<orgName type="institution">MIT Kavli Institute for Astrophysics and Space Research</orgName>
+								<address>
+									<addrLine>77 Massachusetts Avenue</addrLine>
+									<postCode>02139</postCode>
+									<settlement>Cambridge</settlement>
+									<region>Massachusetts</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Seiji</forename><surname>Fujimoto</surname></persName>
+							<affiliation key="aff19">
+								<orgName type="department">Department of Astronomy</orgName>
+								<orgName type="institution">The University of Texas at Austin</orgName>
+								<address>
+									<postCode>78712</postCode>
+									<settlement>Austin</settlement>
+									<region>TX</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Melanie</forename><surname>Habouzit</surname></persName>
+							<affiliation key="aff20">
+								<orgName type="department">Zentrum f ür Astronomie</orgName>
+								<orgName type="institution">Universit ät Heidelberg (ITA)</orgName>
+								<address>
+									<addrLine>Albert-Ueberle-Str. 2</addrLine>
+									<postCode>D-69120</postCode>
+									<settlement>Heidelberg</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="department">Max-Planck-Institut f ür Astronomie</orgName>
+								<address>
+									<addrLine>K önigstuhl 17</addrLine>
+									<postCode>D-69117</postCode>
+									<settlement>Heidelberg</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Masatoshi</forename><surname>Imanishi</surname></persName>
+							<affiliation key="aff6">
+								<orgName type="institution">National Astronomical Observatory of Japan</orgName>
+								<address>
+									<addrLine>Osawa</addrLine>
+									<postCode>181-8588</postCode>
+									<settlement>Mitaka</settlement>
+									<region>Tokyo</region>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff21">
+								<orgName type="department" key="dep1">Department of Astronomy</orgName>
+								<orgName type="department" key="dep2">School of Science</orgName>
+								<orgName type="institution">Graduate University for Advanced Studies (SOKENDAI)</orgName>
+								<address>
+									<postCode>181-8588</postCode>
+									<settlement>Mitaka Tokyo</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Kohei</forename><surname>Inayoshi</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="institution" key="instit1">Kavli Institute for Astronomy and Astrophysics</orgName>
+								<orgName type="institution" key="instit2">Peking University</orgName>
+								<address>
+									<postCode>100871</postCode>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Kazushi</forename><surname>Iwasawa</surname></persName>
+							<affiliation key="aff22">
+								<orgName type="department">Institut de Ci ències del Cosmos (ICCUB)</orgName>
+								<orgName type="institution">Universitat de Barcelona (IEEC-UB)</orgName>
+								<address>
+									<addrLine>Martí i Franqu ès 1</addrLine>
+									<postCode>08028</postCode>
+									<settlement>Barcelona</settlement>
+									<country key="ES">Spain</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff23">
+								<orgName type="institution">ICREA</orgName>
+								<address>
+									<addrLine>Pg. Lluís Companys 23</addrLine>
+									<postCode>08010</postCode>
+									<settlement>Barcelona</settlement>
+									<country key="ES">Spain</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Nobunari</forename><surname>Kashikawa</surname></persName>
+							<affiliation key="aff4">
+								<orgName type="department" key="dep1">Department of Astronomy</orgName>
+								<orgName type="department" key="dep2">School of Science</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<addrLine>7-3-1 Hongo Bunkyo-ku</addrLine>
+									<postCode>113-0033</postCode>
+									<settlement>Tokyo</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff24">
+								<orgName type="department">Graduate School of Science</orgName>
+								<orgName type="laboratory">Research Center for the Early Universe</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<addrLine>7-3-1 Hongo Bunkyo-ku</addrLine>
+									<postCode>113-0033</postCode>
+									<settlement>Tokyo</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Toshihiro</forename><surname>Kawaguchi</surname></persName>
+							<affiliation key="aff25">
+								<orgName type="department">Department of Economics, Management and Information Science</orgName>
+								<address>
+									<settlement>Onomichi City</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Kotaro</forename><surname>Kohno</surname></persName>
+							<affiliation key="aff27">
+								<orgName type="department" key="dep1">Institute of Astronomy</orgName>
+								<orgName type="department" key="dep2">Graduate School of Science</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<addrLine>2-21-1 Osawa</addrLine>
+									<postCode>181-0015</postCode>
+									<settlement>Mitaka Tokyo</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff24">
+								<orgName type="department">Graduate School of Science</orgName>
+								<orgName type="laboratory">Research Center for the Early Universe</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<addrLine>7-3-1 Hongo Bunkyo-ku</addrLine>
+									<postCode>113-0033</postCode>
+									<settlement>Tokyo</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Chien-Hsiu</forename><surname>Lee</surname></persName>
+							<affiliation key="aff28">
+								<orgName type="institution">W. M. Keck Observatory</orgName>
+								<address>
+									<addrLine>65-1120 Mamalahoa Hwy</addrLine>
+									<postCode>96743</postCode>
+									<settlement>Kamuela</settlement>
+									<region>HI</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Alessandro</forename><surname>Lupi</surname></persName>
+							<affiliation key="aff29">
+								<orgName type="department">Dipartimento di Fisica &quot;G. Occhialini&quot;</orgName>
+								<orgName type="institution">Universit à degli Studi di Milano-Bicocca</orgName>
+								<address>
+									<addrLine>Piazza della Scienza 3</addrLine>
+									<postCode>I-20126</postCode>
+									<settlement>Milano</settlement>
+									<country key="IT">Italy</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jianwei</forename><surname>Lyu</surname></persName>
+							<affiliation key="aff30">
+								<orgName type="department">Steward Observatory</orgName>
+								<orgName type="institution">University of Arizona</orgName>
+								<address>
+									<addrLine>933 N. Cherry Avenue</addrLine>
+									<postCode>85721</postCode>
+									<settlement>Tucson</settlement>
+									<region>AZ</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Tohru</forename><surname>Nagao</surname></persName>
+							<affiliation key="aff5">
+								<orgName type="department">Research Center for Space and Cosmic Evolution</orgName>
+								<orgName type="institution">Ehime University</orgName>
+								<address>
+									<addrLine>2-5 Bunkyo-cho</addrLine>
+									<postCode>790-8577</postCode>
+									<settlement>Matsuyama</settlement>
+									<region>Ehime</region>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Roderik</forename><surname>Overzier</surname></persName>
+							<affiliation key="aff31">
+								<orgName type="department">Rua General Jos é Cristino</orgName>
+								<orgName type="institution">Observat ório Nacional/MCTI</orgName>
+								<address>
+									<addrLine>77 S ão Crist óv ão</addrLine>
+									<postCode>20921-400</postCode>
+									<settlement>Rio de Janeiro</settlement>
+									<region>RJ</region>
+									<country key="BR">Brazil</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jan-Torge</forename><surname>Schindler</surname></persName>
+							<affiliation key="aff32">
+								<orgName type="department">Leiden Observatory</orgName>
+								<orgName type="institution">Leiden University</orgName>
+								<address>
+									<postBox>PO Box 9513</postBox>
+									<postCode>2300 RA</postCode>
+									<settlement>Leiden</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Malte</forename><surname>Schramm</surname></persName>
+							<affiliation key="aff33">
+								<orgName type="institution">Universit ät Potsdam</orgName>
+								<address>
+									<addrLine>Karl-Liebknecht-Str. 24/25</addrLine>
+									<postCode>D-14476</postCode>
+									<settlement>Potsdam</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Kazuhiro</forename><surname>Shimasaku</surname></persName>
+							<affiliation key="aff4">
+								<orgName type="department" key="dep1">Department of Astronomy</orgName>
+								<orgName type="department" key="dep2">School of Science</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<addrLine>7-3-1 Hongo Bunkyo-ku</addrLine>
+									<postCode>113-0033</postCode>
+									<settlement>Tokyo</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff24">
+								<orgName type="department">Graduate School of Science</orgName>
+								<orgName type="laboratory">Research Center for the Early Universe</orgName>
+								<orgName type="institution">The University of Tokyo</orgName>
+								<address>
+									<addrLine>7-3-1 Hongo Bunkyo-ku</addrLine>
+									<postCode>113-0033</postCode>
+									<settlement>Tokyo</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Yoshiki</forename><surname>Toba</surname></persName>
+							<affiliation key="aff6">
+								<orgName type="institution">National Astronomical Observatory of Japan</orgName>
+								<address>
+									<addrLine>Osawa</addrLine>
+									<postCode>181-8588</postCode>
+									<settlement>Mitaka</settlement>
+									<region>Tokyo</region>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff34">
+								<orgName type="department" key="dep1">Academia Sinica Institute of Astronomy and Astrophysics</orgName>
+								<orgName type="department" key="dep2">11F Astronomy-Mathematics Building</orgName>
+								<orgName type="institution">AS/NTU</orgName>
+								<address>
+									<addrLine>No.1 Section 4 Roosevelt Road</addrLine>
+									<postCode>10617</postCode>
+									<settlement>Taipei</settlement>
+									<country key="TW">Taiwan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Benny</forename><surname>Trakhtenbrot</surname></persName>
+							<affiliation key="aff35">
+								<orgName type="department">School of Physics and Astronomy</orgName>
+								<orgName type="institution">Tel Aviv University</orgName>
+								<address>
+									<postCode>69978</postCode>
+									<settlement>Tel Aviv</settlement>
+									<country key="IL">Israel</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Maxime</forename><surname>Trebitsch</surname></persName>
+							<affiliation key="aff36">
+								<orgName type="institution" key="instit1">Kapteyn Astronomical Institute</orgName>
+								<orgName type="institution" key="instit2">University of Groningen</orgName>
+								<address>
+									<postBox>P.O. Box 800</postBox>
+									<postCode>9700 AV</postCode>
+									<settlement>Groningen</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Tommaso</forename><surname>Treu</surname></persName>
+							<affiliation key="aff37">
+								<orgName type="department">Department of Physics and Astronomy</orgName>
+								<orgName type="institution">University of California Los Angeles</orgName>
+								<address>
+									<postCode>90095</postCode>
+									<region>CA</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Hideki</forename><surname>Umehata</surname></persName>
+							<affiliation key="aff38">
+								<orgName type="department">Institute for Advanced Research</orgName>
+								<orgName type="institution">Nagoya University</orgName>
+								<address>
+									<addrLine>Furocho</addrLine>
+									<postCode>464-8602</postCode>
+									<settlement>Chikusa Nagoya</settlement>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff39">
+								<orgName type="department" key="dep1">Department of Physics</orgName>
+								<orgName type="department" key="dep2">Graduate School of Science</orgName>
+								<orgName type="institution">Nagoya University</orgName>
+								<address>
+									<addrLine>Furocho</addrLine>
+									<postCode>464-8602</postCode>
+									<settlement>Chikusa</settlement>
+									<region>Nagoya</region>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Bram</forename><forename type="middle">P</forename><surname>Venemans</surname></persName>
+							<affiliation key="aff32">
+								<orgName type="department">Leiden Observatory</orgName>
+								<orgName type="institution">Leiden University</orgName>
+								<address>
+									<postBox>PO Box 9513</postBox>
+									<postCode>2300 RA</postCode>
+									<settlement>Leiden</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Marianne</forename><surname>Vestergaard</surname></persName>
+							<affiliation key="aff30">
+								<orgName type="department">Steward Observatory</orgName>
+								<orgName type="institution">University of Arizona</orgName>
+								<address>
+									<addrLine>933 N. Cherry Avenue</addrLine>
+									<postCode>85721</postCode>
+									<settlement>Tucson</settlement>
+									<region>AZ</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff40">
+								<orgName type="department">DARK</orgName>
+								<orgName type="institution">Niels Bohr Institute</orgName>
+								<address>
+									<addrLine>Jagtvej 155</addrLine>
+									<postCode>2200</postCode>
+									<settlement>Copenhagen N</settlement>
+									<country key="DK">Denmark</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Fabian</forename><surname>Walter</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="department">Max-Planck-Institut f ür Astronomie</orgName>
+								<address>
+									<addrLine>K önigstuhl 17</addrLine>
+									<postCode>D-69117</postCode>
+									<settlement>Heidelberg</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Feige</forename><surname>Wang</surname></persName>
+							<affiliation key="aff30">
+								<orgName type="department">Steward Observatory</orgName>
+								<orgName type="institution">University of Arizona</orgName>
+								<address>
+									<addrLine>933 N. Cherry Avenue</addrLine>
+									<postCode>85721</postCode>
+									<settlement>Tucson</settlement>
+									<region>AZ</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jinyi</forename><surname>Yang</surname></persName>
+							<affiliation key="aff30">
+								<orgName type="department">Steward Observatory</orgName>
+								<orgName type="institution">University of Arizona</orgName>
+								<address>
+									<addrLine>933 N. Cherry Avenue</addrLine>
+									<postCode>85721</postCode>
+									<settlement>Tucson</settlement>
+									<region>AZ</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Detection of stellar light from quasar host galaxies at redshifts above 6</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-06-24">24 Jun 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">A09CEF5FFFCE6EB681260045947EC1A4</idno>
+					<idno type="arXiv">arXiv:2211.14329v2[astro-ph.GA]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.9.1" ident="GROBID" when="2026-11-16T08:30+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">0.9.1</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=0, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[s, p, head], flavor=null, debugLabelingCollector=disabled</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract/>
+		</profileDesc>
+	</teiHeader>
+	<facsimile>
+		<surface n="1" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="2" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="3" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="4" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="5" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="6" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="7" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="8" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="9" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="10" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="11" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="12" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="13" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="14" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="15" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="16" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="17" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="18" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="19" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="20" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="21" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="22" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="23" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="24" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="25" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="26" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="27" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+	</facsimile>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p coords="2,56.30,337.45,499.81,10.83;2,56.69,351.90,263.98,10.75;2,333.38,351.90,221.92,10.75;2,56.69,366.34,41.85,10.75;2,104.52,366.34,451.21,10.83;2,56.69,380.79,40.66,10.75;2,120.25,380.79,363.22,10.75;2,492.92,380.79,62.39,10.75;2,56.69,395.23,500.60,10.75;2,56.69,409.68,498.62,10.75;2,56.69,424.13,498.61,10.75;2,56.69,438.57,323.68,10.75;2,380.38,436.29,8.97,8.06;2,392.83,438.57,162.47,11.78;2,56.69,453.02,498.61,10.75;2,56.69,467.46,498.62,10.75;2,56.69,481.91,333.09,10.75;2,389.78,479.63,4.48,8.06;2,397.75,481.91,61.42,10.75;2,459.17,479.63,4.48,8.06;2,467.13,481.91,90.27,11.78;2,56.30,496.35,499.44,10.75;2,56.69,510.80,498.61,10.75;2,56.69,525.25,247.45,10.75"><s coords="2,56.30,337.45,499.81,10.83;2,56.69,351.90,263.98,10.75;2,321.68,349.62,11.21,8.06;2,333.38,351.90,3.05,10.75">The detection of starlight from the host galaxies of quasars during the reionization epoch (z &gt; 6) has been elusive, even with deep HST observations <ref type="bibr" target="#b0">1,</ref><ref type="bibr" target="#b1">2</ref> .</s><s coords="2,342.22,351.90,213.08,10.75;2,56.69,366.34,41.85,10.75;2,99.54,364.07,4.48,8.06;2,104.52,366.34,368.46,10.83">The current highest redshift quasar host detected <ref type="bibr" target="#b2">3</ref> , at z = 4.5, required the magnifying effect of a foreground lensing galaxy.</s><s coords="2,476.68,366.34,79.05,10.75;2,56.69,380.79,40.66,10.75;2,98.34,378.51,17.93,8.06;2,120.25,380.79,363.22,10.75;2,484.46,378.51,4.48,8.06;2,492.92,380.79,62.39,10.75;2,56.69,395.23,392.02,10.75">Low-luminosity quasars <ref type="bibr" target="#b3">4,</ref><ref type="bibr" target="#b4">5,</ref><ref type="bibr" target="#b5">6</ref> from the Hyper Suprime-Cam Subaru Strategic Program (HSC-SSP) <ref type="bibr" target="#b6">7</ref> mitigate the challenge of detecting their underlying, previously-undetected host galaxies.</s><s coords="2,452.43,395.23,104.87,10.75;2,56.69,409.68,418.71,10.75">Here we report restframe optical images and spectroscopy of two HSC-SSP quasars at z &gt; 6 with JWST.</s><s coords="2,478.25,409.68,77.06,10.75;2,56.69,424.13,498.61,10.75;2,56.69,438.57,323.68,10.75;2,380.38,436.29,8.97,8.06;2,392.83,438.57,162.47,11.78;2,56.69,453.02,47.66,10.75">Using NIRCam imaging at 3.6µm and 1.5µm and subtracting the light from the unresolved quasars, we find that the host galaxies are massive (stellar masses of 13× and 3.4× 10 10 M ⊙ , respectively), compact, and disk-like.</s><s coords="2,110.91,453.02,444.40,10.75;2,56.69,467.46,263.79,10.75">NIRSpec medium-resolution spectroscopy shows stellar absorption lines in the more massive quasar, confirming the detection of the host.</s><s coords="2,324.20,467.46,231.11,10.75;2,56.69,481.91,333.09,10.75;2,389.78,479.63,4.48,8.06;2,397.75,481.91,61.42,10.75;2,459.17,479.63,4.48,8.06;2,467.13,481.91,90.27,11.78">Velocity-broadened gas in the vicinity of these quasars enables measurements of their black hole masses (1.4 × 10 9 and 2.0× 10 8 M ⊙ , respectively).</s><s coords="2,56.30,496.35,499.44,10.75;2,56.69,510.80,498.61,10.75;2,56.69,525.25,247.45,10.75">Their location in the black hole mass -stellar mass plane is consistent with the distribution at low redshift, suggesting that the relation between black holes and their host galaxies was already in place less than a billion years after the Big Bang.</s></p><p coords="2,74.25,558.07,397.52,10.37;2,479.31,558.07,76.00,10.37;2,56.69,572.52,293.87,11.73;2,353.72,572.13,203.08,10.75;2,56.69,586.96,378.39,10.37;2,458.99,586.76,96.32,10.57;2,56.69,601.41,42.31,10.37;2,109.46,601.41,445.84,10.37;2,56.26,615.85,500.54,10.62;2,56.69,630.30,498.61,10.37;2,56.69,644.74,498.82,10.37;2,56.69,659.19,48.25,10.37"><s coords="2,74.25,558.07,481.05,10.37;2,56.69,572.52,81.97,10.37">The quasars J2236+0032 and J2255+0251 (coordinates listed in Extended Data Table <ref type="table" target="#tab_0">1</ref>) are at redshifts of 6.40 and 6.34.</s><s coords="2,142.37,572.52,208.19,11.73;2,353.72,572.13,203.08,10.75;2,56.69,586.96,378.39,10.37;2,436.08,584.57,22.42,7.77;2,458.99,586.96,3.05,10.37">They have relatively low luminosity (M 1450 = -23.87 and -23.66 mag, respectively), roughly 10 times less luminous than typical bright quasars at these redshifts <ref type="bibr" target="#b7">8,</ref><ref type="bibr" target="#b8">9,</ref><ref type="bibr" target="#b9">10</ref> .</s><s coords="2,468.34,586.76,86.97,10.57;2,56.69,601.41,42.31,10.37;2,100.00,599.01,8.97,7.77;2,109.46,601.41,408.46,10.37">Using JWST with NIRCam <ref type="bibr" target="#b10">11</ref> , we observed J2236+0032 on November 6, 2022 and J2255+0251 on October 26, 2022.</s><s coords="2,521.47,601.41,33.84,10.37;2,56.26,615.85,500.54,10.62;2,56.69,630.30,498.61,10.37;2,56.69,644.74,155.77,10.37">Images were taken in two broad-band filters (F356W and F150W) to detect their host galaxies at 3.56 and 1.50 µm, thus bracketing the rest-frame 4000 Å break, a characteristic feature of galaxy spectra which constrains the age of the stellar population.</s><s coords="2,216.19,644.74,339.32,10.37;2,56.69,659.19,48.25,10.37">Total exposure times were approximately 3,100 seconds for each filter per target.</s></p><p coords="2,74.25,677.10,45.94,10.37;2,128.70,677.10,77.60,10.37;2,206.30,674.42,4.93,7.86;2,211.73,676.72,21.24,10.48;2,232.97,674.42,4.93,7.86;2,242.34,676.90,312.97,10.57;2,56.69,691.55,498.61,10.37;2,56.69,705.99,139.94,11.73;2,200.38,705.61,115.48,10.75;2,315.86,709.95,26.90,7.77;2,346.51,705.61,208.79,10.75;2,56.69,720.44,254.43,11.73;2,314.52,720.05,113.19,10.75;2,427.71,724.39,26.90,7.77;2,458.00,720.05,97.31,10.75;3,56.69,67.95,154.96,10.37;3,211.65,65.27,4.93,7.86;3,217.08,67.95,338.43,10.37;3,56.69,82.19,500.70,10.57"><s coords="2,74.25,677.10,132.04,10.37;2,206.30,674.42,4.93,7.86;2,211.73,676.72,21.24,10.48;2,232.97,674.42,4.93,7.86;2,242.34,676.90,312.97,10.57;2,56.69,691.55,136.58,10.37">In Figure <ref type="figure" target="#fig_0">1</ref>, we show a 24 ′′ ×24 ′′ region and zoomed-in cutouts of the JWST images centered on the quasars for both filters.</s><s coords="2,201.79,691.55,302.47,10.37">As expected, both quasars are detected at high significance.</s><s coords="2,512.77,691.55,42.53,10.37;2,56.69,705.99,139.94,11.73;2,200.38,705.61,115.48,10.75;2,315.86,709.95,26.90,7.77;2,346.51,705.61,208.79,10.75;2,56.69,720.44,51.14,10.37">The first quasar J2236+0032 (m F356W = 21.75 ± 0.02 mag, m F150W = 22.78 ± 0.02,) has no evidence of close neighbors.</s><s coords="2,112.82,720.44,198.30,11.73;2,314.52,720.05,113.19,10.75;2,427.71,724.39,26.90,7.77;2,458.00,720.05,97.31,10.75;3,56.69,67.95,154.96,10.37;3,211.65,65.27,4.93,7.86;3,217.08,67.95,338.43,10.37;3,56.69,82.19,500.70,10.57">The second quasar J2255+0251 (m F356W = 22.20 ± 0.02 mag, m F150W = 23.03 ± 0.02) has two neighboring sources (&lt; 2.6 ′′ ) that do not have spectroscopic redshifts at this point; however, their detection in the HSC rand i-bands suggests that both of them are at lower redshift than the central quasar.</s></p><p coords="3,74.25,97.45,481.05,10.37;3,56.69,111.90,498.61,10.37;3,56.69,126.34,500.71,10.37;3,56.13,140.79,151.19,10.37;3,220.78,140.79,335.33,10.37;3,56.69,155.23,498.81,10.37;3,56.69,169.68,363.41,10.37;3,433.54,169.68,121.77,10.37;3,56.69,184.12,498.62,11.73;3,56.30,198.37,499.01,10.57;3,56.69,213.02,52.73,10.37;3,116.99,213.02,438.32,10.37;3,56.69,227.46,371.96,10.37"><s coords="3,74.25,97.45,481.05,10.37;3,56.69,111.90,348.55,10.37">The detection of an underlying host galaxy requires careful decomposition of the two-dimensional light distribution to separate the unresolved quasar from its host galaxy.</s><s coords="3,409.10,111.90,146.21,10.37;3,56.69,126.34,500.71,10.37">We perform a two-component model fit of the rest-frame optical emission in a region of the NIRCam images centered on each target.</s><s coords="3,56.13,140.79,151.19,10.37;3,208.32,138.39,8.97,7.77;3,220.78,140.79,335.33,10.37;3,56.69,155.23,133.14,10.37">We use the software galight <ref type="bibr" target="#b11">12</ref> to identify stars from each image to model the two-dimensional (2D) point-spread function (PSF).</s><s coords="3,192.47,155.23,363.03,10.37;3,56.69,169.68,101.47,10.37">We then model each quasar image in each filter as a sum of a point-like quasar and an extended host.</s><s coords="3,161.86,169.68,258.25,10.37;3,421.10,167.28,8.97,7.77;3,433.54,169.68,121.77,10.37;3,56.69,184.12,498.62,11.73;3,56.30,198.37,438.27,10.57">The host galaxy was modeled using a 2D Sérsic profile <ref type="bibr" target="#b12">13</ref> whose parameters include the position, size (R eff ), axis ratio, orientation, flux, and the radial profile/shape of the light distribution (i.e., Sérsic index), allowing a flexible description of the a priori unknown host galaxy shape.</s><s coords="3,498.30,198.57,57.01,10.37;3,56.69,213.02,498.61,10.37;3,56.69,227.46,371.96,10.37">In Extended Data Table <ref type="table" target="#tab_0">1</ref>, we report the best-fit parameters and their uncertainties based on the dispersion resulting from different PSF models with different modeling techniques (see Methods).</s></p><p coords="3,74.25,242.51,93.66,10.37;3,175.37,242.51,379.94,10.37;3,56.69,256.96,498.61,10.37;3,56.69,271.41,105.82,11.73;3,165.66,271.02,111.35,10.75;3,277.01,275.36,26.90,7.77;3,307.06,271.02,248.55,10.75;3,56.69,285.47,499.18,12.11;3,56.69,300.30,498.61,10.37;3,56.69,314.74,498.62,10.37;3,56.69,329.19,498.61,10.37;3,56.69,343.63,500.11,10.37;3,56.69,358.08,300.33,11.73;3,360.18,357.70,195.13,10.75;3,56.69,372.14,498.61,10.75;3,56.69,386.97,135.09,11.73;3,192.28,386.59,363.02,10.75;3,56.69,401.42,498.61,10.37;3,56.69,415.66,21.91,10.57;3,78.60,419.67,26.70,7.72;3,109.63,415.48,446.09,10.75;3,56.69,430.31,498.61,10.37;3,56.69,444.76,498.61,10.37;3,56.69,459.20,64.09,10.37;3,134.37,459.20,420.94,10.37;3,56.69,473.65,236.12,10.37"><s coords="3,74.25,242.51,481.05,10.37;3,56.69,256.96,221.08,10.37">As shown in Figure <ref type="figure" target="#fig_1">2</ref>, we detect the host galaxies for both targets, which are visible after subtracting the quasar point-source model (third column).</s><s coords="3,281.51,256.96,273.79,10.37;3,56.69,271.41,105.82,11.73;3,165.66,271.02,111.35,10.75;3,277.01,275.36,26.90,7.77;3,307.06,271.02,103.35,10.75">For J2236+0032, the quasar host is significantly detected in both filters (m F356W = 23.12 ± 0.20 mag; m F150W = 25.12 ± 0.29 mag).</s><s coords="3,414.11,271.41,141.50,10.37;3,56.69,285.47,499.18,12.11;3,56.69,300.30,122.71,10.37">The inferred host-to-total flux ratios are 25.5 ± 4.4%, and 10.2 ± 2.8% with sizes (R eff ) of 0.7 ± 0.1 kpc and 0.5 ± 0.2 kpc for F356W and F150W, respectively.</s><s coords="3,183.11,300.30,372.20,10.37;3,56.69,314.74,257.60,10.37">The light distribution is elongated in the same direction (i.e., NE-SW) in the two filters, suggesting a mildly inclined disk-like host.</s><s coords="3,317.99,314.74,237.32,10.37;3,56.69,329.19,498.61,10.37;3,56.69,343.63,413.23,10.37">For this target, we fix the Sérsic index to 1 in both bands -corresponding to an exponential disk model -to avoid non-physical fits; this is supported by a subsequent fit to the host galaxy emission after subtracting the quasar (see Methods).</s><s coords="3,473.63,343.63,83.18,10.37;3,56.69,358.08,300.33,11.73;3,360.18,357.70,195.13,10.75;3,56.69,372.14,116.15,10.75">For J2255+0251, the host galaxy is clearly detected in the F356W band (m F356W = 24.58 ± 0.30 mag) with a host-to-total flux ratio of 9.8 ± 2.6%.</s><s coords="3,176.55,372.53,321.39,10.37">The host emission extends southeast (left) of the quasar's location.</s><s coords="3,501.64,372.53,53.67,10.37;3,56.69,386.97,135.09,11.73;3,192.28,386.59,363.02,10.75;3,56.69,401.42,111.72,10.37">The size of the host is inferred to be R eff = 1.5 ± 1.1 kpc with a Sérsic index of 1.5 ± 1.4, suggesting a more disk-like than spheroidal profile.</s><s coords="3,172.12,401.42,383.18,10.37;3,56.69,415.66,21.91,10.57;3,78.60,419.67,26.70,7.72;3,109.63,415.48,133.03,10.75">The host galaxy is not detected in the F150W image, resulting in an upper limit of m F150W = 26.3 mag (see Methods).</s><s coords="3,246.76,415.86,308.95,10.37;3,56.69,430.31,164.53,10.37">This upper limit provides an important constraint on the galaxy spectral energy distribution (SED).</s><s coords="3,224.23,430.31,331.08,10.37;3,56.69,444.76,477.14,10.37">A non-detection is not surprising, given the low host-to-total flux ratio in the F356W band and the fact that galaxies are typically fainter blueward of the 4000 Å break.</s><s coords="3,539.34,444.76,15.96,10.37;3,56.69,459.20,64.09,10.37;3,121.78,456.81,8.97,7.77;3,134.37,459.20,420.94,10.37;3,56.69,473.65,236.12,10.37">We use NIRSpec <ref type="bibr" target="#b13">14</ref> observations to demonstrate that the contribution of extended line emission to the host photometry in F356W is minimal (See Methods).</s></p><p coords="3,74.25,488.70,481.05,10.37;3,56.69,503.14,498.81,10.37;3,56.69,517.59,499.03,10.37;3,56.69,531.65,498.61,11.70;3,56.69,546.10,498.61,11.90;3,56.69,560.93,498.61,10.37;3,56.69,575.37,27.98,10.37;3,84.67,572.70,18.42,7.86;3,84.67,580.64,18.42,7.86;3,104.72,574.99,22.87,10.75;3,127.59,572.98,8.97,7.77;3,140.01,575.37,224.52,11.32;3,364.52,572.83,18.42,7.86;3,364.52,580.64,18.42,7.86;3,384.57,574.99,22.87,10.75;3,407.44,572.98,8.97,7.77;3,419.86,575.37,135.45,11.32;3,56.69,589.82,498.61,10.37;3,56.26,604.27,499.05,10.37;3,56.69,618.71,498.61,10.37;3,56.69,632.77,48.46,10.75;3,123.33,633.16,4.73,10.37"><s coords="3,74.25,488.70,481.05,10.37;3,56.69,503.14,498.81,10.37;3,56.69,517.59,64.46,10.37">Our two photometric bands lie on either side of the 4000 Å break, allowing us to quantify the contributions of young and relatively old stars, and thus to estimate the stellar masses of the two quasar host galaxies.</s><s coords="3,124.86,517.59,430.86,10.37;3,56.69,531.65,498.61,11.70;3,56.69,546.10,469.02,11.90">We fit the SED of each host with a single stellar population, in which the stellar metallicity log Z/Z ⊙ is constrained to the range [-1, -0.3], the stellar age is within the range [0.01, 0.84] Gyr (capped by the age of the universe at redshift 6.4), and the extinction A v is in the range of [0, 5.0] mag.</s><s coords="3,531.39,546.48,23.91,10.37;3,56.69,560.93,498.61,10.37;3,56.69,575.37,27.98,10.37;3,84.67,572.70,18.42,7.86;3,84.67,580.64,18.42,7.86;3,104.72,574.99,22.87,10.75;3,127.59,572.98,8.97,7.77;3,140.01,575.37,224.52,11.32;3,364.52,572.83,18.42,7.86;3,364.52,580.64,18.42,7.86;3,384.57,574.99,22.87,10.75;3,407.44,572.98,8.97,7.77;3,419.86,575.37,21.02,11.32">With standard assumptions on the stellar Initial Mass Function (IMF), we find that J2236+0032 has a stellar mass of 1.3 +2.0 -0.6 × 10 11 M ⊙ , while J2255+0251 is less massive with 3.4 +7.6 -1.9 × 10 10 M ⊙ .</s><s coords="3,444.57,575.37,110.74,10.37;3,56.69,589.82,498.61,10.37;3,56.26,604.27,499.05,10.37;3,56.69,618.71,158.83,10.37">We use simulations and three different SED fitting codes to demonstrate that the results are robust, although further observations will lessen potential systematic errors in these mass estimates (see Methods for full details on our mass estimates and their uncertainties).</s><s coords="3,219.23,618.71,336.07,10.37;3,56.69,632.77,71.37,10.75">Our host galaxies are among the highest stellar mass galaxies known at z ∼ 6 (ref. 15).</s></p><p coords="3,74.25,648.21,481.43,10.37;3,56.30,662.65,34.49,10.37;3,97.94,662.65,457.37,10.62;3,56.69,677.10,498.61,10.37;3,56.69,691.55,9.32,10.37;3,63.35,688.86,4.93,7.86;3,68.78,691.55,472.64,10.37;3,548.73,691.55,8.67,10.37;3,56.69,705.99,498.61,10.37;3,56.69,720.44,498.62,10.37;4,56.69,67.95,498.62,10.37;4,56.69,82.40,498.61,10.37;4,56.69,96.84,361.05,10.37;4,431.19,96.84,124.32,10.37;4,56.69,111.29,195.95,11.61;4,255.78,110.91,51.74,10.75;4,307.52,108.90,4.48,7.77;4,315.48,111.09,143.43,11.81;4,462.05,110.91,51.74,10.75;4,513.79,108.90,4.48,7.77;4,521.75,111.09,33.76,11.52;4,56.47,125.74,196.52,10.37"><s coords="3,74.25,648.21,481.43,10.37;3,56.30,662.65,50.10,10.37">A rest-frame optical spectrum of each quasar was obtained by the NIRSpec instrument on JWST (Figure <ref type="figure" target="#fig_2">3</ref>).</s><s coords="3,110.09,662.65,445.22,10.62;3,56.69,677.10,476.36,10.37">These spectra cover 2.87-5.27 µm, or approximately 4000-7000 Å in the rest-frame, revealing strong emission lines including the Hβ +[O III] multiplet, Hα, and blended Fe II pseudo-continuum.</s><s coords="3,536.79,677.10,18.52,10.37;3,56.69,691.55,9.32,10.37">The 0.</s><s coords="3,63.35,688.86,4.93,7.86;3,68.78,691.55,488.62,10.37">′′ 2-wide slit was fortuitously aligned along the major axis of the host galaxy of J2236+0032 (Figure <ref type="figure" target="#fig_1">2</ref>).</s><s coords="3,56.69,705.99,470.99,10.37">Remarkably, we serendipitously identify stellar absorption lines (Hγ, Hδ , and Hε) in J2236+0032.</s><s coords="3,531.39,705.99,23.91,10.37;3,56.69,720.44,478.99,10.37">Thus the contribution of stellar light is confirmed both from the imaging and spectroscopy in this object.</s><s coords="3,539.38,720.44,15.93,10.37;4,56.69,67.95,498.62,10.37;4,56.69,82.40,498.61,10.37;4,56.69,96.84,137.79,10.37">We use the velocity width of the broad Hβ emission line and the rest-frame 5100 Å continuum luminosity to estimate the mass of the central black hole, under the assumption that the high-velocity gas is governed by the gravity of the SMBH.</s><s coords="4,197.46,96.84,220.28,10.37;4,418.74,94.45,8.97,7.77;4,431.19,96.84,124.32,10.37;4,56.69,111.29,195.95,11.61;4,255.78,110.91,51.74,10.75;4,307.52,108.90,4.48,7.77;4,315.48,111.09,143.43,11.81;4,462.05,110.91,51.74,10.75;4,513.79,108.90,4.48,7.77;4,521.75,111.09,33.76,11.52;4,56.47,125.74,196.52,10.37">Using a recipe calibrated in the local universe <ref type="bibr" target="#b15">16</ref> and subtracting the stellar emission, we obtain virial masses of M BH = 1.4 × 10 9 M ⊙ for J2236+0032, and M BH = 2.0 × 10 8 M ⊙ for J2255+0251, respectively (see Methods).</s></p><p coords="4,74.25,140.18,31.84,10.37;4,119.01,139.80,436.31,10.75;4,56.26,154.63,499.05,10.37;4,56.69,169.07,498.61,10.37;4,56.69,183.52,500.11,11.61;4,56.69,197.96,66.87,10.37;4,137.73,197.96,419.67,10.37;4,56.69,212.41,498.61,10.37;4,56.69,226.47,498.62,11.99;4,56.69,240.92,498.61,11.99;4,56.69,255.75,498.82,10.37;4,56.69,269.81,498.61,10.75;4,56.69,284.26,498.61,10.75;4,56.69,298.70,498.62,11.99;4,56.69,313.53,219.40,10.37;4,283.49,313.53,271.81,10.37;4,56.69,327.98,498.61,10.37;4,56.69,342.42,57.57,10.37;4,126.28,342.22,429.23,10.57;4,56.69,356.87,498.82,10.37;4,56.69,371.31,110.19,10.37;4,199.76,371.31,2.99,10.37;6,56.69,555.48,477.88,11.23;6,56.69,570.57,492.98,10.57;6,56.69,585.22,480.52,10.37"><s coords="4,74.25,139.80,481.06,10.75;4,56.26,154.63,395.65,10.37">Figure <ref type="figure" target="#fig_3">4</ref> shows the two z ∼ 6.4 quasars in the black hole mass -stellar mass plane (left panel), as well as the inferred underlying relation compared to the local relation (right panel).</s><s coords="4,455.64,154.63,99.67,10.37;4,56.69,169.07,482.53,10.37">As is observed in the local universe, the quasar hosting the more massive black hole is hosted by the more massive galaxy.</s><s coords="4,542.94,169.07,12.36,10.37;4,56.69,183.52,500.11,11.61;4,56.69,197.96,500.71,10.37">To evaluate their location in the M BH -M * plane relative to the local mass relation, we carry out a simulation, following ref. 17, that takes into account the selection effects for these two quasars in the HSC survey.</s><s coords="4,56.69,212.41,498.61,10.37;4,56.69,226.47,498.62,11.99;4,56.69,240.92,498.61,11.99;4,56.69,255.75,55.06,10.37">For this purpose, we combine the quasar flux limits, the estimated BH mass and accretion rate functions at z ∼ 6, as well as uncertainty in our stellar mass estimates to predict the expected M BH for these two quasars -under the baseline assumption that the M BH -M * relation does not evolve between z = 6.4 and the present.</s><s coords="4,115.45,255.75,440.06,10.37;4,56.69,270.19,384.62,10.37">In the left panel, the orange contours show the resulting bivariate probability distribution for the location of these two quasars, with the measured values overplotted in red.</s><s coords="4,446.03,269.81,109.27,10.75;4,56.69,284.26,498.61,10.75;4,56.69,298.70,498.62,11.99;4,56.69,313.53,231.21,10.37">Our two z &gt; 6 quasars fall within the probability distribution (orange contours) of this simulated z ∼ 6.4 sample and are thus consistent with no evolution of the M BH -M * relation from z ∼ 6.4 to z = 0, as shown for the inferred underlying relation in the right panel of Figure <ref type="figure" target="#fig_3">4</ref>.</s><s coords="4,291.61,313.53,263.69,10.37;4,56.69,327.98,498.61,10.37;4,56.69,342.42,149.36,10.37">With just two quasars, the probability distribution of the nominal evolution strength is broad as suggested by the width of these uncertainties (see also Extended Data Figure <ref type="figure">6</ref> in the Methods).</s><s coords="4,209.76,342.22,345.75,10.57;4,56.69,356.87,498.82,10.37;4,56.69,371.31,110.19,10.37;4,167.88,368.92,31.38,7.77;4,199.76,371.31,2.99,10.37">However, ongoing JWST observations will give us a significantly larger sample, allowing us to better constrain models for the mutual evolution of the black hole and stellar populations in galaxies <ref type="bibr" target="#b17">18,</ref><ref type="bibr" target="#b18">19,</ref><ref type="bibr" target="#b19">20</ref> .</s><s coords="6,56.69,555.48,49.83,11.23">Figure 1.</s><s coords="6,110.63,555.86,333.88,10.75">NIRCam images of the field around J2236+0032 and J2255+0251.</s><s coords="6,448.22,556.33,86.35,10.37;6,56.69,570.57,278.29,10.57">Both JWST filters F356W (left panels) and F150W (right panels) are shown.</s><s coords="6,338.69,570.78,210.99,10.37;6,56.69,585.22,57.10,10.37">The middle panels are zoomed-in regions of each image.</s><s coords="6,117.50,585.22,419.71,10.37">One of the PSF stars used for 2D image decomposition is indicated in each quasar field.</s></p><p coords="7,112.94,167.74,4.94,14.69;7,108.00,146.96,9.88,14.69;7,108.00,126.18,9.88,14.69;7,108.00,105.39,9.88,14.69;7,108.00,84.61,9.88,14.69;7,88.16,111.77,19.58,35.95;7,125.97,152.70,21.23,19.58;7,126.76,80.18,21.00,17.62;7,224.98,80.18,29.02,17.62;7,320.37,80.01,189.91,17.79;7,274.34,59.01,64.42,19.58;7,112.33,182.19,17.97,14.69;7,380.17,182.73,3.46,10.28;7,424.96,182.25,4.94,14.69;7,460.99,182.25,4.94,14.69;7,500.28,182.25,4.94,14.69;7,112.94,287.33,4.94,14.69;7,108.00,266.54,9.88,14.69;7,108.00,245.76,9.88,14.69;7,108.00,224.98,9.88,14.69;7,108.00,204.20,9.88,14.69;7,88.16,231.35,19.58,35.95;7,134.62,272.28,21.23,19.58;7,126.76,199.77,21.00,17.62;7,224.98,199.77,29.02,17.62;7,320.37,199.60,189.91,17.79;7,112.33,301.77,17.97,14.69;7,376.80,302.31,3.46,10.28;7,424.96,301.83,4.94,14.69;7,460.99,301.83,4.94,14.69;7,500.28,301.83,4.94,14.69;7,112.94,428.48,4.94,14.69;7,108.00,401.84,9.88,14.69;7,108.00,375.20,9.88,14.69;7,108.00,348.57,9.88,14.69;7,88.16,372.65,19.58,35.95;7,128.44,413.43,21.23,19.58;7,126.91,340.92,21.00,17.62;7,225.13,340.92,29.02,17.62;7,320.52,340.75,189.91,17.79;7,274.34,319.89,64.42,19.58;7,112.33,443.07,76.39,14.76;7,210.55,443.07,76.39,14.76;7,308.77,443.07,76.39,14.76;7,424.96,443.13,4.94,14.69;7,460.99,443.13,4.94,14.69;7,500.28,443.13,4.94,14.69;7,112.94,548.15,4.94,14.69;7,108.00,524.80,9.88,14.69;7,108.00,501.45,9.88,14.69;7,108.00,478.10,9.88,14.69;7,108.00,454.75,9.88,14.69;7,88.16,492.23,19.58,35.95;7,136.77,533.10,21.23,19.58;7,126.82,460.58,21.00,17.62;7,225.05,460.58,29.02,17.62;7,320.43,460.41,189.91,17.79;7,112.33,562.65,72.09,14.76;7,210.55,562.65,72.09,14.76;7,308.77,562.65,72.09,14.76;7,424.96,562.71,4.94,14.69;7,460.99,562.71,4.94,14.69;7,500.28,562.71,4.94,14.69"><s coords="7,112.94,167.74,4.94,14.69;7,108.00,146.96,9.88,14.69;7,108.00,126.18,9.88,14.69;7,108.00,105.39,9.88,14.69;7,108.00,84.61,9.88,14.69;7,88.16,111.77,19.58,35.95;7,125.97,152.70,21.23,19.58;7,126.76,80.18,21.00,17.62;7,224.98,80.18,29.02,17.62;7,320.37,80.01,189.91,17.79;7,274.34,59.01,64.42,19.58;7,112.33,182.19,74.86,14.76;7,210.55,182.19,74.86,14.76;7,308.77,182.19,74.86,14.76;7,424.96,182.25,4.94,14.69;7,460.99,182.25,4.94,14.69;7,500.28,182.25,4.94,14.69;7,112.94,287.33,4.94,14.69;7,108.00,266.54,9.88,14.69;7,108.00,245.76,9.88,14.69;7,108.00,224.98,9.88,14.69;7,108.00,204.20,9.88,14.69;7,88.16,231.35,19.58,35.95;7,134.62,272.28,21.23,19.58;7,126.76,199.77,21.00,17.62;7,224.98,199.77,29.02,17.62;7,320.37,199.60,189.91,17.79;7,112.33,301.77,71.49,14.76;7,210.55,301.77,71.49,14.76;7,308.77,301.77,71.49,14.76;7,424.96,301.83,4.94,14.69;7,460.99,301.83,4.94,14.69;7,500.28,301.83,4.94,14.69;7,112.94,428.48,4.94,14.69;7,108.00,401.84,9.88,14.69;7,108.00,375.20,9.88,14.69;7,108.00,348.57,9.88,14.69;7,88.16,372.65,19.58,35.95;7,128.44,413.43,21.23,19.58;7,126.91,340.92,21.00,17.62;7,225.13,340.92,29.02,17.62;7,320.52,340.75,189.91,17.79;7,274.34,319.89,64.42,19.58;7,112.33,443.07,76.39,14.76;7,210.55,443.07,76.39,14.76;7,308.77,443.07,76.39,14.76;7,424.96,443.13,4.94,14.69;7,460.99,443.13,4.94,14.69;7,500.28,443.13,4.94,14.69;7,112.94,548.15,4.94,14.69;7,108.00,524.80,9.88,14.69;7,108.00,501.45,9.88,14.69;7,108.00,478.10,9.88,14.69;7,108.00,454.75,9.88,14.69;7,88.16,492.23,19.58,35.95;7,136.77,533.10,21.23,19.58;7,126.82,460.58,21.00,17.62;7,225.05,460.58,29.02,17.62;7,320.43,460.41,189.91,17.79;7,112.33,562.65,72.09,14.76;7,210.55,562.65,72.09,14.76;7,308.77,562.65,72.09,14.76;7,424.96,562.71,4.94,14.69;7,460.99,562.71,4.94,14.69;7,500.28,562.71,4.94,14.69">0 20 40 60 80 F356W 0.5" data model data point source normalized residual J2236+0032 10 4 <ref type="formula">10 3 10 2 10 1  10 4 10 3 10 2 10 1  10 4 10 3 10 2 10</ref>1 5 0 5 0 20 40 60 80 F150W 0.5" data model data point source normalized residual 10 4 <ref type="formula">10 3 10 2 10 1  10 4 10 3 10 2 10 1  10 4 10 3 10 2 10</ref>1 5 0 5 0 20 40 60 F356W 0.5" data model data point source normalized residual J2255+0251 10 4 10 3 10 2 10 1 10 4 10 3 10 2 10 1 10 4 10 3 10 2 10 1 5 0 5 0 20 40 60 80 F150W 0.5" data model data point source normalized residual 10 4 10 3 10 2 10 1 10 4 10 3 10 2 10 1 10 4 10 3 10 2 10 1 5 0 5</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="10,56.69,65.97,58.98,13.47">Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="10,56.69,87.80,102.61,10.75">Cosmological model</head><p coords="10,56.26,102.80,205.03,10.57;10,260.99,106.83,4.48,7.77;10,268.63,102.62,49.62,10.75;10,318.25,100.32,11.45,7.86;10,333.19,103.00,21.69,10.37;10,354.88,100.32,11.45,7.86;10,366.83,102.62,99.32,12.22;10,469.30,102.62,87.50,10.75;10,56.26,117.45,152.75,10.37;10,209.02,114.77,4.93,7.86;10,217.43,117.07,338.29,10.75;10,56.69,131.90,456.07,10.37;10,56.26,102.80,205.03,10.57;10,260.99,106.83,4.48,7.77;10,268.63,102.62,49.62,10.75;10,318.25,100.32,5.73,7.86"><s coords="10,56.26,102.80,205.03,10.57;10,260.99,106.83,4.48,7.77;10,268.63,102.62,49.62,10.75;10,318.25,100.32,5.73,7.86;10,333.19,103.00,21.69,10.37;10,354.88,100.32,11.45,7.86;10,366.83,102.62,99.32,12.22;10,469.30,102.62,87.50,10.75;10,56.26,117.45,152.75,10.37;10,209.02,114.77,4.93,7.86;10,217.43,117.07,49.10,10.75">A standard concordance cosmology with H 0 = 70 km s -<ref type="foot" target="#foot_0">foot_0</ref> Mpc -1 , Ω m = 0.30, and Ω Λ = 0.70 is adopted, which gives a scale of 5.63 kpc/ ′′ at z = 6.4.</s><s coords="10,270.23,117.45,228.20,10.37">All magnitudes are presented in the AB system.</s><s coords="10,502.13,117.45,53.59,10.37;10,56.69,131.90,456.07,10.37">Milky Way dust extinction is negligible at the near-infrared wavelengths of interest and is not corrected for.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="10,56.30,160.61,80.12,10.75">Target selection</head><p coords="10,56.32,175.61,499.79,10.57;10,56.26,190.26,359.56,10.37;10,430.44,190.26,125.08,10.37;10,56.69,204.70,195.77,10.37;10,258.44,204.70,298.85,10.37;10,56.69,219.15,454.19,10.37;10,530.32,219.15,24.99,10.37;10,56.69,233.60,498.61,10.37;10,56.69,248.04,498.82,10.37;10,56.69,262.49,346.09,10.37;10,410.09,262.49,8.63,10.37"><s coords="10,56.32,175.61,499.79,10.57;10,56.26,190.26,499.25,10.37;10,56.69,204.70,195.77,10.37;10,253.46,202.31,4.48,7.77;10,258.44,204.70,298.85,10.37;10,56.69,219.15,29.73,10.37">The two objects presented here are part of our Cycle 1 JWST program (Observation ID 1967; PI: M.Onoue) which targets 12 of the lowest-luminosity quasars at redshift 6.0 to 6.4 (ref. 23) discovered by the Hyper Suprime-Cam Subaru Strategic Program <ref type="bibr" target="#b6">7</ref> , an optical wide-field survey using the 8.2-meter Subaru telescope.</s><s coords="10,90.17,219.15,420.71,10.37;10,511.89,216.76,17.93,7.77;10,530.32,219.15,2.94,10.37">These quasars were spectroscopically confirmed by ground-based follow-up observations <ref type="bibr" target="#b3">4,</ref><ref type="bibr" target="#b4">5,</ref><ref type="bibr" target="#b5">6</ref> .</s><s coords="10,537.01,219.15,18.29,10.37;10,56.69,233.60,473.44,10.37">The quasars exhibit broad Lyα emission and strong intergalactic medium absorption blueward of Lyα.</s><s coords="10,533.83,233.60,21.47,10.37;10,56.69,248.04,498.82,10.37;10,56.69,262.49,362.03,10.37">This deep survey, which is sensitive to quasars a factor of 10 less luminous than those discovered by shallower surveys such as the Sloan Digital Sky Survey (see Extended Data Figure <ref type="figure" target="#fig_0">1</ref>).</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="10,56.69,291.20,216.74,10.75">NIRCam Observations and data reduction</head><p coords="10,56.32,306.41,498.99,10.37;10,56.69,320.47,498.62,10.75;10,56.69,334.91,498.61,10.75;10,56.69,349.74,498.62,10.37;10,56.69,363.46,499.03,11.09;10,56.69,377.91,353.61,11.09;10,74.25,393.17,483.04,10.57;10,56.69,407.82,498.61,10.37;10,56.69,421.53,498.82,11.09;10,56.47,436.50,350.95,10.57;10,407.41,434.31,4.48,7.77;10,412.39,436.71,142.91,10.37;10,56.69,450.42,417.66,11.09;10,475.34,448.76,8.97,7.77;10,484.81,451.15,70.50,10.37;10,56.69,465.40,498.61,10.57;10,56.69,480.05,498.62,10.37;10,56.69,494.49,498.61,10.37;10,56.69,508.94,498.82,10.37;10,56.69,523.38,498.61,10.37;10,56.26,537.83,499.04,10.37;10,56.69,552.28,498.61,10.37;10,56.69,566.72,498.61,10.37;10,56.69,580.44,411.61,11.09;10,465.64,578.49,4.93,7.86;10,471.07,581.17,56.13,10.37;10,524.53,578.49,4.93,7.86;10,529.96,581.17,26.85,10.37;10,56.69,595.61,59.50,10.37"><s coords="10,56.32,306.41,498.99,10.37;10,56.69,320.47,189.11,10.75">The data presented in this paper were taken with Module B of the NIRCam instrument, which has a field of view of 2.2 × 2.2 square arcminutes.</s><s coords="10,249.51,320.85,305.79,10.37;10,56.69,335.30,191.44,10.37">Total exposures of 3,100 seconds in the two filters (F356W and F150W) were obtained simultaneously.</s><s coords="10,251.85,334.91,303.45,10.75;10,56.69,349.74,498.62,10.37;10,56.69,364.19,66.19,10.37">A 4 × 4 primary and sub-pixel dithering pattern was employed to mitigate cosmic ray hits and bad pixels in the detector and to ensure sub-pixel resampling during the stacking step.</s><s coords="10,126.59,363.46,429.14,11.09;10,56.69,378.64,165.58,10.37">We used the INTRAMODULEBOX and STANDARD dithering patterns for the primary and sub-pixel dithers, respectively.</s><s coords="10,225.98,377.91,184.32,11.09">We used the BRIGHT1 readout mode.</s><s coords="10,74.25,393.17,434.17,10.57">The data were processed using the standard procedures in JWST pipeline version 1.7.2.</s><s coords="10,514.81,393.37,42.48,10.37;10,56.69,407.82,394.74,10.37">The precalibrated "Stage 2" image frames were downloaded from the MAST archive.</s><s coords="10,459.90,407.82,95.41,10.37;10,56.69,421.53,498.82,11.09;10,56.47,436.50,350.95,10.57;10,407.41,434.31,4.48,7.77;10,412.39,436.71,2.93,10.37">These images have the pipeline parameter reference files jwst_1009.pmap for J2255+0251 and jwst_1011.pmap for J2236+0032, as registered in the JWST Calibration Reference Data System 1 .</s><s coords="10,419.01,436.71,136.29,10.37;10,56.69,450.42,417.66,11.09;10,475.34,448.76,8.97,7.77;10,484.81,451.15,3.05,10.37">For individual frames, global background light was first subtracted using the Background2D function of Photutils 24 .</s><s coords="10,491.78,451.15,63.52,10.37;10,56.69,465.40,405.13,10.57">The archived images clearly have horizontal and vertical stripe noise patterns, known as "1/ f noise".</s><s coords="10,465.36,465.40,89.94,10.57;10,56.69,480.05,498.62,10.37;10,56.69,494.49,384.58,10.37">This 1/ f noise was subtracted by first masking bright objects, then collapsing the 2D images along each axis of the detectors and estimating the noise amplitudes by measuring sigma-clipped median values.</s><s coords="10,444.98,494.49,110.33,10.37;10,56.69,508.94,212.53,10.37">These amplitudes were then subtracted from each row and column.</s><s coords="10,273.70,508.94,281.81,10.37;10,56.69,523.38,141.85,10.37">The horizontal stripes were measured for each of the four detector amplifiers separately.</s><s coords="10,202.25,523.38,353.06,10.37;10,56.26,537.83,499.04,10.37;10,56.69,552.28,240.72,10.37">These post-processed Stage 2 image frames were then aligned and stacked with inverse-variance weighting using the Stage 3 pipeline, keeping the original position angle of the detector for the purpose of building the PSF library.</s><s coords="10,301.04,552.28,254.26,10.37;10,56.69,566.72,498.61,10.37;10,56.69,580.44,165.90,11.09">Both F356W and F150W images were resampled with a pixel scale a factor of two smaller than that of the detector, using the drizzling algorithm implemented in the Resample step of the pipeline.</s><s coords="10,226.29,581.17,242.02,10.37">The final pixel scales for F356W and F150W are 0.</s><s coords="10,465.64,578.49,4.93,7.86;10,471.07,581.17,56.13,10.37">′′ 0315 and 0.</s><s coords="10,524.53,578.49,4.93,7.86;10,529.96,581.17,26.85,10.37;10,56.69,595.61,59.50,10.37">′′ 0153, respectively.</s></p><p coords="10,56.69,624.33,388.97,10.75;10,56.26,639.53,499.47,10.37;10,56.69,653.98,500.71,10.37;10,56.69,668.42,498.61,10.37;10,56.69,682.49,498.61,10.75;10,56.30,697.31,19.86,10.37;10,138.71,696.93,416.59,10.75;11,56.69,67.95,498.62,10.37;11,56.69,82.40,498.62,10.37;11,56.69,96.64,202.70,10.97;11,310.21,96.84,245.10,10.37;11,56.69,111.29,110.60,10.37;11,177.75,111.29,2.99,10.37"><s coords="10,56.69,624.33,388.97,10.75;10,56.26,639.53,499.47,10.37;10,56.69,653.98,500.71,10.37">2D image decomposition of quasar and host galaxy emission using galight Accurate decomposition of the image of a quasar into a central point source and an extended host galaxy requires a high-quality model for the PSF based on stars detected in the same image as the quasars.</s><s coords="10,56.69,668.42,498.61,10.37;10,56.69,682.49,498.61,10.75;10,56.30,697.31,87.30,10.37">Space-based telescopes have a much sharper and more stable PSF than ground-based telescopes, and the Hubble Space Telescope (HST) has been used to measure quasar host galaxies to redshift up to z ∼ 2 (ref. 12,25,26,27).</s><s coords="10,147.30,696.93,408.00,10.75;11,56.69,67.95,498.62,10.37;11,56.69,82.40,140.02,10.37">However, HST's ∼90-minute orbit means that it is continually passing between Earth's shadow and direct sunlight, causing the telescope to expand and contract ("orbital breathing") and giving rise to a time-dependent PSF.</s><s coords="11,199.70,82.40,355.61,10.37;11,56.69,96.64,498.61,10.97;11,56.69,111.29,110.60,10.37;11,168.29,108.90,8.97,7.77;11,177.75,111.29,2.99,10.37">The difficulty of modeling the PSF has not allowed quasar host galaxies to be detected significantly beyond z ≳ 3 (ref. 1,2,28,29), where host starlight can be only measured through the SED fitting method <ref type="bibr" target="#b29">30</ref> .</s></p><p coords="11,74.25,126.90,174.00,10.37;11,258.71,126.90,200.50,10.37;11,469.67,126.90,85.97,10.37;11,56.69,141.35,498.82,10.37;11,56.69,155.80,498.62,10.37;11,56.69,170.24,498.62,10.37;11,56.69,185.81,50.21,8.42;11,120.62,184.69,434.68,10.37;11,56.69,199.13,500.60,10.37;11,56.69,213.58,73.71,10.37;11,138.37,213.58,306.73,10.37;11,455.56,213.58,99.75,10.37;11,56.69,227.82,209.16,10.57;11,276.31,227.82,33.65,10.57;11,320.42,228.03,100.94,10.37;11,431.83,228.03,123.48,10.37;11,56.69,242.47,125.68,11.73;11,185.70,242.09,23.08,10.48;11,206.11,239.79,4.93,7.86;11,211.54,242.47,25.89,10.37;11,234.77,239.79,4.93,7.86;11,240.20,242.09,315.11,10.75;11,56.69,256.92,498.61,10.37;11,56.69,271.36,345.98,10.37"><s coords="11,74.25,126.90,174.00,10.37;11,249.25,124.51,8.97,7.77;11,258.71,126.90,200.50,10.37;11,460.21,124.51,8.97,7.77;11,469.67,126.90,85.97,10.37;11,56.69,141.35,498.82,10.37;11,56.69,155.80,37.60,10.37">Here, we follow our tested strategy <ref type="bibr" target="#b11">12</ref> , including the analysis of JWST images <ref type="bibr" target="#b31">32</ref> , and build a PSF library by identifying all isolated, unsaturated stars of sufficient signal-to noise ratio (SNR) in our images.</s><s coords="11,100.48,155.80,454.83,10.37;11,56.69,170.24,257.33,10.37">We identified 12|16 PSF stars in filter F150W|F356W for J2236+0032 and 9|5 PSF stars in filter F150W|F356W in the images for J2255+0251.</s><s coords="11,319.36,170.24,235.95,10.37;11,56.69,185.81,50.21,8.42;11,107.90,182.29,8.97,7.77;11,120.62,184.69,434.68,10.37;11,56.69,199.13,317.21,10.37">We use our two-dimensional modeling software galight <ref type="bibr" target="#b11">12</ref> to fit the quasar images with a model of a scaled PSF (the spatially unresolved point-like quasar) and a PSF-convolved 2D Sérsic profile (the host galaxy).</s><s coords="11,378.19,199.13,179.11,10.37;11,56.69,213.58,388.40,10.37;11,446.09,211.18,8.97,7.77;11,455.56,213.58,3.00,10.37">galight is a python-based opensource package<ref type="foot" target="#foot_1">foot_1</ref> that utilizes the image modeling capabilities of lenstronomy <ref type="bibr" target="#b30">31</ref> .</s><s coords="11,462.26,213.58,93.04,10.37;11,56.69,227.82,209.16,10.57;11,266.85,225.63,8.97,7.77;11,276.31,227.82,33.65,10.57;11,310.96,225.63,8.97,7.77;11,320.42,228.03,100.94,10.37;11,422.36,225.63,8.97,7.77;11,431.83,228.03,2.97,10.37">It has been adopted for quasar decomposition of images by HST <ref type="bibr" target="#b11">12</ref> , JWST <ref type="bibr" target="#b31">32</ref> , and the HSC survey <ref type="bibr" target="#b32">33</ref> .</s><s coords="11,438.50,228.03,116.80,10.37;11,56.69,242.47,125.68,11.73;11,185.70,242.09,23.08,10.48;11,206.11,239.79,4.93,7.86;11,211.54,242.47,25.89,10.37;11,234.77,239.79,4.93,7.86;11,240.20,242.09,315.11,10.75;11,56.69,256.92,96.08,10.37">We adopt uniform priors for the effective radius R eff ∈ [0. ′′ 03, 2. ′′ 0] and the Sérsic index (n) ∈ [0.3, 9] of the host to avoid unphysical parameter inference.</s><s coords="11,156.40,256.92,398.91,10.37;11,56.69,271.36,345.98,10.37">For J2255+0251, there is one nearby object which we fit simultaneously with a Sérsic profile, allowing us to correct for its effect on the host galaxy properties.</s></p><p coords="11,74.25,286.98,481.05,10.37;11,56.69,301.42,498.62,10.37;11,56.69,315.87,199.40,10.62;11,257.09,313.47,4.48,7.77;11,265.05,315.87,290.25,10.37;11,56.69,330.32,150.94,10.62;11,208.63,327.92,4.48,7.77;11,216.61,330.32,233.71,10.37;11,552.64,330.32,4.76,10.37;11,56.32,344.76,498.98,10.37;11,56.69,359.21,498.61,10.37;11,56.69,373.65,498.62,10.37;11,56.69,388.10,458.38,10.62;11,516.06,385.70,4.48,7.77;11,524.04,388.10,32.77,10.37;11,56.69,402.54,85.58,10.37;11,156.86,402.54,35.26,10.37;11,196.56,402.54,13.33,10.37;11,214.34,402.54,340.97,10.37;11,56.69,416.99,498.61,10.37;11,56.69,431.44,498.61,10.37;11,56.69,445.88,228.13,10.37;11,295.29,445.88,260.02,10.37;11,56.69,460.33,325.21,10.37;11,389.36,460.33,109.49,10.37;11,510.78,460.33,44.53,10.37;11,56.69,474.77,498.61,10.37;11,56.69,489.22,297.18,11.73"><s coords="11,74.25,286.98,398.17,10.37">We obtain a weighted inference for the decomposition result as briefly described here.</s><s coords="11,475.99,286.98,79.32,10.37;11,56.69,301.42,413.64,10.37">After subtracting the remaining local background, we use each PSF in our library in turn to fit the image.</s><s coords="11,474.04,301.42,81.27,10.37;11,56.69,315.87,199.40,10.62;11,257.09,313.47,4.48,7.77;11,265.05,315.87,28.36,10.37">The performance of each PSF is determined by its best-fit χ 2 value.</s><s coords="11,297.11,315.87,258.19,10.37;11,56.69,330.32,150.94,10.62;11,208.63,327.92,4.48,7.77;11,216.61,330.32,340.79,10.37">We select groups of two, three, and five PSFs from the library that have the top level χ 2 performance and then average them using psfr (Birrer et al. in prep).</s><s coords="11,56.32,344.76,498.98,10.37;11,56.69,359.21,413.41,10.37">To optimize our modeling of the unresolved quasar emission, we consider both best-fit models using individual stars and average models based on the combined PSF stars described above.</s><s coords="11,473.81,359.21,81.49,10.37;11,56.69,373.65,266.73,10.37">Thus, we add the three averaged PSFs as new members to the PSF library.</s><s coords="11,327.12,373.65,228.19,10.37;11,56.69,388.10,163.18,10.37">We take the results from the five top-performing PSF models in the updated library.</s><s coords="11,223.60,388.10,291.47,10.62;11,516.06,385.70,4.48,7.77;11,524.04,388.10,32.77,10.37;11,56.69,402.54,125.50,10.37">We determine our final result parameters by weighting their χ 2 values, as defined by ref. 12, Eq.</s><s coords="11,187.68,402.54,35.55,10.37">( <ref type="formula">3</ref>)-( <ref type="formula">6</ref>).</s><s coords="11,228.71,402.54,326.60,10.37;11,56.69,416.99,233.92,10.37">The uncertainties we quote are based on the dispersion in the host properties from these five different PSF models.</s><s coords="11,294.49,416.99,260.81,10.37;11,56.69,431.44,498.61,10.37;11,56.69,445.88,228.13,10.37;11,285.82,443.49,8.97,7.77;11,295.29,445.88,3.05,10.37">Errors based on variation in the PSF models are often significantly larger than the formal fitting errors, as has been recently demonstrated using simulations and observations of quasars and their host galaxies <ref type="bibr" target="#b33">34</ref> .</s><s coords="11,303.02,445.88,252.29,10.37;11,56.69,460.33,337.12,10.37">The final inferred host filter magnitude, size, Sérsic index, and other fit parameters are presented in Extended Data Table <ref type="table" target="#tab_0">1</ref>.</s><s coords="11,397.54,460.33,157.77,10.37;11,56.69,474.77,179.95,10.37">The images in Figure <ref type="figure" target="#fig_1">2</ref> are based on the PSF with the best performance.</s><s coords="11,240.34,474.77,314.96,10.37;11,56.69,489.22,297.18,11.73">The sizes of our host galaxies are defined using the Sérsic effective radius R eff along the semi-major axis measured by galight.</s></p><p coords="11,74.25,504.63,481.06,10.57;11,56.69,519.28,432.96,11.73;11,486.98,516.60,4.93,7.86;11,492.41,519.28,63.09,10.37;11,56.69,533.73,498.81,10.37;11,56.69,548.17,224.13,10.37;11,280.82,545.78,15.93,7.77;11,300.23,547.97,255.08,11.52;11,56.69,562.23,498.62,10.75;11,56.69,577.06,498.62,10.37;11,56.69,591.51,256.45,10.37;11,320.45,591.51,234.86,10.37;11,56.69,605.57,498.62,10.75;11,56.69,620.20,498.62,11.93;11,56.69,634.46,264.01,10.75"><s coords="11,74.25,504.83,305.23,10.37">The quasar host of J2236+0032 appears to be a compact galaxy.</s><s coords="11,383.20,504.63,172.11,10.57;11,56.69,519.28,432.96,11.73">As a result, we find that the Sérsic n is poorly constrained, and the resulting host residual is point-like with an inferred R eff of 0.</s><s coords="11,486.98,516.60,4.93,7.86;11,492.41,519.28,63.09,10.37;11,56.69,533.73,364.31,10.37">′′ 03 (the lower limit of the prior), indicating that the central PSF has not been fully removed.</s><s coords="11,424.72,533.73,130.79,10.37;11,56.69,548.17,224.13,10.37;11,280.82,545.78,15.93,7.77;11,300.23,547.97,206.83,11.52">This model implies a stellar mass with an implausibly high value above 10 11.8 M ⊙ given the SED fitting described below.</s><s coords="11,510.75,548.17,44.56,10.37;11,56.69,562.23,269.35,10.75">Thus, we refit this object, fixing n = 1 in both F356W and F150W.</s><s coords="11,329.04,562.62,170.55,10.37">This gives a much-improved model.</s><s coords="11,503.31,562.62,52.01,10.37;11,56.69,577.06,335.68,10.37">The host is quite elongated in F356W, suggesting that it is a disky edge-on galaxy.</s><s coords="11,396.08,577.06,159.23,10.37;11,56.69,591.51,268.15,10.37">We also find a consistent position angle between F356W and F150W, as shown in Figure <ref type="figure" target="#fig_1">2</ref>.</s><s coords="11,328.52,591.51,226.79,10.37;11,56.69,605.75,90.24,10.57">Thus, for J2236+0032, we adopt the results with Sérsic n fixed to 1.</s><s coords="11,150.65,605.57,404.66,10.75;11,56.69,620.40,192.69,10.37">We further directly fit the "dataquasar" residual image (i.e., host) with the Sérsic model and allow the Sérsic index to vary.</s><s coords="11,253.07,620.20,302.24,11.93;11,56.69,634.46,264.01,10.75">When we do so, the inferred n is 1.55 with values of R eff and the host magnitude consistent with those with the n = 1 fit.</s></p><p coords="11,74.25,650.46,481.06,10.37;11,56.69,664.91,498.61,11.73;11,56.69,679.35,498.61,10.37;11,56.69,693.42,498.61,10.75;12,56.69,67.95,112.26,10.37;12,180.91,67.95,257.70,10.37"><s coords="11,74.25,650.46,481.06,10.37;11,56.69,664.91,498.61,11.73;11,56.69,679.35,356.38,10.37">Since J2255+0251 has no clear host detection in the F150W band, we re-model the data and fix the host galaxy parameters (host Sérsic index, R eff , ellipticity, and position angle) to the values inferred from the F356W band, while allowing the central position and amplitude to vary.</s><s coords="11,416.81,679.35,138.50,10.37;11,56.69,693.42,370.37,10.75">We still see no evidence for a host residual, but the model gives a formal host magnitude of 26.3 ± 0.2 mag.</s><s coords="11,430.78,693.80,124.52,10.37;12,56.69,67.95,381.92,10.37">We quote these inferences in Extended Data Table <ref type="table" target="#tab_0">1</ref> and adopt a lower limit to the magnitude of 26.3 mag.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="12,56.69,96.78,273.52,10.75">Confirmation of our 2D decomposition using galfit</head><p coords="12,56.69,112.10,498.82,10.37;12,56.69,126.54,500.70,10.37;12,56.32,140.99,498.98,10.37;12,56.69,155.44,498.97,10.37;12,56.69,169.88,498.61,10.37;12,56.69,184.33,145.67,10.37;12,216.38,184.33,338.93,10.37;12,56.69,198.77,500.60,10.37;12,56.69,213.22,498.61,10.37;12,56.69,227.66,336.90,10.37;12,405.96,227.66,149.34,10.37;12,56.32,242.11,26.82,10.37;12,90.91,242.11,464.40,10.37;12,56.69,256.56,499.03,10.37;12,56.69,271.00,87.88,10.37"><s coords="12,56.69,112.10,477.43,10.37">In the fitting routine described above, the results are sensitive to the setting of certain parameters.</s><s coords="12,538.75,112.10,16.77,10.37;12,56.69,126.54,500.70,10.37">For instance, a sub-pixel shift of the PSF is typically needed to optimally align with the position of the quasar.</s><s coords="12,56.32,140.99,498.98,10.37;12,56.69,155.44,122.97,10.37">This interpolation within a pixel can result in modest variations in the allocation of flux between the quasar and its host galaxy.</s><s coords="12,183.33,155.44,372.33,10.37;12,56.69,169.88,128.50,10.37">In galight, the parameter point_source_supersampling_factor controls this interpolation.</s><s coords="12,189.27,169.88,366.04,10.37;12,56.69,184.33,145.67,10.37;12,203.36,181.93,8.97,7.77;12,216.38,184.33,338.93,10.37;12,56.69,198.77,85.34,10.37">For guidance here on the optimal setting, we compared our results with the decomposition from galfit <ref type="bibr" target="#b34">35</ref> while implementing different supersampling factor values, i.e., 1 (no interpolation) and</s><s coords="12,145.02,198.77,412.28,10.37;12,56.69,213.22,173.95,10.37">2. The choice of supersampling factor had a greater impact on the F150W decomposition than that on the F356W image.</s><s coords="12,234.96,213.22,320.34,10.37;12,56.69,227.66,498.61,10.37;12,56.32,242.11,39.16,10.37">We found that the two codes are in close agreement when using a supersampling_factor of 2 as shown in Extended Data Figure <ref type="figure" target="#fig_1">2</ref> and reported in Extended Data Table <ref type="table" target="#tab_0">1</ref>.</s><s coords="12,99.83,242.11,455.47,10.37;12,56.69,256.56,499.03,10.37;12,56.69,271.00,87.88,10.37">As a result, to account for the uncertainty associated with this setting, we report the averaged results obtained using both supersampling_factor values of 1 and 2, with uncertainties covered by these two settings.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="12,56.30,299.83,261.89,10.75">Tests of the robustness of the host galaxy properties</head><p coords="12,56.13,315.15,499.18,10.37;12,56.69,329.59,498.61,10.37;12,56.69,344.04,498.61,10.37;12,56.69,358.48,498.61,10.37;12,56.69,372.93,498.61,10.37;12,56.69,387.38,9.30,10.37;12,63.33,384.69,4.93,7.86;12,68.76,387.38,44.77,10.37;12,110.86,384.69,4.93,7.86;12,116.29,387.38,439.01,10.37;12,56.26,401.82,67.39,10.37"><s coords="12,56.13,315.15,499.18,10.37;12,56.69,329.59,38.00,10.37">We perform several sanity checks for our two quasars to confirm that the detections of their host galaxies are real.</s><s coords="12,98.42,329.59,275.09,10.37">First, our final reduced data are co-added using 16 dithers.</s><s coords="12,377.24,329.59,178.07,10.37;12,56.69,344.04,498.61,10.37;12,56.69,358.48,129.74,10.37">To check whether the apparent host is caused by a random ghost from any particular dither frame, we reanalyze the data using the first 8 and the second 8 dithers separately.</s><s coords="12,190.14,358.48,277.45,10.37">We are able to detect the host from both halves of the data.</s><s coords="12,471.29,358.48,84.01,10.37;12,56.69,372.93,498.61,10.37;12,56.69,387.38,9.30,10.37;12,63.33,384.69,4.93,7.86;12,68.76,387.38,44.77,10.37;12,110.86,384.69,4.93,7.86;12,116.29,387.38,350.44,10.37">To ensure that the apparent host galaxy flux is not dominated by a mismatched PSF core, we mask the quasar center (using a 0. ′′ 12 and 0. ′′ 06 radius aperture for F356W and F150W, respectively) and redo the fit.</s><s coords="12,470.44,387.38,84.87,10.37;12,56.26,401.82,67.39,10.37">Again, the host is well-detected.</s></p><p coords="12,74.25,416.67,482.55,10.37;12,56.26,431.12,499.04,10.37;12,56.69,445.56,498.61,10.37;12,56.69,460.01,498.61,10.37;12,56.69,474.45,498.61,10.37;12,56.69,488.90,30.59,10.37;12,94.56,488.90,460.75,10.37;12,56.26,503.35,499.47,10.37;12,56.69,517.79,498.62,10.37;12,56.69,532.24,498.82,10.37;12,56.69,546.68,277.80,10.37;12,341.97,546.68,4.48,10.37"><s coords="12,74.25,416.67,482.55,10.37;12,56.26,431.12,443.50,10.37">To rule out the possibility that the residual emission (host galaxy) is an artifact of the chosen PSF stars, we selected the five top-performing PSF in the library, and identified twenty pairs from these.</s><s coords="12,503.46,431.12,51.84,10.37;12,56.69,445.56,348.60,10.37">We then fit one PSF with the other without assuming any host component for all pairs.</s><s coords="12,408.94,445.56,146.37,10.37;12,56.69,460.01,498.61,10.37;12,56.69,474.45,57.48,10.37">We performed this test for stars in the fields of J2236+0032 and J2255+0251 in both bands; residual images show no extended features in any case.</s><s coords="12,118.73,474.45,436.58,10.37;12,56.69,488.90,42.26,10.37">This is illustrated for J2255+0251 in the F356W filter in the top panels of Extended Data Figure <ref type="figure" target="#fig_2">3</ref>.</s><s coords="12,102.63,488.90,452.67,10.37;12,56.26,503.35,388.22,10.37">We also fit galaxy + host models to pure PSF images, in which case the inferred host magnitudes were roughly two magnitudes fainter than the hosts detected around the quasars.</s><s coords="12,448.21,503.35,107.52,10.37;12,56.69,517.79,498.62,10.37;12,56.69,532.24,498.82,10.37;12,56.69,546.68,289.76,10.37">In contrast, we clearly detect the quasar host when we use any of the five library PSFs and, using these stellar residual maps to measure the standard deviation, we display the maps of the host signal-to-noise ratio for all images of our two quasars in the bottom panels of Extended Data Figure <ref type="figure" target="#fig_2">3</ref>.</s></p><p coords="12,74.25,561.53,481.96,10.37;12,56.69,575.98,500.11,10.37;12,56.26,590.43,499.05,10.37;12,56.69,604.87,498.62,10.37;12,56.69,619.32,498.61,10.37;12,56.69,633.76,498.61,10.37;12,56.69,648.21,498.61,10.37;12,56.69,662.65,499.05,10.37;12,55.80,677.10,499.51,10.37;12,56.69,691.16,498.82,10.75;12,56.69,705.99,498.61,10.37;12,56.69,720.44,293.71,10.37;12,357.81,720.44,197.49,10.37;13,56.69,67.95,498.61,10.37;13,56.69,82.40,220.80,10.37"><s coords="12,74.25,561.53,481.96,10.37;12,56.69,575.98,328.82,10.37">We carried out three sets of simulations to further validate our host detections, including J2255+0251 in the F356W filter and J2236+0032 in the F356W and F150W filters.</s><s coords="12,389.23,575.98,167.58,10.37;12,56.26,590.43,499.05,10.37;12,56.69,604.87,221.01,10.37">In one realization of the simulation, we randomly select a PSF from the five top-ranked PSFs in the library, and add a Sérsic profile using the best-fit parameters from our model inference.</s><s coords="12,281.43,604.87,273.88,10.37;12,56.69,619.32,424.12,10.37">We sample the resulting mock quasar+host image at the observed resolution and insert it into a random empty position in the JWST NIRCam data.</s><s coords="12,484.54,619.32,70.77,10.37;12,56.69,633.76,416.70,10.37">We then model the images with the other four PSF stars, and select the result with the best performance.</s><s coords="12,477.11,633.76,78.19,10.37;12,56.69,648.21,498.61,10.37;12,56.69,662.65,55.23,10.37">We repeated this simulation a hundred times to quantify the bias and standard deviation of the inferred values around the true values.</s><s coords="12,115.63,662.65,440.11,10.37;12,55.80,677.10,93.14,10.37">We found that the key Sérsic parameters can be obtained accurately, with biases well below 1σ in all quantities.</s><s coords="12,152.66,677.10,402.64,10.37;12,56.69,691.16,82.48,10.75">For J2255+0251, the bias (obtained-truth) and scatter of the inferred host magnitude are -0.02±0.11.</s><s coords="12,143.74,691.16,411.77,10.75;12,56.69,705.99,164.50,10.37">For J2236+0032, the magnitude bias and scatter are 0.01±0.14 and -0.13±0.16 for F356W and F150W, respectively.</s><s coords="12,227.00,705.99,328.31,10.37;12,56.69,720.44,305.54,10.37">We present the distributions of the inferred host magnitudes in the simulations of J2255+0251 (F356W) in Extended Data Figure <ref type="figure" target="#fig_3">4</ref>.</s><s coords="12,365.95,720.44,189.35,10.37;13,56.69,67.95,351.11,10.37">We note that these simulation tests were conducted with point_source_supersampling_factor set to 1.</s><s coords="13,411.47,67.95,143.84,10.37;13,56.69,82.40,220.80,10.37">The similar scatter distribution can be found when setting this parameter to 2.</s></p><p coords="13,74.25,97.19,481.05,10.37;13,56.69,111.64,498.61,10.37;13,56.69,126.08,498.61,10.37;13,56.69,140.53,452.66,10.37"><s coords="13,74.25,97.19,462.09,10.37">Finally, we tested the fidelity of the host magnitude inference using a joint fit across the two bands.</s><s coords="13,540.00,97.19,15.30,10.37;13,56.69,111.64,498.61,10.37;13,56.69,126.08,498.61,10.37;13,56.69,140.53,452.66,10.37">We fix the host galaxy parameters for J2236+0032 (where the host is detected in F150W), setting the Sérsic parameters to those inferred from F356W; we find a very similar host magnitude to the value when all parameters are allowed to vary: the changes in the inferred host magnitude are within 0.1 mag.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="13,56.69,169.30,154.41,10.75">Stellar mass of the host galaxy</head><p coords="13,56.13,184.17,499.59,10.75;13,56.69,199.00,498.61,10.37;13,56.69,213.45,498.61,10.37;13,56.69,227.89,498.61,10.37;13,56.69,242.34,373.43,10.37;13,463.99,242.34,91.31,10.37;13,56.69,256.79,498.82,10.37;13,56.69,270.85,500.11,10.75;13,56.69,285.68,500.11,11.51;13,56.69,299.74,498.82,11.70;13,56.69,314.19,168.71,10.75;13,263.09,314.57,292.42,11.51;13,56.47,329.02,500.34,11.51;13,56.26,343.46,499.41,11.51;13,56.69,357.91,175.98,10.37;13,243.13,357.91,312.61,10.37;13,56.69,372.35,498.62,11.51;13,56.69,386.80,500.11,10.37;13,56.69,401.24,498.61,10.37;13,56.26,415.69,323.33,10.37"><s coords="13,56.13,184.17,499.59,10.75;13,56.69,199.00,498.61,10.37;13,56.69,213.45,123.31,10.37">We use SED fitting to estimate the stellar masses of our two host galaxies at z ∼ 6.4 using the photometry and its uncertainty based on NIRCam imaging with two filters (F356W and F150W) which straddle the rest-frame 4000 Å break.</s><s coords="13,184.64,213.45,370.67,10.37;13,56.69,227.89,230.95,10.37">The host galaxy of J2255+0251 is not detected in the F150W filter, thus we take 26.3 mag as a lower limit on the magnitude.</s><s coords="13,291.36,227.89,263.95,10.37;13,56.69,242.34,412.17,10.37">We adopt a Chabrier IMF in our analysis to allow direct comparison with the local black hole -host galaxy mass relations (e.g., ref. 21,22).</s><s coords="13,474.63,242.34,80.68,10.37;13,56.69,256.79,498.82,10.37;13,56.69,270.85,141.41,10.75">Contributions of nebular emission lines from the host galaxies are also allowed with a uniform log ionization parameter logU over the range [-3, -1].</s><s coords="13,201.65,271.23,355.15,10.37;13,56.69,285.68,128.46,11.51">Three key parameters define the shape of the SED template: age, metallicity, and dust attenuation (A v ).</s><s coords="13,191.26,285.68,365.55,10.37;13,56.69,299.74,228.77,10.75">We adopt a uniform prior on the age over the range [0.01, 0.84] (in Gyr), extending to the age of the universe at z = 6.4.</s><s coords="13,290.28,299.92,265.24,11.52;13,56.69,314.19,202.69,10.75">We adopt a uniform prior in metallicity log Z/Z ⊙ over the range [-1, -0.3] following ref. 36,37.</s><s coords="13,263.09,314.57,271.96,11.51">We assume an A v range of [0, 5.0] mag for both targets.</s><s coords="13,538.75,314.57,16.76,10.37;13,56.47,329.02,500.34,11.51;13,56.26,343.46,499.41,11.51;13,56.69,357.91,175.98,10.37;13,233.67,355.51,8.97,7.77;13,243.13,357.91,2.93,10.37">For J2255+0251, the F150W band has an upper limit on the flux thus the constraint on A v is weaker; hence, we assume A v follows a log-normal distribution with a median value at 0.85 as supported by recent JWST observations of high-redshift galaxies <ref type="bibr" target="#b37">38</ref> .</s><s coords="13,249.71,357.91,306.04,10.37;13,56.69,372.35,498.62,11.51;13,56.69,386.80,334.64,10.37">A measurement of the Balmer decrement (i.e., the ratio of narrow Hα and Hβ in the spectrum) implies an attenuation A v =0.67±0.13 mag for the narrow-line region (Onoue et al., in prep), consistent with the median extinction value of our prior.</s><s coords="13,395.04,386.80,161.77,10.37;13,56.69,401.24,498.61,10.37;13,56.26,415.69,323.33,10.37">We also note that for J2236+0032, the contribution of the host in the spectrum (Onoue et al., in prep) has a magnitude in close agreement with the NIRCam photometry, supporting our stellar mass estimate.</s></p><p coords="13,74.25,430.48,61.03,10.37;13,149.39,430.48,405.91,10.37;13,56.69,444.93,498.61,10.37;13,56.69,459.37,498.61,10.37;13,56.30,473.82,500.50,10.37;13,56.69,488.27,191.19,11.32;13,247.88,485.66,13.74,7.86;13,247.88,493.46,22.90,7.86;13,274.09,488.27,48.14,10.37;13,322.23,485.72,22.90,7.86;13,322.23,493.53,22.90,7.86;13,348.43,488.06,206.88,11.52;13,56.69,502.71,99.98,10.37;13,164.15,502.71,126.09,10.37;13,297.71,502.71,259.09,10.37;13,56.69,517.16,498.62,10.37;13,56.69,531.60,488.15,11.51;13,56.69,546.05,64.17,10.37;13,121.86,543.65,8.97,7.77;13,134.85,546.05,420.46,11.32;13,56.69,560.50,498.61,10.37;13,56.69,574.94,498.62,10.37;13,56.69,589.00,498.61,10.75;13,56.69,603.83,298.40,10.37"><s coords="13,74.25,430.48,61.03,10.37;13,136.28,428.09,8.97,7.77;13,149.39,430.48,167.60,10.37">We use gsf <ref type="bibr" target="#b38">39</ref> to perform the SED model fitting.</s><s coords="13,322.66,430.48,232.64,10.37;13,56.69,444.93,498.61,10.37;13,56.69,459.37,106.14,10.37">This software generates a set of templates with a range of ages and metallicities according to the prior to fit a composite stellar population (CSP)-like star formation history.</s><s coords="13,166.59,459.37,388.71,10.37;13,56.30,473.82,331.28,10.37">A random parameter sampling is performed through Markov-Chain Monte-Carlo (MCMC) to infer the probability distribution of the SED parameters.</s><s coords="13,391.31,473.82,165.49,10.37;13,56.69,488.27,191.19,11.32;13,247.88,485.66,13.74,7.86">For J2236+0032 and J2255+0251, the inferred values of log M * are 11.12 +0.</s><s coords="13,261.62,485.66,9.16,7.86;13,247.88,493.46,22.90,7.86;13,274.09,488.27,48.14,10.37;13,322.23,485.72,22.90,7.86;13,322.23,493.53,22.90,7.86;13,348.43,488.06,206.88,11.52;13,56.69,502.71,111.94,10.37"><ref type="bibr" target="#b39">40</ref> -0.27 and 10.53 +0.51 -0.37 (in units of M ⊙ ), respectively, as shown in Extended Data Table <ref type="table" target="#tab_0">1</ref>.</s><s coords="13,172.35,502.71,384.46,10.37;13,56.69,517.16,498.62,10.37;13,56.69,531.60,114.62,11.51">In Extended Data Figure <ref type="figure">5</ref>, we present the best-fit SEDs of the two quasar hosts, in which the MCMC inference indicates that the stellar mass is mildly sensitive to age and metallicity but is more sensitive to A v .</s><s coords="13,175.74,531.60,369.10,10.37;13,545.84,529.21,8.97,7.77;13,56.69,546.05,64.17,10.37;13,121.86,543.65,8.97,7.77;13,134.85,546.05,362.42,11.32">We also adopt the same configuration for the independent code Bagpipes <ref type="bibr" target="#b39">40</ref> and CIGALE 41 to perform SED fits; we find values of M * that change by 0.1 dex or less.</s><s coords="13,502.58,546.05,52.73,10.37;13,56.69,560.50,498.61,10.37;13,56.69,574.94,498.62,10.37;13,56.69,589.00,37.48,10.75">The robust measurement of stellar mass is due to having photometry on both sides of the 4000 Å break, accurate spectroscopic redshifts, and a firm upper limit of the stellar age 0.84 Gyr, given the age of the universe at z = 6.4.</s><s coords="13,97.91,589.39,457.40,10.37;13,56.69,603.83,298.40,10.37">Even so, we note that additional systematic uncertainties may be unaccounted for thus leading to greater uncertainty in the mass estimates than we have quoted.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="13,56.69,632.60,216.08,10.75">NIRSpec Observations and data reduction</head><p coords="13,56.32,647.86,498.98,10.37;13,56.69,662.31,335.36,10.37;13,389.38,659.63,4.93,7.86;13,394.81,661.93,27.89,10.75;13,420.04,659.63,4.93,7.86;13,425.47,662.31,129.84,10.37;13,56.26,676.37,499.04,11.00;13,56.69,691.20,338.33,10.37"><s coords="13,56.32,647.86,498.98,10.37;13,56.69,662.31,162.57,10.37">The NIRSpec Fixed-Slit data for the two quasars were obtained on October 30, 2022 for J2236+0032 and October 28, 2022 for J2255+0251.</s><s coords="13,222.99,662.31,169.06,10.37">The targets were aligned onto the 0.</s><s coords="13,389.38,659.63,4.93,7.86;13,394.81,661.93,27.89,10.75">′′ 2 × 3.</s><s coords="13,420.04,659.63,4.93,7.86;13,425.47,662.31,129.84,10.37;13,56.26,676.37,499.04,11.00;13,56.69,691.20,30.87,10.37">′′ 2 S200A2 slit and observed with the medium-resolution (R ∼ 1000) G395M grating, which covers 2.87 -5.27 µm in the observed frame.</s><s coords="13,91.27,691.20,303.76,10.37">Total exposures of 1,970 seconds were obtained for each target.</s></p><p coords="13,74.25,705.99,481.05,10.37;13,56.26,719.71,501.14,11.09"><s coords="13,74.25,705.99,388.05,10.37">The spectroscopic data were processed with the JWST pipeline version 1.8.5.</s><s coords="13,469.37,705.99,85.93,10.37;13,56.26,719.71,501.14,11.09">Raw (uncal) data were downloaded from the MAST archive, which has the parameter reference files jwst_1027.pmap.</s></p><p coords="14,56.32,67.95,498.98,10.37;14,56.69,81.67,498.62,11.09;14,56.26,96.84,499.04,10.37;14,56.69,111.29,499.03,10.37;14,56.69,125.74,498.61,10.37;14,56.69,140.18,498.82,10.37;14,56.69,154.63,498.61,10.37;14,56.69,168.34,498.62,11.09;14,56.69,183.52,498.61,10.37;14,56.69,197.96,499.04,10.37;14,56.69,212.41,155.91,10.37;14,209.94,209.73,4.93,7.86;14,215.37,212.41,339.94,10.37;14,56.69,226.86,85.54,10.37"><s coords="14,56.32,67.95,498.98,10.37;14,56.69,81.67,298.70,11.09">The stage 1 calibration was performed with the default parameters but with the function to detect large cosmic-ray hits on the detector turned on during the Jump step.</s><s coords="14,359.07,82.19,196.24,10.57;14,56.26,96.84,463.90,10.37">The 1/ f noise along the vertical direction was subtracted from the Stage 1 products using the same method as that for NIRCam images.</s><s coords="14,525.67,96.84,29.63,10.37;14,56.69,111.29,499.03,10.37;14,56.69,125.74,36.02,10.37">Pixels of the science frames flagged as bad or saturated were masked based on the associated Data Quality frames.</s><s coords="14,96.41,125.74,458.90,10.37;14,56.69,140.18,498.82,10.37;14,56.69,154.63,128.46,10.37">During the Stage 2 data processing, including flat-fielding and flux calibration, we use in-flight measurements of spectrophotometric standard stars (jwst_nirspec_fflat_0065.fits) to convert the detector signals into physical units.</s><s coords="14,188.85,154.63,366.45,10.37;14,56.69,168.34,498.62,11.09;14,56.69,183.52,116.53,10.37">The signal loss due to the optical system and the finite width of the S200A2 slit were corrected in the Pathloss step by applying built-in correction factors for a point source as a function of wavelength.</s><s coords="14,178.48,183.52,376.83,10.37;14,56.69,197.96,100.14,10.37">The two-dimensional spectra at each dither position were then stacked using the Stage 3 pipeline.</s><s coords="14,161.30,197.96,381.18,10.37">The pixel resampling scale was kept to the original pixel scale of the detector.</s><s coords="14,546.93,197.96,8.80,10.37;14,56.69,212.41,155.91,10.37;14,209.94,209.73,4.93,7.86;14,215.37,212.41,339.94,10.37;14,56.69,226.86,85.54,10.37">A 6-pixel-wide box-car aperture (0. ′′ 6 wide) was employed to extract the one-dimensional spectrum from the stacked spectrum.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="14,56.69,256.05,83.35,10.75">Spectrum fitting</head><p coords="14,56.13,271.74,182.45,10.37;14,239.58,269.35,8.97,7.77;14,252.96,271.74,68.08,10.37;14,321.04,269.35,4.48,7.77;14,326.02,271.74,229.29,10.37;14,56.69,286.19,499.04,10.37;14,56.69,300.63,500.70,10.37;14,56.69,315.08,271.53,10.37;14,343.91,315.08,211.39,10.37;14,56.69,329.52,492.09,11.73;14,548.78,335.35,4.92,6.64;14,56.30,343.77,90.99,10.57;14,146.09,349.80,4.92,6.64;14,155.27,345.73,17.74,8.86;14,174.49,342.89,18.31,11.44"><s coords="14,56.13,271.74,182.45,10.37;14,239.58,269.35,8.97,7.77;14,252.96,271.74,302.35,10.37;14,56.69,286.19,180.73,10.37">We use a public code QSOFitMORE 42 (version 1.2.0<ref type="foot" target="#foot_2">foot_2</ref> ) with custom modification to fit the NIRSpec rest-optical spectra of the two quasars.</s><s coords="14,241.13,286.19,314.61,10.37;14,56.69,300.63,500.70,10.37">The continuum emission is fitted with two components: power-law emission from the accretion disk, and a pseudo-continuum from the forest of singly-ionized iron emission.</s><s coords="14,56.69,315.08,292.22,10.37">QSOFitMORE uses an empirical iron template of ref. 43.</s><s coords="14,357.73,315.08,197.57,10.37;14,56.69,329.52,492.09,11.73;14,548.78,335.35,4.92,6.64;14,56.30,343.77,90.99,10.57;14,146.09,349.80,4.92,6.64;14,155.27,345.73,17.74,8.86;14,174.49,342.89,18.31,11.44">The rest-frame 5100 Å monochromatic luminosity (L 5100 ) is derived from the best-fit power-law continuum model with a power-law index of α λ (i.e., flux density F λ ∝ λ α λ ).</s></p><p coords="14,74.25,359.19,481.06,10.37;14,56.69,373.64,498.61,10.62;14,56.69,388.08,498.62,10.37;14,56.69,402.53,498.62,10.37;14,56.69,416.97,498.61,10.37;14,56.26,431.42,384.91,10.37;14,448.28,431.42,107.03,10.37;14,56.69,445.87,425.39,10.37"><s coords="14,74.25,359.19,388.23,10.37">Emission lines are modeled with a combination of one or more Gaussian profiles.</s><s coords="14,466.22,359.19,89.09,10.37;14,56.69,373.64,498.61,10.62;14,56.69,388.08,311.76,10.37">J2236+0032 needs one broad component for Hβ , while the adjacent forbidden emission of [O III] λ λ 4960, 5008 requires one narrow component and another blueshifted broad component.</s><s coords="14,372.16,388.08,183.15,10.37;14,56.69,402.53,314.35,10.37">The narrow [O III] doublet is forced to have the same line width without velocity offsets between the two.</s><s coords="14,374.74,402.53,180.56,10.37;14,56.69,416.97,293.20,10.37">The [O III] redshifts of the two targets are derived from the peaks of the narrow [O III] components.</s><s coords="14,353.60,416.97,201.71,10.37;14,56.26,431.42,400.48,10.37">The [O III] redshift of J2236+0032 agrees well with the location of the absorption lines we detect in Hγ, Hδ , and Hε (Figure <ref type="figure" target="#fig_2">3</ref>).</s><s coords="14,460.41,431.42,94.90,10.37;14,56.69,445.87,425.39,10.37">The Hβ +[O III] line profile as well as the continuum properties of J2236+0032 are reported in Extended Data</s></p><p coords="14,485.05,445.87,70.26,10.37;14,56.69,460.31,498.61,10.37;14,56.69,474.76,31.20,10.37"><s coords="14,485.05,445.87,38.29,10.37">Table 2.</s><s coords="14,527.04,445.87,28.27,10.37;14,56.69,460.31,498.61,10.37;14,56.69,474.76,31.20,10.37">A full description of the fitting procedure and other emission line properties will be presented in Onoue et al. (in prep.).</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="14,56.69,503.96,95.63,10.75">BH mass estimates</head><p coords="14,56.32,519.64,498.99,11.61;14,56.69,534.09,498.61,10.37;14,56.69,548.53,499.04,10.37;14,56.69,562.98,498.61,10.37;14,56.69,577.43,498.61,11.73;14,56.69,591.87,293.56,10.37;14,360.71,591.87,194.60,10.37;14,56.69,606.32,31.20,10.37;14,106.82,606.32,152.42,10.37;14,85.96,644.17,23.08,11.61;14,112.20,643.79,23.90,10.75;14,136.10,641.18,15.93,7.77;14,180.84,635.87,6.65,10.29;14,187.48,640.03,17.93,7.77;14,163.85,652.37,11.96,10.37;14,175.81,650.86,8.97,7.77;14,188.26,652.37,22.69,10.37;14,210.95,650.57,11.45,7.86"><s coords="14,56.32,519.64,498.99,11.61;14,56.69,534.09,120.49,10.37">The central black hole masses M BH of the two quasars are measured by the single-epoch method using broad Hβ emission lines.</s><s coords="14,180.88,534.09,374.42,10.37;14,56.69,548.53,499.04,10.37;14,56.69,562.98,252.16,10.37">Assuming that the broad Hβ emission traces the kinematics of the gas orbiting in the vicinity of the SMBHs (the so-called broad-line-region), one can use the line width of Hβ as a proxy of the rotation velocity of the broad-line-region gas.</s><s coords="14,312.56,562.98,242.75,10.37;14,56.69,577.43,498.61,11.73;14,56.69,591.87,293.56,10.37;14,351.24,589.48,8.97,7.77;14,360.71,591.87,2.93,10.37">There is also an empirical correlation between the rest-frame 5100 Å continuum luminosity (L 5100 ) and the radius from the SMBH to the broad-line-region gas, which is observed by the reverberation mapping technique <ref type="bibr" target="#b43">44</ref> .</s><s coords="14,367.26,591.87,188.06,10.37;14,56.69,606.32,202.55,10.37;14,85.96,644.17,23.08,11.61;14,112.20,643.79,23.90,10.75;14,136.10,641.18,15.93,7.77;14,180.84,635.87,6.65,10.29;14,187.48,640.03,17.93,7.77;14,163.85,652.37,11.96,10.37;14,175.81,650.86,8.97,7.77;14,188.26,652.37,22.69,10.37;14,210.95,650.57,11.45,7.86">In this paper, we use the recipe provided by ref. 16 to estimate the black hole mass: M BH = 10 6.91 L 5100 10 44 erg s -1</s></p><formula xml:id="formula_0">0.50 FWHM Hβ 10 3 km s -1 2 M ⊙ .<label>(1)</label></formula><p coords="14,74.25,680.53,429.13,11.61;14,506.54,680.15,48.78,10.48;14,56.69,694.60,50.72,10.75;14,107.42,692.59,4.48,7.77;14,115.76,694.78,146.09,11.81;14,265.21,694.60,101.64,10.75;14,366.85,692.59,4.48,7.77;14,375.20,694.78,180.11,11.52;15,56.39,67.95,285.59,10.37;15,352.44,67.95,202.86,10.37;15,56.69,82.40,323.66,10.37;15,387.83,82.40,4.48,10.37"><s coords="14,74.25,680.53,429.13,11.61;14,506.54,680.15,48.78,10.48;14,56.69,694.60,50.72,10.75;14,107.42,692.59,4.48,7.77;14,115.76,694.78,146.09,11.81;14,265.21,694.60,101.64,10.75;14,366.85,692.59,4.48,7.77;14,375.20,694.78,101.52,11.52">Based on the spectrum fitting results described above, we derive virial BH masses of M BH = (1.54 ± 0.27) × 10 9 M ⊙ for J2236+0032 and M BH = (2.02 ± 0.17) × 10 8 M ⊙ for J2255+0251.</s><s coords="14,481.53,694.98,73.78,10.37;15,56.39,67.95,285.59,10.37;15,342.97,65.56,8.97,7.77;15,352.44,67.95,202.86,10.37;15,56.69,82.40,31.18,10.37">Note that these virial SMBH masses have intrinsic uncertainties of 0.4 dex <ref type="bibr" target="#b15">16</ref> , which is not included in the error budget above.</s><s coords="15,91.58,82.40,300.73,10.37">We report the derived BH properties in Extended Data Table <ref type="table">2</ref>.</s></p><p coords="15,74.25,97.25,481.05,10.37;15,56.69,111.69,498.61,10.37;15,56.69,126.14,459.22,10.37;15,513.25,123.46,4.93,7.86;15,518.68,125.76,27.89,10.75;15,543.90,123.46,4.93,7.86;15,549.33,126.14,5.98,10.37;15,56.69,140.59,500.71,10.37;15,56.13,155.03,499.18,10.37;15,56.69,169.48,498.61,10.37;15,56.69,183.92,368.86,11.61;15,428.80,183.54,101.24,10.75;15,530.04,181.53,4.48,7.77;15,538.18,183.72,16.63,11.52;15,56.69,198.37,123.40,11.61;15,183.26,197.99,100.91,10.75;15,284.16,195.97,4.48,7.77;15,292.14,198.16,263.16,11.52;15,56.69,212.81,228.34,10.37;15,292.71,212.81,132.60,10.37;15,433.01,212.81,122.30,10.37;15,56.69,227.26,386.27,10.37;15,450.27,227.26,8.63,10.37"><s coords="15,74.25,97.25,481.05,10.37;15,56.69,111.69,308.44,10.37">We estimate the host galaxy contribution to the rest-optical continua of the NIRSpec spectra, using the decomposed host galaxy images in the NIRCam's F356W filter.</s><s coords="15,368.84,111.69,186.46,10.37;15,56.69,126.14,459.22,10.37">Referring to the relative position angle of the NIRCam and NIRSpec observations, we find that the stellar emission falling inside the 0.</s><s coords="15,513.25,123.46,4.93,7.86;15,518.68,125.76,27.89,10.75">′′ 2 × 0.</s><s coords="15,543.90,123.46,4.93,7.86;15,549.33,126.14,5.98,10.37;15,56.69,140.59,500.71,10.37">′′ 6 extraction aperture is 21.8% (J2236+0032) and 4.8% (J2255+0251) with respect to the total emission.</s><s coords="15,56.13,155.03,499.18,10.37;15,56.69,169.48,498.61,10.37;15,56.69,183.92,129.04,10.37">We interpret this as the fraction of the host starlight in the observed continuum emission in the NIRSpec G395M spectrum for each source, which allows us to correct the 5100 Å continuum luminosity to that from the quasar emission alone.</s><s coords="15,189.95,183.92,235.60,11.61;15,428.80,183.54,101.24,10.75;15,530.04,181.53,4.48,7.77;15,538.18,183.72,16.63,11.52;15,56.69,198.37,123.40,11.61;15,183.26,197.99,100.91,10.75;15,284.16,195.97,4.48,7.77;15,292.14,198.16,162.99,11.52">Accordingly, the virial BH masses become M BH = (1.36 ± 0.15) × 10 9 M ⊙ for J2236+0032 and M BH = (1.97 ± 0.17) × 10 8 M ⊙ for J2255+0251, respectively.</s><s coords="15,458.88,198.37,96.43,10.37;15,56.69,212.81,380.89,10.37">These corrected BH properties are reported in Extended Data Table <ref type="table">2</ref>, and are adopted in Figure <ref type="figure" target="#fig_3">4</ref>.</s><s coords="15,441.66,212.81,113.65,10.37;15,56.69,227.26,402.21,10.37">This correction is more significant for J2236+0032, in which stellar absorption lines are detected (Figure <ref type="figure" target="#fig_2">3</ref>).</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="15,56.69,256.09,194.01,10.75">Emission from Hβ +[O III] in the hosts</head><p coords="15,56.69,271.41,498.82,10.37;15,56.30,285.85,109.29,10.37;15,172.90,285.85,382.42,10.37;15,56.69,300.30,499.03,10.37;15,56.69,314.74,50.26,10.37;15,128.62,314.74,427.11,10.37;15,56.69,329.19,498.62,10.37;15,56.69,343.63,500.11,10.37;15,56.69,357.70,498.61,10.75;15,56.69,372.53,82.63,10.37"><s coords="15,56.69,271.41,498.82,10.37;15,56.30,285.85,125.26,10.37">Our SED model allows for the inclusion of the Hβ +[O III] line emission that falls within the F365W filter (Extended Data Figure <ref type="figure">5</ref>).</s><s coords="15,185.26,285.85,370.05,10.37;15,56.69,300.30,499.03,10.37;15,56.69,314.74,50.26,10.37;15,107.95,312.35,20.17,7.77;15,128.62,314.74,3.05,10.37">However, if those lines were of high equivalent width in the hosts, they could affect the broad-band photometry used in the stellar mass inference, especially if the gas is ionized by the quasar <ref type="bibr" target="#b44">45,</ref><ref type="bibr" target="#b45">46</ref> .</s><s coords="15,137.01,314.74,418.72,10.37;15,56.69,329.19,498.62,10.37;15,56.69,343.63,415.30,10.37">To ensure that our NIRCam detection of extended host emission is not dominated by these lines, we directly compare the total flux of the Hβ +[O III] narrow lines seen in our spectra with the contribution from the host in the NIRCam image within the aperture of the spectral slit.</s><s coords="15,475.72,343.63,81.08,10.37;15,56.69,357.70,498.61,10.75;15,56.69,372.53,82.63,10.37">For J2236+0032, narrow Hβ emission is not detected and the [O III] emission in NIRSpec contributes only ∼ 3% of the host galaxy light.</s></p><p coords="15,74.25,387.38,481.05,10.37;15,56.69,401.82,500.71,10.37;15,56.32,416.27,498.99,10.37;15,56.69,430.71,498.61,10.37;15,56.39,445.16,498.92,10.37;15,56.69,459.61,498.61,10.37;15,56.69,474.05,498.61,10.37;15,56.69,488.50,498.61,10.37;15,56.69,502.94,498.61,10.37;15,56.69,517.39,499.03,10.37;15,56.26,531.83,499.05,10.37;15,56.69,546.28,498.61,10.37;15,56.69,560.73,498.62,10.37;15,56.69,575.17,351.45,10.37;15,415.75,575.17,139.55,10.37;15,56.69,589.62,498.61,10.37;15,56.69,604.06,498.61,10.37;15,56.69,618.51,498.61,10.37;15,56.69,632.57,414.59,10.75"><s coords="15,74.25,387.38,481.05,10.37;15,56.69,401.82,91.76,10.37">For J2255+0251, the narrow Hβ +[O III] emission is comparable to the host galaxy brightness measured in the F356W filter.</s><s coords="15,152.14,401.82,405.26,10.37">Much of this emission may be coming from the narrow-line region of the quasar itself.</s><s coords="15,56.32,416.27,498.99,10.37;15,56.69,430.71,498.61,10.37;15,56.39,445.16,498.92,10.37;15,56.69,459.61,498.61,10.37;15,56.69,474.05,167.67,10.37">To quantify the impact on the detection of the stellar continuum, we use the 2D NIRSpec spectroscopic data and fit a Gaussian to the unresolved spatial profile at each wavelength, allowing the centroid to vary linearly with wavelength, setting the width to be the same as the spatial PSF as measured from a publicly available reference star in the same spectroscopic configuration as our observations, and letting the amplitude be a free parameter.</s><s coords="15,229.29,474.05,326.01,10.37;15,56.69,488.50,427.75,10.37">The best-fit Gaussian profile at each wavelength is then subtracted from the 2D spectrogram to reveal any spatially extended [O III] emission in the spectrum.</s><s coords="15,488.15,488.50,67.16,10.37;15,56.69,502.94,346.40,10.37">A background region of equivalent size is subtracted from the extended emission region.</s><s coords="15,406.82,502.94,148.49,10.37;15,56.69,517.39,499.03,10.37;15,56.26,531.83,241.41,10.37">We calculate the flux density of the extended emission in the F356W band and compare it to the flux density of the NIRCam host galaxy within the aperture of the NIRSpec slit on the sky.</s><s coords="15,301.40,531.83,253.91,10.37;15,56.69,546.28,451.49,10.37">For J2255+0251, the [O III] extended emission has a magnitude of 27.6, which is 11% of the flux of the observed host galaxy within the slit aperture.</s><s coords="15,511.91,546.28,43.39,10.37;15,56.69,560.73,498.62,10.37;15,56.69,575.17,367.87,10.37">Note that the measurement of the extended emission is based on the observational fact that the apparent minor axis of J2255+0251 is wider than the scale of the PSF in F356W (see Figure <ref type="figure" target="#fig_1">2</ref>).</s><s coords="15,428.94,575.17,126.37,10.37;15,56.69,589.62,498.61,10.37;15,56.69,604.06,208.73,10.37">We thus conclude that the majority of the narrow Hβ +[O III] emission in J2255+0251 comes from the unresolved quasar, which has been removed by our quasar decomposition.</s><s coords="15,269.13,604.06,286.17,10.37;15,56.69,618.51,224.53,10.37">For J2236+0032, we use the same approach and find that the extended [O III] has a magnitude of 27.5 mag.</s><s coords="15,284.92,618.51,270.38,10.37;15,56.69,632.57,145.39,10.75">The flux ratio between the extended [O III] and the host galaxy within the slit is ∼ 3%.</s><s coords="15,205.79,632.96,265.50,10.37">No extended Hβ emission was detected in either target.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="15,56.69,661.78,321.78,10.75">Construction of mock quasar and host galaxy sample at z = 6.4</head><p coords="15,56.13,677.10,172.96,10.37;15,248.04,677.10,307.47,10.37;15,56.69,691.55,498.61,10.37;15,56.69,705.61,267.78,10.75;15,334.93,705.99,220.38,10.37;15,56.69,720.44,498.61,10.37;16,56.69,67.95,337.97,10.37;16,413.74,67.95,143.66,10.37;16,56.69,82.40,498.61,11.60;16,56.69,96.46,115.24,10.75;16,171.64,100.80,17.93,7.77;16,193.15,96.46,258.02,10.75;16,464.78,96.84,90.53,10.37;16,56.69,111.29,498.61,10.37;16,56.69,125.35,229.91,11.99;16,286.60,124.66,3.69,6.64;16,291.52,125.74,263.78,10.62;16,56.69,140.18,209.79,10.37;16,300.23,140.18,255.08,10.37;16,56.69,154.63,498.12,11.61;16,56.69,169.07,200.42,10.37;16,264.53,168.69,283.02,11.00;21,143.06,255.15,407.46,11.23;21,56.69,270.44,497.58,10.37;21,56.69,284.89,187.21,10.37;21,243.90,282.21,15.93,7.86;21,263.32,284.89,32.65,10.37;21,295.97,282.21,11.45,7.86;21,310.90,284.89,4.65,10.37;21,315.55,282.21,11.45,7.86;21,327.50,284.89,2.99,10.37;26,56.32,664.88,360.65,10.37"><s coords="15,56.13,677.10,499.38,10.37;15,56.69,691.55,239.51,10.37">We use the method described in ref. 17 to generate mock samples to assess the expected location of our two quasars in the black hole -stellar mass plane.</s><s coords="15,299.91,691.55,255.39,10.37;15,56.69,705.61,267.78,10.75;15,325.47,703.60,8.97,7.77;15,334.93,705.99,2.93,10.37">We start with a large galaxy sample representative of the population at z ∼ 6 based on the stellar mass function <ref type="bibr" target="#b14">15</ref> .</s><s coords="15,341.53,705.99,213.78,10.37;15,56.69,720.44,416.74,10.37">We then assume that the ratio of black hole to host stellar mass and its dispersion are the same as the local values (i.e., no evolution).</s><s coords="15,477.17,720.44,78.14,10.37;16,56.69,67.95,500.71,10.37">As an update on this procedure, we now use the BH Eddington rate distribution of ref. 47 to assign quasar luminosities.</s><s coords="16,56.69,82.40,498.61,11.60;16,56.69,96.46,115.24,10.75;16,171.64,100.80,17.93,7.77;16,193.15,96.46,101.55,10.75">Observational uncertainty on M * and intrinsic uncertainty on M BH are incorporated with a selection on magnitude (-23.9 &lt; M 1450 &lt; -23.8) is applied.</s><s coords="16,300.69,96.84,254.62,10.37;16,56.69,111.29,357.93,10.37">The orange contours in Figure <ref type="figure" target="#fig_3">4</ref> show the resulting bivariate probability distribution in the stellar mass-black hole mass plane.</s><s coords="16,418.32,111.29,136.99,10.37;16,56.69,125.35,229.91,11.99;16,286.60,124.66,3.69,6.64;16,291.52,125.74,263.78,10.62;16,56.69,140.18,498.61,10.37;16,56.69,154.63,57.63,10.37">We further generate samples for different evolution rates (M BH /M * ∝ (1 + z) γ ) in steps of 0.1 in γ and under the assumption that the dispersion is the same as the local value (ref. 17,48 demonstrates that the evolution rate and dispersion are degenerate).</s><s coords="16,118.02,154.63,436.79,11.61;16,56.69,168.69,490.85,11.00">The probability distribution of γ is determined given our measurements of both M BH and M * of our two quasars (Extended Data Figure <ref type="figure">6</ref>); γ lies in the range -0.40 to +0.84 with 68% confidence.</s><s coords="21,143.06,255.15,43.45,11.23">Table 2.</s><s coords="21,190.61,255.53,239.33,10.75">Spectroscopic properties and virial BH masses.</s><s coords="21,433.65,256.00,116.87,10.37;21,56.69,270.44,497.58,10.37;21,56.69,284.89,44.33,10.37">The corrected values are based on the quasar continuum emission after subtracting the host galaxy light falling onto the NIRSpec fixed slit.</s><s coords="21,104.73,284.89,139.17,10.37;21,243.90,282.21,15.93,7.86;21,263.32,284.89,32.65,10.37;21,295.97,282.21,11.45,7.86;21,310.90,284.89,4.65,10.37;21,315.55,282.21,11.45,7.86;21,327.50,284.89,2.99,10.37">Flux values are in units of 10 -17 erg cm -2 s -1 .</s><s coords="26,56.32,664.88,360.65,10.37">The distribution of the host galaxy SED properties using MCMC inference.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="20,56.69,65.97,99.65,13.47">Extended Data</head></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>FiguresFigure 1 .</head><label>1</label><figDesc><div><p><s coords="6,56.69,65.97,51.82,13.47">Figures</s></p></div></figDesc><graphic coords="6,82.59,117.97,167.61,167.61" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 .</head><label>2</label><figDesc><div><p><s coords="7,56.69,598.25,49.55,11.23">Figure 2.</s><s coords="7,110.36,598.63,284.35,10.75">2D decomposition into quasar and host-galaxy emission.</s><s coords="7,398.41,599.10,156.73,10.37;7,56.69,613.16,496.74,10.75;7,56.69,627.61,487.15,11.00;7,56.69,642.43,118.59,10.37">Panels are as follows from left to right: quasar image (data), best-fit model (quasar + host galaxy), host galaxy only (datamodel quasar point-source component), and normalized residual image, i.e., (datamodel) / σ , where σ is the flux uncertainty of each pixel.</s><s coords="7,178.93,642.43,378.48,10.37">The target name is above each row of panels and the filter is indicated on the left.</s><s coords="7,56.32,656.88,180.64,10.37;7,234.29,654.20,4.93,7.86;7,239.72,656.50,27.89,10.75;7,264.94,654.20,4.93,7.86;7,270.37,656.88,275.95,10.37;7,56.69,671.33,30.00,10.37">The alignment of the NIRSpec slit (0. ′′ 2 × 0. ′′ 6) is shown in the left panel of the F356W image for each target.</s><s coords="7,90.39,671.33,206.59,10.37">Pixel units are Mega-Janskys per steradian.</s><s coords="7,300.69,671.33,79.01,10.37">A scale bar of 0.</s><s coords="7,377.03,668.64,4.93,7.86;7,382.46,670.94,169.65,10.75">′′ 5 corresponds to 2.8 kpc at z ∼ 6.4.</s></p></div></figDesc><graphic coords="7,121.51,462.46,95.03,95.03" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 .</head><label>3</label><figDesc><div><p><s coords="8,56.69,550.03,49.82,11.23">Figure 3.</s><s coords="8,110.62,550.42,345.39,10.75">NIRSpec rest-frame optical spectra of J2236+0032 and J2255+0251.</s><s coords="8,459.72,550.88,95.59,10.37;8,56.69,565.33,493.12,10.62;8,56.69,579.77,38.35,10.37">For each quasar, the left panel shows the full spectrum while the top-right panels zoom in on the Hβ +[O III] λ λ 4960, 5008 doublet.</s><s coords="8,98.75,579.57,87.07,10.57;8,184.62,585.60,4.92,6.64;8,194.13,579.77,73.74,10.37;8,267.87,577.09,15.93,7.86;8,287.29,579.77,32.26,10.37;8,319.55,577.09,11.45,7.86;8,334.49,579.77,4.59,10.37;8,339.08,577.09,11.45,7.86;8,354.02,579.77,8.52,10.37;8,362.54,577.09,11.45,7.86;8,374.49,579.77,2.95,10.37">The flux density F λ is in units of 10 -20 erg cm -2 s -1 Å -1 .</s><s coords="8,381.14,579.77,173.99,10.37;8,56.69,594.22,111.41,10.37">The data are shown in black with the errors per pixel in grey.</s><s coords="8,171.81,594.22,362.97,10.37;8,56.26,608.67,245.11,10.37">The stellar absorption lines in J2236+0032 are identified in Hγ, Hδ and Hε, which are also presented in the inset zoom-in panel.</s><s coords="8,305.07,608.67,249.91,10.37;8,56.30,623.11,499.74,10.37;8,56.69,637.56,182.93,10.37">Best-fit models of power-law continuum (blue), Fe II (green), broad Hβ (magenta), narrow Hβ + [O III] (orange thick line), and broad [O III] (orange thin line) are overplotted in the top-right panels.</s><s coords="8,243.33,637.56,307.55,10.37;8,56.69,652.00,18.26,10.37">The sum of the continuum and emission line models is shown in red.</s><s coords="8,78.65,652.00,259.33,10.37">The residuals are displayed in the bottom right panels.</s></p></div></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 .</head><label>4</label><figDesc><div><p><s coords="9,56.69,492.40,48.83,11.23">Figure 4.</s><s coords="9,109.62,492.78,199.21,10.75">BH mass -stellar mass plane at z ∼ 6.4.</s><s coords="9,312.52,492.87,242.79,10.75;9,56.69,507.70,68.75,10.37">Left: Observed locations of our two z ∼ 6.4 quasars marked in red.</s><s coords="9,129.14,507.70,426.17,10.37;9,56.69,521.76,419.32,11.99">Orange contours (1-3σ levels) show the expected distribution of a mock quasar sample at z ∼ 6.4 for which the ratio M BH /M * of the intrinsic population does not evolve to z = 0.</s><s coords="9,479.72,521.94,52.18,10.57;9,56.69,536.21,495.57,11.99;9,56.69,551.03,34.55,10.37">Right: The M BH -M * relation at z ∼ 6.4 (red solid line) inferred from our two quasars after accounting for selection effects.</s><s coords="9,94.95,551.03,451.55,10.37;9,56.69,565.10,75.82,10.75;9,133.51,563.09,20.17,7.77;9,154.18,565.48,2.95,10.37">The shaded region represents the 68 % confidence interval, and the dashed line is the observed relation at z = 0 21,22 .</s><s coords="9,160.84,565.48,394.44,10.37;9,56.69,579.93,79.36,10.37">Note that we assume a linear relationship between black hole mass and stellar mass in log-log space.</s><s coords="9,139.76,579.54,231.76,10.75">The slope is fixed to the value observed at z = 0.</s></p></div></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>4 .Extended Data Figure 5 .</head><label>45</label><figDesc><div><p><s coords="25,197.00,510.23,357.66,10.75;25,56.26,524.67,116.01,10.75">Distribution of the inferred host magnitude from simulations with and without a host present.</s><s coords="25,175.98,525.14,378.67,10.37;25,56.69,539.59,482.75,10.37;25,56.69,554.03,239.91,10.37">When the host of J2255+0251 is added into the mock image in the simulations, the derived host magnitude distribution based on 100 realizations (dark orange) is consistent with the input true value, with an r.m.s. scatter of 0.12 mag.</s><s coords="25,300.30,554.03,254.90,10.37;25,56.69,568.48,466.34,10.37;25,56.69,582.92,213.59,10.37;26,194.46,606.63,360.84,10.75;26,56.69,622.73,24.46,8.11">When the host light is not included in the mock image and we still fit the host light in our model, we infer host magnitudes with a broad distribution (tan histogram), centered two magnitudes fainter.The SED inference using the host galaxy two-band photometry based on gsf.</s><s coords="26,84.86,621.34,323.78,10.57">Top: The red data points with errors indicate the inferred host fluxes.</s><s coords="26,412.33,621.55,142.96,10.37;26,55.80,635.99,482.37,10.37;26,56.69,650.44,107.92,10.37">The gray region represents the 1σ range of variation in SED templates obtained through MCMC, while the black line represents the median SED template.</s><s coords="26,168.32,650.44,340.70,10.37">The blue diamonds indicate the predictions using this median template.</s><s coords="26,512.72,650.23,38.52,10.29">Bottom:</s></p></div></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 .</head><label>1</label><figDesc><div><p><s coords="20,190.61,349.21,317.30,10.83;20,56.69,364.12,498.62,10.37;20,56.69,378.57,473.21,10.37;20,56.69,393.01,448.52,10.37;20,56.69,407.25,497.07,10.57;20,56.69,421.90,203.36,10.37;21,92.84,201.84,37.36,11.73;21,130.20,199.45,8.97,7.77;21,142.65,201.84,22.69,10.37;21,165.34,199.16,11.45,7.86;21,177.29,201.84,3.98,10.37;21,221.73,201.46,55.10,10.75;21,312.69,201.46,213.11,10.75;21,86.19,216.52,107.65,11.73;21,193.84,213.83,11.45,7.86;21,205.79,216.13,70.39,10.75;21,379.75,216.13,54.45,10.75;21,86.19,231.19,42.51,11.61;21,128.70,228.79,4.48,7.77;21,136.67,230.98,21.11,11.52;21,221.72,230.81,49.12,10.75;21,312.69,230.81,49.12,10.75;21,379.74,230.81,55.10,10.75;21,458.75,230.81,55.10,10.75;21,56.69,255.15,83.04,11.23">Summary of the quasar decomposition results.The photometry measurements are obtained using galight, where the top-performance PSFs are weighted with different point_source_supersampling_factor.We also present the host magnitudes inferred by galfit, combining results using top-performance PSFs.The RA and Dec are from the HSC measurements, consistent with JWST's.The stellar masses are from gsf; we also find consistent results using the Bagpipes and CIGALE codes.5100 (10 45 erg s -1 ) 2.29 ± 0.02 1.79 ± 0.01 1.531 ± 0.008 1.458 ± 0.008 Hβ FWHM broad (km s -1 ) 6290 ± 560 2520 ± 110 M BH (10 8 M ⊙ ) 15.4 ± 2.7 13.6 ± 1.5 2.02 ± 0.17 1.97 ± 0.17Extended Data</s></p></div></figDesc><table><row><cell></cell><cell cols="2">J2236+0032</cell><cell cols="2">J2255+0251</cell></row><row><cell>RA</cell><cell cols="2">22 36 44.58</cell><cell cols="2">22 55 38.04</cell></row><row><cell>Dec</cell><cell cols="2">+00 32 56.90</cell><cell cols="2">+02 51 26.60</cell></row><row><cell>Redshift</cell><cell></cell><cell>6.40</cell><cell>6.34</cell><cell></cell></row><row><cell>M 1450 (mag)</cell><cell cols="2">-23.8</cell><cell>-23.9</cell><cell></cell></row><row><cell></cell><cell>F356W</cell><cell>F150W</cell><cell>F356W</cell><cell>F150W</cell></row><row><cell>R eff ( ′′ )</cell><cell>0.13±0.02</cell><cell>0.10±0.03</cell><cell>0.27±0.19</cell><cell>-</cell></row><row><cell>R eff (kpc)</cell><cell>0.7±0.1</cell><cell>0.5±0.2</cell><cell>1.5±1.1</cell><cell>-</cell></row><row><cell>Sérsic index</cell><cell>fixed as 1</cell><cell>fixed as 1</cell><cell>1.5±1.4</cell><cell>-</cell></row><row><cell>ellipticity (b/a)</cell><cell>0.39±0.02</cell><cell>0.34±0.11</cell><cell>0.61±0.09</cell><cell>-</cell></row><row><cell>PA (N to W)</cell><cell cols="3">-39.4 • ±2.8 • -48.8 • ±25.5 • 26.0 • ±11.6 •</cell><cell>-</cell></row><row><cell>flux ratio</cell><cell cols="3">25.5%±4.4% 10.2%±2.8% 9.8%±2.6%</cell><cell>&lt; 3.8%</cell></row><row><cell>quasar mag</cell><cell>21.95±0.07</cell><cell>22.73±0.04</cell><cell cols="2">22.15±0.03 22.89±0.02</cell></row><row><cell>host mag</cell><cell>23.12±0.20</cell><cell>25.12±0.29</cell><cell>24.58±0.30</cell><cell>&gt; 26.3</cell></row><row><cell cols="2">host mag (galfit) 23.10±0.07</cell><cell>24.95±0.10</cell><cell>24.27±0.06</cell><cell>&gt; 26.7</cell></row><row><cell>host log M  *  (M ⊙ )</cell><cell cols="2">11.12 +0.40 -0.27</cell><cell cols="2">10.53 +0.51 -0.37</cell></row><row><cell>Extended Data</cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_0" coords="10,74.63,722.67,161.89,7.01"><p><s coords="10,74.63,722.67,161.89,7.01">https://jwst-crds.stsci.edu</s></p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_1" coords="11,74.63,721.73,154.37,8.64"><p><s coords="11,74.63,721.73,154.37,8.64">https://galight.readthedocs.io/en/latest/</s></p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_2" coords="14,74.63,722.67,227.15,7.01"><p><s coords="14,74.63,722.67,227.15,7.01">https://doi.org/10.5281/zenodo.4893646</s></p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head coords="18,56.69,65.97,134.37,13.47">Acknowledgements</head><p coords="18,56.13,88.78,499.48,10.37;18,56.00,103.23,499.31,10.37;18,56.69,117.68,106.59,10.37"><s coords="18,56.13,88.78,450.89,10.37">We thank <rs type="person">Takahiro Morishita</rs> and <rs type="person">Lilan Yang</rs> for help with the gsf and Bagpipes packages.</s><s coords="18,510.72,88.78,44.89,10.37;18,56.00,103.23,248.82,10.37">We thank <rs type="person">Yuming Fu</rs> for his help on the use of QSOFitMORE.</s><s coords="18,307.69,103.23,247.62,10.37;18,56.69,117.68,106.59,10.37">We thank <rs type="person">Xiaohui Fan</rs>, <rs type="person">Luis Ho</rs>, and <rs type="person">Vardha Bennert</rs> for useful discussions.</s></p><p coords="18,74.25,132.93,483.15,10.37;18,56.32,147.37,498.99,10.37;18,56.69,161.82,498.82,10.37;18,56.69,176.27,498.61,10.37;18,56.69,190.71,500.11,10.37;18,56.26,205.16,499.48,10.37;18,56.69,219.60,110.81,10.37"><s coords="18,74.25,132.93,483.15,10.37">This work is based on observations made with the <rs type="institution">NASA/ESA/CSA James Webb Space Telescope</rs>.</s><s coords="18,56.32,147.37,498.99,10.37;18,56.69,161.82,498.82,10.37;18,56.69,176.27,192.60,10.37">The data were obtained from the <rs type="institution">Mikulski Archive for Space Telescopes</rs> at the <rs type="institution">Space Telescope Science Institute</rs>, which is operated by the <rs type="institution">Association of Universities for Research in Astronomy, Inc</rs>., under <rs type="institution">NASA</rs> contract <rs type="grantNumber">NAS 5-03127</rs> for JWST.</s><s coords="18,252.26,176.27,261.94,10.37">These observations are associated with program #1967.</s><s coords="18,517.89,176.27,37.41,10.37;18,56.69,190.71,500.11,10.37;18,56.26,205.16,499.48,10.37;18,56.69,219.60,110.81,10.37">Support for program #1967 was provided by <rs type="funder">NASA</rs> through a grant from the <rs type="institution">Space Telescope Science Institute</rs>, which is operated by the <rs type="funder">Association of Universities for Research in Astronomy, Inc</rs>., under <rs type="funder">NASA</rs> contract <rs type="grantNumber">NAS 5-03127</rs>.</s></p><p coords="18,74.25,234.86,481.05,10.37;18,56.69,249.30,498.61,10.37;18,56.69,263.75,500.11,10.37;18,56.69,278.19,498.61,10.37;18,56.69,292.64,292.56,10.37"><s coords="18,74.25,234.86,481.05,10.37;18,56.69,249.30,472.61,10.37">This paper is based on data collected at the Subaru Telescope and retrieved from the HSC data archive system, which is operated by the <rs type="institution">Subaru Telescope and Astronomy Data Center (ADC) at NAOJ</rs>.</s><s coords="18,532.28,249.30,23.02,10.37;18,56.69,263.75,500.11,10.37;18,56.69,278.19,31.99,10.37">Data analysis was in part carried out with the cooperation of <rs type="institution">Center for Computational Astrophysics (CfCA)</rs>, <rs type="institution">NAOJ</rs>.</s><s coords="18,91.68,278.19,463.63,10.37;18,56.69,292.64,292.56,10.37">We are honored and grateful for the opportunity of observing the Universe from Maunakea, which has the cultural, historical and natural significance in Hawaii.</s></p><p coords="18,74.25,307.89,482.54,10.37;18,56.47,322.34,498.84,10.37;18,56.30,336.78,500.50,10.37;18,56.47,351.23,498.84,10.37;18,56.69,365.67,498.61,10.37;18,56.69,380.12,227.07,10.37;18,355.13,380.12,200.17,10.37;18,56.69,394.57,498.61,10.37;18,56.69,409.01,499.03,10.37;18,56.69,423.46,500.60,10.37;18,56.69,437.90,498.61,10.37;18,56.69,452.35,498.61,10.37;18,56.69,466.79,498.61,10.37;18,56.69,481.24,498.61,10.37;18,56.69,495.69,498.99,10.37;18,56.69,510.13,498.61,10.37;18,56.69,524.58,398.11,10.37"><s coords="18,74.25,307.89,482.54,10.37;18,56.47,322.34,30.82,10.37">This work was supported by <rs type="funder">World Premier International Research Center Initiative (WPI)</rs>, <rs type="funder">MEXT, Japan</rs>.</s><s coords="18,91.29,322.34,464.02,10.37;18,56.30,336.78,147.94,10.37">XD, JS, YM, TI, KK, and HU are supported by the <rs type="funder">Japan Society for the Promotion of Science (JSPS) KAKENHI</rs> grant Nos.</s><s coords="18,210.42,336.78,346.38,10.37;18,56.47,351.23,207.11,10.37"><rs type="grantNumber">JP22K14071</rs>, <rs type="grantNumber">JP18H01251</rs>, <rs type="grantNumber">JP22H01262</rs>, <rs type="grantNumber">JP17H04830</rs>, <rs type="grantNumber">JP21H04494</rs>, <rs type="grantNumber">JP20K14531</rs>, <rs type="grantNumber">JP17H06130</rs>, <rs type="grantNumber">JP20H01953</rs>.</s><s coords="18,270.84,351.23,284.47,10.37;18,56.69,365.67,232.52,10.37">FW, SEIB, BT, JTS, and MO acknowledge support from the <rs type="funder">ERC</rs> grant Nos. <rs type="grantNumber">740246</rs>, <rs type="grantNumber">885301</rs>, <rs type="grantNumber">950533</rs>.</s><s coords="18,295.96,365.67,259.35,10.37;18,56.69,380.12,368.39,10.37">MO and KI acknowledge support from the <rs type="funder">National Natural Science Foundation of China</rs> grant Nos. <rs type="grantNumber">12150410307</rs> and <rs type="grantNumber">12073003</rs>.</s><s coords="18,428.79,380.12,126.52,10.37;18,56.69,394.57,244.83,10.37">YM acknowledges support from the <rs type="funder">Mitsubishi Foundation</rs> grant No. <rs type="grantNumber">30140</rs>.</s><s coords="18,306.53,394.57,248.78,10.37;18,56.69,409.01,499.03,10.37;18,56.69,423.46,500.60,10.37;18,56.69,437.90,33.53,10.37">SF acknowledges support from <rs type="funder">NASA</rs> through the <rs type="funder">NASA</rs> <rs type="grantName">Hubble Fellowship</rs> grant <rs type="grantNumber">HST-HF2-51505.001-A</rs> awarded by the <rs type="institution">STScI</rs>, which is operated by the <rs type="institution">Association of Universities for Research in Astronomy, Incorporated</rs>, under <rs type="funder">NASA</rs> contract <rs type="grantNumber">NAS5-26555</rs>.</s><s coords="18,97.30,437.90,289.15,10.37">ZH acknowledges support from <rs type="funder">NSF</rs> grant <rs type="grantNumber">AST-2006176</rs>.</s><s coords="18,393.54,437.90,161.77,10.37;18,56.69,452.35,498.61,10.37;18,56.69,466.79,292.26,10.37">KI acknowledges support by the <rs type="funder">Spanish MCIN</rs> under grant <rs type="grantNumber">PID2019-105510GB-C33/AEI/10.13039/501100011033 AL</rs> acknowledges funding from <rs type="funder">MIUR</rs> under the grant <rs type="grantNumber">PRIN 2017-MB8AEZ</rs>.</s><s coords="18,352.23,466.79,203.07,10.37;18,56.69,481.24,498.61,10.37;18,56.69,495.69,477.13,10.37">BT acknowledges support from the <rs type="funder">Israel Science Foundation</rs> (grant No. <rs type="grantNumber">1849/19</rs>) and from the <rs type="funder">European Research Council (ERC)</rs> under the <rs type="funder">European Union</rs>'s <rs type="programName">Horizon 2020 research and innovation program</rs> (grant agreements No. <rs type="grantNumber">950533</rs>).</s><s coords="18,537.53,495.69,18.15,10.37;18,56.69,510.13,364.51,10.37">MT acknowledges support from the <rs type="funder">NWO</rs> grant <rs type="grantNumber">0.16.VIDI.189.162</rs> ("<rs type="projectName">ODIN</rs>").</s><s coords="18,424.24,510.13,131.06,10.37;18,56.69,524.58,398.11,10.37">MV acknowledges support from the <rs type="funder">Independent Research Fund Denmark</rs> via grant number <rs type="grantNumber">DFF 8021-00130</rs>.</s></p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_pVXuka7">
+					<idno type="grant-number">NAS 5-03127</idno>
+				</org>
+				<org type="funding" xml:id="_KxHta3C">
+					<idno type="grant-number">NAS 5-03127</idno>
+				</org>
+				<org type="funding" xml:id="_GyAH4xp">
+					<idno type="grant-number">JP22K14071</idno>
+				</org>
+				<org type="funding" xml:id="_g5nacdE">
+					<idno type="grant-number">JP18H01251</idno>
+				</org>
+				<org type="funding" xml:id="_yJBjPfA">
+					<idno type="grant-number">JP22H01262</idno>
+				</org>
+				<org type="funding" xml:id="_pzajSja">
+					<idno type="grant-number">JP17H04830</idno>
+				</org>
+				<org type="funding" xml:id="_KGwScTz">
+					<idno type="grant-number">JP21H04494</idno>
+				</org>
+				<org type="funding" xml:id="_yW8qJNg">
+					<idno type="grant-number">JP20K14531</idno>
+				</org>
+				<org type="funding" xml:id="_KbFtkS2">
+					<idno type="grant-number">JP17H06130</idno>
+				</org>
+				<org type="funding" xml:id="_GuWVSdJ">
+					<idno type="grant-number">JP20H01953</idno>
+				</org>
+				<org type="funding" xml:id="_qFTD5tM">
+					<idno type="grant-number">740246</idno>
+				</org>
+				<org type="funding" xml:id="_kcAcu4B">
+					<idno type="grant-number">885301</idno>
+				</org>
+				<org type="funding" xml:id="_CPvSap9">
+					<idno type="grant-number">950533</idno>
+				</org>
+				<org type="funding" xml:id="_KN74Rbz">
+					<idno type="grant-number">12150410307</idno>
+				</org>
+				<org type="funding" xml:id="_2h3RHvv">
+					<idno type="grant-number">12073003</idno>
+				</org>
+				<org type="funding" xml:id="_7r7fvmm">
+					<idno type="grant-number">30140</idno>
+				</org>
+				<org type="funding" xml:id="_dTYepUP">
+					<idno type="grant-number">HST-HF2-51505.001-A</idno>
+					<orgName type="grant-name">Hubble Fellowship</orgName>
+				</org>
+				<org type="funding" xml:id="_pPUyEAC">
+					<idno type="grant-number">NAS5-26555</idno>
+				</org>
+				<org type="funding" xml:id="_ZxQamkD">
+					<idno type="grant-number">AST-2006176</idno>
+				</org>
+				<org type="funding" xml:id="_DqBbuhk">
+					<idno type="grant-number">PID2019-105510GB-C33/AEI/10.13039/501100011033 AL</idno>
+				</org>
+				<org type="funding" xml:id="_2haMquE">
+					<idno type="grant-number">PRIN 2017-MB8AEZ</idno>
+				</org>
+				<org type="funding" xml:id="_TSRQWQx">
+					<idno type="grant-number">1849/19</idno>
+				</org>
+				<org type="funding" xml:id="_9K9aEH3">
+					<idno type="grant-number">950533</idno>
+					<orgName type="program" subtype="full">Horizon 2020 research and innovation program</orgName>
+				</org>
+				<org type="funded-project" xml:id="_e63DdqR">
+					<idno type="grant-number">0.16.VIDI.189.162</idno>
+					<orgName type="project" subtype="full">ODIN</orgName>
+				</org>
+				<org type="funding" xml:id="_nDFpc8G">
+					<idno type="grant-number">DFF 8021-00130</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="17,56.69,588.02,114.74,13.47">Code Availability</head><p coords="17,56.32,610.02,504.01,10.37;17,56.69,624.47,349.07,10.37;17,406.76,622.08,8.97,7.77;17,416.22,624.47,48.38,10.37;17,56.32,610.02,348.70,10.37;17,150.54,624.47,255.22,10.37;17,406.76,622.08,8.97,7.77;17,416.22,624.47,48.38,10.37;17,477.34,624.47,76.57,10.37;17,564.37,624.47,2.93,10.37"><s coords="17,56.32,610.02,348.70,10.37;17,150.54,625.59,13.41,8.42">The JWST data were processed with the JWST calibration pipeline (<ref type="url" target="https://jwst-pipeline.readthedocs.io">https://jwst-pipeline.  readthedocs.io</ref>).</s><s coords="17,167.41,624.47,238.35,10.37;17,406.76,622.08,8.97,7.77;17,416.22,624.47,48.38,10.37;17,465.60,622.08,8.97,7.77;17,477.34,624.47,76.57,10.37;17,554.91,622.08,8.97,7.77;17,564.37,624.47,2.93,10.37">Public tools were used for data analysis: galight 12 , galfit <ref type="bibr" target="#b34">35</ref> and PyQSOFit <ref type="bibr" target="#b41">42</ref> .</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="17,56.69,655.10,109.96,13.47">Data Availability</head><p coords="17,56.32,677.10,499.36,10.37;17,56.69,691.55,498.61,10.37;17,56.69,705.99,500.05,10.37;17,56.69,721.56,332.95,8.42;17,56.32,677.10,499.36,10.37;17,56.69,691.55,498.61,10.37;17,56.69,705.99,303.39,10.37;17,382.56,721.56,7.08,8.42"><s coords="17,56.32,677.10,499.36,10.37;17,56.69,691.55,276.99,10.37">The JWST data are available in the MAST and can be accessed via doi:10.17909/2z59-3v32 (JWST GO 1967) after a twelve-month exclusive access period.</s><s coords="17,339.09,691.55,216.22,10.37;17,56.69,705.99,303.39,10.37;17,382.56,721.56,7.08,8.42">Reduced quasar NIRCam image cutouts are also available from the corresponding author upon request or at <ref type="url" target="https://github.com/dartoon/publication/tree/main/SHELLQs_J2236_J2255_data">https://github.com/dartoon/  publication/tree/main/SHELLQs_J2236_J2255_data</ref>.</s></p></div>
+			</div>
+
+
+			<div type="conflict">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="19,56.69,65.97,138.70,13.47">Competing interests</head><p coords="19,56.32,87.98,208.51,10.37"><s coords="19,56.32,87.98,208.51,10.37">The authors declare no competing interests.</s></p></div>
+			</div>
+
+
+			<div type="contribution">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="18,56.69,560.11,144.32,13.47">Author Contributions</head><p coords="18,56.26,582.92,499.04,10.37;18,56.69,597.36,498.61,10.37;18,56.69,611.81,498.61,10.37;18,56.69,626.25,498.62,10.37;18,56.69,640.70,498.62,10.37;18,56.69,654.76,498.82,10.75;18,56.69,669.59,498.61,10.37;18,56.69,684.04,498.62,10.37;18,56.69,698.48,181.95,10.37"><s coords="18,56.26,582.92,499.04,10.37;18,56.69,597.36,57.24,10.37">XD led the analysis of the quasar decomposition, simulation test, SED fitting, and preparation of the manuscript.</s><s coords="18,118.57,597.36,222.66,10.37">MO reduced the NIRCam and NIRSpec data.</s><s coords="18,345.87,597.36,209.44,10.37;18,56.69,611.81,135.64,10.37">He also led the spectroscopic data analysis and wrote relevant sections.</s><s coords="18,196.32,611.81,343.48,10.37">We regard that these first two authors equally contributed to this work.</s><s coords="18,543.78,611.81,11.52,10.37;18,56.69,626.25,362.79,10.37">JS contributed to the NIRCam data analysis and preparation of the manuscript.</s><s coords="18,423.22,626.25,132.09,10.37;18,56.69,640.70,407.86,10.37">CP performed the NIRSpec 2D spectroscopic analysis and evaluated the strength of the extended [O III] emission.</s><s coords="18,468.25,640.70,87.07,10.37;18,56.69,654.76,498.82,10.75;18,56.69,669.59,65.40,10.37">JL constructed the mock quasar sample at z = 6.4, which was used to assess the redshift evolution of the black hole -stellar mass relation.</s><s coords="18,125.79,669.59,429.51,10.37;18,56.69,684.04,175.25,10.37">MO, XD, JS, YM, TI, MS, and KJ led the project design and management, also developing the main interpretation of the results.</s><s coords="18,235.69,684.04,319.62,10.37;18,56.69,698.48,181.95,10.37">All co-authors contributed to the discussion of the presented results and the preparation of the manuscript.</s></p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head coords="19,56.69,119.47,113.99,13.47">Correspondence</head><p coords="19,56.69,141.48,499.42,10.37;19,56.69,155.92,197.44,10.37;19,56.69,141.48,362.14,10.37;19,549.24,141.48,6.86,10.37;19,56.69,155.92,78.34,10.37;19,240.90,155.92,13.23,10.37"><s coords="19,56.69,141.48,362.14,10.37;19,549.24,141.48,6.86,10.37;19,56.69,155.92,78.34,10.37;19,240.90,155.92,13.23,10.37">Correspondence and requests for materials should be addressed to X. Ding (<ref type="url" target="file://localhost/opt/grobid/grobid-home/tmp/xuheng.ding@ipmu.jp">xuheng.ding@ipmu.jp</ref>) and M. Onoue (<ref type="url" target="file://localhost/opt/grobid/grobid-home/tmp/onoue@pku.edu.cn">onoue@pku.edu.cn</ref>).</s></p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Extended Data Figure 1 . 2 .Extended Data Figure 3 .</head><label>123</label><figDesc><div><p><s coords="22,197.00,566.18,252.14,10.75">Distribution of known quasars at redshift z &gt; 5.8.</s><s coords="22,452.84,566.65,96.29,10.37;22,56.69,581.09,220.80,10.37">The y-axis indicates the absolute magnitudes at rest-frame 1450 Å.</s><s coords="22,280.48,581.09,250.26,10.37;22,56.30,595.16,481.36,10.75;22,56.69,609.98,135.38,10.37">The two target quasars in this work are shown in red (J2236+0032 at z = 6.40, and J2255+0251 at z = 6.34), while other low-luminosity quasars from the HSC-SSP are shown in blue.</s><s coords="22,195.78,609.78,361.44,10.57">The JWST 12 Cycle 1 targets in GO #1967 are highlighted with open circles.</s><s coords="22,56.69,624.43,196.95,10.37">Other known quasars are shown in black.</s><s coords="23,194.41,536.26,361.31,10.75;23,56.69,550.71,118.44,10.75">Quasar-subtracted images of J2236+0032 based on 2D decomposition by two independent codes.</s><s coords="23,178.84,551.17,273.25,10.37">The inferred host magnitude from each code is indicated.</s><s coords="23,455.79,551.17,98.45,10.37;23,56.69,565.62,374.87,10.37">For this comparison, the point_source_supersampling_factor is set to 2 for galight.</s><s coords="23,435.27,565.62,120.24,10.37;23,56.69,580.07,79.04,10.37">The same PSF is used for this comparison.</s><s coords="23,139.43,580.07,364.55,10.37">Coordinates are in pixel units; the pixel scales for F356W and F150W are 0.</s><s coords="23,501.32,577.38,4.93,7.86;23,506.75,580.07,44.16,10.37;23,56.69,594.51,9.30,10.37">′′ 0315 and 0.</s><s coords="23,63.33,591.83,4.93,7.86;23,68.76,594.51,89.39,10.37;24,90.74,197.35,71.97,16.59;24,89.12,262.55,17.21,15.88;24,180.49,197.35,71.97,16.59;24,270.24,197.35,71.97,16.59;24,359.99,197.35,71.97,16.59;24,449.74,197.35,71.97,16.59;24,90.74,283.67,71.97,16.59;24,180.49,283.67,71.97,16.59;24,270.24,283.67,71.97,16.59;24,359.99,283.67,71.97,16.59;24,449.74,283.67,71.97,16.59;24,197.00,509.81,347.75,10.75;24,56.69,524.26,59.20,10.75">′′ 0153, respectively.fit star 2 using 1 0.5" fit star 3 using 1 fit star 4 using 1 fit star 5 using 1 fit star 3 using 2 fit star 4 using 2 fit star 5 using 2 fit star 4 using 3 fit star 5 using 3 fit star 5 using 4Testing the effect of PSF star mismatch on the inferred presence of a host galaxy.</s><s coords="24,119.60,524.52,435.71,10.57;24,56.69,539.17,289.79,10.37">Top: The residuals using the top five PSF star pairs for J2255+0251 in F356W (10 of 20 are shown) -we see no evidence for extended residual emission.</s><s coords="24,350.19,539.17,205.45,10.37;24,56.69,553.41,272.80,10.57">Using these 20 PSF residual maps, the PSF mismatch standard deviation is calculated for each pixel.</s><s coords="24,333.20,553.41,195.57,10.57;24,56.69,568.06,483.49,10.37;24,56.69,582.51,97.96,10.37">Bottom: Maps of host galaxy signal (i.e., data-point-source model) divided by the standard deviation (as indicated by the color scale) for both targets in two filters.</s><s coords="24,158.36,582.51,352.44,10.37">The host is clearly detected in all cases except for J2255+0251 in F150W.</s></p></div></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>6 .</head><label>6</label><figDesc><div><p><s coords="27,197.00,514.19,307.11,10.75;27,56.69,528.64,162.58,10.75">Probability distribution of the evolution parameter based on observations of our two quasars.</s><s coords="27,222.97,528.72,279.01,11.99;27,501.97,528.03,3.69,6.64;27,506.90,529.11,2.94,10.37">The evolution parameter γ is inferred as M BH /M * ∝ (1 + z) γ .</s><s coords="27,513.54,529.11,42.76,10.37;27,56.69,543.17,263.66,11.00">The 68% confidence interval in γ lies between -0.40 and +0.84.</s><s coords="27,324.06,543.55,231.26,10.37;27,56.69,558.00,83.00,10.37">The black dashed line indicates the 50 percentile position (+0.21).</s></p></div></figDesc></figure>
+			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct status="extracted" xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Near-infrared Imaging of a z = 6.42 Quasar Host Galaxy with the Hubble Space Telescope Wide Field Camera 3</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mechtley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">756</biblScope>
+			<biblScope unit="page">38</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Limits to Rest-frame Ultraviolet Emission from Far-infrared-luminous z ∼ 6 Quasar Hosts</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Marshall</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">900</biblScope>
+			<biblScope unit="page">21</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Probing the coevolution of supermassive black holes and galaxies using gravitationally lensed hosts</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">Y</forename><surname>Peng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">649</biblScope>
+			<biblScope unit="page" from="616" to="634" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Subaru High-z Exploration of Low-luminosity Quasars (SHELLQs). I. Discovery of 15 Quasars and Bright Galaxies at 5.7 &lt; z &lt; 6.9</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Matsuoka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">828</biblScope>
+			<biblScope unit="page">26</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Subaru High-z Exploration of Low-luminosity Quasars (SHELLQs). IV. Discovery of 41 Quasars and Luminous Galaxies at 5.7 ≤ z ≤ 6.9</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Matsuoka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J. Suppl. Ser</title>
+		<imprint>
+			<biblScope unit="volume">237</biblScope>
+			<biblScope unit="page">5</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Subaru High-z Exploration of Low-luminosity Quasars (SHELLQs). XVI. 69 New Quasars at 5.8 ≤ z ≤ 7.0</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Matsuoka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J. Suppl. Ser</title>
+		<imprint>
+			<biblScope unit="volume">259</biblScope>
+			<biblScope unit="page">18</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b6">
+	<analytic>
+		<title level="a" type="main">The Hyper Suprime-Cam SSP Survey: Overview and survey design</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Aihara</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Publ. Astron. Soc. Jpn</title>
+		<imprint>
+			<biblScope unit="volume">70</biblScope>
+			<biblScope unit="page">4</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b7">
+	<analytic>
+		<title level="a" type="main">A Survey of z &gt; 5.8 Quasars in the Sloan Digital Sky Survey. I. Discovery of Three New Quasars and the Spatial Density of Luminous Quasars at z ~6</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Fan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">122</biblScope>
+			<biblScope unit="page" from="2833" to="2849" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b8">
+	<analytic>
+		<title level="a" type="main">An 800-million-solar-mass black hole in a significantly neutral Universe at a redshift of 7.5</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Bañados</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">553</biblScope>
+			<biblScope unit="page" from="473" to="476" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b9">
+	<monogr>
+		<author>
+			<persName><forename type="first">X</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Banados</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Simcoe</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2212.06907</idno>
+		<title level="m">Quasars and the Intergalactic Medium at Cosmic Dawn</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv e-prints</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Overview of James Webb Space Telescope and NIRCam&apos;s Role</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Rieke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kelly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Horner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cryogenic Optical Systems and Instruments</title>
+		<imprint>
+			<biblScope unit="volume">XI</biblScope>
+			<biblScope unit="page" from="1" to="8" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b11">
+	<analytic>
+		<title level="a" type="main">The Mass Relations between Supermassive Black Holes and Their Host Galaxies at 1 &lt; z &lt; 2 HST-WFC3</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">888</biblScope>
+			<biblScope unit="page">37</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b12">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Sérsic</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Boletin de la Asociacion Argentina de Astronomia La Plata Argentina</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="41" to="43" />
+			<date type="published" when="1963">1963</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b13">
+	<analytic>
+		<title level="a" type="main">The Near-Infrared Spectrograph (NIRSpec) on the James Webb Space Telescope. I. Overview of the instrument and its capabilities</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Jakobsen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astron. Astrophys</title>
+		<imprint>
+			<biblScope unit="volume">661</biblScope>
+			<biblScope unit="page">80</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b14">
+	<analytic>
+		<title level="a" type="main">The galaxy stellar mass function at 3.5 ≤z ≤ 7.5 in the CANDELS/UDS, GOODS-South, and HUDF fields</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Grazian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astron. Astrophys</title>
+		<imprint>
+			<biblScope unit="volume">575</biblScope>
+			<biblScope unit="page">96</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Determining Central Black Hole Masses in Distant Active Galaxies and Quasars. II. Improved Optical and UV Scaling Relationships</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Vestergaard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">M</forename><surname>Peterson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">641</biblScope>
+			<biblScope unit="page" from="689" to="709" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b16">
+	<analytic>
+		<title level="a" type="main">On the Connection between Supermassive Black Holes and Galaxy Growth in the Reionization Epoch</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J. Lett</title>
+		<imprint>
+			<biblScope unit="volume">931</biblScope>
+			<biblScope unit="page">11</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Co-evolution of massive black holes and their host galaxies at high redshift: discrepancies from six cosmological simulations and the key role of JWST</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Habouzit</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mon. Not. R. Astron. Soc</title>
+		<imprint>
+			<biblScope unit="volume">511</biblScope>
+			<biblScope unit="page" from="3751" to="3767" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Coevolution (Or Not) of Supermassive Black Holes and Host Galaxies</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kormendy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">C</forename><surname>Ho</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annu. Rev. Astron. Astrophys</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="page" from="511" to="653" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Rapid Growth of Seed Black Holes during Early Bulge Formation</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Inayoshi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">927</biblScope>
+			<biblScope unit="page">237</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b20">
+	<analytic>
+		<title level="a" type="main">On the Black Hole Mass-Bulge Mass Relation</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Häring</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H.-W</forename><surname>Rix</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J. Lett</title>
+		<imprint>
+			<biblScope unit="volume">604</biblScope>
+			<biblScope unit="page" from="89" to="L92" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b21">
+	<analytic>
+		<title level="a" type="main">A Local Baseline of the Black Hole Mass Scaling Relations for Active Galaxies. I. Methodology and Results of Pilot Study</title>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">N</forename><surname>Bennert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">W</forename><surname>Auger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Treu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-H</forename><surname>Woo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Malkan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">726</biblScope>
+			<biblScope unit="page">59</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Subaru High-z Exploration of Low-luminosity Quasars (SHELLQs). V. Quasar Luminosity Function and Contribution to Cosmic Reionization at z = 6</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Matsuoka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">869</biblScope>
+			<biblScope unit="page">150</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b23">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bradley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Sipőcz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Robitaille</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">astropy/photutils</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">6385735B</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note>Zenodo</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Ultraviolet Light from Young Stars in GEMS Quasar Host Galaxies at 1.8&lt;z&lt;2.75</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Jahnke</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">614</biblScope>
+			<biblScope unit="page" from="568" to="585" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Do the Most Massive Black Holes at z = 2. Grow via Major Mergers?</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mechtley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">830</biblScope>
+			<biblScope unit="page">156</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Major Mergers Are Not the Dominant Trigger for High-accretion AGNs at z ∼ 2</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Marian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">882</biblScope>
+			<biblScope unit="page">141</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Major Mergers Host the Most-luminous Red Quasars at z ∼ 2: A Hubble Space Telescope WFC3/IR Study</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Glikman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">806</biblScope>
+			<biblScope unit="page">218</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b28">
+	<analytic>
+		<title level="a" type="main">A close quasar pair in a disk-disk galaxy merger at z = 2.17</title>
+		<author>
+			<persName><forename type="first">Y.-C</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">616</biblScope>
+			<biblScope unit="page" from="45" to="49" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Herschel Observed Stripe 82 Quasars and Their Host Galaxies: Connections between AGN Activity and host Galaxy Star Formation</title>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">Y</forename><surname>Dong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X.-B</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">824</biblScope>
+			<biblScope unit="page">70</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b30">
+	<analytic>
+		<title level="a" type="main">lenstronomy II: A gravitational lensing software ecosystem</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Birrer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Open Source Software</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">3283</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Opening the Era of Quasar-host Studies at High Redshift with JWST</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Silverman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Onoue</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J. Lett</title>
+		<imprint>
+			<biblScope unit="volume">939</biblScope>
+			<biblScope unit="page">28</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b32">
+	<analytic>
+		<title level="a" type="main">The Sizes of Quasar Host Galaxies in the Hyper Suprime-Cam Subaru Strategic Program</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">918</biblScope>
+			<biblScope unit="page">22</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b33">
+	<monogr>
+		<author>
+			<persName><forename type="first">M.-Y</forename><surname>Zhuang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shen</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2304.13776</idno>
+		<title level="m">Characterization of JWST NIRCam PSFs and Implications for AGN+Host Image Decomposition</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv e-prints</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Detailed Structural Decomposition of Galaxy Images</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">Y</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">C</forename><surname>Ho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Impey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H.-W</forename><surname>Rix</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astron. J</title>
+		<imprint>
+			<biblScope unit="volume">124</biblScope>
+			<biblScope unit="page" from="266" to="293" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b35">
+	<analytic>
+		<title level="a" type="main">UV-continuum Slopes of &gt;4000 z ∼ 4-8 Galaxies from the HUDF/XDF, HUDF09, ERS, CANDELS-South, and CANDELS-North Fields</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Bouwens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">793</biblScope>
+			<biblScope unit="page">115</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Quantifying the impact of cosmic variance during the Epoch of Reionization</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Ucci</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mon. Not. R. Astron. Soc</title>
+		<imprint>
+			<biblScope unit="volume">506</biblScope>
+			<biblScope unit="page" from="202" to="214" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b37">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">E</forename><surname>Shapley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">L</forename><surname>Sanders</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A</forename><surname>Reddy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">W</forename><surname>Topping</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>Brammer</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2301.03241</idno>
+		<title level="m">JWST/NIRSpec Balmer-line Measurements of Star Formation and Dust Attenuation at z ∼ 3-6</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv e-prints</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Massive Dead Galaxies at z ∼ 2 with HST Grism Spectroscopy. I. Star Formation Histories and Metallicity Enrichment</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Morishita</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">877</biblScope>
+			<biblScope unit="page">141</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Inferring the star formation histories of massive quiescent galaxies with BAGPIPES: evidence for multiple quenching mechanisms</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Carnall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Mclure</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Dunlop</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Davé</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mon. Not. R. Astron. Soc</title>
+		<imprint>
+			<biblScope unit="volume">480</biblScope>
+			<biblScope unit="page" from="4379" to="4401" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b40">
+	<analytic>
+		<title level="a" type="main">CIGALE: a python Code Investigating GALaxy Emission</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Boquien</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astron. Astrophys</title>
+		<imprint>
+			<biblScope unit="volume">622</biblScope>
+			<biblScope unit="page">103</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b41">
+	<analytic>
+		<title level="a" type="main">QSOFITMORE (version 1.2.0): a python package for fitting UV-optical spectra of quasars</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Fu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Zenodo</title>
+		<imprint>
+			<biblScope unit="page">5810042</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b42">
+	<analytic>
+		<title level="a" type="main">The Emission-Line Properties of Low-Redshift Quasi-stellar Objects</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Boroson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">F</forename><surname>Green</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J. Suppl. Ser</title>
+		<imprint>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="page">109</biblScope>
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Reverberation Measurements for 17 Quasars and the Size-Mass-Luminosity Relations in Active Galactic Nuclei</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kaspi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">533</biblScope>
+			<biblScope unit="page" from="631" to="649" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b44">
+	<analytic>
+		<title level="a" type="main">a large sample of</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kashino</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2211.08254</idno>
+	</analytic>
+	<monogr>
+		<title level="m">OIII]-emitting galaxies at 5.3 &lt; z &lt; 6.9 and direct evidence for local reionization by galaxies</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv e-prints</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b45">
+	<analytic>
+		<title level="a" type="main">EIGER II. first spectroscopic characterisation of the young stars and ionised gas associated with strong Hβ and</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Matthee</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2211.08255</idno>
+	</analytic>
+	<monogr>
+		<title level="m">OIII] line-emission in galaxies at z=5-7 with JWST</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv e-prints</note>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Demographics of z ∼ 6 quasars in the black hole mass-luminosity plane</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mon. Not. R. Astron. Soc</title>
+		<imprint>
+			<biblScope unit="volume">517</biblScope>
+			<biblScope unit="page" from="2659" to="2676" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted" xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Synchronized Coevolution between Supermassive Black Holes and Galaxies over the Last Seven Billion Years as Revealed by Hyper Suprime-Cam</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J</title>
+		<imprint>
+			<biblScope unit="volume">922</biblScope>
+			<biblScope unit="page">142</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

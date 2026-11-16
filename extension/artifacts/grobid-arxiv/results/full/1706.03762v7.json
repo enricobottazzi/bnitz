@@ -1,0 +1,3456 @@
+{
+  "source": "https://arxiv.org/pdf/1706.03762v7",
+  "title": "Attention Is All You Need",
+  "abstract": [
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+          "coords": [
+            "1,143.56,414.48,324.74,8.64",
+            "1,143.87,425.39,324.26,8.64",
+            "1,143.87,436.30,324.26,8.64",
+            "1,143.87,447.21,325.51,8.64",
+            "1,143.87,458.12,324.27,8.64",
+            "1,143.87,469.02,324.26,8.64",
+            "1,143.87,479.93,324.62,8.64",
+            "1,143.87,490.84,325.92,8.64",
+            "1,143.87,501.75,324.26,8.64",
+            "1,143.87,512.66,325.51,8.64",
+            "1,143.87,523.57,324.44,8.64",
+            "1,143.87,534.48,324.26,8.64",
+            "1,143.87,545.39,324.27,8.64",
+            "1,143.87,556.30,324.27,8.64",
+            "1,143.87,567.21,122.40,8.64",
+            "1,119.82,597.96,1.27,5.24"
+          ],
+          "sentences": [
+            {
+              "text": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder.",
+              "coords": [
+                "1,143.56,414.48,324.74,8.64",
+                "1,143.87,425.39,284.66,8.64"
+              ]
+            },
+            {
+              "text": "The best performing models also connect the encoder and decoder through an attention mechanism.",
+              "coords": [
+                "1,433.01,425.39,35.12,8.64",
+                "1,143.87,436.30,324.26,8.64",
+                "1,143.87,447.21,48.83,8.64"
+              ]
+            },
+            {
+              "text": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+              "coords": [
+                "1,198.77,447.21,270.61,8.64",
+                "1,143.87,458.12,324.27,8.64",
+                "1,143.87,469.02,32.93,8.64"
+              ]
+            },
+            {
+              "text": "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
+              "coords": [
+                "1,182.93,469.02,285.20,8.64",
+                "1,143.87,479.93,324.62,8.64",
+                "1,143.87,490.84,71.51,8.64"
+              ]
+            },
+            {
+              "text": "Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU.",
+              "coords": [
+                "1,220.12,490.84,249.67,8.64",
+                "1,143.87,501.75,324.26,8.64",
+                "1,143.87,512.66,111.89,8.64"
+              ]
+            },
+            {
+              "text": "On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.",
+              "coords": [
+                "1,258.04,512.66,211.34,8.64",
+                "1,143.87,523.57,324.44,8.64",
+                "1,143.87,534.48,324.26,8.64",
+                "1,143.87,545.39,124.34,8.64"
+              ]
+            },
+            {
+              "text": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+              "coords": [
+                "1,271.31,545.39,196.82,8.64",
+                "1,143.87,556.30,324.27,8.64",
+                "1,143.87,567.21,122.40,8.64",
+                "1,119.82,597.96,1.27,5.24"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "* Equal contribution. Listing order is random. Jakob proposed replacing RNNs with self-attention and started the effort to evaluate this idea. Ashish, with Illia, designed and implemented the first Transformer models and has been crucially involved in every aspect of this work. Noam proposed scaled dot-product attention, multi-head attention and the parameter-free position representation and became the other person involved in nearly every detail. Niki designed, implemented, tuned and evaluated countless model variants in our original codebase and tensor2tensor. Llion also experimented with novel model variants, was responsible for our initial codebase, and efficient inference and visualizations. Lukasz and Aidan spent countless long days designing various parts of and implementing tensor2tensor, replacing our earlier codebase, greatly improving results and massively accelerating our research.",
+          "coords": [
+            "1,121.10,597.96,2.55,5.24",
+            "1,124.14,600.02,379.86,7.77",
+            "1,108.00,609.98,396.00,7.77",
+            "1,108.00,619.94,396.00,7.77",
+            "1,108.00,629.91,396.31,7.77",
+            "1,108.00,639.87,396.00,7.77",
+            "1,108.00,649.83,396.00,7.77",
+            "1,108.00,659.79,396.00,7.77",
+            "1,108.00,669.76,396.00,7.77",
+            "1,108.00,679.72,46.30,7.77",
+            "1,120.21,688.61,1.72,5.24"
+          ],
+          "sentences": [
+            {
+              "text": "* Equal contribution.",
+              "coords": [
+                "1,121.10,597.96,2.55,5.24",
+                "1,124.14,600.02,67.79,7.77"
+              ]
+            },
+            {
+              "text": "Listing order is random.",
+              "coords": [
+                "1,194.72,600.02,85.16,7.77"
+              ]
+            },
+            {
+              "text": "Jakob proposed replacing RNNs with self-attention and started the effort to evaluate this idea.",
+              "coords": [
+                "1,282.68,600.02,221.32,7.77",
+                "1,108.00,609.98,109.13,7.77"
+              ]
+            },
+            {
+              "text": "Ashish, with Illia, designed and implemented the first Transformer models and has been crucially involved in every aspect of this work.",
+              "coords": [
+                "1,219.91,609.98,284.09,7.77",
+                "1,108.00,619.94,195.47,7.77"
+              ]
+            },
+            {
+              "text": "Noam proposed scaled dot-product attention, multi-head attention and the parameter-free position representation and became the other person involved in nearly every detail.",
+              "coords": [
+                "1,306.17,619.94,197.82,7.77",
+                "1,108.00,629.91,396.31,7.77",
+                "1,108.00,639.87,22.12,7.77"
+              ]
+            },
+            {
+              "text": "Niki designed, implemented, tuned and evaluated countless model variants in our original codebase and tensor2tensor.",
+              "coords": [
+                "1,132.93,639.87,371.07,7.77",
+                "1,108.00,649.83,49.65,7.77"
+              ]
+            },
+            {
+              "text": "Llion also experimented with novel model variants, was responsible for our initial codebase, and efficient inference and visualizations.",
+              "coords": [
+                "1,160.43,649.83,343.57,7.77",
+                "1,108.00,659.79,130.77,7.77"
+              ]
+            },
+            {
+              "text": "Lukasz and Aidan spent countless long days designing various parts of and implementing tensor2tensor, replacing our earlier codebase, greatly improving results and massively accelerating our research.",
+              "coords": [
+                "1,241.50,659.79,262.50,7.77",
+                "1,108.00,669.76,396.00,7.77",
+                "1,108.00,679.72,46.30,7.77",
+                "1,120.21,688.61,1.72,5.24"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "† Work performed while at Google Brain.",
+          "coords": [
+            "1,121.93,688.61,1.72,5.24",
+            "1,124.14,690.67,143.21,7.77",
+            "1,120.21,699.56,1.72,5.24"
+          ],
+          "sentences": [
+            {
+              "text": "† Work performed while at Google Brain.",
+              "coords": [
+                "1,121.93,688.61,1.72,5.24",
+                "1,124.14,690.67,143.21,7.77",
+                "1,120.21,699.56,1.72,5.24"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Introduction",
+          "coords": [
+            "2,108.00,73.71,82.81,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Recurrent neural networks, long short-term memory [13] and gated recurrent [7] neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation [35,2,5]. Numerous efforts have since continued to push the boundaries of recurrent language models and encoder-decoder architectures [38,24,15].",
+          "coords": [
+            "2,108.00,100.16,212.89,8.64",
+            "2,342.98,100.16,78.67,8.64",
+            "2,438.77,100.16,65.23,8.64",
+            "2,108.00,111.07,396.00,8.64",
+            "2,108.00,121.98,305.94,8.64",
+            "2,453.52,121.98,50.48,8.64",
+            "2,108.00,132.89,396.17,8.64",
+            "2,108.00,143.80,50.90,8.64",
+            "2,206.42,143.80,3.94,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Recurrent neural networks, long short-term memory [13] and gated recurrent [7] neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation [35,2,5].",
+              "coords": [
+                "2,108.00,100.16,396.00,8.64",
+                "2,108.00,111.07,396.00,8.64",
+                "2,108.00,121.98,349.16,8.64"
+              ]
+            },
+            {
+              "text": "Numerous efforts have since continued to push the boundaries of recurrent language models and encoder-decoder architectures [38,24,15].",
+              "coords": [
+                "2,461.67,121.98,42.33,8.64",
+                "2,108.00,132.89,396.17,8.64",
+                "2,108.00,143.80,102.37,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Recurrent models typically factor computation along the symbol positions of the input and output sequences. Aligning the positions to steps in computation time, they generate a sequence of hidden states h t , as a function of the previous hidden state h t-1 and the input for position t. This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths, as memory constraints limit batching across examples. Recent work has achieved significant improvements in computational efficiency through factorization tricks [21] and conditional computation [32], while also improving model performance in case of the latter. The fundamental constraint of sequential computation, however, remains.",
+          "coords": [
+            "2,108.00,160.19,396.00,8.64",
+            "2,108.00,171.09,396.00,8.64",
+            "2,108.00,181.68,396.35,9.65",
+            "2,108.00,192.91,396.17,8.64",
+            "2,108.00,203.82,396.00,8.64",
+            "2,108.00,214.73,314.79,8.64",
+            "2,443.73,214.73,60.27,8.64",
+            "2,108.00,225.64,50.71,8.64",
+            "2,176.60,225.64,327.40,8.64",
+            "2,108.00,236.55,222.52,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Recurrent models typically factor computation along the symbol positions of the input and output sequences.",
+              "coords": [
+                "2,108.00,160.19,396.00,8.64",
+                "2,108.00,171.09,43.05,8.64"
+              ]
+            },
+            {
+              "text": "Aligning the positions to steps in computation time, they generate a sequence of hidden states h t , as a function of the previous hidden state h t-1 and the input for position t.",
+              "coords": [
+                "2,154.15,171.09,349.85,8.64",
+                "2,108.00,181.68,333.24,9.65"
+              ]
+            },
+            {
+              "text": "This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths, as memory constraints limit batching across examples.",
+              "coords": [
+                "2,444.32,182.00,60.03,8.64",
+                "2,108.00,192.91,396.17,8.64",
+                "2,108.00,203.82,289.45,8.64"
+              ]
+            },
+            {
+              "text": "Recent work has achieved significant improvements in computational efficiency through factorization tricks [21] and conditional computation [32], while also improving model performance in case of the latter.",
+              "coords": [
+                "2,400.54,203.82,103.46,8.64",
+                "2,108.00,214.73,396.00,8.64",
+                "2,108.00,225.64,323.95,8.64"
+              ]
+            },
+            {
+              "text": "The fundamental constraint of sequential computation, however, remains.",
+              "coords": [
+                "2,435.04,225.64,68.95,8.64",
+                "2,108.00,236.55,222.52,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences [2,19]. In all but a few cases [27], however, such attention mechanisms are used in conjunction with a recurrent network.",
+          "coords": [
+            "2,107.64,252.94,398.01,8.64",
+            "2,108.00,263.85,396.00,8.64",
+            "2,108.00,274.76,114.21,8.64",
+            "2,249.40,274.76,88.39,8.64",
+            "2,355.29,274.76,148.71,8.64",
+            "2,108.00,285.66,195.79,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences [2,19].",
+              "coords": [
+                "2,107.64,252.94,398.01,8.64",
+                "2,108.00,263.85,396.00,8.64",
+                "2,108.00,274.76,145.31,8.64"
+              ]
+            },
+            {
+              "text": "In all but a few cases [27], however, such attention mechanisms are used in conjunction with a recurrent network.",
+              "coords": [
+                "2,256.37,274.76,247.63,8.64",
+                "2,108.00,285.66,195.79,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output. The Transformer allows for significantly more parallelization and can reach a new state of the art in translation quality after being trained for as little as twelve hours on eight P100 GPUs.",
+          "coords": [
+            "2,108.00,302.05,396.00,8.64",
+            "2,108.00,312.96,397.74,8.64",
+            "2,107.69,323.87,396.31,8.64",
+            "2,108.00,334.78,344.36,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.",
+              "coords": [
+                "2,108.00,302.05,396.00,8.64",
+                "2,108.00,312.96,397.74,8.64"
+              ]
+            },
+            {
+              "text": "The Transformer allows for significantly more parallelization and can reach a new state of the art in translation quality after being trained for as little as twelve hours on eight P100 GPUs.",
+              "coords": [
+                "2,107.69,323.87,396.31,8.64",
+                "2,108.00,334.78,344.36,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Background",
+          "coords": [
+            "2,108.00,364.03,80.83,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The goal of reducing sequential computation also forms the foundation of the Extended Neural GPU [16], ByteNet [18] and ConvS2S [9], all of which use convolutional neural networks as basic building block, computing hidden representations in parallel for all input and output positions. In these models, the number of operations required to relate signals from two arbitrary input or output positions grows in the distance between positions, linearly for ConvS2S and logarithmically for ByteNet. This makes it more difficult to learn dependencies between distant positions [12]. In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to averaging attention-weighted positions, an effect we counteract with Multi-Head Attention as described in section 3.2.",
+          "coords": [
+            "2,107.69,390.47,396.31,8.64",
+            "2,123.12,401.38,38.69,8.64",
+            "2,182.94,401.38,52.93,8.64",
+            "2,248.65,401.38,255.36,8.64",
+            "2,108.00,412.29,397.24,8.64",
+            "2,108.00,423.20,396.00,8.64",
+            "2,108.00,434.11,396.00,8.64",
+            "2,108.00,445.02,263.71,8.64",
+            "2,390.20,445.02,113.79,8.64",
+            "2,108.00,455.93,396.00,8.64",
+            "2,108.00,466.84,396.00,8.64",
+            "2,108.00,477.75,96.57,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The goal of reducing sequential computation also forms the foundation of the Extended Neural GPU [16], ByteNet [18] and ConvS2S [9], all of which use convolutional neural networks as basic building block, computing hidden representations in parallel for all input and output positions.",
+              "coords": [
+                "2,107.69,390.47,396.31,8.64",
+                "2,108.00,401.38,396.00,8.64",
+                "2,108.00,412.29,330.96,8.64"
+              ]
+            },
+            {
+              "text": "In these models, the number of operations required to relate signals from two arbitrary input or output positions grows in the distance between positions, linearly for ConvS2S and logarithmically for ByteNet.",
+              "coords": [
+                "2,441.96,412.29,63.29,8.64",
+                "2,108.00,423.20,396.00,8.64",
+                "2,108.00,434.11,348.04,8.64"
+              ]
+            },
+            {
+              "text": "This makes it more difficult to learn dependencies between distant positions [12].",
+              "coords": [
+                "2,459.17,434.11,44.83,8.64",
+                "2,108.00,445.02,286.06,8.64"
+              ]
+            },
+            {
+              "text": "In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to averaging attention-weighted positions, an effect we counteract with Multi-Head Attention as described in section 3.2.",
+              "coords": [
+                "2,398.90,445.02,105.09,8.64",
+                "2,108.00,455.93,396.00,8.64",
+                "2,108.00,466.84,396.00,8.64",
+                "2,108.00,477.75,96.57,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Self-attention, sometimes called intra-attention is an attention mechanism relating different positions of a single sequence in order to compute a representation of the sequence. Self-attention has been used successfully in a variety of tasks including reading comprehension, abstractive summarization, textual entailment and learning task-independent sentence representations [4,27,28,22].",
+          "coords": [
+            "2,108.00,494.14,396.00,8.64",
+            "2,108.00,505.04,396.00,8.64",
+            "2,108.00,515.95,397.25,8.64",
+            "2,108.00,526.86,293.69,8.64",
+            "2,459.17,526.86,3.94,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Self-attention, sometimes called intra-attention is an attention mechanism relating different positions of a single sequence in order to compute a representation of the sequence.",
+              "coords": [
+                "2,108.00,494.14,396.00,8.64",
+                "2,108.00,505.04,299.73,8.64"
+              ]
+            },
+            {
+              "text": "Self-attention has been used successfully in a variety of tasks including reading comprehension, abstractive summarization, textual entailment and learning task-independent sentence representations [4,27,28,22].",
+              "coords": [
+                "2,410.90,505.04,93.09,8.64",
+                "2,108.00,515.95,397.25,8.64",
+                "2,108.00,526.86,355.12,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "End-to-end memory networks are based on a recurrent attention mechanism instead of sequencealigned recurrence and have been shown to perform well on simple-language question answering and language modeling tasks [34].",
+          "coords": [
+            "2,108.00,543.25,397.65,8.64",
+            "2,108.00,554.16,396.00,8.64",
+            "2,108.00,565.07,98.51,8.64",
+            "2,224.27,565.07,3.82,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "End-to-end memory networks are based on a recurrent attention mechanism instead of sequencealigned recurrence and have been shown to perform well on simple-language question answering and language modeling tasks [34].",
+              "coords": [
+                "2,108.00,543.25,397.65,8.64",
+                "2,108.00,554.16,396.00,8.64",
+                "2,108.00,565.07,120.09,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To the best of our knowledge, however, the Transformer is the first transduction model relying entirely on self-attention to compute representations of its input and output without using sequencealigned RNNs or convolution. In the following sections, we will describe the Transformer, motivate self-attention and discuss its advantages over models such as [17,18] and [9].",
+          "coords": [
+            "2,107.69,581.46,396.31,8.64",
+            "2,108.00,592.37,397.66,8.64",
+            "2,108.00,603.28,396.00,8.64",
+            "2,108.00,614.18,241.84,8.64",
+            "2,386.37,614.18,14.39,8.64",
+            "2,413.82,614.18,3.53,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "To the best of our knowledge, however, the Transformer is the first transduction model relying entirely on self-attention to compute representations of its input and output without using sequencealigned RNNs or convolution.",
+              "coords": [
+                "2,107.69,581.46,396.31,8.64",
+                "2,108.00,592.37,397.66,8.64",
+                "2,108.00,603.28,119.19,8.64"
+              ]
+            },
+            {
+              "text": "In the following sections, we will describe the Transformer, motivate self-attention and discuss its advantages over models such as [17,18] and [9].",
+              "coords": [
+                "2,230.30,603.28,273.70,8.64",
+                "2,108.00,614.18,309.35,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Model Architecture",
+          "coords": [
+            "2,108.00,643.43,118.09,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Most competitive neural sequence transduction models have an encoder-decoder structure [5,2,35]. Here, the encoder maps an input sequence of symbol representations (x 1 , ..., x n ) to a sequence of continuous representations z = (z 1 , ..., z n ). Given z, the decoder then generates an output sequence (y 1 , ..., y m ) of symbols one element at a time. At each step the model is auto-regressive [10], consuming the previously generated symbols as additional input when generating the next. The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+          "coords": [
+            "2,108.00,669.88,356.29,8.64",
+            "2,501.81,669.88,3.94,8.64",
+            "2,108.00,680.47,396.00,9.65",
+            "2,108.00,691.35,396.00,9.68",
+            "2,108.00,702.29,396.00,9.65",
+            "2,123.27,713.51,367.29,8.64",
+            "3,107.69,437.87,396.66,8.64",
+            "3,108.00,448.78,386.93,8.64",
+            "3,501.44,448.78,3.81,8.64",
+            "3,108.00,459.69,49.58,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Most competitive neural sequence transduction models have an encoder-decoder structure [5,2,35].",
+              "coords": [
+                "2,108.00,669.88,397.74,8.64"
+              ]
+            },
+            {
+              "text": "Here, the encoder maps an input sequence of symbol representations (x 1 , ..., x n ) to a sequence of continuous representations z = (z 1 , ..., z n ).",
+              "coords": [
+                "2,108.00,680.47,396.00,9.65",
+                "2,108.00,691.35,195.09,9.68"
+              ]
+            },
+            {
+              "text": "Given z, the decoder then generates an output sequence (y 1 , ..., y m ) of symbols one element at a time.",
+              "coords": [
+                "2,309.77,691.35,194.23,8.99",
+                "2,108.00,702.29,226.08,9.65"
+              ]
+            },
+            {
+              "text": "At each step the model is auto-regressive [10], consuming the previously generated symbols as additional input when generating the next.",
+              "coords": [
+                "2,337.37,702.61,166.63,8.64",
+                "2,108.00,713.51,382.56,8.64"
+              ]
+            },
+            {
+              "text": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+              "coords": [
+                "3,107.69,437.87,396.66,8.64",
+                "3,108.00,448.78,397.25,8.64",
+                "3,108.00,459.69,49.58,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Encoder and Decoder Stacks",
+          "coords": [
+            "3,108.00,483.76,145.01,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Encoder: The encoder is composed of a stack of N = 6 identical layers. Each layer has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, positionwise fully connected feed-forward network. We employ a residual connection [11] around each of the two sub-layers, followed by layer normalization [1]. That is, the output of each sub-layer is LayerNorm(x + Sublayer(x)), where Sublayer(x) is the function implemented by the sub-layer itself. To facilitate these residual connections, all sub-layers in the model, as well as the embedding layers, produce outputs of dimension d model = 512.",
+          "coords": [
+            "3,108.00,503.74,396.00,9.03",
+            "3,108.00,515.04,397.66,8.64",
+            "3,107.64,525.95,314.58,8.64",
+            "3,443.93,525.95,60.07,8.64",
+            "3,108.00,536.86,213.57,8.64",
+            "3,335.41,536.86,168.59,8.64",
+            "3,108.00,547.45,396.17,8.96",
+            "3,108.00,558.68,396.00,8.64",
+            "3,108.00,569.27,203.81,9.80"
+          ],
+          "sentences": [
+            {
+              "text": "Encoder: The encoder is composed of a stack of N = 6 identical layers.",
+              "coords": [
+                "3,108.00,503.74,311.94,9.03"
+              ]
+            },
+            {
+              "text": "Each layer has two sub-layers.",
+              "coords": [
+                "3,425.12,504.13,78.88,8.64",
+                "3,108.00,515.04,43.83,8.64"
+              ]
+            },
+            {
+              "text": "The first is a multi-head self-attention mechanism, and the second is a simple, positionwise fully connected feed-forward network.",
+              "coords": [
+                "3,154.92,515.04,350.73,8.64",
+                "3,107.64,525.95,177.02,8.64"
+              ]
+            },
+            {
+              "text": "We employ a residual connection [11] around each of the two sub-layers, followed by layer normalization [1].",
+              "coords": [
+                "3,287.77,525.95,216.23,8.64",
+                "3,108.00,536.86,230.98,8.64"
+              ]
+            },
+            {
+              "text": "That is, the output of each sub-layer is LayerNorm(x + Sublayer(x)), where Sublayer(x) is the function implemented by the sub-layer itself.",
+              "coords": [
+                "3,343.97,536.86,160.03,8.64",
+                "3,108.00,547.45,396.17,8.96",
+                "3,108.00,558.68,22.42,8.64"
+              ]
+            },
+            {
+              "text": "To facilitate these residual connections, all sub-layers in the model, as well as the embedding layers, produce outputs of dimension d model = 512.",
+              "coords": [
+                "3,133.51,558.68,370.49,8.64",
+                "3,108.00,569.27,203.81,9.80"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Decoder: The decoder is also composed of a stack of N = 6 identical layers. In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack. Similar to the encoder, we employ residual connections around each of the sub-layers, followed by layer normalization. We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions. This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than i.",
+          "coords": [
+            "3,108.00,592.32,396.00,9.03",
+            "3,108.00,603.62,396.00,8.64",
+            "3,108.00,614.52,396.00,8.64",
+            "3,108.00,625.43,396.00,8.64",
+            "3,108.00,636.34,396.00,8.64",
+            "3,108.00,647.25,396.00,8.64",
+            "3,108.00,657.84,348.65,8.96"
+          ],
+          "sentences": [
+            {
+              "text": "Decoder: The decoder is also composed of a stack of N = 6 identical layers.",
+              "coords": [
+                "3,108.00,592.32,309.27,9.03"
+              ]
+            },
+            {
+              "text": "In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack.",
+              "coords": [
+                "3,420.32,592.71,83.67,8.64",
+                "3,108.00,603.62,396.00,8.64",
+                "3,108.00,614.52,177.59,8.64"
+              ]
+            },
+            {
+              "text": "Similar to the encoder, we employ residual connections around each of the sub-layers, followed by layer normalization.",
+              "coords": [
+                "3,288.60,614.52,215.40,8.64",
+                "3,108.00,625.43,257.60,8.64"
+              ]
+            },
+            {
+              "text": "We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions.",
+              "coords": [
+                "3,368.80,625.43,135.19,8.64",
+                "3,108.00,636.34,373.00,8.64"
+              ]
+            },
+            {
+              "text": "This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than i.",
+              "coords": [
+                "3,485.93,636.34,18.07,8.64",
+                "3,108.00,647.25,396.00,8.64",
+                "3,108.00,657.84,348.65,8.96"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Attention",
+          "coords": [
+            "3,108.00,682.24,62.81,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.",
+          "coords": [
+            "3,107.64,702.61,397.61,8.64",
+            "3,107.64,713.51,396.36,8.64",
+            "4,108.00,318.25,396.00,8.64",
+            "4,108.00,329.16,135.51,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors.",
+              "coords": [
+                "3,107.64,702.61,397.61,8.64",
+                "3,107.64,713.51,223.79,8.64"
+              ]
+            },
+            {
+              "text": "The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.",
+              "coords": [
+                "3,334.53,713.51,169.47,8.64",
+                "4,108.00,318.25,396.00,8.64",
+                "4,108.00,329.16,135.51,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Scaled Dot-Product Attention",
+          "coords": [
+            "4,108.00,351.83,155.88,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We call our particular attention \"Scaled Dot-Product Attention\" (Figure 2). The input consists of queries and keys of dimension d k , and values of dimension d v . We compute the dot products of the query with all keys, divide each by √ d k , and apply a softmax function to obtain the weights on the values.",
+          "coords": [
+            "4,107.53,370.85,292.65,8.64",
+            "4,406.69,370.85,97.31,8.64",
+            "4,108.00,381.44,396.00,9.65",
+            "4,108.00,392.67,139.56,8.64",
+            "4,250.05,384.60,8.30,8.74",
+            "4,258.35,392.35,245.65,9.65",
+            "4,107.75,403.57,27.70,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "We call our particular attention \"Scaled Dot-Product Attention\" (Figure 2).",
+              "coords": [
+                "4,107.53,370.85,306.49,8.64"
+              ]
+            },
+            {
+              "text": "The input consists of queries and keys of dimension d k , and values of dimension d v .",
+              "coords": [
+                "4,418.15,370.85,85.85,8.64",
+                "4,108.00,381.44,250.68,9.65"
+              ]
+            },
+            {
+              "text": "We compute the dot products of the query with all keys, divide each by √ d k , and apply a softmax function to obtain the weights on the values.",
+              "coords": [
+                "4,361.77,381.76,142.23,8.64",
+                "4,108.00,392.67,139.56,8.64",
+                "4,250.05,384.60,8.30,8.74",
+                "4,258.35,392.35,245.65,9.65",
+                "4,107.75,403.57,27.70,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix Q. The keys and values are also packed together into matrices K and V . We compute the matrix of outputs as:",
+          "coords": [
+            "4,108.00,419.96,396.17,8.64",
+            "4,108.00,430.55,396.00,8.96",
+            "4,108.00,441.78,96.86,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix Q. The keys and values are also packed together into matrices K and V .",
+              "coords": [
+                "4,108.00,419.96,396.17,8.64",
+                "4,108.00,430.55,342.94,8.96"
+              ]
+            },
+            {
+              "text": "We compute the matrix of outputs as:",
+              "coords": [
+                "4,454.03,430.87,49.97,8.64",
+                "4,108.00,441.78,96.86,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "Attention(Q, K, V ) = softmax( QK T √ d k )V(1)",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "The two most commonly used attention functions are additive attention [2], and dot-product (multiplicative) attention. Dot-product attention is identical to our algorithm, except for the scaling factor of 1",
+          "coords": [
+            "4,107.69,500.59,284.90,8.64",
+            "4,405.68,500.59,99.97,8.64",
+            "4,108.00,511.50,396.17,8.64",
+            "4,108.00,522.41,8.37,8.64",
+            "4,125.60,520.21,3.97,6.12"
+          ],
+          "sentences": [
+            {
+              "text": "The two most commonly used attention functions are additive attention [2], and dot-product (multiplicative) attention.",
+              "coords": [
+                "4,107.69,500.59,397.96,8.64",
+                "4,108.00,511.50,77.23,8.64"
+              ]
+            },
+            {
+              "text": "Dot-product attention is identical to our algorithm, except for the scaling factor of 1",
+              "coords": [
+                "4,188.34,511.50,315.83,8.64",
+                "4,108.00,522.41,8.37,8.64",
+                "4,125.60,520.21,3.97,6.12"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "√ d k .",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "Additive attention computes the compatibility function using a feed-forward network with a single hidden layer. While the two are similar in theoretical complexity, dot-product attention is much faster and more space-efficient in practice, since it can be implemented using highly optimized matrix multiplication code.",
+          "coords": [
+            "4,141.90,522.41,362.10,8.64",
+            "4,108.00,535.58,396.00,8.64",
+            "4,108.00,546.49,396.00,8.64",
+            "4,108.00,557.39,108.20,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Additive attention computes the compatibility function using a feed-forward network with a single hidden layer.",
+              "coords": [
+                "4,141.90,522.41,362.10,8.64",
+                "4,108.00,535.58,86.36,8.64"
+              ]
+            },
+            {
+              "text": "While the two are similar in theoretical complexity, dot-product attention is much faster and more space-efficient in practice, since it can be implemented using highly optimized matrix multiplication code.",
+              "coords": [
+                "4,197.58,535.58,306.42,8.64",
+                "4,108.00,546.49,396.00,8.64",
+                "4,108.00,557.39,108.20,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "While for small values of d k the two mechanisms perform similarly, additive attention outperforms dot product attention without scaling for larger values of d k [3]. We suspect that for large values of d k , the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradientsfoot_0 . To counteract this effect, we scale the dot products by 1",
+          "coords": [
+            "4,107.53,573.46,396.47,9.65",
+            "4,108.00,584.37,237.81,9.65",
+            "4,359.59,584.69,144.41,8.64",
+            "4,108.00,595.28,396.00,9.65",
+            "4,108.00,606.51,102.78,8.64",
+            "4,217.26,606.51,219.78,8.64",
+            "4,446.27,604.31,3.97,6.12"
+          ],
+          "sentences": [
+            {
+              "text": "While for small values of d k the two mechanisms perform similarly, additive attention outperforms dot product attention without scaling for larger values of d k [3].",
+              "coords": [
+                "4,107.53,573.46,396.47,9.65",
+                "4,108.00,584.37,255.13,9.65"
+              ]
+            },
+            {
+              "text": "We suspect that for large values of d k , the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradientsfoot_0 .",
+              "coords": [
+                "4,366.24,584.69,137.76,8.64",
+                "4,108.00,595.28,396.00,9.65",
+                "4,108.00,606.51,111.75,8.64"
+              ]
+            },
+            {
+              "text": "To counteract this effect, we scale the dot products by 1",
+              "coords": [
+                "4,222.84,606.51,214.21,8.64",
+                "4,446.27,604.31,3.97,6.12"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "√ d k .",
+          "coords": []
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Multi-Head Attention",
+          "coords": [
+            "4,108.00,631.55,122.59,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Instead of performing a single attention function with d model -dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values h times with different, learned linear projections to d k , d k and d v dimensions, respectively. On each of these projected versions of queries, keys and values we then perform the attention function in parallel, yielding d v -dimensional output values. These are concatenated and once again projected, resulting in the final values, as depicted in Figure 2.",
+          "coords": [
+            "4,108.00,650.25,397.24,9.80",
+            "4,107.64,661.16,396.35,8.96",
+            "4,108.00,672.07,396.00,9.65",
+            "4,108.00,682.98,396.00,9.65",
+            "5,108.00,75.48,396.00,8.64",
+            "5,108.00,86.39,72.50,8.64",
+            "5,186.72,86.39,3.74,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Instead of performing a single attention function with d model -dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values h times with different, learned linear projections to d k , d k and d v dimensions, respectively.",
+              "coords": [
+                "4,108.00,650.25,397.24,9.80",
+                "4,107.64,661.16,396.35,8.96",
+                "4,108.00,672.07,239.81,9.65"
+              ]
+            },
+            {
+              "text": "On each of these projected versions of queries, keys and values we then perform the attention function in parallel, yielding d v -dimensional output values.",
+              "coords": [
+                "4,350.90,672.39,153.10,8.64",
+                "4,108.00,682.98,396.00,9.65",
+                "5,108.00,75.48,57.31,8.64"
+              ]
+            },
+            {
+              "text": "These are concatenated and once again projected, resulting in the final values, as depicted in Figure 2.",
+              "coords": [
+                "5,170.17,75.48,333.83,8.64",
+                "5,108.00,86.39,82.46,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.",
+          "coords": [
+            "5,108.00,102.77,396.00,8.64",
+            "5,108.00,113.68,337.19,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions.",
+              "coords": [
+                "5,108.00,102.77,396.00,8.64",
+                "5,108.00,113.68,127.03,8.64"
+              ]
+            },
+            {
+              "text": "With a single attention head, averaging inhibits this.",
+              "coords": [
+                "5,238.12,113.68,207.07,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "MultiHead(Q, K, V ) = Concat(head 1 , ..., head h )W O",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "where",
+          "coords": [
+            "5,224.50,165.71,24.34,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "where",
+              "coords": [
+                "5,224.50,165.71,24.34,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "head i = Attention(QW Q i , KW K i , V W V i )",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "Where the projections are parameter matrices",
+          "coords": [
+            "5,107.53,206.82,176.20,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Where the projections are parameter matrices",
+              "coords": [
+                "5,107.53,206.82,176.20,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "W Q i ∈ R dmodel×d k , W K i ∈ R dmodel×d k , W V i ∈ R dmodel×dv and W O ∈ R hdv×dmodel .",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work we employ h = 8 parallel attention layers, or heads. For each of these we use",
+          "coords": [
+            "5,108.00,235.12,396.00,8.96"
+          ],
+          "sentences": [
+            {
+              "text": "In this work we employ h = 8 parallel attention layers, or heads.",
+              "coords": [
+                "5,108.00,235.12,281.81,8.96"
+              ]
+            },
+            {
+              "text": "For each of these we use",
+              "coords": [
+                "5,397.15,235.44,106.85,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "d k = d v = d model /h = 64.",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "Due to the reduced dimension of each head, the total computational cost is similar to that of single-head attention with full dimensionality.",
+          "coords": [
+            "5,217.26,246.35,286.74,8.64",
+            "5,108.00,257.26,261.15,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Due to the reduced dimension of each head, the total computational cost is similar to that of single-head attention with full dimensionality.",
+              "coords": [
+                "5,217.26,246.35,286.74,8.64",
+                "5,108.00,257.26,261.15,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Applications of Attention in our Model",
+          "coords": [
+            "5,108.00,281.04,194.86,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The Transformer uses multi-head attention in three different ways:",
+          "coords": [
+            "5,107.69,300.49,264.92,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The Transformer uses multi-head attention in three different ways:",
+              "coords": [
+                "5,107.69,300.49,264.92,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer, and the memory keys and values come from the output of the encoder. This allows every position in the decoder to attend over all positions in the input sequence. This mimics the typical encoder-decoder attention mechanisms in sequence-to-sequence models such as [38,2,9].",
+          "coords": [
+            "5,135.40,321.33,369.84,8.64",
+            "5,143.87,332.24,360.48,8.64",
+            "5,143.87,343.15,360.13,8.64",
+            "5,143.87,354.06,360.14,8.64",
+            "5,179.28,364.97,3.60,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "• In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer, and the memory keys and values come from the output of the encoder.",
+              "coords": [
+                "5,135.40,321.33,369.84,8.64",
+                "5,143.87,332.24,285.57,8.64"
+              ]
+            },
+            {
+              "text": "This allows every position in the decoder to attend over all positions in the input sequence.",
+              "coords": [
+                "5,432.72,332.24,71.63,8.64",
+                "5,143.87,343.15,291.99,8.64"
+              ]
+            },
+            {
+              "text": "This mimics the typical encoder-decoder attention mechanisms in sequence-to-sequence models such as [38,2,9].",
+              "coords": [
+                "5,438.96,343.15,65.04,8.64",
+                "5,143.87,354.06,360.14,8.64",
+                "5,143.87,364.97,39.01,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• The encoder contains self-attention layers. In a self-attention layer all of the keys, values and queries come from the same place, in this case, the output of the previous layer in the encoder. Each position in the encoder can attend to all positions in the previous layer of the encoder.",
+          "coords": [
+            "5,135.40,380.80,368.60,8.64",
+            "5,143.87,391.71,360.13,8.64",
+            "5,143.87,402.62,360.14,8.64",
+            "5,143.87,413.53,33.47,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "• The encoder contains self-attention layers.",
+              "coords": [
+                "5,135.40,380.80,180.55,8.64"
+              ]
+            },
+            {
+              "text": "In a self-attention layer all of the keys, values and queries come from the same place, in this case, the output of the previous layer in the encoder.",
+              "coords": [
+                "5,319.15,380.80,184.84,8.64",
+                "5,143.87,391.71,360.13,8.64",
+                "5,143.87,402.62,33.10,8.64"
+              ]
+            },
+            {
+              "text": "Each position in the encoder can attend to all positions in the previous layer of the encoder.",
+              "coords": [
+                "5,180.07,402.62,323.94,8.64",
+                "5,143.87,413.53,33.47,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Similarly, self-attention layers in the decoder allow each position in the decoder to attend to all positions in the decoder up to and including that position. We need to prevent leftward information flow in the decoder to preserve the auto-regressive property. We implement this inside of scaled dot-product attention by masking out (setting to -∞) all values in the input of the softmax which correspond to illegal connections. See Figure 2.",
+          "coords": [
+            "5,135.40,429.37,368.60,8.64",
+            "5,143.87,440.28,360.14,8.64",
+            "5,143.87,451.19,360.14,8.64",
+            "5,143.87,461.78,360.13,8.96",
+            "5,143.87,473.00,267.14,8.64",
+            "5,417.23,473.00,3.74,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "• Similarly, self-attention layers in the decoder allow each position in the decoder to attend to all positions in the decoder up to and including that position.",
+              "coords": [
+                "5,135.40,429.37,368.60,8.64",
+                "5,143.87,440.28,243.83,8.64"
+              ]
+            },
+            {
+              "text": "We need to prevent leftward information flow in the decoder to preserve the auto-regressive property.",
+              "coords": [
+                "5,390.80,440.28,113.20,8.64",
+                "5,143.87,451.19,283.23,8.64"
+              ]
+            },
+            {
+              "text": "We implement this inside of scaled dot-product attention by masking out (setting to -∞) all values in the input of the softmax which correspond to illegal connections.",
+              "coords": [
+                "5,430.18,451.19,73.82,8.64",
+                "5,143.87,461.78,360.13,8.96",
+                "5,143.87,473.00,221.16,8.64"
+              ]
+            },
+            {
+              "text": "See Figure 2.",
+              "coords": [
+                "5,368.11,473.00,52.85,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Position-wise Feed-Forward Networks",
+          "coords": [
+            "5,108.00,498.13,184.87,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In addition to attention sub-layers, each of the layers in our encoder and decoder contains a fully connected feed-forward network, which is applied to each position separately and identically. This consists of two linear transformations with a ReLU activation in between.",
+          "coords": [
+            "5,108.00,518.92,396.34,8.64",
+            "5,108.00,529.83,396.00,8.64",
+            "5,108.00,540.74,293.54,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In addition to attention sub-layers, each of the layers in our encoder and decoder contains a fully connected feed-forward network, which is applied to each position separately and identically.",
+              "coords": [
+                "5,108.00,518.92,396.34,8.64",
+                "5,108.00,529.83,375.02,8.64"
+              ]
+            },
+            {
+              "text": "This consists of two linear transformations with a ReLU activation in between.",
+              "coords": [
+                "5,486.13,529.83,17.87,8.64",
+                "5,108.00,540.74,293.54,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "FFN(x) = max(0, xW 1 + b 1 )W 2 + b 2(2)",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "While the linear transformations are the same across different positions, they use different parameters from layer to layer. Another way of describing this is as two convolutions with kernel size 1.",
+          "coords": [
+            "5,107.53,591.23,396.47,8.64",
+            "5,108.00,602.14,397.75,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "While the linear transformations are the same across different positions, they use different parameters from layer to layer.",
+              "coords": [
+                "5,107.53,591.23,396.47,8.64",
+                "5,108.00,602.14,81.47,8.64"
+              ]
+            },
+            {
+              "text": "Another way of describing this is as two convolutions with kernel size 1.",
+              "coords": [
+                "5,196.29,602.14,309.46,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The dimensionality of input and output is d model = 512, and the inner-layer has dimensionality d f f = 2048.",
+          "coords": [
+            "5,107.69,612.73,396.66,9.80",
+            "5,108.00,623.64,50.72,9.65"
+          ],
+          "sentences": [
+            {
+              "text": "The dimensionality of input and output is d model = 512, and the inner-layer has dimensionality d f f = 2048.",
+              "coords": [
+                "5,107.69,612.73,396.66,9.80",
+                "5,108.00,623.64,50.72,9.65"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Embeddings and Softmax",
+          "coords": [
+            "5,108.00,649.09,132.02,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Similarly to other sequence transduction models, we use learned embeddings to convert the input tokens and output tokens to vectors of dimension d model . We also use the usual learned linear transformation and softmax function to convert the decoder output to predicted next-token probabilities. In our model, we share the same weight matrix between the two embedding layers and the pre-softmax linear transformation, similar to [30]. In the embedding layers, we multiply those weights by √ d model .",
+          "coords": [
+            "5,108.00,669.88,396.00,8.64",
+            "5,108.00,680.47,397.65,9.80",
+            "5,108.00,691.70,396.00,8.64",
+            "5,108.00,702.61,396.25,8.64",
+            "5,108.00,713.51,123.96,8.64",
+            "5,249.43,713.51,220.10,8.64",
+            "5,471.88,705.49,8.30,8.74",
+            "5,480.19,713.20,25.56,9.80"
+          ],
+          "sentences": [
+            {
+              "text": "Similarly to other sequence transduction models, we use learned embeddings to convert the input tokens and output tokens to vectors of dimension d model .",
+              "coords": [
+                "5,108.00,669.88,396.00,8.64",
+                "5,108.00,680.47,219.22,9.80"
+              ]
+            },
+            {
+              "text": "We also use the usual learned linear transformation and softmax function to convert the decoder output to predicted next-token probabilities.",
+              "coords": [
+                "5,330.29,680.79,175.36,8.64",
+                "5,108.00,691.70,384.54,8.64"
+              ]
+            },
+            {
+              "text": "In our model, we share the same weight matrix between the two embedding layers and the pre-softmax linear transformation, similar to [30].",
+              "coords": [
+                "5,495.67,691.70,8.33,8.64",
+                "5,108.00,702.61,396.25,8.64",
+                "5,108.00,713.51,145.22,8.64"
+              ]
+            },
+            {
+              "text": "In the embedding layers, we multiply those weights by √ d model .",
+              "coords": [
+                "5,256.26,713.51,213.27,8.64",
+                "5,471.88,705.49,8.30,8.74",
+                "5,480.19,713.20,25.56,9.80"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 1: Maximum path lengths, per-layer complexity and minimum number of sequential operations for different layer types. n is the sequence length, d is the representation dimension, k is the kernel size of convolutions and r the size of the neighborhood in restricted self-attention.",
+          "coords": [
+            "6,107.69,72.27,21.43,8.64",
+            "6,135.12,72.27,368.88,8.64",
+            "6,108.00,82.86,396.00,8.96",
+            "6,108.00,93.77,327.08,8.96"
+          ],
+          "sentences": [
+            {
+              "text": "Table 1: Maximum path lengths, per-layer complexity and minimum number of sequential operations for different layer types.",
+              "coords": [
+                "6,107.69,72.27,396.30,8.64",
+                "6,108.00,83.18,97.02,8.64"
+              ]
+            },
+            {
+              "text": "n is the sequence length, d is the representation dimension, k is the kernel size of convolutions and r the size of the neighborhood in restricted self-attention.",
+              "coords": [
+                "6,208.11,82.86,295.89,8.96",
+                "6,108.00,93.77,327.08,8.96"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Layer Type Complexity per Layer Sequential Maximum Path Length Operations Self-Attention",
+          "coords": [
+            "6,124.55,117.71,45.40,8.64",
+            "6,239.70,117.71,247.75,8.64",
+            "6,339.50,128.62,43.72,8.64",
+            "6,124.55,141.25,57.01,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Layer Type Complexity per Layer Sequential Maximum Path Length Operations Self-Attention",
+              "coords": [
+                "6,124.55,117.71,45.40,8.64",
+                "6,239.70,117.71,247.75,8.64",
+                "6,339.50,128.62,43.72,8.64",
+                "6,124.55,141.25,57.01,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "O(n 2 • d) O(1) O(1) Recurrent O(n • d 2 ) O(n) O(n) Convolutional O(k • n • d 2 ) O(1) O(log k (n)) Self-Attention (restricted) O(r • n • d) O(1) O(n/r)",
+          "coords": []
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Positional Encoding",
+          "coords": [
+            "6,108.00,214.56,107.20,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Since our model contains no recurrence and no convolution, in order for the model to make use of the order of the sequence, we must inject some information about the relative or absolute position of the tokens in the sequence. To this end, we add \"positional encodings\" to the input embeddings at the bottoms of the encoder and decoder stacks. The positional encodings have the same dimension d model as the embeddings, so that the two can be summed. There are many choices of positional encodings, learned and fixed [9].",
+          "coords": [
+            "6,108.00,234.93,396.00,8.64",
+            "6,108.00,245.84,396.00,8.64",
+            "6,108.00,256.74,396.00,8.64",
+            "6,108.00,267.33,395.50,9.81",
+            "6,108.00,278.56,397.25,8.64",
+            "6,108.00,289.47,68.46,8.64",
+            "6,189.53,289.47,3.53,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Since our model contains no recurrence and no convolution, in order for the model to make use of the order of the sequence, we must inject some information about the relative or absolute position of the tokens in the sequence.",
+              "coords": [
+                "6,108.00,234.93,396.00,8.64",
+                "6,108.00,245.84,396.00,8.64",
+                "6,108.00,256.74,94.08,8.64"
+              ]
+            },
+            {
+              "text": "To this end, we add \"positional encodings\" to the input embeddings at the bottoms of the encoder and decoder stacks.",
+              "coords": [
+                "6,205.24,256.74,298.76,8.64",
+                "6,108.00,267.65,168.52,8.64"
+              ]
+            },
+            {
+              "text": "The positional encodings have the same dimension d model as the embeddings, so that the two can be summed.",
+              "coords": [
+                "6,279.59,267.33,223.91,9.81",
+                "6,108.00,278.56,202.64,8.64"
+              ]
+            },
+            {
+              "text": "There are many choices of positional encodings, learned and fixed [9].",
+              "coords": [
+                "6,313.75,278.56,191.50,8.64",
+                "6,108.00,289.47,85.06,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work, we use sine and cosine functions of different frequencies:",
+          "coords": [
+            "6,108.00,305.86,281.86,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In this work, we use sine and cosine functions of different frequencies:",
+              "coords": [
+                "6,108.00,305.86,281.86,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "P E (pos,2i) = sin(pos/10000 2i/dmodel ) P E (pos,2i+1) = cos(pos/10000 2i/dmodel )",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "where pos is the position and i is the dimension. That is, each dimension of the positional encoding corresponds to a sinusoid. The wavelengths form a geometric progression from 2π to 10000 • 2π. We chose this function because we hypothesized it would allow the model to easily learn to attend by relative positions, since for any fixed offset k, P E pos+k can be represented as a linear function of P E pos .",
+          "coords": [
+            "6,107.64,378.27,396.36,8.96",
+            "6,108.00,389.18,396.00,8.96",
+            "6,108.00,400.41,396.34,8.64",
+            "6,108.00,411.00,396.00,9.65",
+            "6,108.00,421.91,29.92,9.65"
+          ],
+          "sentences": [
+            {
+              "text": "where pos is the position and i is the dimension.",
+              "coords": [
+                "6,107.64,378.27,192.62,8.96"
+              ]
+            },
+            {
+              "text": "That is, each dimension of the positional encoding corresponds to a sinusoid.",
+              "coords": [
+                "6,303.34,378.59,200.66,8.64",
+                "6,108.00,389.50,101.34,8.64"
+              ]
+            },
+            {
+              "text": "The wavelengths form a geometric progression from 2π to 10000 • 2π.",
+              "coords": [
+                "6,212.41,389.18,275.77,8.96"
+              ]
+            },
+            {
+              "text": "We chose this function because we hypothesized it would allow the model to easily learn to attend by relative positions, since for any fixed offset k, P E pos+k can be represented as a linear function of P E pos .",
+              "coords": [
+                "6,491.25,389.50,12.75,8.64",
+                "6,108.00,400.41,396.34,8.64",
+                "6,108.00,411.00,396.00,9.65",
+                "6,108.00,421.91,29.92,9.65"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We also experimented with using learned positional embeddings [9] instead, and found that the two versions produced nearly identical results (see Table 3 row (E)). We chose the sinusoidal version because it may allow the model to extrapolate to sequence lengths longer than the ones encountered during training.",
+          "coords": [
+            "6,107.53,438.62,256.95,8.64",
+            "6,381.09,438.62,122.90,8.64",
+            "6,107.75,449.53,214.17,8.64",
+            "6,332.68,449.53,171.32,8.64",
+            "6,108.00,460.43,396.00,8.64",
+            "6,108.00,471.34,61.99,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "We also experimented with using learned positional embeddings [9] instead, and found that the two versions produced nearly identical results (see Table 3 row (E)).",
+              "coords": [
+                "6,107.53,438.62,396.46,8.64",
+                "6,107.75,449.53,262.22,8.64"
+              ]
+            },
+            {
+              "text": "We chose the sinusoidal version because it may allow the model to extrapolate to sequence lengths longer than the ones encountered during training.",
+              "coords": [
+                "6,372.80,449.53,131.20,8.64",
+                "6,108.00,460.43,396.00,8.64",
+                "6,108.00,471.34,61.99,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Why Self-Attention",
+          "coords": [
+            "6,108.00,497.81,117.04,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this section we compare various aspects of self-attention layers to the recurrent and convolutional layers commonly used for mapping one variable-length sequence of symbol representations (x 1 , ..., x n ) to another sequence of equal length (z 1 , ..., z n ), with x i , z i ∈ R d , such as a hidden layer in a typical sequence transduction encoder or decoder. Motivating our use of self-attention we consider three desiderata.",
+          "coords": [
+            "6,108.00,522.53,397.65,8.64",
+            "6,108.00,533.44,396.00,8.64",
+            "6,106.83,544.03,317.00,9.65",
+            "6,423.83,542.46,4.15,6.12",
+            "6,428.48,544.35,75.52,8.64",
+            "6,108.00,555.26,396.00,8.64",
+            "6,108.00,566.17,101.53,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In this section we compare various aspects of self-attention layers to the recurrent and convolutional layers commonly used for mapping one variable-length sequence of symbol representations (x 1 , ..., x n ) to another sequence of equal length (z 1 , ..., z n ), with x i , z i ∈ R d , such as a hidden layer in a typical sequence transduction encoder or decoder.",
+              "coords": [
+                "6,108.00,522.53,397.65,8.64",
+                "6,108.00,533.44,396.00,8.64",
+                "6,106.83,544.03,317.00,9.65",
+                "6,423.83,542.46,4.15,6.12",
+                "6,428.48,544.35,75.52,8.64",
+                "6,108.00,555.26,237.84,8.64"
+              ]
+            },
+            {
+              "text": "Motivating our use of self-attention we consider three desiderata.",
+              "coords": [
+                "6,348.95,555.26,155.05,8.64",
+                "6,108.00,566.17,101.53,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "One is the total computational complexity per layer. Another is the amount of computation that can be parallelized, as measured by the minimum number of sequential operations required.",
+          "coords": [
+            "6,108.00,582.56,396.00,8.64",
+            "6,108.00,593.46,349.46,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "One is the total computational complexity per layer.",
+              "coords": [
+                "6,108.00,582.56,207.04,8.64"
+              ]
+            },
+            {
+              "text": "Another is the amount of computation that can be parallelized, as measured by the minimum number of sequential operations required.",
+              "coords": [
+                "6,318.14,582.56,185.86,8.64",
+                "6,108.00,593.46,349.46,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The third is the path length between long-range dependencies in the network. Learning long-range dependencies is a key challenge in many sequence transduction tasks. One key factor affecting the ability to learn such dependencies is the length of the paths forward and backward signals have to traverse in the network. The shorter these paths between any combination of positions in the input and output sequences, the easier it is to learn long-range dependencies [12]. Hence we also compare the maximum path length between any two input and output positions in networks composed of the different layer types.",
+          "coords": [
+            "6,107.69,609.85,396.31,8.64",
+            "6,108.00,620.76,396.00,8.64",
+            "6,108.00,631.67,396.00,8.64",
+            "6,108.00,642.58,396.00,8.64",
+            "6,108.00,653.49,277.35,8.64",
+            "6,403.04,653.49,100.96,8.64",
+            "6,108.00,664.40,396.00,8.64",
+            "6,108.00,675.31,82.47,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The third is the path length between long-range dependencies in the network.",
+              "coords": [
+                "6,107.69,609.85,310.72,8.64"
+              ]
+            },
+            {
+              "text": "Learning long-range dependencies is a key challenge in many sequence transduction tasks.",
+              "coords": [
+                "6,421.51,609.85,82.49,8.64",
+                "6,108.00,620.76,280.50,8.64"
+              ]
+            },
+            {
+              "text": "One key factor affecting the ability to learn such dependencies is the length of the paths forward and backward signals have to traverse in the network.",
+              "coords": [
+                "6,391.60,620.76,112.40,8.64",
+                "6,108.00,631.67,396.00,8.64",
+                "6,108.00,642.58,94.91,8.64"
+              ]
+            },
+            {
+              "text": "The shorter these paths between any combination of positions in the input and output sequences, the easier it is to learn long-range dependencies [12].",
+              "coords": [
+                "6,206.01,642.58,297.99,8.64",
+                "6,108.00,653.49,298.84,8.64"
+              ]
+            },
+            {
+              "text": "Hence we also compare the maximum path length between any two input and output positions in networks composed of the different layer types.",
+              "coords": [
+                "6,409.93,653.49,94.07,8.64",
+                "6,108.00,664.40,396.00,8.64",
+                "6,108.00,675.31,82.47,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "As noted in Table 1, a self-attention layer connects all positions with a constant number of sequentially executed operations, whereas a recurrent layer requires O(n) sequential operations. In terms of computational complexity, self-attention layers are faster than recurrent layers when the sequence length n is smaller than the representation dimensionality d, which is most often the case with sentence representations used by state-of-the-art models in machine translations, such as word-piece [38] and byte-pair [31] representations. To improve computational performance for tasks involving very long sequences, self-attention could be restricted to considering only a neighborhood of size r in the input sequence centered around the respective output position. This would increase the maximum path length to O(n/r). We plan to investigate this approach further in future work.",
+          "coords": [
+            "6,107.64,691.70,67.90,8.64",
+            "6,181.32,691.70,323.02,8.64",
+            "6,108.00,702.29,396.00,8.96",
+            "6,108.00,713.51,396.00,8.64",
+            "7,108.00,75.16,396.00,8.96",
+            "7,108.00,86.39,396.00,8.64",
+            "7,127.12,97.30,53.13,8.64",
+            "7,201.86,97.30,302.14,8.64",
+            "7,107.75,107.89,396.25,8.96",
+            "7,108.00,119.11,396.00,8.64",
+            "7,108.00,129.70,329.57,8.96"
+          ],
+          "sentences": [
+            {
+              "text": "As noted in Table 1, a self-attention layer connects all positions with a constant number of sequentially executed operations, whereas a recurrent layer requires O(n) sequential operations.",
+              "coords": [
+                "6,107.64,691.70,396.70,8.64",
+                "6,108.00,702.29,344.88,8.96"
+              ]
+            },
+            {
+              "text": "In terms of computational complexity, self-attention layers are faster than recurrent layers when the sequence length n is smaller than the representation dimensionality d, which is most often the case with sentence representations used by state-of-the-art models in machine translations, such as word-piece [38] and byte-pair [31] representations.",
+              "coords": [
+                "6,458.09,702.61,45.91,8.64",
+                "6,108.00,713.51,396.00,8.64",
+                "7,108.00,75.16,396.00,8.96",
+                "7,108.00,86.39,396.00,8.64",
+                "7,108.00,97.30,157.03,8.64"
+              ]
+            },
+            {
+              "text": "To improve computational performance for tasks involving very long sequences, self-attention could be restricted to considering only a neighborhood of size r in the input sequence centered around the respective output position.",
+              "coords": [
+                "7,268.12,97.30,235.89,8.64",
+                "7,107.75,107.89,396.25,8.96",
+                "7,108.00,119.11,257.80,8.64"
+              ]
+            },
+            {
+              "text": "This would increase the maximum path length to O(n/r).",
+              "coords": [
+                "7,368.89,119.11,135.12,8.64",
+                "7,108.00,129.70,91.13,8.96"
+              ]
+            },
+            {
+              "text": "We plan to investigate this approach further in future work.",
+              "coords": [
+                "7,202.22,130.02,235.35,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "A single convolutional layer with kernel width k < n does not connect all pairs of input and output positions. Doing so requires a stack of O(n/k) convolutional layers in the case of contiguous kernels, or O(log k (n)) in the case of dilated convolutions [18], increasing the length of the longest paths between any two positions in the network. Convolutional layers are generally more expensive than recurrent layers, by a factor of k. Separable convolutions [6], however, decrease the complexity considerably, to O(k",
+          "coords": [
+            "7,107.64,146.09,396.36,8.96",
+            "7,108.00,157.00,397.24,8.96",
+            "7,108.00,167.91,201.86,9.65",
+            "7,328.21,168.23,175.79,8.64",
+            "7,108.00,179.14,396.00,8.64",
+            "7,108.00,189.73,236.87,8.96",
+            "7,358.68,190.05,145.68,8.64",
+            "7,108.00,200.64,84.62,8.96"
+          ],
+          "sentences": [
+            {
+              "text": "A single convolutional layer with kernel width k < n does not connect all pairs of input and output positions.",
+              "coords": [
+                "7,107.64,146.09,396.36,8.96",
+                "7,108.00,157.32,37.71,8.64"
+              ]
+            },
+            {
+              "text": "Doing so requires a stack of O(n/k) convolutional layers in the case of contiguous kernels, or O(log k (n)) in the case of dilated convolutions [18], increasing the length of the longest paths between any two positions in the network.",
+              "coords": [
+                "7,148.75,157.00,356.49,8.96",
+                "7,108.00,167.91,396.00,9.65",
+                "7,108.00,179.14,169.62,8.64"
+              ]
+            },
+            {
+              "text": "Convolutional layers are generally more expensive than recurrent layers, by a factor of k.",
+              "coords": [
+                "7,280.70,179.14,223.30,8.64",
+                "7,108.00,189.73,136.93,8.96"
+              ]
+            },
+            {
+              "text": "Separable convolutions [6], however, decrease the complexity considerably, to O(k",
+              "coords": [
+                "7,249.81,190.05,254.54,8.64",
+                "7,108.00,200.64,84.62,8.96"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "• n • d + n • d 2 ).",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "Even with k = n, however, the complexity of a separable convolution is equal to the combination of a self-attention layer and a point-wise feed-forward layer, the approach we take in our model.",
+          "coords": [
+            "7,266.86,200.64,237.14,8.96",
+            "7,108.00,211.87,397.25,8.64",
+            "7,108.00,222.77,140.17,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Even with k = n, however, the complexity of a separable convolution is equal to the combination of a self-attention layer and a point-wise feed-forward layer, the approach we take in our model.",
+              "coords": [
+                "7,266.86,200.64,237.14,8.96",
+                "7,108.00,211.87,397.25,8.64",
+                "7,108.00,222.77,140.17,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "As side benefit, self-attention could yield more interpretable models. We inspect attention distributions from our models and present and discuss examples in the appendix. Not only do individual attention heads clearly learn to perform different tasks, many appear to exhibit behavior related to the syntactic and semantic structure of the sentences.",
+          "coords": [
+            "7,107.64,239.16,396.36,8.64",
+            "7,108.00,250.07,396.00,8.64",
+            "7,108.00,260.98,396.00,8.64",
+            "7,108.00,271.89,158.26,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "As side benefit, self-attention could yield more interpretable models.",
+              "coords": [
+                "7,107.64,239.16,264.30,8.64"
+              ]
+            },
+            {
+              "text": "We inspect attention distributions from our models and present and discuss examples in the appendix.",
+              "coords": [
+                "7,374.86,239.16,129.14,8.64",
+                "7,108.00,250.07,266.53,8.64"
+              ]
+            },
+            {
+              "text": "Not only do individual attention heads clearly learn to perform different tasks, many appear to exhibit behavior related to the syntactic and semantic structure of the sentences.",
+              "coords": [
+                "7,377.61,250.07,126.38,8.64",
+                "7,108.00,260.98,396.00,8.64",
+                "7,108.00,271.89,158.26,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Training",
+          "coords": [
+            "7,108.00,300.84,62.23,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "This section describes the training regime for our models.",
+          "coords": [
+            "7,107.69,327.11,229.79,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "This section describes the training regime for our models.",
+              "coords": [
+                "7,107.69,327.11,229.79,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Training Data and Batching",
+          "coords": [
+            "7,108.00,353.50,141.53,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We trained on the standard WMT 2014 English-German dataset consisting of about 4.5 million sentence pairs. Sentences were encoded using byte-pair encoding [3], which has a shared sourcetarget vocabulary of about 37000 tokens. For English-French, we used the significantly larger WMT 2014 English-French dataset consisting of 36M sentences and split tokens into a 32000 word-piece vocabulary [38]. Sentence pairs were batched together by approximate sequence length. Each training batch contained a set of sentence pairs containing approximately 25000 source tokens and 25000 target tokens.",
+          "coords": [
+            "7,107.53,374.79,396.46,8.64",
+            "7,108.00,385.70,267.63,8.64",
+            "7,389.07,385.70,116.58,8.64",
+            "7,108.00,396.61,396.30,8.64",
+            "7,108.00,407.52,396.00,8.64",
+            "7,107.75,418.43,42.98,8.64",
+            "7,168.03,418.43,335.97,8.64",
+            "7,108.00,429.34,396.00,8.64",
+            "7,108.00,440.25,53.40,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "We trained on the standard WMT 2014 English-German dataset consisting of about 4.5 million sentence pairs.",
+              "coords": [
+                "7,107.53,374.79,396.46,8.64",
+                "7,108.00,385.70,60.01,8.64"
+              ]
+            },
+            {
+              "text": "Sentences were encoded using byte-pair encoding [3], which has a shared sourcetarget vocabulary of about 37000 tokens.",
+              "coords": [
+                "7,171.81,385.70,333.85,8.64",
+                "7,108.00,396.61,161.29,8.64"
+              ]
+            },
+            {
+              "text": "For English-French, we used the significantly larger WMT 2014 English-French dataset consisting of 36M sentences and split tokens into a 32000 word-piece vocabulary [38].",
+              "coords": [
+                "7,272.37,396.61,231.93,8.64",
+                "7,108.00,407.52,396.00,8.64",
+                "7,107.75,418.43,64.06,8.64"
+              ]
+            },
+            {
+              "text": "Sentence pairs were batched together by approximate sequence length.",
+              "coords": [
+                "7,174.80,418.43,274.15,8.64"
+              ]
+            },
+            {
+              "text": "Each training batch contained a set of sentence pairs containing approximately 25000 source tokens and 25000 target tokens.",
+              "coords": [
+                "7,451.93,418.43,52.07,8.64",
+                "7,108.00,429.34,396.00,8.64",
+                "7,108.00,440.25,53.40,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Hardware and Schedule",
+          "coords": [
+            "7,108.00,466.64,125.04,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We trained our models on one machine with 8 NVIDIA P100 GPUs. For our base models using the hyperparameters described throughout the paper, each training step took about 0.4 seconds. We trained the base models for a total of 100,000 steps or 12 hours. For our big models,(described on the bottom line of table 3), step time was 1.0 seconds. The big models were trained for 300,000 steps (3.5 days).",
+          "coords": [
+            "7,107.53,487.93,396.46,8.64",
+            "7,108.00,498.84,396.00,8.64",
+            "7,108.00,509.75,396.00,8.64",
+            "7,108.00,520.66,79.88,8.64",
+            "7,194.08,520.66,309.92,8.64",
+            "7,107.67,531.56,42.33,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "We trained our models on one machine with 8 NVIDIA P100 GPUs.",
+              "coords": [
+                "7,107.53,487.93,283.20,8.64"
+              ]
+            },
+            {
+              "text": "For our base models using the hyperparameters described throughout the paper, each training step took about 0.4 seconds.",
+              "coords": [
+                "7,395.22,487.93,108.77,8.64",
+                "7,108.00,498.84,379.80,8.64"
+              ]
+            },
+            {
+              "text": "We trained the base models for a total of 100,000 steps or 12 hours.",
+              "coords": [
+                "7,490.91,498.84,13.08,8.64",
+                "7,108.00,509.75,248.68,8.64"
+              ]
+            },
+            {
+              "text": "For our big models,(described on the bottom line of table 3), step time was 1.0 seconds.",
+              "coords": [
+                "7,359.77,509.75,144.23,8.64",
+                "7,108.00,520.66,203.68,8.64"
+              ]
+            },
+            {
+              "text": "The big models were trained for 300,000 steps (3.5 days).",
+              "coords": [
+                "7,314.92,520.66,189.08,8.64",
+                "7,107.67,531.56,42.33,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Optimizer",
+          "coords": [
+            "7,108.00,557.95,66.13,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We used the Adam optimizer [20] with β 1 = 0.9, β 2 = 0.98 and ϵ = 10 -9 . We varied the learning rate over the course of training, according to the formula:",
+          "coords": [
+            "7,107.53,579.25,117.64,8.64",
+            "7,246.83,578.93,149.58,9.65",
+            "7,396.41,577.35,10.20,6.12",
+            "7,407.11,579.25,96.90,8.64",
+            "7,108.00,590.16,228.23,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "We used the Adam optimizer [20] with β 1 = 0.9, β 2 = 0.98 and ϵ = 10 -9 .",
+              "coords": [
+                "7,107.53,578.93,288.88,9.65",
+                "7,396.41,577.35,10.20,6.12",
+                "7,407.11,579.25,2.53,8.64"
+              ]
+            },
+            {
+              "text": "We varied the learning rate over the course of training, according to the formula:",
+              "coords": [
+                "7,412.72,579.25,91.28,8.64",
+                "7,108.00,590.16,228.23,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "lrate = d -0.5 model • min(step_num -0.5 , step_num • warmup_steps -1.5 ) (3",
+          "coords": []
+        },
+        {
+          "kind": "formula",
+          "text": ")",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "This corresponds to increasing the learning rate linearly for the first warmup_steps training steps, and decreasing it thereafter proportionally to the inverse square root of the step number. We used warmup_steps = 4000.",
+          "coords": [
+            "7,107.69,643.70,397.55,8.96",
+            "7,108.00,654.92,396.00,8.64",
+            "7,108.00,665.51,100.17,8.74"
+          ],
+          "sentences": [
+            {
+              "text": "This corresponds to increasing the learning rate linearly for the first warmup_steps training steps, and decreasing it thereafter proportionally to the inverse square root of the step number.",
+              "coords": [
+                "7,107.69,643.70,397.55,8.96",
+                "7,108.00,654.92,357.79,8.64"
+              ]
+            },
+            {
+              "text": "We used warmup_steps = 4000.",
+              "coords": [
+                "7,469.40,654.92,34.60,8.64",
+                "7,108.00,665.51,100.17,8.74"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Regularization",
+          "coords": [
+            "7,108.00,692.22,85.51,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We employ three types of regularization during training: Residual Dropout We apply dropout [33] to the output of each sub-layer, before it is added to the sub-layer input and normalized. In addition, we apply dropout to the sums of the embeddings and the positional encodings in both the encoder and decoder stacks. For the base model, we use a rate of P drop = 0.1.",
+          "coords": [
+            "7,107.53,713.51,224.46,8.64",
+            "8,108.00,273.98,155.66,9.03",
+            "8,285.22,274.37,218.78,8.64",
+            "8,108.00,285.28,396.00,8.64",
+            "8,108.00,296.19,396.00,8.64",
+            "8,108.00,306.78,51.50,9.65"
+          ],
+          "sentences": [
+            {
+              "text": "We employ three types of regularization during training: Residual Dropout We apply dropout [33] to the output of each sub-layer, before it is added to the sub-layer input and normalized.",
+              "coords": [
+                "7,107.53,713.51,224.46,8.64",
+                "8,108.00,273.98,396.00,9.03",
+                "8,108.00,285.28,124.30,8.64"
+              ]
+            },
+            {
+              "text": "In addition, we apply dropout to the sums of the embeddings and the positional encodings in both the encoder and decoder stacks.",
+              "coords": [
+                "8,235.38,285.28,268.62,8.64",
+                "8,108.00,296.19,246.40,8.64"
+              ]
+            },
+            {
+              "text": "For the base model, we use a rate of P drop = 0.1.",
+              "coords": [
+                "8,357.65,296.19,146.35,8.64",
+                "8,108.00,306.78,51.50,9.65"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Label Smoothing During training, we employed label smoothing of value ϵ ls = 0.1 [36]. This hurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score.",
+          "coords": [
+            "8,108.00,332.05,352.03,9.72",
+            "8,478.20,332.44,25.79,8.64",
+            "8,108.00,343.35,383.70,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Label Smoothing During training, we employed label smoothing of value ϵ ls = 0.1 [36].",
+              "coords": [
+                "8,108.00,332.05,374.06,9.72"
+              ]
+            },
+            {
+              "text": "This hurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score.",
+              "coords": [
+                "8,485.93,332.44,18.07,8.64",
+                "8,108.00,343.35,383.70,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Results",
+          "coords": [
+            "8,108.00,372.21,55.13,10.75"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Machine Translation",
+          "coords": [
+            "8,108.00,398.04,111.07,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "On the WMT 2014 English-to-German translation task, the big transformer model (Transformer (big) in Table 2) outperforms the best previously reported models (including ensembles) by more than 2.0 BLEU, establishing a new state-of-the-art BLEU score of 28.4. The configuration of this model is listed in the bottom line of Table 3. Training took 3.5 days on 8 P100 GPUs. Even our base model surpasses all previously published models and ensembles, at a fraction of the training cost of any of the competitive models.",
+          "coords": [
+            "8,108.00,419.30,396.67,8.64",
+            "8,108.00,430.20,31.84,8.64",
+            "8,146.45,429.89,357.80,8.96",
+            "8,108.00,440.79,396.00,8.96",
+            "8,108.00,452.02,131.43,8.64",
+            "8,245.70,451.70,258.30,8.96",
+            "8,108.00,462.93,396.00,8.64",
+            "8,108.00,473.84,95.07,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "On the WMT 2014 English-to-German translation task, the big transformer model (Transformer (big) in Table 2) outperforms the best previously reported models (including ensembles) by more than 2.0 BLEU, establishing a new state-of-the-art BLEU score of 28.4.",
+              "coords": [
+                "8,108.00,419.30,396.67,8.64",
+                "8,108.00,429.89,396.25,8.96",
+                "8,108.00,440.79,255.38,8.96"
+              ]
+            },
+            {
+              "text": "The configuration of this model is listed in the bottom line of Table 3.",
+              "coords": [
+                "8,366.47,441.11,137.52,8.64",
+                "8,108.00,452.02,141.49,8.64"
+              ]
+            },
+            {
+              "text": "Training took 3.5 days on 8 P100 GPUs.",
+              "coords": [
+                "8,252.58,451.70,163.58,8.96"
+              ]
+            },
+            {
+              "text": "Even our base model surpasses all previously published models and ensembles, at a fraction of the training cost of any of the competitive models.",
+              "coords": [
+                "8,419.25,452.02,84.75,8.64",
+                "8,108.00,462.93,396.00,8.64",
+                "8,108.00,473.84,95.07,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "On the WMT 2014 English-to-French translation task, our big model achieves a BLEU score of 41.0, outperforming all of the previously published single models, at less than 1/4 the training cost of the previous state-of-the-art model. The Transformer (big) model trained for English-to-French used dropout rate P drop = 0.1, instead of 0.3.",
+          "coords": [
+            "8,108.00,489.91,397.25,8.96",
+            "8,108.00,500.82,396.00,8.96",
+            "8,108.00,512.05,396.00,8.64",
+            "8,108.00,522.64,161.62,9.65"
+          ],
+          "sentences": [
+            {
+              "text": "On the WMT 2014 English-to-French translation task, our big model achieves a BLEU score of 41.0, outperforming all of the previously published single models, at less than 1/4 the training cost of the previous state-of-the-art model.",
+              "coords": [
+                "8,108.00,489.91,397.25,8.96",
+                "8,108.00,500.82,396.00,8.96",
+                "8,108.00,512.05,128.62,8.64"
+              ]
+            },
+            {
+              "text": "The Transformer (big) model trained for English-to-French used dropout rate P drop = 0.1, instead of 0.3.",
+              "coords": [
+                "8,240.55,512.05,263.45,8.64",
+                "8,108.00,522.64,161.62,9.65"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "For the base models, we used a single model obtained by averaging the last 5 checkpoints, which were written at 10-minute intervals. For the big models, we averaged the last 20 checkpoints. We used beam search with a beam size of 4 and length penalty α = 0.6 [38]. These hyperparameters were chosen after experimentation on the development set. We set the maximum output length during inference to input length + 50, but terminate early when possible [38].",
+          "coords": [
+            "8,108.00,539.35,396.00,8.64",
+            "8,107.64,550.25,396.36,8.64",
+            "8,108.00,560.84,275.76,8.96",
+            "8,401.86,561.16,102.14,8.64",
+            "8,107.64,572.07,396.36,8.64",
+            "8,108.00,582.66,257.49,8.96",
+            "8,383.25,582.98,3.82,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "For the base models, we used a single model obtained by averaging the last 5 checkpoints, which were written at 10-minute intervals.",
+              "coords": [
+                "8,108.00,539.35,396.00,8.64",
+                "8,107.64,550.25,145.39,8.64"
+              ]
+            },
+            {
+              "text": "For the big models, we averaged the last 20 checkpoints.",
+              "coords": [
+                "8,256.48,550.25,230.76,8.64"
+              ]
+            },
+            {
+              "text": "We used beam search with a beam size of 4 and length penalty α = 0.6 [38].",
+              "coords": [
+                "8,490.69,550.25,13.31,8.64",
+                "8,108.00,560.84,297.72,8.96"
+              ]
+            },
+            {
+              "text": "These hyperparameters were chosen after experimentation on the development set.",
+              "coords": [
+                "8,409.38,561.16,94.62,8.64",
+                "8,107.64,572.07,229.00,8.64"
+              ]
+            },
+            {
+              "text": "We set the maximum output length during inference to input length + 50, but terminate early when possible [38].",
+              "coords": [
+                "8,339.70,572.07,164.31,8.64",
+                "8,108.00,582.66,279.07,8.96"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 2 summarizes our results and compares our translation quality and training costs to other model architectures from the literature. We estimate the number of floating point operations used to train a model by multiplying the training time, the number of GPUs used, and an estimate of the sustained single-precision floating-point capacity of each GPUfoot_1 .",
+          "coords": [
+            "8,107.69,599.37,21.43,8.64",
+            "8,138.80,599.37,365.20,8.64",
+            "8,108.00,610.28,396.00,8.64",
+            "8,108.00,621.19,396.00,8.64",
+            "8,108.00,632.10,210.01,8.64",
+            "8,324.49,632.10,2.49,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Table 2 summarizes our results and compares our translation quality and training costs to other model architectures from the literature.",
+              "coords": [
+                "8,107.69,599.37,396.30,8.64",
+                "8,108.00,610.28,127.99,8.64"
+              ]
+            },
+            {
+              "text": "We estimate the number of floating point operations used to train a model by multiplying the training time, the number of GPUs used, and an estimate of the sustained single-precision floating-point capacity of each GPUfoot_1 .",
+              "coords": [
+                "8,239.08,610.28,264.92,8.64",
+                "8,108.00,621.19,396.00,8.64",
+                "8,108.00,632.10,218.98,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Model Variations",
+          "coords": [
+            "8,108.00,658.40,95.94,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To evaluate the importance of different components of the Transformer, we varied our base model in different ways, measuring the change in performance on English-to-German translation on the We used beam search as described in the previous section, but no checkpoint averaging. We present these results in Table 3.",
+          "coords": [
+            "8,107.69,679.65,396.31,8.64",
+            "8,108.00,690.56,396.00,8.64",
+            "9,239.72,414.82,264.28,8.64",
+            "9,108.00,425.73,221.10,8.64",
+            "9,335.33,425.73,3.74,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "To evaluate the importance of different components of the Transformer, we varied our base model in different ways, measuring the change in performance on English-to-German translation on the We used beam search as described in the previous section, but no checkpoint averaging.",
+              "coords": [
+                "8,107.69,679.65,396.31,8.64",
+                "8,108.00,690.56,396.00,8.64",
+                "9,239.72,414.82,264.28,8.64",
+                "9,108.00,425.73,87.63,8.64"
+              ]
+            },
+            {
+              "text": "We present these results in Table 3.",
+              "coords": [
+                "9,198.72,425.73,140.34,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In Table 3 rows (A), we vary the number of attention heads and the attention key and value dimensions, keeping the amount of computation constant, as described in Section 3.2.2. While single-head attention is 0.9 BLEU worse than the best setting, quality also drops off with too many heads.",
+          "coords": [
+            "9,108.00,442.12,31.64,8.64",
+            "9,148.67,442.12,356.57,8.64",
+            "9,108.00,453.03,396.00,8.64",
+            "9,108.00,463.94,372.80,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In Table 3 rows (A), we vary the number of attention heads and the attention key and value dimensions, keeping the amount of computation constant, as described in Section 3.2.2.",
+              "coords": [
+                "9,108.00,442.12,397.24,8.64",
+                "9,108.00,453.03,314.66,8.64"
+              ]
+            },
+            {
+              "text": "While single-head attention is 0.9 BLEU worse than the best setting, quality also drops off with too many heads.",
+              "coords": [
+                "9,428.81,453.03,75.19,8.64",
+                "9,108.00,463.94,372.80,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In Table 3 rows (B), we observe that reducing the attention key size d k hurts model quality. This suggests that determining compatibility is not easy and that a more sophisticated compatibility function than dot product may be beneficial. We further observe in rows (C) and (D) that, as expected, bigger models are better, and dropout is very helpful in avoiding over-fitting. In row (E) we replace our sinusoidal positional encoding with learned positional embeddings [9], and observe nearly identical results to the base model.",
+          "coords": [
+            "9,108.00,480.33,33.57,8.64",
+            "9,152.19,480.01,351.81,9.65",
+            "9,108.00,491.23,396.34,8.64",
+            "9,108.00,502.14,397.24,8.64",
+            "9,108.00,513.05,396.17,8.64",
+            "9,108.00,523.96,265.20,8.64",
+            "9,386.27,523.96,117.73,8.64",
+            "9,108.00,534.87,101.00,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In Table 3 rows",
+              "coords": [
+                "9,108.00,480.33,63.69,8.64"
+              ]
+            },
+            {
+              "text": "(B), we observe that reducing the attention key size d k hurts model quality.",
+              "coords": [
+                "9,174.47,480.01,307.54,9.65"
+              ]
+            },
+            {
+              "text": "This suggests that determining compatibility is not easy and that a more sophisticated compatibility function than dot product may be beneficial.",
+              "coords": [
+                "9,485.94,480.33,18.07,8.64",
+                "9,108.00,491.23,396.34,8.64",
+                "9,108.00,502.14,172.10,8.64"
+              ]
+            },
+            {
+              "text": "We further observe in rows",
+              "coords": [
+                "9,283.13,502.14,105.20,8.64"
+              ]
+            },
+            {
+              "text": "(C) and",
+              "coords": [
+                "9,390.67,502.14,29.45,8.64"
+              ]
+            },
+            {
+              "text": "(D) that, as expected, bigger models are better, and dropout is very helpful in avoiding over-fitting.",
+              "coords": [
+                "9,422.45,502.14,82.79,8.64",
+                "9,108.00,513.05,294.93,8.64"
+              ]
+            },
+            {
+              "text": "In row",
+              "coords": [
+                "9,405.87,513.05,25.10,8.64"
+              ]
+            },
+            {
+              "text": "(E) we replace our sinusoidal positional encoding with learned positional embeddings [9], and observe nearly identical results to the base model.",
+              "coords": [
+                "9,433.00,513.05,71.17,8.64",
+                "9,108.00,523.96,396.00,8.64",
+                "9,108.00,534.87,101.00,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "English Constituency Parsing",
+          "coords": [
+            "9,108.00,561.26,147.97,8.96"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To evaluate if the Transformer can generalize to other tasks we performed experiments on English constituency parsing. This task presents specific challenges: the output is subject to strong structural constraints and is significantly longer than the input. Furthermore, RNN sequence-to-sequence models have not been able to attain state-of-the-art results in small-data regimes [37].",
+          "coords": [
+            "9,107.69,582.56,396.31,8.64",
+            "9,108.00,593.46,396.00,8.64",
+            "9,108.00,604.37,396.00,8.64",
+            "9,108.00,615.28,318.52,8.64",
+            "9,444.29,615.28,3.82,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "To evaluate if the Transformer can generalize to other tasks we performed experiments on English constituency parsing.",
+              "coords": [
+                "9,107.69,582.56,396.31,8.64",
+                "9,108.00,593.46,83.61,8.64"
+              ]
+            },
+            {
+              "text": "This task presents specific challenges: the output is subject to strong structural constraints and is significantly longer than the input.",
+              "coords": [
+                "9,194.71,593.46,309.30,8.64",
+                "9,108.00,604.37,219.05,8.64"
+              ]
+            },
+            {
+              "text": "Furthermore, RNN sequence-to-sequence models have not been able to attain state-of-the-art results in small-data regimes [37].",
+              "coords": [
+                "9,332.95,604.37,171.04,8.64",
+                "9,108.00,615.28,340.10,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We trained a 4-layer transformer with d model = 1024 on the Wall Street Journal (WSJ) portion of the Penn Treebank [25], about 40K training sentences. We also trained it in a semi-supervised setting, using the larger high-confidence and BerkleyParser corpora from with approximately 17M sentences [37]. We used a vocabulary of 16K tokens for the WSJ only setting and a vocabulary of 32K tokens for the semi-supervised setting.",
+          "coords": [
+            "9,107.53,631.35,396.47,9.65",
+            "9,108.00,642.58,60.72,8.64",
+            "9,186.62,642.58,318.63,8.64",
+            "9,108.00,653.49,396.00,8.64",
+            "9,123.26,664.40,380.73,8.64",
+            "9,108.00,675.31,125.07,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "We trained a 4-layer transformer with d model = 1024 on the Wall Street Journal (WSJ) portion of the Penn Treebank [25], about 40K training sentences.",
+              "coords": [
+                "9,107.53,631.35,396.47,9.65",
+                "9,108.00,642.58,205.39,8.64"
+              ]
+            },
+            {
+              "text": "We also trained it in a semi-supervised setting, using the larger high-confidence and BerkleyParser corpora from with approximately 17M sentences [37].",
+              "coords": [
+                "9,316.48,642.58,188.76,8.64",
+                "9,108.00,653.49,396.00,8.64",
+                "9,108.00,664.40,19.08,8.64"
+              ]
+            },
+            {
+              "text": "We used a vocabulary of 16K tokens for the WSJ only setting and a vocabulary of 32K tokens for the semi-supervised setting.",
+              "coords": [
+                "9,130.16,664.40,373.83,8.64",
+                "9,108.00,675.31,125.07,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We performed only a small number of experiments to select the dropout, both attention and residual (section 5.4), learning rates and beam size on the Section 22 development set, all other parameters remained unchanged from the English-to-German base translation model. During inference, we increased the maximum output length to input length + 300. We used a beam size of 21 and α = 0.3 for both WSJ only and the semi-supervised setting.",
+          "coords": [
+            "9,107.53,691.70,396.46,8.64",
+            "9,107.67,702.61,396.33,8.64",
+            "9,108.00,713.51,396.00,8.64",
+            "10,108.00,262.83,396.25,8.96",
+            "10,108.00,274.06,203.67,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "We performed only a small number of experiments to select the dropout, both attention and residual (section 5.4), learning rates and beam size on the Section 22 development set, all other parameters remained unchanged from the English-to-German base translation model.",
+              "coords": [
+                "9,107.53,691.70,396.46,8.64",
+                "9,107.67,702.61,396.33,8.64",
+                "9,108.00,713.51,303.46,8.64"
+              ]
+            },
+            {
+              "text": "During inference, we increased the maximum output length to input length + 300.",
+              "coords": [
+                "9,416.54,713.51,87.45,8.64",
+                "10,108.00,262.83,236.58,8.96"
+              ]
+            },
+            {
+              "text": "We used a beam size of 21 and α = 0.3 for both WSJ only and the semi-supervised setting.",
+              "coords": [
+                "10,347.68,262.83,156.57,8.96",
+                "10,108.00,274.06,203.67,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Our results in Table 4 show that despite the lack of task-specific tuning our model performs surprisingly well, yielding better results than all previously reported models with the exception of the Recurrent Neural Network Grammar [8].",
+          "coords": [
+            "10,108.00,290.45,81.75,8.64",
+            "10,200.95,290.45,304.70,8.64",
+            "10,108.00,301.36,396.00,8.64",
+            "10,108.00,312.27,146.80,8.64",
+            "10,267.87,312.27,3.53,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Our results in Table 4 show that despite the lack of task-specific tuning our model performs surprisingly well, yielding better results than all previously reported models with the exception of the Recurrent Neural Network Grammar [8].",
+              "coords": [
+                "10,108.00,290.45,397.65,8.64",
+                "10,108.00,301.36,396.00,8.64",
+                "10,108.00,312.27,163.40,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In contrast to RNN sequence-to-sequence models [37], the Transformer outperforms the Berkeley-Parser [29] even when training only on the WSJ training set of 40K sentences.",
+          "coords": [
+            "10,108.00,328.66,199.79,8.64",
+            "10,325.63,328.66,180.02,8.64",
+            "10,108.00,339.57,24.75,8.64",
+            "10,154.33,339.57,265.23,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In contrast to RNN sequence-to-sequence models [37], the Transformer outperforms the Berkeley-Parser [29] even when training only on the WSJ training set of 40K sentences.",
+              "coords": [
+                "10,108.00,328.66,397.66,8.64",
+                "10,108.00,339.57,311.56,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Conclusion",
+          "coords": [
+            "10,108.00,365.75,75.07,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work, we presented the Transformer, the first sequence transduction model based entirely on attention, replacing the recurrent layers most commonly used in encoder-decoder architectures with multi-headed self-attention.",
+          "coords": [
+            "10,108.00,390.18,396.00,8.64",
+            "10,108.00,401.09,396.00,8.64",
+            "10,108.00,411.99,110.13,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "In this work, we presented the Transformer, the first sequence transduction model based entirely on attention, replacing the recurrent layers most commonly used in encoder-decoder architectures with multi-headed self-attention.",
+              "coords": [
+                "10,108.00,390.18,396.00,8.64",
+                "10,108.00,401.09,396.00,8.64",
+                "10,108.00,411.99,110.13,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "For translation tasks, the Transformer can be trained significantly faster than architectures based on recurrent or convolutional layers. On both WMT 2014 English-to-German and WMT 2014 English-to-French translation tasks, we achieve a new state of the art. In the former task our best model outperforms even all previously reported ensembles.",
+          "coords": [
+            "10,108.00,428.38,396.00,8.64",
+            "10,108.00,439.29,396.00,8.64",
+            "10,108.00,450.20,396.00,8.64",
+            "10,108.00,461.11,235.92,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "For translation tasks, the Transformer can be trained significantly faster than architectures based on recurrent or convolutional layers.",
+              "coords": [
+                "10,108.00,428.38,396.00,8.64",
+                "10,108.00,439.29,151.41,8.64"
+              ]
+            },
+            {
+              "text": "On both WMT 2014 English-to-German and WMT 2014 English-to-French translation tasks, we achieve a new state of the art.",
+              "coords": [
+                "10,265.54,439.29,238.46,8.64",
+                "10,108.00,450.20,283.64,8.64"
+              ]
+            },
+            {
+              "text": "In the former task our best model outperforms even all previously reported ensembles.",
+              "coords": [
+                "10,395.48,450.20,108.52,8.64",
+                "10,108.00,461.11,235.92,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We are excited about the future of attention-based models and plan to apply them to other tasks. We plan to extend the Transformer to problems involving input and output modalities other than text and to investigate local, restricted attention mechanisms to efficiently handle large inputs and outputs such as images, audio and video. Making generation less sequential is another research goals of ours.",
+          "coords": [
+            "10,107.53,477.50,396.46,8.64",
+            "10,108.00,488.41,396.00,8.64",
+            "10,108.00,499.32,396.00,8.64",
+            "10,108.00,510.23,397.61,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "We are excited about the future of attention-based models and plan to apply them to other tasks.",
+              "coords": [
+                "10,107.53,477.50,380.40,8.64"
+              ]
+            },
+            {
+              "text": "We plan to extend the Transformer to problems involving input and output modalities other than text and to investigate local, restricted attention mechanisms to efficiently handle large inputs and outputs such as images, audio and video.",
+              "coords": [
+                "10,491.03,477.50,12.97,8.64",
+                "10,108.00,488.41,396.00,8.64",
+                "10,108.00,499.32,396.00,8.64",
+                "10,108.00,510.23,128.98,8.64"
+              ]
+            },
+            {
+              "text": "Making generation less sequential is another research goals of ours.",
+              "coords": [
+                "10,240.07,510.23,265.54,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The code we used to train and evaluate our models is available at https://github.com/ tensorflow/tensor2tensor.",
+          "coords": [
+            "10,107.69,526.61,397.36,8.70",
+            "10,108.00,537.92,127.99,8.30",
+            "10,107.69,526.61,293.03,8.64",
+            "10,230.87,537.92,5.12,8.30"
+          ],
+          "sentences": [
+            {
+              "text": "The code we used to train and evaluate our models is available at https://github.com/ tensorflow/tensor2tensor.",
+              "coords": [
+                "10,107.69,526.61,293.03,8.64",
+                "10,230.87,537.92,5.12,8.30"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Attention Visualizations",
+          "coords": [
+            "13,108.00,73.71,122.77,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Input-Input Layer5",
+          "coords": [
+            "13,108.00,65.55,142.50,17.84"
+          ],
+          "sentences": [
+            {
+              "text": "Input-Input Layer5",
+              "coords": [
+                "13,108.00,65.55,142.50,17.84"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "It is in this spirit that a majority of American governments have passed new laws since 2009 making the registration or voting process more difficult . <EOS> <pad> <pad> <pad> <pad> <pad> <pad> It is in this spirit that a majority of American governments have passed new laws since 2009 making the registration or voting process more difficult . <EOS> <pad> <pad> <pad> <pad> <pad> <pad> Figure 3: An example of the attention mechanism following long-distance dependencies in the encoder self-attention in layer 5 of 6. Many of the attention heads attend to a distant dependency of the verb 'making', completing the phrase 'making...more difficult'. Attentions here shown only for the word 'making'. Different colors represent different heads. Best viewed in color.",
+          "coords": [
+            "13,121.88,154.43,31.43,6.05",
+            "13,156.88,148.38,8.10,12.10",
+            "13,168.55,144.06,19.77,16.42",
+            "13,191.89,156.16,8.10,4.33",
+            "13,203.56,133.26,8.10,27.23",
+            "13,215.22,154.00,8.10,6.49",
+            "13,226.89,127.63,8.10,32.85",
+            "13,238.56,115.52,8.10,44.96",
+            "13,250.23,143.62,8.10,16.86",
+            "13,261.90,135.41,8.10,25.08",
+            "13,273.57,142.33,43.10,18.16",
+            "13,320.24,135.41,8.10,25.07",
+            "13,331.91,149.67,8.10,10.81",
+            "13,343.58,122.01,8.10,38.47",
+            "13,355.24,153.57,8.10,6.92",
+            "13,366.91,139.73,8.10,20.75",
+            "13,378.58,133.25,8.10,27.23",
+            "13,390.25,142.76,8.10,17.72",
+            "13,401.92,136.42,8.10,24.07",
+            "13,413.59,158.32,8.10,2.16",
+            "13,425.25,134.97,78.11,25.52",
+            "13,121.88,241.38,31.43,6.06",
+            "13,156.88,241.39,8.10,12.10",
+            "13,168.55,241.38,19.77,16.42",
+            "13,191.89,241.39,8.10,4.33",
+            "13,203.56,241.39,8.10,27.23",
+            "13,215.22,241.38,8.10,6.49",
+            "13,226.89,241.39,8.10,32.85",
+            "13,238.56,241.39,8.10,44.96",
+            "13,250.23,241.39,8.10,16.86",
+            "13,261.90,241.39,8.10,25.08",
+            "13,273.57,241.39,43.10,18.16",
+            "13,320.24,241.39,8.10,25.07",
+            "13,331.91,241.39,8.10,10.81",
+            "13,343.58,241.39,8.10,38.47",
+            "13,355.24,241.39,8.10,6.92",
+            "13,366.91,241.39,8.10,20.75",
+            "13,378.58,241.39,8.10,27.23",
+            "13,390.25,241.39,8.10,17.72",
+            "13,401.92,241.39,8.10,24.07",
+            "13,413.58,241.38,8.10,2.16",
+            "13,425.25,241.38,78.11,25.51",
+            "13,108.00,313.46,396.00,8.64",
+            "13,108.00,324.37,396.00,8.64",
+            "13,108.00,335.28,396.17,8.64",
+            "13,108.00,346.18,332.91,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "It is in this spirit that a majority of American governments have passed new laws since 2009 making the registration or voting process more difficult .",
+              "coords": [
+                "13,121.88,154.43,31.43,6.05",
+                "13,156.88,148.38,8.10,12.10",
+                "13,168.55,144.06,19.77,16.42",
+                "13,191.89,156.16,8.10,4.33",
+                "13,203.56,133.26,8.10,27.23",
+                "13,215.22,154.00,8.10,6.49",
+                "13,226.89,127.63,8.10,32.85",
+                "13,238.56,115.52,8.10,44.96",
+                "13,250.23,143.62,8.10,16.86",
+                "13,261.90,135.41,8.10,25.08",
+                "13,273.57,142.33,43.10,18.16",
+                "13,320.24,135.41,8.10,25.07",
+                "13,331.91,149.67,8.10,10.81",
+                "13,343.58,122.01,8.10,38.47",
+                "13,355.24,153.57,8.10,6.92",
+                "13,366.91,139.73,8.10,20.75",
+                "13,378.58,133.25,8.10,27.23",
+                "13,390.25,142.76,8.10,17.72",
+                "13,401.92,136.42,8.10,24.07",
+                "13,413.59,158.32,8.10,2.16"
+              ]
+            },
+            {
+              "text": "<EOS> <pad> <pad> <pad> <pad> <pad> <pad> It is in this spirit that a majority of American governments have passed new laws since 2009 making the registration or voting process more difficult .",
+              "coords": [
+                "13,425.25,134.97,78.11,25.52",
+                "13,121.88,241.38,31.43,6.06",
+                "13,156.88,241.39,8.10,12.10",
+                "13,168.55,241.38,19.77,16.42",
+                "13,191.89,241.39,8.10,4.33",
+                "13,203.56,241.39,8.10,27.23",
+                "13,215.22,241.38,8.10,6.49",
+                "13,226.89,241.39,8.10,32.85",
+                "13,238.56,241.39,8.10,44.96",
+                "13,250.23,241.39,8.10,16.86",
+                "13,261.90,241.39,8.10,25.08",
+                "13,273.57,241.39,43.10,18.16",
+                "13,320.24,241.39,8.10,25.07",
+                "13,331.91,241.39,8.10,10.81",
+                "13,343.58,241.39,8.10,38.47",
+                "13,355.24,241.39,8.10,6.92",
+                "13,366.91,241.39,8.10,20.75",
+                "13,378.58,241.39,8.10,27.23",
+                "13,390.25,241.39,8.10,17.72",
+                "13,401.92,241.39,8.10,24.07",
+                "13,413.58,241.38,8.10,2.16"
+              ]
+            },
+            {
+              "text": "<EOS> <pad> <pad> <pad> <pad> <pad> <pad> Figure 3: An example of the attention mechanism following long-distance dependencies in the encoder self-attention in layer 5 of 6.",
+              "coords": [
+                "13,425.25,241.38,78.11,25.51",
+                "13,108.00,313.46,396.00,8.64",
+                "13,108.00,324.37,147.69,8.64"
+              ]
+            },
+            {
+              "text": "Many of the attention heads attend to a distant dependency of the verb 'making', completing the phrase 'making...more difficult'.",
+              "coords": [
+                "13,258.78,324.37,245.22,8.64",
+                "13,108.00,335.28,268.74,8.64"
+              ]
+            },
+            {
+              "text": "Attentions here shown only for the word 'making'.",
+              "coords": [
+                "13,379.86,335.28,124.31,8.64",
+                "13,108.00,346.18,76.54,8.64"
+              ]
+            },
+            {
+              "text": "Different colors represent different heads.",
+              "coords": [
+                "13,187.63,346.18,166.32,8.64"
+              ]
+            },
+            {
+              "text": "Best viewed in color.",
+              "coords": [
+                "13,357.04,346.18,83.88,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Input-Input Layer5",
+          "coords": [
+            "14,108.00,101.51,170.68,21.37"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The Law will never be perfect , but its application should be just this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its application should be just this is what we are missing , in my opinion . <EOS> <pad> Input-Input Layer5 The Law will never be perfect , but its application should be just this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its application should be just this is what we are missing , in my opinion . <EOS> <pad> Figure 4: Two attention heads, also in layer 5 of 6, apparently involved in anaphora resolution. Top: Full attentions for head 5. Bottom: Isolated attentions from just the word 'its' for attention heads 5 and 6. Note that the attentions are very sharp for this word.",
+          "coords": [
+            "14,124.62,198.13,23.68,17.09",
+            "14,152.58,202.28,9.70,12.93",
+            "14,166.55,191.91,9.70,23.30",
+            "14,180.53,204.85,9.70,10.36",
+            "14,194.51,186.73,9.70,28.48",
+            "14,208.48,212.62,9.70,2.59",
+            "14,222.46,202.26,23.68,12.95",
+            "14,250.41,170.68,9.70,44.54",
+            "14,264.39,187.76,9.70,27.45",
+            "14,278.36,204.85,9.70,10.36",
+            "14,292.34,200.72,9.70,14.50",
+            "14,306.32,212.11,9.70,3.10",
+            "14,320.29,200.72,9.70,14.50",
+            "14,334.27,208.49,9.70,6.73",
+            "14,348.25,195.54,9.70,19.68",
+            "14,362.22,201.75,23.68,13.46",
+            "14,390.18,183.64,9.70,31.58",
+            "14,404.15,212.62,9.70,2.59",
+            "14,418.13,207.96,9.70,7.25",
+            "14,432.11,202.79,9.70,12.42",
+            "14,446.08,185.17,9.70,30.04",
+            "14,460.06,212.63,9.70,2.59",
+            "14,474.04,184.65,9.70,30.56",
+            "14,488.01,188.79,9.70,26.42",
+            "14,124.62,312.12,23.68,17.09",
+            "14,152.58,312.13,9.70,12.93",
+            "14,166.55,312.12,9.70,23.30",
+            "14,180.53,312.12,9.70,10.36",
+            "14,194.51,312.12,9.70,28.48",
+            "14,208.48,312.12,9.70,2.59",
+            "14,222.46,312.12,23.68,12.95",
+            "14,250.41,312.13,9.70,44.54",
+            "14,264.39,312.13,9.70,27.45",
+            "14,278.36,312.12,9.70,10.36",
+            "14,292.34,312.12,9.70,14.50",
+            "14,306.32,312.12,9.70,3.10",
+            "14,320.29,312.12,9.70,14.50",
+            "14,334.27,312.12,9.70,6.73",
+            "14,348.25,312.12,9.70,19.68",
+            "14,362.22,312.12,23.68,13.46",
+            "14,390.18,312.12,9.70,31.58",
+            "14,404.15,312.12,9.70,2.59",
+            "14,418.13,312.12,9.70,7.25",
+            "14,432.11,312.12,9.70,12.42",
+            "14,446.08,312.13,9.70,30.04",
+            "14,460.06,312.12,9.70,2.59",
+            "14,474.04,312.12,9.70,30.56",
+            "14,488.01,312.12,9.70,26.42",
+            "14,108.00,317.48,172.60,21.61",
+            "14,124.81,415.19,23.94,17.28",
+            "14,153.08,419.39,9.81,13.08",
+            "14,167.21,408.90,9.81,23.57",
+            "14,181.34,421.99,9.81,10.48",
+            "14,195.48,403.66,9.81,28.80",
+            "14,209.61,429.85,9.81,2.62",
+            "14,223.74,419.37,23.94,13.10",
+            "14,252.01,387.43,9.81,45.04",
+            "14,266.15,404.71,9.81,27.76",
+            "14,280.28,421.99,9.81,10.48",
+            "14,294.41,417.81,9.81,14.66",
+            "14,308.55,429.33,9.81,3.14",
+            "14,322.68,417.81,9.81,14.66",
+            "14,336.81,425.66,9.81,6.80",
+            "14,350.95,412.57,9.81,19.90",
+            "14,365.08,418.85,23.94,13.62",
+            "14,393.35,400.54,9.81,31.93",
+            "14,407.48,429.85,9.81,2.62",
+            "14,421.61,425.14,9.81,7.33",
+            "14,435.75,419.91,9.81,12.56",
+            "14,449.88,402.09,9.81,30.38",
+            "14,464.01,429.85,9.81,2.62",
+            "14,478.15,401.56,9.81,30.91",
+            "14,492.28,405.74,9.81,26.72",
+            "14,124.81,530.46,23.94,17.28",
+            "14,153.08,530.47,9.81,13.08",
+            "14,167.21,530.46,9.81,23.57",
+            "14,181.34,530.46,9.81,10.48",
+            "14,195.48,530.46,9.81,28.80",
+            "14,209.61,530.46,9.81,2.62",
+            "14,223.74,530.46,23.94,13.10",
+            "14,252.01,530.47,9.81,45.04",
+            "14,266.15,530.47,9.81,27.76",
+            "14,280.28,530.46,9.81,10.48",
+            "14,294.41,530.46,9.81,14.66",
+            "14,308.55,530.46,9.81,3.14",
+            "14,322.68,530.46,9.81,14.66",
+            "14,336.81,530.46,9.81,6.80",
+            "14,350.95,530.46,9.81,19.90",
+            "14,365.08,530.46,23.94,13.62",
+            "14,393.35,530.47,9.81,31.93",
+            "14,407.48,530.46,9.81,2.62",
+            "14,421.61,530.46,9.81,7.33",
+            "14,435.75,530.46,9.81,12.56",
+            "14,449.88,530.47,9.81,30.38",
+            "14,464.01,530.46,9.81,2.62",
+            "14,478.15,530.46,9.81,30.91",
+            "14,492.28,530.46,9.81,26.72",
+            "14,108.00,615.35,26.01,8.64",
+            "14,140.37,615.35,365.02,8.64",
+            "14,108.00,626.26,396.00,8.64",
+            "14,108.00,637.17,235.26,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The Law will never be perfect , but its application should be just this is what we are missing , in my opinion .",
+              "coords": [
+                "14,124.62,198.13,23.68,17.09",
+                "14,152.58,202.28,9.70,12.93",
+                "14,166.55,191.91,9.70,23.30",
+                "14,180.53,204.85,9.70,10.36",
+                "14,194.51,186.73,9.70,28.48",
+                "14,208.48,212.62,9.70,2.59",
+                "14,222.46,202.26,23.68,12.95",
+                "14,250.41,170.68,9.70,44.54",
+                "14,264.39,187.76,9.70,27.45",
+                "14,278.36,204.85,9.70,10.36",
+                "14,292.34,200.72,9.70,14.50",
+                "14,306.32,212.11,9.70,3.10",
+                "14,320.29,200.72,9.70,14.50",
+                "14,334.27,208.49,9.70,6.73",
+                "14,348.25,195.54,9.70,19.68",
+                "14,362.22,201.75,23.68,13.46",
+                "14,390.18,183.64,9.70,31.58",
+                "14,404.15,212.62,9.70,2.59",
+                "14,418.13,207.96,9.70,7.25",
+                "14,432.11,202.79,9.70,12.42",
+                "14,446.08,185.17,9.70,30.04",
+                "14,460.06,212.63,9.70,2.59"
+              ]
+            },
+            {
+              "text": "<EOS> <pad> The Law will never be perfect , but its application should be just this is what we are missing , in my opinion .",
+              "coords": [
+                "14,474.04,184.65,9.70,30.56",
+                "14,488.01,188.79,9.70,26.42",
+                "14,124.62,312.12,23.68,17.09",
+                "14,152.58,312.13,9.70,12.93",
+                "14,166.55,312.12,9.70,23.30",
+                "14,180.53,312.12,9.70,10.36",
+                "14,194.51,312.12,9.70,28.48",
+                "14,208.48,312.12,9.70,2.59",
+                "14,222.46,312.12,23.68,12.95",
+                "14,250.41,312.13,9.70,44.54",
+                "14,264.39,312.13,9.70,27.45",
+                "14,278.36,312.12,9.70,10.36",
+                "14,292.34,312.12,9.70,14.50",
+                "14,306.32,312.12,9.70,3.10",
+                "14,320.29,312.12,9.70,14.50",
+                "14,334.27,312.12,9.70,6.73",
+                "14,348.25,312.12,9.70,19.68",
+                "14,362.22,312.12,23.68,13.46",
+                "14,390.18,312.12,9.70,31.58",
+                "14,404.15,312.12,9.70,2.59",
+                "14,418.13,312.12,9.70,7.25",
+                "14,432.11,312.12,9.70,12.42",
+                "14,446.08,312.13,9.70,30.04",
+                "14,460.06,312.12,9.70,2.59"
+              ]
+            },
+            {
+              "text": "<EOS> <pad> Input-Input Layer5 The Law will never be perfect , but its application should be just this is what we are missing , in my opinion .",
+              "coords": [
+                "14,474.04,312.12,9.70,30.56",
+                "14,488.01,312.12,9.70,26.42",
+                "14,108.00,317.48,172.60,21.61",
+                "14,124.81,415.19,23.94,17.28",
+                "14,153.08,419.39,9.81,13.08",
+                "14,167.21,408.90,9.81,23.57",
+                "14,181.34,421.99,9.81,10.48",
+                "14,195.48,403.66,9.81,28.80",
+                "14,209.61,429.85,9.81,2.62",
+                "14,223.74,419.37,23.94,13.10",
+                "14,252.01,387.43,9.81,45.04",
+                "14,266.15,404.71,9.81,27.76",
+                "14,280.28,421.99,9.81,10.48",
+                "14,294.41,417.81,9.81,14.66",
+                "14,308.55,429.33,9.81,3.14",
+                "14,322.68,417.81,9.81,14.66",
+                "14,336.81,425.66,9.81,6.80",
+                "14,350.95,412.57,9.81,19.90",
+                "14,365.08,418.85,23.94,13.62",
+                "14,393.35,400.54,9.81,31.93",
+                "14,407.48,429.85,9.81,2.62",
+                "14,421.61,425.14,9.81,7.33",
+                "14,435.75,419.91,9.81,12.56",
+                "14,449.88,402.09,9.81,30.38",
+                "14,464.01,429.85,9.81,2.62"
+              ]
+            },
+            {
+              "text": "<EOS> <pad> The Law will never be perfect , but its application should be just this is what we are missing , in my opinion .",
+              "coords": [
+                "14,478.15,401.56,9.81,30.91",
+                "14,492.28,405.74,9.81,26.72",
+                "14,124.81,530.46,23.94,17.28",
+                "14,153.08,530.47,9.81,13.08",
+                "14,167.21,530.46,9.81,23.57",
+                "14,181.34,530.46,9.81,10.48",
+                "14,195.48,530.46,9.81,28.80",
+                "14,209.61,530.46,9.81,2.62",
+                "14,223.74,530.46,23.94,13.10",
+                "14,252.01,530.47,9.81,45.04",
+                "14,266.15,530.47,9.81,27.76",
+                "14,280.28,530.46,9.81,10.48",
+                "14,294.41,530.46,9.81,14.66",
+                "14,308.55,530.46,9.81,3.14",
+                "14,322.68,530.46,9.81,14.66",
+                "14,336.81,530.46,9.81,6.80",
+                "14,350.95,530.46,9.81,19.90",
+                "14,365.08,530.46,23.94,13.62",
+                "14,393.35,530.47,9.81,31.93",
+                "14,407.48,530.46,9.81,2.62",
+                "14,421.61,530.46,9.81,7.33",
+                "14,435.75,530.46,9.81,12.56",
+                "14,449.88,530.47,9.81,30.38",
+                "14,464.01,530.46,9.81,2.62"
+              ]
+            },
+            {
+              "text": "<EOS> <pad> Figure 4: Two attention heads, also in layer 5 of 6, apparently involved in anaphora resolution.",
+              "coords": [
+                "14,478.15,530.46,9.81,30.91",
+                "14,492.28,530.46,9.81,26.72",
+                "14,108.00,615.35,376.28,8.64"
+              ]
+            },
+            {
+              "text": "Top: Full attentions for head",
+              "coords": [
+                "14,487.37,615.35,18.02,8.64",
+                "14,108.00,626.26,93.37,8.64"
+              ]
+            },
+            {
+              "text": "5. Bottom: Isolated attentions from just the word 'its' for attention heads 5 and",
+              "coords": [
+                "14,203.86,626.26,300.13,8.64",
+                "14,108.00,637.17,14.39,8.64"
+              ]
+            },
+            {
+              "text": "6. Note that the attentions are very sharp for this word.",
+              "coords": [
+                "14,124.88,637.17,218.38,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Input-Input Layer5",
+          "coords": [
+            "15,106.97,115.76,171.14,21.42"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The Law will never be perfect , but its application should be just this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its application should be just this is what we are missing , in my opinion . <EOS> <pad> Input-Input Layer5 The Law will never be perfect , but its application should be just this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its application should be just this is what we are missing , in my opinion . <EOS> <pad> Figure 5: Many of the attention heads exhibit behaviour that seems related to the structure of the sentence. We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6. The heads clearly learned to perform different tasks.",
+          "coords": [
+            "15,123.64,212.63,23.74,17.13",
+            "15,151.67,216.80,9.73,12.97",
+            "15,165.68,206.40,9.73,23.37",
+            "15,179.69,219.38,9.73,10.39",
+            "15,193.71,201.21,9.73,28.56",
+            "15,207.72,227.17,9.73,2.60",
+            "15,221.73,216.78,23.74,12.99",
+            "15,249.76,185.11,9.73,44.66",
+            "15,263.78,202.24,9.73,27.52",
+            "15,277.79,219.38,9.73,10.39",
+            "15,291.80,215.23,9.73,14.54",
+            "15,305.82,226.66,9.73,3.11",
+            "15,319.83,215.23,9.73,14.54",
+            "15,333.84,223.02,9.73,6.75",
+            "15,347.86,210.04,9.73,19.73",
+            "15,361.87,216.27,23.74,13.50",
+            "15,389.90,198.11,9.73,31.66",
+            "15,403.91,227.17,9.73,2.60",
+            "15,417.92,222.50,9.73,7.27",
+            "15,431.94,217.31,9.73,12.45",
+            "15,445.95,199.65,9.73,30.12",
+            "15,459.96,227.17,9.73,2.60",
+            "15,473.98,199.12,9.73,30.64",
+            "15,487.99,203.27,9.73,26.49",
+            "15,123.64,326.93,23.74,17.14",
+            "15,151.67,326.93,9.73,12.97",
+            "15,165.68,326.93,9.73,23.37",
+            "15,179.69,326.93,9.73,10.39",
+            "15,193.71,326.93,9.73,28.56",
+            "15,207.72,326.92,9.73,2.60",
+            "15,221.73,326.93,23.74,12.99",
+            "15,249.76,326.94,9.73,44.66",
+            "15,263.78,326.93,9.73,27.52",
+            "15,277.79,326.93,9.73,10.39",
+            "15,291.80,326.93,9.73,14.54",
+            "15,305.82,326.93,9.73,3.11",
+            "15,319.83,326.93,9.73,14.54",
+            "15,333.84,326.93,9.73,6.75",
+            "15,347.86,326.93,9.73,19.73",
+            "15,361.87,326.93,23.74,13.50",
+            "15,389.90,326.93,9.73,31.66",
+            "15,403.91,326.92,9.73,2.60",
+            "15,417.92,326.93,9.73,7.27",
+            "15,431.94,326.93,9.73,12.45",
+            "15,445.95,326.94,9.73,30.12",
+            "15,459.96,326.92,9.73,2.60",
+            "15,473.98,326.92,9.73,30.64",
+            "15,487.99,326.93,9.73,26.49",
+            "15,106.77,334.01,171.22,21.43",
+            "15,123.44,430.93,23.75,17.14",
+            "15,151.48,435.10,9.73,12.97",
+            "15,165.50,424.70,9.73,23.38",
+            "15,179.52,437.68,9.73,10.39",
+            "15,193.54,419.50,9.73,28.57",
+            "15,207.56,445.48,9.73,2.60",
+            "15,221.58,435.08,23.75,12.99",
+            "15,249.62,403.40,9.73,44.68",
+            "15,263.64,420.54,9.73,27.54",
+            "15,277.66,437.68,9.73,10.39",
+            "15,291.68,433.53,9.73,14.54",
+            "15,305.71,444.96,9.73,3.11",
+            "15,319.73,433.53,9.73,14.54",
+            "15,333.75,441.32,9.73,6.75",
+            "15,347.77,428.33,9.73,19.74",
+            "15,361.79,434.57,23.75,13.51",
+            "15,389.83,416.40,9.73,31.68",
+            "15,403.85,445.47,9.73,2.60",
+            "15,417.87,440.80,9.73,7.27",
+            "15,431.89,435.61,9.73,12.46",
+            "15,445.91,417.94,9.73,30.13",
+            "15,459.93,445.48,9.73,2.60",
+            "15,473.95,417.42,9.73,30.66",
+            "15,487.97,421.56,9.73,26.51",
+            "15,123.44,545.28,23.75,17.15",
+            "15,151.48,545.29,9.73,12.97",
+            "15,165.50,545.29,9.73,23.38",
+            "15,179.52,545.28,9.73,10.39",
+            "15,193.54,545.28,9.73,28.57",
+            "15,207.56,545.28,9.73,2.60",
+            "15,221.58,545.28,23.75,12.99",
+            "15,249.62,545.29,9.73,44.68",
+            "15,263.64,545.29,9.73,27.54",
+            "15,277.66,545.28,9.73,10.39",
+            "15,291.68,545.28,9.73,14.54",
+            "15,305.71,545.28,9.73,3.11",
+            "15,319.73,545.28,9.73,14.54",
+            "15,333.75,545.28,9.73,6.75",
+            "15,347.77,545.28,9.73,19.74",
+            "15,361.79,545.28,23.75,13.51",
+            "15,389.83,545.29,9.73,31.68",
+            "15,403.85,545.28,9.73,2.60",
+            "15,417.87,545.28,9.73,7.27",
+            "15,431.89,545.28,9.73,12.46",
+            "15,445.91,545.29,9.73,30.13",
+            "15,459.93,545.28,9.73,2.60",
+            "15,473.95,545.28,9.73,30.66",
+            "15,487.97,545.29,9.73,26.51",
+            "15,108.00,603.47,26.53,8.64",
+            "15,141.27,603.47,362.73,8.64",
+            "15,108.00,614.38,396.00,8.64",
+            "15,108.00,625.29,269.26,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "The Law will never be perfect , but its application should be just this is what we are missing , in my opinion .",
+              "coords": [
+                "15,123.64,212.63,23.74,17.13",
+                "15,151.67,216.80,9.73,12.97",
+                "15,165.68,206.40,9.73,23.37",
+                "15,179.69,219.38,9.73,10.39",
+                "15,193.71,201.21,9.73,28.56",
+                "15,207.72,227.17,9.73,2.60",
+                "15,221.73,216.78,23.74,12.99",
+                "15,249.76,185.11,9.73,44.66",
+                "15,263.78,202.24,9.73,27.52",
+                "15,277.79,219.38,9.73,10.39",
+                "15,291.80,215.23,9.73,14.54",
+                "15,305.82,226.66,9.73,3.11",
+                "15,319.83,215.23,9.73,14.54",
+                "15,333.84,223.02,9.73,6.75",
+                "15,347.86,210.04,9.73,19.73",
+                "15,361.87,216.27,23.74,13.50",
+                "15,389.90,198.11,9.73,31.66",
+                "15,403.91,227.17,9.73,2.60",
+                "15,417.92,222.50,9.73,7.27",
+                "15,431.94,217.31,9.73,12.45",
+                "15,445.95,199.65,9.73,30.12",
+                "15,459.96,227.17,9.73,2.60"
+              ]
+            },
+            {
+              "text": "<EOS> <pad> The Law will never be perfect , but its application should be just this is what we are missing , in my opinion .",
+              "coords": [
+                "15,473.98,199.12,9.73,30.64",
+                "15,487.99,203.27,9.73,26.49",
+                "15,123.64,326.93,23.74,17.14",
+                "15,151.67,326.93,9.73,12.97",
+                "15,165.68,326.93,9.73,23.37",
+                "15,179.69,326.93,9.73,10.39",
+                "15,193.71,326.93,9.73,28.56",
+                "15,207.72,326.92,9.73,2.60",
+                "15,221.73,326.93,23.74,12.99",
+                "15,249.76,326.94,9.73,44.66",
+                "15,263.78,326.93,9.73,27.52",
+                "15,277.79,326.93,9.73,10.39",
+                "15,291.80,326.93,9.73,14.54",
+                "15,305.82,326.93,9.73,3.11",
+                "15,319.83,326.93,9.73,14.54",
+                "15,333.84,326.93,9.73,6.75",
+                "15,347.86,326.93,9.73,19.73",
+                "15,361.87,326.93,23.74,13.50",
+                "15,389.90,326.93,9.73,31.66",
+                "15,403.91,326.92,9.73,2.60",
+                "15,417.92,326.93,9.73,7.27",
+                "15,431.94,326.93,9.73,12.45",
+                "15,445.95,326.94,9.73,30.12",
+                "15,459.96,326.92,9.73,2.60"
+              ]
+            },
+            {
+              "text": "<EOS> <pad> Input-Input Layer5 The Law will never be perfect , but its application should be just this is what we are missing , in my opinion .",
+              "coords": [
+                "15,473.98,326.92,9.73,30.64",
+                "15,487.99,326.93,9.73,26.49",
+                "15,106.77,334.01,171.22,21.43",
+                "15,123.44,430.93,23.75,17.14",
+                "15,151.48,435.10,9.73,12.97",
+                "15,165.50,424.70,9.73,23.38",
+                "15,179.52,437.68,9.73,10.39",
+                "15,193.54,419.50,9.73,28.57",
+                "15,207.56,445.48,9.73,2.60",
+                "15,221.58,435.08,23.75,12.99",
+                "15,249.62,403.40,9.73,44.68",
+                "15,263.64,420.54,9.73,27.54",
+                "15,277.66,437.68,9.73,10.39",
+                "15,291.68,433.53,9.73,14.54",
+                "15,305.71,444.96,9.73,3.11",
+                "15,319.73,433.53,9.73,14.54",
+                "15,333.75,441.32,9.73,6.75",
+                "15,347.77,428.33,9.73,19.74",
+                "15,361.79,434.57,23.75,13.51",
+                "15,389.83,416.40,9.73,31.68",
+                "15,403.85,445.47,9.73,2.60",
+                "15,417.87,440.80,9.73,7.27",
+                "15,431.89,435.61,9.73,12.46",
+                "15,445.91,417.94,9.73,30.13",
+                "15,459.93,445.48,9.73,2.60"
+              ]
+            },
+            {
+              "text": "<EOS> <pad> The Law will never be perfect , but its application should be just this is what we are missing , in my opinion .",
+              "coords": [
+                "15,473.95,417.42,9.73,30.66",
+                "15,487.97,421.56,9.73,26.51",
+                "15,123.44,545.28,23.75,17.15",
+                "15,151.48,545.29,9.73,12.97",
+                "15,165.50,545.29,9.73,23.38",
+                "15,179.52,545.28,9.73,10.39",
+                "15,193.54,545.28,9.73,28.57",
+                "15,207.56,545.28,9.73,2.60",
+                "15,221.58,545.28,23.75,12.99",
+                "15,249.62,545.29,9.73,44.68",
+                "15,263.64,545.29,9.73,27.54",
+                "15,277.66,545.28,9.73,10.39",
+                "15,291.68,545.28,9.73,14.54",
+                "15,305.71,545.28,9.73,3.11",
+                "15,319.73,545.28,9.73,14.54",
+                "15,333.75,545.28,9.73,6.75",
+                "15,347.77,545.28,9.73,19.74",
+                "15,361.79,545.28,23.75,13.51",
+                "15,389.83,545.29,9.73,31.68",
+                "15,403.85,545.28,9.73,2.60",
+                "15,417.87,545.28,9.73,7.27",
+                "15,431.89,545.28,9.73,12.46",
+                "15,445.91,545.29,9.73,30.13",
+                "15,459.93,545.28,9.73,2.60"
+              ]
+            },
+            {
+              "text": "<EOS> <pad> Figure 5: Many of the attention heads exhibit behaviour that seems related to the structure of the sentence.",
+              "coords": [
+                "15,473.95,545.28,9.73,30.66",
+                "15,487.97,545.29,9.73,26.51",
+                "15,108.00,603.47,396.00,8.64",
+                "15,108.00,614.38,36.06,8.64"
+              ]
+            },
+            {
+              "text": "We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6.",
+              "coords": [
+                "15,147.10,614.38,356.90,8.64",
+                "15,108.00,625.29,57.82,8.64"
+              ]
+            },
+            {
+              "text": "The heads clearly learned to perform different tasks.",
+              "coords": [
+                "15,168.91,625.29,208.35,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appendices": [],
+  "pages": [
+    {
+      "page": 1,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 2,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 3,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 4,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 5,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 6,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 7,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 8,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 9,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 10,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 11,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 12,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 13,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 14,
+      "width": 612.0,
+      "height": 792.0
+    },
+    {
+      "page": 15,
+      "width": 612.0,
+      "height": 792.0
+    }
+  ]
+}

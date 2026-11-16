@@ -26,6 +26,27 @@ Three abstract errors stood out when checking the source PDFs. On *Attention Is 
 | `2501.12948v1` | DeepSeek-R1 | [TEI](results/2501.12948v1.tei.xml) | [JSON](results/2501.12948v1.json) | 7 | 270 |
 | `2603.19299v1` | PRIME-CVD | [TEI](results/2603.19299v1.tei.xml) | [JSON](results/2603.19299v1.json) | 10 | 355 |
 
+## Full versus CRF
+
+GROBID Full fixed **zero of the three abstract errors**. Seven papers had identical exported abstract text across the two builds, including the three with known errors. Across the three papers that changed, Full removed one footnote marker, added chart text to an abstract, and dropped an abstract sentence. The differences below were checked against the printed PDFs.
+
+| arXiv revision | What Full returned | Full output |
+|---|---|---|
+| `1706.03762v7` | Transformer abstract still includes author footnotes | [JSON](results/full/1706.03762v7.json) · [TEI](results/full/1706.03762v7.tei.xml) |
+| `1810.04805v2` | BERT abstract text unchanged | [JSON](results/full/1810.04805v2.json) · [TEI](results/full/1810.04805v2.tei.xml) |
+| `2001.08361v1` | Scaling Laws abstract text unchanged | [JSON](results/full/2001.08361v1.json) · [TEI](results/full/2001.08361v1.tei.xml) |
+| `2211.14329v2` | Abstract field still empty. The quasar abstract appears at the start of the body | [JSON](results/full/2211.14329v2.json) · [TEI](results/full/2211.14329v2.tei.xml) |
+| `2302.14165v2` | GAM Coach abstract field still contains the Figure 1 caption | [JSON](results/full/2302.14165v2.json) · [TEI](results/full/2302.14165v2.tei.xml) |
+| `2309.00941v2` | Removed the trailing footnote marker from the Othello abstract | [JSON](results/full/2309.00941v2.json) · [TEI](results/full/2309.00941v2.tei.xml) |
+| `2406.18747v2` | Music source separation abstract text unchanged | [JSON](results/full/2406.18747v2.json) · [TEI](results/full/2406.18747v2.tei.xml) |
+| `2410.13641v2` | Inclusive generation abstract text unchanged | [JSON](results/full/2410.13641v2.json) · [TEI](results/full/2410.13641v2.tei.xml) |
+| `2501.12948v1` | Appended Figure 1 axis labels to the DeepSeek-R1 abstract | [JSON](results/full/2501.12948v1.json) · [TEI](results/full/2501.12948v1.tei.xml) |
+| `2603.19299v1` | Dropped the closing licence sentence from the PRIME-CVD abstract field | [JSON](results/full/2603.19299v1.json) · [TEI](results/full/2603.19299v1.tei.xml) |
+
+Full returned 3,166 body sentences versus 3,124 for CRF. All but one Full sentence entry, which contained only punctuation, had coordinates. All reported abstract and body sentence boxes fell within their pages with a one-point tolerance. The counts give the number of entries each build produced. Body completeness and rendered placement were outside the comparison.
+
+Both runs used the same PDF files and request settings below. The Full run used GROBID's public mirror, which runs the `0.9.1-full` image with the DeLFT header model enabled. The local Full container exited with a native TensorFlow `SIGILL` on the emulated `amd64` runtime. [Mirror image](https://huggingface.co/spaces/grobidOrg/grobid-full2/blob/main/Dockerfile) · [Mirror model settings](https://huggingface.co/spaces/grobidOrg/grobid-full2/blob/main/grobid.yaml)
+
 ## Output format
 
 The JSON extracts the title, abstract, body and appendices for inspection. It keeps section order and joins adjacent tagged sentences with spaces to make paragraph text readable. The raw TEI also contains the other structures GROBID detected, including figures, footnotes and references.
@@ -54,3 +75,5 @@ curl -fsS -F input=@1810.04805v2.pdf -F consolidateHeader=0 \
   http://127.0.0.1:8070/api/processFulltextDocument -o results/1810.04805v2.tei.xml
 python3 export.py
 ```
+
+To regenerate the Full JSON views from the saved TEI, run `python3 export.py results/full`.

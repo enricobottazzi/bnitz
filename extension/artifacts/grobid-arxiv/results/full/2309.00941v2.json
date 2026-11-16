@@ -1,0 +1,4303 @@
+{
+  "source": "https://arxiv.org/pdf/2309.00941v2",
+  "title": "Emergent Linear Representations in World Models of Self-Supervised Sequence Models",
+  "abstract": [
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "How do sequence models represent their decision-making process? Prior work suggests that Othello-playing neural network learned nonlinear models of the board state (Li et al., 2023a). In this work, we provide evidence of a closely related linear representation of the board. In particular, we show that probing for \"my colour\" vs. \"opponent's colour\" may be a simple yet powerful way to interpret the model's internal state. This precise understanding of the internal representations allows us to control the model's behaviour with simple vector arithmetic. Linear representations enable significant interpretability progress, which we demonstrate with further exploration of how the world model is computed.",
+          "coords": [
+            "1,87.87,236.63,184.42,8.64",
+            "1,87.87,248.58,184.25,8.64",
+            "1,87.87,260.54,184.25,8.64",
+            "1,87.87,272.49,144.73,8.64",
+            "1,114.24,284.45,157.89,8.64",
+            "1,87.87,296.23,184.25,8.82",
+            "1,87.87,308.36,184.25,8.64",
+            "1,87.87,320.32,184.60,8.64",
+            "1,87.87,332.27,184.25,8.64",
+            "1,87.87,344.23,185.91,8.64",
+            "1,87.87,356.18,184.25,8.64",
+            "1,87.87,368.14,185.91,8.64",
+            "1,87.87,380.09,184.25,8.64",
+            "1,87.87,392.05,184.26,8.64",
+            "1,87.87,404.00,184.61,8.64",
+            "1,87.87,415.96,118.61,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "How do sequence models represent their decision-making process?",
+              "coords": [
+                "1,87.87,236.63,184.42,8.64",
+                "1,87.87,248.58,102.58,8.64"
+              ]
+            },
+            {
+              "text": "Prior work suggests that Othello-playing neural network learned nonlinear models of the board state (Li et al., 2023a).",
+              "coords": [
+                "1,193.55,248.58,78.58,8.64",
+                "1,87.87,260.54,184.25,8.64",
+                "1,87.87,272.49,185.49,8.64",
+                "1,87.87,284.45,30.76,8.64"
+              ]
+            },
+            {
+              "text": "In this work, we provide evidence of a closely related linear representation of the board.",
+              "coords": [
+                "1,122.34,284.45,149.79,8.64",
+                "1,87.87,296.23,184.25,8.82",
+                "1,87.87,308.36,25.68,8.64"
+              ]
+            },
+            {
+              "text": "In particular, we show that probing for \"my colour\" vs. \"opponent's colour\" may be a simple yet powerful way to interpret the model's internal state.",
+              "coords": [
+                "1,121.58,308.36,150.55,8.64",
+                "1,87.87,320.32,184.60,8.64",
+                "1,87.87,332.27,184.25,8.64",
+                "1,87.87,344.23,86.38,8.64"
+              ]
+            },
+            {
+              "text": "This precise understanding of the internal representations allows us to control the model's behaviour with simple vector arithmetic.",
+              "coords": [
+                "1,177.34,344.23,96.44,8.64",
+                "1,87.87,356.18,184.25,8.64",
+                "1,87.87,368.14,185.91,8.64",
+                "1,87.87,380.09,58.21,8.64"
+              ]
+            },
+            {
+              "text": "Linear representations enable significant interpretability progress, which we demonstrate with further exploration of how the world model is computed.",
+              "coords": [
+                "1,151.21,380.09,120.92,8.64",
+                "1,87.87,392.05,184.26,8.64",
+                "1,87.87,404.00,184.61,8.64",
+                "1,87.87,415.96,118.61,8.64"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Introduction",
+          "coords": [
+            "1,70.87,435.74,82.81,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "How do sequence models represent their decisionmaking process? Large language models are capable of unprecedented feats, yet largely remain inscrutable black boxes. Yet evidence has accumulated that models act as feature extractors: identifying increasingly complex properties of the input and representing these in the internal activations (Geva et al., 2021;Bau et al., 2020;Gurnee et al., 2023;Belinkov, 2022a;Burns et al., 2022;Goh et al., 2021;Elhage et al., 2022a). A key first step for interpreting them is understanding how these features are represented. Mikolov et al. (2013c) introduce the linear representation hypothesis: that features are represented linearly as directions in activation space. This would be highly consequential if true, yet this remains controversial and without conclusive empirical justification. In this work, we present novel evidence of linear representations, and show that this hypothesis has real predictive power. We build on the work of Li et al. (2023a), who demonstrate the emergence of a world model in sequence models. Namely, the authors train Oth-elloGPT, an autoregressive transformer model, to predict legal moves in a game of Othello given a sequence of prior moves (Section 2.2). They show that the model spontaneously learns to track the correct board state, recovered using non-linear probes, despite never being told that the board exists. They further show a causal relationship between the model's inner board state and its move predictions using model edits. Namely, they show that the edited network plays moves that are legal in the edited board state even if illegal in the original board, and even if the edited board state is unreachable by legal play (i.e., out of distribution).",
+          "coords": [
+            "1,70.87,457.38,220.08,9.46",
+            "1,70.87,470.93,220.08,9.46",
+            "1,70.87,484.48,218.27,9.46",
+            "1,70.87,498.03,220.08,9.46",
+            "1,70.87,511.58,220.08,9.46",
+            "1,70.87,525.13,218.27,9.46",
+            "1,70.87,538.68,218.27,9.46",
+            "1,214.33,579.32,74.81,9.46",
+            "1,70.87,592.87,218.27,9.46",
+            "1,70.87,606.42,105.12,9.46",
+            "1,278.97,606.42,11.97,9.46",
+            "1,70.87,619.54,218.26,9.88",
+            "1,70.87,633.52,220.08,9.46",
+            "1,70.87,647.07,218.27,9.46",
+            "1,70.87,660.62,218.27,9.46",
+            "1,70.87,674.17,218.27,9.46",
+            "1,70.87,687.72,219.63,9.46",
+            "1,70.87,701.27,218.27,9.46",
+            "1,70.87,714.82,29.12,9.46",
+            "1,317.05,478.88,108.01,9.46",
+            "1,497.75,478.88,26.66,9.46",
+            "1,306.14,492.24,218.27,9.65",
+            "1,306.14,505.98,220.08,9.46",
+            "1,306.14,519.53,218.27,9.46",
+            "1,306.14,533.08,218.27,9.46",
+            "1,306.14,546.63,218.65,9.46",
+            "1,306.14,560.18,218.54,9.46",
+            "1,306.14,573.53,218.27,9.65",
+            "1,306.14,587.28,220.07,9.46",
+            "1,306.14,600.83,220.08,9.46",
+            "1,306.14,614.38,218.27,9.46",
+            "1,306.14,627.93,218.66,9.46",
+            "1,306.14,641.47,218.27,9.46",
+            "1,306.14,655.02,220.08,9.46",
+            "1,306.14,668.57,218.27,9.46",
+            "1,306.14,682.12,220.18,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "How do sequence models represent their decisionmaking process?",
+              "coords": [
+                "1,70.87,457.38,220.08,9.46",
+                "1,70.87,470.93,75.19,9.46"
+              ]
+            },
+            {
+              "text": "Large language models are capable of unprecedented feats, yet largely remain inscrutable black boxes.",
+              "coords": [
+                "1,151.73,470.93,139.21,9.46",
+                "1,70.87,484.48,218.27,9.46",
+                "1,70.87,498.03,104.15,9.46"
+              ]
+            },
+            {
+              "text": "Yet evidence has accumulated that models act as feature extractors: identifying increasingly complex properties of the input and representing these in the internal activations (Geva et al., 2021;Bau et al., 2020;Gurnee et al., 2023;Belinkov, 2022a;Burns et al., 2022;Goh et al., 2021;Elhage et al., 2022a).",
+              "coords": [
+                "1,178.39,498.03,112.56,9.46",
+                "1,70.87,511.58,220.08,9.46",
+                "1,70.87,525.13,218.27,9.46",
+                "1,70.87,538.68,218.27,9.46",
+                "1,70.51,552.22,219.99,9.46",
+                "1,70.87,565.77,218.27,9.46",
+                "1,70.87,579.32,148.23,9.46"
+              ]
+            },
+            {
+              "text": "A key first step for interpreting them is understanding how these features are represented.",
+              "coords": [
+                "1,222.48,579.32,66.66,9.46",
+                "1,70.87,592.87,218.27,9.46",
+                "1,70.87,606.42,105.12,9.46"
+              ]
+            },
+            {
+              "text": "Mikolov et al. (2013c) introduce the linear representation hypothesis: that features are represented linearly as directions in activation space.",
+              "coords": [
+                "1,179.39,606.42,111.55,9.46",
+                "1,70.87,619.54,218.26,9.88",
+                "1,70.87,633.52,220.08,9.46",
+                "1,70.87,647.07,61.52,9.46"
+              ]
+            },
+            {
+              "text": "This would be highly consequential if true, yet this remains controversial and without conclusive empirical justification.",
+              "coords": [
+                "1,135.79,647.07,153.34,9.46",
+                "1,70.87,660.62,218.27,9.46",
+                "1,70.87,674.17,145.01,9.46"
+              ]
+            },
+            {
+              "text": "In this work, we present novel evidence of linear representations, and show that this hypothesis has real predictive power.",
+              "coords": [
+                "1,219.27,674.17,69.87,9.46",
+                "1,70.87,687.72,219.63,9.46",
+                "1,70.87,701.27,218.27,9.46",
+                "1,70.87,714.82,29.12,9.46"
+              ]
+            },
+            {
+              "text": "We build on the work of Li et al. (2023a), who demonstrate the emergence of a world model in sequence models.",
+              "coords": [
+                "1,317.05,478.88,207.36,9.46",
+                "1,306.14,492.24,218.27,9.65",
+                "1,306.14,505.98,78.79,9.46"
+              ]
+            },
+            {
+              "text": "Namely, the authors train Oth-elloGPT, an autoregressive transformer model, to predict legal moves in a game of Othello given a sequence of prior moves (Section 2.2).",
+              "coords": [
+                "1,389.36,505.98,136.85,9.46",
+                "1,306.14,519.53,218.27,9.46",
+                "1,306.14,533.08,218.27,9.46",
+                "1,306.14,546.63,188.11,9.46"
+              ]
+            },
+            {
+              "text": "They show that the model spontaneously learns to track the correct board state, recovered using non-linear probes, despite never being told that the board exists.",
+              "coords": [
+                "1,502.09,546.63,22.70,9.46",
+                "1,306.14,560.18,218.54,9.46",
+                "1,306.14,573.53,218.27,9.65",
+                "1,306.14,587.28,220.07,9.46",
+                "1,306.14,600.83,17.63,9.46"
+              ]
+            },
+            {
+              "text": "They further show a causal relationship between the model's inner board state and its move predictions using model edits.",
+              "coords": [
+                "1,329.49,600.83,196.73,9.46",
+                "1,306.14,614.38,218.27,9.46",
+                "1,306.14,627.93,131.51,9.46"
+              ]
+            },
+            {
+              "text": "Namely, they show that the edited network plays moves that are legal in the edited board state even if illegal in the original board, and even if the edited board state is unreachable by legal play (i.e., out of distribution).",
+              "coords": [
+                "1,441.03,627.93,83.77,9.46",
+                "1,306.14,641.47,218.27,9.46",
+                "1,306.14,655.02,220.08,9.46",
+                "1,306.14,668.57,218.27,9.46",
+                "1,306.14,682.12,220.18,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Critically, the original authors claim that Othel-loGPT uses non-linear representations to encode the board state, by achieving high accuracy with non-linear probes, but failing to do so using linear probes. In our work, we demonstrate that a closely related world model is actually linearly encoded.",
+          "coords": [
+            "1,317.05,696.18,209.17,9.46",
+            "1,306.14,709.53,218.27,9.65",
+            "1,306.14,723.27,218.27,9.46",
+            "1,306.14,736.82,218.45,9.46",
+            "1,306.14,750.37,218.65,9.46",
+            "1,306.14,763.73,220.18,9.65"
+          ],
+          "sentences": [
+            {
+              "text": "Critically, the original authors claim that Othel-loGPT uses non-linear representations to encode the board state, by achieving high accuracy with non-linear probes, but failing to do so using linear probes.",
+              "coords": [
+                "1,317.05,696.18,209.17,9.46",
+                "1,306.14,709.53,218.27,9.65",
+                "1,306.14,723.27,218.27,9.46",
+                "1,306.14,736.82,218.45,9.46",
+                "1,306.14,750.37,31.43,9.46"
+              ]
+            },
+            {
+              "text": "In our work, we demonstrate that a closely related world model is actually linearly encoded.",
+              "coords": [
+                "1,340.94,750.37,183.84,9.46",
+                "1,306.14,763.73,220.18,9.65"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Our key insight is that rather than encoding the colours of the board (BLACK, WHITE, EMPTY), the sequence model encodes the board relative to the current player of each timestep (MINE, YOURS, EMPTY). In other words, for odd timesteps, the model considers BLACK tiles as MINE and WHITE tiles as YOURS, and vice versa for even timesteps (Section 3). Using this insight, we demonstrate that a linear projection can be learned with near perfect accuracy to derive the board state.",
+          "coords": [
+            "2,70.87,74.72,218.27,9.46",
+            "2,70.87,88.08,219.63,9.65",
+            "2,70.87,101.63,218.27,9.65",
+            "2,70.87,115.37,219.63,9.46",
+            "2,71.14,128.92,218.00,9.46",
+            "2,70.87,142.47,218.01,9.46",
+            "2,70.87,156.02,218.27,9.46",
+            "2,70.51,169.57,218.63,9.46",
+            "2,70.87,182.92,218.27,9.65",
+            "2,70.87,196.67,148.44,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Our key insight is that rather than encoding the colours of the board (BLACK, WHITE, EMPTY), the sequence model encodes the board relative to the current player of each timestep (MINE, YOURS, EMPTY).",
+              "coords": [
+                "2,70.87,74.72,218.27,9.46",
+                "2,70.87,88.08,219.63,9.65",
+                "2,70.87,101.63,218.27,9.65",
+                "2,70.87,115.37,219.63,9.46",
+                "2,71.14,128.92,40.50,9.46"
+              ]
+            },
+            {
+              "text": "In other words, for odd timesteps, the model considers BLACK tiles as MINE and WHITE tiles as YOURS, and vice versa for even timesteps (Section 3).",
+              "coords": [
+                "2,117.44,128.92,171.69,9.46",
+                "2,70.87,142.47,218.01,9.46",
+                "2,70.87,156.02,218.27,9.46",
+                "2,70.51,169.57,49.64,9.46"
+              ]
+            },
+            {
+              "text": "Using this insight, we demonstrate that a linear projection can be learned with near perfect accuracy to derive the board state.",
+              "coords": [
+                "2,123.43,169.57,165.71,9.46",
+                "2,70.87,182.92,218.27,9.65",
+                "2,70.87,196.67,148.44,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We further demonstrate that we can steer the sequence model's predictions by simply conducting vectoral arithmetics using our linear vectors (Section 4). Put differently, by pushing the model's activations in the directions of MINE, YOURS, or EMPTY, we can alter the model's belief state of the board, and change its predictions accordingly. Our intervention method is much simpler and interpretable than that of Li et al. (2023a), which rely on gradients to update the model's activations (Section 4.1). Our results confirm that our interpretation of each probe direction is correct, but also demonstrates that a mechanistic understanding of model representations can lead to better control. Our results do not contradict that of Li et al. (2023a), but add to our understanding of emergent world models.",
+          "coords": [
+            "2,81.78,210.77,209.17,9.46",
+            "2,70.87,224.32,218.27,9.46",
+            "2,70.59,237.87,220.35,9.46",
+            "2,70.87,251.42,218.27,9.46",
+            "2,70.87,264.96,218.46,9.46",
+            "2,71.14,278.51,218.00,9.46",
+            "2,70.87,292.06,220.18,9.46",
+            "2,70.87,305.61,220.08,9.46",
+            "2,70.87,319.16,104.67,9.46",
+            "2,252.96,319.16,36.17,9.46",
+            "2,70.87,332.71,218.27,9.46",
+            "2,70.51,346.26,220.44,9.46",
+            "2,70.87,359.81,218.27,9.46",
+            "2,70.87,373.36,218.27,9.46",
+            "2,70.87,386.91,220.08,9.46",
+            "2,70.87,400.46,182.48,9.46",
+            "2,102.42,414.01,186.72,9.46",
+            "2,70.47,427.55,62.31,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We further demonstrate that we can steer the sequence model's predictions by simply conducting vectoral arithmetics using our linear vectors (Section 4).",
+              "coords": [
+                "2,81.78,210.77,209.17,9.46",
+                "2,70.87,224.32,218.27,9.46",
+                "2,70.59,237.87,220.35,9.46",
+                "2,70.87,251.42,33.21,9.46"
+              ]
+            },
+            {
+              "text": "Put differently, by pushing the model's activations in the directions of MINE, YOURS, or EMPTY, we can alter the model's belief state of the board, and change its predictions accordingly.",
+              "coords": [
+                "2,110.81,251.42,178.33,9.46",
+                "2,70.87,264.96,218.46,9.46",
+                "2,71.14,278.51,218.00,9.46",
+                "2,70.87,292.06,220.18,9.46"
+              ]
+            },
+            {
+              "text": "Our intervention method is much simpler and interpretable than that of Li et al. (2023a), which rely on gradients to update the model's activations (Section 4.1).",
+              "coords": [
+                "2,70.87,305.61,220.08,9.46",
+                "2,70.87,319.16,218.27,9.46",
+                "2,70.87,332.71,218.27,9.46",
+                "2,70.51,346.26,60.97,9.46"
+              ]
+            },
+            {
+              "text": "Our results confirm that our interpretation of each probe direction is correct, but also demonstrates that a mechanistic understanding of model representations can lead to better control.",
+              "coords": [
+                "2,137.14,346.26,153.81,9.46",
+                "2,70.87,359.81,218.27,9.46",
+                "2,70.87,373.36,218.27,9.46",
+                "2,70.87,386.91,220.08,9.46",
+                "2,70.87,400.46,18.24,9.46"
+              ]
+            },
+            {
+              "text": "Our results do not contradict that of Li et al. (2023a), but add to our understanding of emergent world models.",
+              "coords": [
+                "2,93.27,400.46,197.78,9.46",
+                "2,70.51,414.01,218.63,9.46",
+                "2,70.47,427.55,62.31,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We provide additional interpretations of the sequence model using linear operations. For example, we provide empirical evidence of how the model derives empty tiles of the board, and find additional linear representations, such as tiles being FLIPPED at each timestep.",
+          "coords": [
+            "2,81.78,441.66,209.17,9.46",
+            "2,70.87,455.20,219.63,9.46",
+            "2,70.47,468.75,218.66,9.46",
+            "2,70.87,482.30,218.27,9.46",
+            "2,70.87,495.85,218.01,9.46",
+            "2,70.87,509.40,73.01,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We provide additional interpretations of the sequence model using linear operations.",
+              "coords": [
+                "2,81.78,441.66,209.17,9.46",
+                "2,70.87,455.20,160.74,9.46"
+              ]
+            },
+            {
+              "text": "For example, we provide empirical evidence of how the model derives empty tiles of the board, and find additional linear representations, such as tiles being FLIPPED at each timestep.",
+              "coords": [
+                "2,234.83,455.20,55.67,9.46",
+                "2,70.47,468.75,218.66,9.46",
+                "2,70.87,482.30,218.27,9.46",
+                "2,70.87,495.85,218.01,9.46",
+                "2,70.87,509.40,73.01,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Finally, we provide a short discussion of our thoughts. How should we think of linear versus non-linear representations? Perhaps most interestingly, why do linear representations emerge?",
+          "coords": [
+            "2,81.78,523.50,207.55,9.46",
+            "2,70.87,537.05,218.27,9.46",
+            "2,70.87,550.60,220.08,9.46",
+            "2,70.87,564.15,195.36,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Finally, we provide a short discussion of our thoughts.",
+              "coords": [
+                "2,81.78,523.50,207.55,9.46",
+                "2,70.87,537.05,41.12,9.46"
+              ]
+            },
+            {
+              "text": "How should we think of linear versus non-linear representations?",
+              "coords": [
+                "2,117.91,537.05,171.23,9.46",
+                "2,70.87,550.60,119.15,9.46"
+              ]
+            },
+            {
+              "text": "Perhaps most interestingly, why do linear representations emerge?",
+              "coords": [
+                "2,193.42,550.60,97.53,9.46",
+                "2,70.87,564.15,195.36,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Preliminaries",
+          "coords": [
+            "2,70.87,588.68,86.78,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this section we briefly describe Othello, Othel-loGPT, and our notations.",
+          "coords": [
+            "2,70.87,612.11,220.08,9.46",
+            "2,70.87,625.66,112.22,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In this section we briefly describe Othello, Othel-loGPT, and our notations.",
+              "coords": [
+                "2,70.87,612.11,220.08,9.46",
+                "2,70.87,625.66,112.22,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Othello",
+          "coords": [
+            "2,70.87,649.53,59.09,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Othello is a two player game played on a 8x8 grid. Players take turns playing black or white discs on the board, and the objective is to have the majority of one's coloured discs by the end of the game.",
+          "coords": [
+            "2,70.87,668.53,220.18,9.46",
+            "2,70.87,682.08,218.27,9.46",
+            "2,70.87,695.62,218.65,9.46",
+            "2,70.87,709.17,205.36,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Othello is a two player game played on a 8x8 grid.",
+              "coords": [
+                "2,70.87,668.53,220.18,9.46"
+              ]
+            },
+            {
+              "text": "Players take turns playing black or white discs on the board, and the objective is to have the majority of one's coloured discs by the end of the game.",
+              "coords": [
+                "2,70.87,682.08,218.27,9.46",
+                "2,70.87,695.62,218.65,9.46",
+                "2,70.87,709.17,205.36,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "At each turn, when a tile is played, all of the opponent's discs that are enclosed in a horizontal, vertical, or diagonal row between two discs of the current player are flipped. The game ends when there are no more valid moves for both players.",
+          "coords": [
+            "2,81.78,723.27,207.36,9.46",
+            "2,70.87,736.82,219.63,9.46",
+            "2,70.59,750.37,218.54,9.46",
+            "2,70.87,763.92,218.27,9.46",
+            "2,306.14,74.72,206.32,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "At each turn, when a tile is played, all of the opponent's discs that are enclosed in a horizontal, vertical, or diagonal row between two discs of the current player are flipped.",
+              "coords": [
+                "2,81.78,723.27,207.36,9.46",
+                "2,70.87,736.82,219.63,9.46",
+                "2,70.59,750.37,218.54,9.46",
+                "2,70.87,763.92,116.80,9.46"
+              ]
+            },
+            {
+              "text": "The game ends when there are no more valid moves for both players.",
+              "coords": [
+                "2,193.08,763.92,96.06,9.46",
+                "2,306.14,74.72,206.32,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "OthelloGPT",
+          "coords": [
+            "2,306.14,95.90,81.52,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "OthelloGPT is a 8-layer GPT model (Radford et al., 2019), each layer consisting of 8 attention heads and a 512-dimensional hidden space. We use the model weights provided by Li et al. (2023a), denoted there as the synthetic model. The vocabulary space consists of 60 tokens, each one corresponding to a playable move on the board (e.g., A4). 2The model is trained in an autoregressive manner, meaning for a given sequence of moves m <t , the model must predict the next valid move m t .",
+          "coords": [
+            "2,306.14,113.81,153.16,9.46",
+            "2,330.09,127.36,194.32,9.46",
+            "2,306.14,140.91,218.27,9.46",
+            "2,306.14,154.45,122.95,9.46",
+            "2,503.86,154.45,22.35,9.46",
+            "2,306.14,168.00,218.65,9.46",
+            "2,306.14,181.55,220.08,9.46",
+            "2,306.14,195.10,203.57,9.46",
+            "2,317.05,208.65,208.72,9.46",
+            "2,306.14,221.85,218.26,10.63",
+            "2,306.14,235.40,191.15,10.63"
+          ],
+          "sentences": [
+            {
+              "text": "OthelloGPT is a 8-layer GPT model (Radford et al., 2019), each layer consisting of 8 attention heads and a 512-dimensional hidden space.",
+              "coords": [
+                "2,306.14,113.81,219.63,9.46",
+                "2,306.14,127.36,218.27,9.46",
+                "2,306.14,140.91,165.35,9.46"
+              ]
+            },
+            {
+              "text": "We use the model weights provided by Li et al. (2023a), denoted there as the synthetic model.",
+              "coords": [
+                "2,475.52,140.91,48.89,9.46",
+                "2,306.14,154.45,220.08,9.46",
+                "2,306.14,168.00,148.81,9.46"
+              ]
+            },
+            {
+              "text": "The vocabulary space consists of 60 tokens, each one corresponding to a playable move on the board (e.g., A4).",
+              "coords": [
+                "2,458.32,168.00,66.47,9.46",
+                "2,306.14,181.55,220.08,9.46",
+                "2,306.14,195.10,203.57,9.46"
+              ]
+            },
+            {
+              "text": "2The model is trained in an autoregressive manner, meaning for a given sequence of moves m <t , the model must predict the next valid move m t .",
+              "coords": [
+                "2,509.72,193.06,3.99,6.91",
+                "2,317.05,208.65,208.72,9.46",
+                "2,306.14,221.85,218.26,10.63",
+                "2,306.14,235.40,191.15,10.63"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Note that no a priori knowledge of the game nor its rules are provided to the model. Rather, the model is only given move sequences with a training objective to predict next valid moves. Further note that these valid moves are uniformly chosen, and this training objective differs from that of models like AlphaZero (Silver et al., 2018), which are trained to play strategic moves to win games.",
+          "coords": [
+            "2,317.05,249.30,207.55,9.46",
+            "2,306.14,262.85,218.27,9.46",
+            "2,306.14,276.40,220.08,9.46",
+            "2,306.14,289.95,218.45,9.46",
+            "2,306.14,303.50,219.63,9.46",
+            "2,306.14,317.04,220.08,9.46",
+            "2,306.14,330.59,81.83,9.46",
+            "2,473.83,330.59,50.58,9.46",
+            "2,306.14,344.14,197.01,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Note that no a priori knowledge of the game nor its rules are provided to the model.",
+              "coords": [
+                "2,317.05,249.30,207.55,9.46",
+                "2,306.14,262.85,161.49,9.46"
+              ]
+            },
+            {
+              "text": "Rather, the model is only given move sequences with a training objective to predict next valid moves.",
+              "coords": [
+                "2,474.59,262.85,49.83,9.46",
+                "2,306.14,276.40,220.08,9.46",
+                "2,306.14,289.95,182.42,9.46"
+              ]
+            },
+            {
+              "text": "Further note that these valid moves are uniformly chosen, and this training objective differs from that of models like AlphaZero (Silver et al., 2018), which are trained to play strategic moves to win games.",
+              "coords": [
+                "2,491.93,289.95,32.66,9.46",
+                "2,306.14,303.50,219.63,9.46",
+                "2,306.14,317.04,220.08,9.46",
+                "2,306.14,330.59,218.27,9.46",
+                "2,306.14,344.14,197.01,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Notations",
+          "coords": [
+            "2,306.14,365.32,69.39,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Transformers. Our transformer architecture (Vaswani et al., 2017) consists of embedding and unembedding layers Emb and U nemb with a series of L transformer layers in-between. Each transformer layer l consists of H multi-head attentions and a multilayer perception (MLP) layer.",
+          "coords": [
+            "2,306.14,382.80,218.26,9.88",
+            "2,405.95,396.78,118.46,9.46",
+            "2,306.14,409.98,220.08,9.81",
+            "2,306.14,423.53,220.07,9.81",
+            "2,306.14,437.07,218.27,9.81",
+            "2,306.14,450.97,178.76,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Transformers.",
+              "coords": [
+                "2,306.14,382.80,67.83,9.81"
+              ]
+            },
+            {
+              "text": "Our transformer architecture (Vaswani et al., 2017) consists of embedding and unembedding layers Emb and U nemb with a series of L transformer layers in-between.",
+              "coords": [
+                "2,384.88,383.23,139.52,9.46",
+                "2,305.78,396.78,218.63,9.46",
+                "2,306.14,409.98,220.08,9.81",
+                "2,306.14,423.53,168.83,9.81"
+              ]
+            },
+            {
+              "text": "Each transformer layer l consists of H multi-head attentions and a multilayer perception (MLP) layer.",
+              "coords": [
+                "2,478.21,423.87,48.00,9.46",
+                "2,306.14,437.07,218.27,9.81",
+                "2,306.14,450.97,178.76,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "A forward pass in the model first embeds the input token at timestep t using embedding layer Emb into a high dimensional space x 0 t ∈ R D . We refer to x 0 t∈T as the start of the residual stream. Then each attention head Att h l , ∀h ∈ H and MLP block at layer l add to the residual stream:",
+          "coords": [
+            "2,317.05,464.52,207.36,9.46",
+            "2,306.14,477.72,218.45,9.81",
+            "2,306.14,491.27,164.27,9.81",
+            "2,470.41,489.32,4.23,6.99",
+            "2,470.41,495.97,3.06,6.99",
+            "2,478.17,491.27,18.18,10.18",
+            "2,496.35,489.32,6.95,6.99",
+            "2,504.03,491.62,20.38,9.46",
+            "2,306.14,504.82,43.74,9.81",
+            "2,349.89,502.87,4.23,6.99",
+            "2,349.89,510.06,13.63,6.99",
+            "2,369.12,504.97,157.20,9.65",
+            "2,305.80,518.37,128.85,9.81",
+            "2,434.65,516.42,4.88,6.99",
+            "2,434.65,523.70,2.53,6.99",
+            "2,440.03,518.37,84.38,9.81",
+            "2,306.14,531.92,183.44,9.81"
+          ],
+          "sentences": [
+            {
+              "text": "A forward pass in the model first embeds the input token at timestep t using embedding layer Emb into a high dimensional space x 0 t ∈ R D .",
+              "coords": [
+                "2,317.05,464.52,207.36,9.46",
+                "2,306.14,477.72,218.45,9.81",
+                "2,306.14,491.27,164.27,9.81",
+                "2,470.41,489.32,4.23,6.99",
+                "2,470.41,495.97,3.06,6.99",
+                "2,478.17,491.27,18.18,10.18",
+                "2,496.35,489.32,6.95,6.99",
+                "2,504.03,491.62,2.73,9.46"
+              ]
+            },
+            {
+              "text": "We refer to x 0 t∈T as the start of the residual stream.",
+              "coords": [
+                "2,510.14,491.62,14.27,9.46",
+                "2,306.14,504.82,43.74,9.81",
+                "2,349.89,502.87,4.23,6.99",
+                "2,349.89,510.06,13.63,6.99",
+                "2,369.12,504.97,157.20,9.65"
+              ]
+            },
+            {
+              "text": "Then each attention head Att h l , ∀h ∈ H and MLP block at layer l add to the residual stream:",
+              "coords": [
+                "2,305.80,518.37,128.85,9.81",
+                "2,434.65,516.42,4.88,6.99",
+                "2,434.65,523.70,2.53,6.99",
+                "2,440.03,518.37,84.38,9.81",
+                "2,306.14,531.92,183.44,9.81"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "x l_mid t = x l t + h∈H Att h l (x l t ) x l+1 t = x l_mid t + M LP l (x l_mid t )",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "Each attention head Att h l computes value vectors by projecting the residual stream to a lower dimension using Att h l . V , linearly combines value vectors using Att h l . A, and projects back to the residual stream using Att h l . O:",
+          "coords": [
+            "2,317.05,615.17,108.29,9.81",
+            "2,425.34,613.22,4.88,6.99",
+            "2,425.34,620.50,2.53,6.99",
+            "2,434.07,615.52,92.16,9.46",
+            "2,306.14,629.07,218.45,9.46",
+            "2,306.14,642.27,91.04,9.81",
+            "2,397.18,640.32,4.88,6.99",
+            "2,397.18,647.60,2.53,6.99",
+            "2,402.56,642.27,121.85,9.81",
+            "2,305.87,655.82,81.29,9.81",
+            "2,387.16,653.87,4.88,6.99",
+            "2,387.16,661.15,2.53,6.99",
+            "2,392.54,655.82,131.88,9.81",
+            "2,306.14,669.37,111.50,9.81",
+            "2,417.65,667.42,4.88,6.99",
+            "2,417.65,674.70,2.53,6.99",
+            "2,423.02,669.37,14.69,9.57"
+          ],
+          "sentences": [
+            {
+              "text": "Each attention head Att h l computes value vectors by projecting the residual stream to a lower dimension using Att h l .",
+              "coords": [
+                "2,317.05,615.17,108.29,9.81",
+                "2,425.34,613.22,4.88,6.99",
+                "2,425.34,620.50,2.53,6.99",
+                "2,434.07,615.52,92.16,9.46",
+                "2,306.14,629.07,218.45,9.46",
+                "2,306.14,642.27,91.04,9.81",
+                "2,397.18,640.32,4.88,6.99",
+                "2,397.18,647.60,2.53,6.99",
+                "2,402.56,642.27,4.70,9.57"
+              ]
+            },
+            {
+              "text": "V , linearly combines value vectors using Att h l .",
+              "coords": [
+                "2,407.25,642.27,117.15,9.81",
+                "2,305.87,655.82,81.29,9.81",
+                "2,387.16,653.87,4.88,6.99",
+                "2,387.16,661.15,2.53,6.99",
+                "2,392.54,655.82,4.66,9.57"
+              ]
+            },
+            {
+              "text": "A, and projects back to the residual stream using Att h l .",
+              "coords": [
+                "2,397.20,655.82,127.21,9.81",
+                "2,306.14,669.37,111.50,9.81",
+                "2,417.65,667.42,4.88,6.99",
+                "2,417.65,674.70,2.53,6.99",
+                "2,423.02,669.37,4.90,9.57"
+              ]
+            },
+            {
+              "text": "O:",
+              "coords": [
+                "2,427.92,669.37,9.79,9.57"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "h(x) = (Attn h l .A ⊗ Attn h l .O * Attn h l .V ) *",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "x A final prediction is made by applying U nemb on x L-1 , followed by a softmax. Probe Models. We notate linear and non-linear probes as p λ and p ν . Our linear probes are simple linear projections from the residual stream: p λ (x l t ) = softmax(W x l t ), W ∈ R D×3 . The dimension D × 3 comes from doing a 3-way classification. 3 Non-linear probes are 2-layer MLP models: Li et al. (2023a) classify the colour at each tile (BLACK, WHITE, EMPTY). Our insight is to classify the colours relative to the current turn's player (MINE, YOURS, EMPTY).",
+          "coords": [
+            "2,510.47,702.69,6.23,9.57",
+            "2,317.05,722.45,207.36,9.81",
+            "2,306.14,736.00,19.87,9.81",
+            "2,326.01,734.05,16.58,6.99",
+            "2,343.09,736.35,105.77,9.46",
+            "3,70.87,210.99,218.46,9.88",
+            "3,70.87,224.61,51.66,9.81",
+            "3,122.53,222.66,4.94,6.99",
+            "3,131.59,224.61,25.18,9.81",
+            "3,156.76,222.66,4.16,6.99",
+            "3,161.95,224.96,129.00,9.46",
+            "3,70.87,238.51,219.79,9.46",
+            "3,70.87,251.71,5.49,9.57",
+            "3,76.36,249.76,4.94,6.99",
+            "3,81.79,251.71,10.48,9.57",
+            "3,92.27,249.76,2.53,6.99",
+            "3,92.27,256.41,3.06,6.99",
+            "3,95.83,251.71,81.48,9.81",
+            "3,177.30,249.76,2.53,6.99",
+            "3,177.30,256.41,3.06,6.99",
+            "3,180.86,251.71,47.37,10.18",
+            "3,228.22,249.76,18.00,6.99",
+            "3,246.73,252.06,44.22,9.46",
+            "3,70.87,265.26,220.08,9.81",
+            "3,70.87,279.16,29.86,9.46",
+            "3,108.61,279.16,182.34,9.46",
+            "3,70.87,292.71,15.46,9.46",
+            "3,255.53,306.26,33.98,9.46",
+            "3,70.87,319.80,220.18,9.46",
+            "3,70.87,333.16,218.27,9.65",
+            "3,70.87,346.90,205.66,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "x A final prediction is made by applying U nemb on x L-1 , followed by a softmax.",
+              "coords": [
+                "2,510.47,702.69,6.23,9.57",
+                "2,317.05,722.45,207.36,9.81",
+                "2,306.14,736.00,19.87,9.81",
+                "2,326.01,734.05,16.58,6.99",
+                "2,343.09,736.35,105.77,9.46"
+              ]
+            },
+            {
+              "text": "Probe Models.",
+              "coords": [
+                "3,70.87,210.99,68.15,9.81"
+              ]
+            },
+            {
+              "text": "We notate linear and non-linear probes as p λ and p ν .",
+              "coords": [
+                "3,149.93,211.41,139.39,9.46",
+                "3,70.87,224.61,51.66,9.81",
+                "3,122.53,222.66,4.94,6.99",
+                "3,131.59,224.61,25.18,9.81",
+                "3,156.76,222.66,4.16,6.99",
+                "3,161.95,224.96,2.78,9.46"
+              ]
+            },
+            {
+              "text": "Our linear probes are simple linear projections from the residual stream: p λ (x l t ) = softmax(W x l t ), W ∈ R D×3 .",
+              "coords": [
+                "3,170.79,224.96,120.15,9.46",
+                "3,70.87,238.51,219.79,9.46",
+                "3,70.87,251.71,5.49,9.57",
+                "3,76.36,249.76,4.94,6.99",
+                "3,81.79,251.71,10.48,9.57",
+                "3,92.27,249.76,2.53,6.99",
+                "3,92.27,256.41,3.06,6.99",
+                "3,95.83,251.71,81.48,9.81",
+                "3,177.30,249.76,2.53,6.99",
+                "3,177.30,256.41,3.06,6.99",
+                "3,180.86,251.71,47.37,10.18",
+                "3,228.22,249.76,18.00,6.99",
+                "3,246.73,252.06,2.78,9.46"
+              ]
+            },
+            {
+              "text": "The dimension D × 3 comes from doing a 3-way classification.",
+              "coords": [
+                "3,257.14,252.06,33.80,9.46",
+                "3,70.87,265.26,220.08,9.81",
+                "3,70.87,279.16,29.86,9.46"
+              ]
+            },
+            {
+              "text": "3 Non-linear probes are 2-layer MLP models: Li et al. (2023a) classify the colour at each tile (BLACK, WHITE, EMPTY).",
+              "coords": [
+                "3,100.73,277.11,3.99,6.91",
+                "3,108.61,279.16,182.34,9.46",
+                "3,70.87,292.71,15.46,9.46",
+                "3,175.83,306.26,113.68,9.46",
+                "3,70.87,319.80,220.18,9.46"
+              ]
+            },
+            {
+              "text": "Our insight is to classify the colours relative to the current turn's player (MINE, YOURS, EMPTY).",
+              "coords": [
+                "3,70.87,333.16,218.27,9.65",
+                "3,70.87,346.90,205.66,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "p ν (x l t ) = softmax(W 1 ReLU(W 2 x l t )), W 1 ∈ R H×3 , W 2 ∈ R D×H .",
+          "coords": []
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Linearly Encoded Board States",
+          "coords": [
+            "3,70.87,370.40,177.68,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this section we describe our experiments to find linear board state representations.",
+          "coords": [
+            "3,70.87,393.08,218.27,9.46",
+            "3,70.87,406.63,146.63,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In this section we describe our experiments to find linear board state representations.",
+              "coords": [
+                "3,70.87,393.08,218.27,9.46",
+                "3,70.87,406.63,146.63,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Experiment Setup",
+          "coords": [
+            "3,70.87,429.47,109.09,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Rather than encoding the colour of each tile (BLACK, WHITE, EMPTY), OthelloGPT encodes each tile relative to the player of each timestep (MINE, YOURS, EMPTY) -for odd timesteps, we consider BLACK to be MINE and WHITE to be YOURS, and vice versa for even timesteps.",
+          "coords": [
+            "3,70.87,447.87,218.27,9.46",
+            "3,70.51,461.42,218.63,9.46",
+            "3,70.87,474.78,218.27,9.65",
+            "3,70.51,488.32,218.63,9.65",
+            "3,70.87,502.07,218.27,9.46",
+            "3,70.46,515.42,185.64,9.65"
+          ],
+          "sentences": [
+            {
+              "text": "Rather than encoding the colour of each tile (BLACK, WHITE, EMPTY), OthelloGPT encodes each tile relative to the player of each timestep (MINE, YOURS, EMPTY) -for odd timesteps, we consider BLACK to be MINE and WHITE to be YOURS, and vice versa for even timesteps.",
+              "coords": [
+                "3,70.87,447.87,218.27,9.46",
+                "3,70.51,461.42,218.63,9.46",
+                "3,70.87,474.78,218.27,9.65",
+                "3,70.51,488.32,218.63,9.65",
+                "3,70.87,502.07,218.27,9.46",
+                "3,70.46,515.42,185.64,9.65"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In order to learn the weights of our linear probe, we train on 3,500,000 game sequences. We use a validation set of 512 games, and train until our validation loss converges according to a patience value of 10. In practice, our linear probes converge after around 100,000 training samples. We test our probes on a held out set of 1,000 games.",
+          "coords": [
+            "3,81.78,529.42,208.72,9.46",
+            "3,70.47,542.97,218.66,9.46",
+            "3,70.87,556.52,218.45,9.46",
+            "3,70.59,570.07,218.54,9.46",
+            "3,70.59,583.62,218.54,9.46",
+            "3,70.87,597.17,218.45,9.46",
+            "3,70.87,610.72,175.68,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In order to learn the weights of our linear probe, we train on 3,500,000 game sequences.",
+              "coords": [
+                "3,81.78,529.42,208.72,9.46",
+                "3,70.47,542.97,179.34,9.46"
+              ]
+            },
+            {
+              "text": "We use a validation set of 512 games, and train until our validation loss converges according to a patience value of 10.",
+              "coords": [
+                "3,256.05,542.97,33.08,9.46",
+                "3,70.87,556.52,218.45,9.46",
+                "3,70.59,570.07,218.54,9.46",
+                "3,70.59,583.62,50.61,9.46"
+              ]
+            },
+            {
+              "text": "In practice, our linear probes converge after around 100,000 training samples.",
+              "coords": [
+                "3,124.59,583.62,164.54,9.46",
+                "3,70.87,597.17,166.26,9.46"
+              ]
+            },
+            {
+              "text": "We test our probes on a held out set of 1,000 games.",
+              "coords": [
+                "3,240.53,597.17,48.79,9.46",
+                "3,70.87,610.72,175.68,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We train a different probe for each layer l. Hyperparameters are provided in the Appendix.",
+          "coords": [
+            "3,81.78,624.17,209.17,9.81",
+            "3,70.87,638.07,194.93,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We train a different probe for each layer l.",
+              "coords": [
+                "3,81.78,624.17,188.07,9.81"
+              ]
+            },
+            {
+              "text": "Hyperparameters are provided in the Appendix.",
+              "coords": [
+                "3,273.65,624.52,17.30,9.46",
+                "3,70.87,638.07,194.93,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Results",
+          "coords": [
+            "3,70.87,660.90,58.48,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 1 shows the accuracy for various probes.",
+          "coords": [
+            "3,70.53,679.31,23.97,9.46",
+            "3,105.40,679.31,168.94,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Table 1 shows the accuracy for various probes.",
+              "coords": [
+                "3,70.53,679.31,203.81,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We include four baselines. The first is a linear probe trained on a randomly initialized GPT model. We also include a probabilistic baseline, in which we always choose the most likely colour per tile at 3 In practice, because we are predicting the state of all 64 tiles, the shape of our probe is D × 64 × 3. each timestep, according to a set of 60,000 games from training data. The next two baselines are probe models used in Li et al. (2023a): a linear and non-linear probe trained to classify amongst {BLACK, WHITE, EMPTY}.",
+          "coords": [
+            "3,81.78,693.11,207.55,9.46",
+            "3,70.87,706.66,220.18,9.46",
+            "3,70.35,720.21,218.78,9.46",
+            "3,70.47,733.76,218.66,9.46",
+            "3,87.01,755.22,202.13,7.77",
+            "3,70.87,764.90,156.52,8.06",
+            "3,306.14,529.79,218.27,9.46",
+            "3,306.14,543.34,218.27,9.46",
+            "3,306.14,556.89,97.72,9.46",
+            "3,480.50,556.89,44.09,9.46",
+            "3,306.14,570.44,218.27,9.46",
+            "3,304.05,583.99,123.97,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We include four baselines.",
+              "coords": [
+                "3,81.78,693.11,118.62,9.46"
+              ]
+            },
+            {
+              "text": "The first is a linear probe trained on a randomly initialized GPT model.",
+              "coords": [
+                "3,204.76,693.11,84.56,9.46",
+                "3,70.87,706.66,220.18,9.46"
+              ]
+            },
+            {
+              "text": "We also include a probabilistic baseline, in which we always choose the most likely colour per tile at 3 In practice, because we are predicting the state of all 64 tiles, the shape of our probe is D × 64 × 3.",
+              "coords": [
+                "3,70.35,720.21,218.78,9.46",
+                "3,70.47,733.76,218.66,9.46",
+                "3,83.52,753.36,2.99,5.18",
+                "3,87.01,755.22,202.13,7.77",
+                "3,70.87,764.90,156.52,8.06"
+              ]
+            },
+            {
+              "text": "each timestep, according to a set of 60,000 games from training data.",
+              "coords": [
+                "3,306.14,529.79,218.27,9.46",
+                "3,306.14,543.34,86.07,9.46"
+              ]
+            },
+            {
+              "text": "The next two baselines are probe models used in Li et al. (2023a): a linear and non-linear probe trained to classify amongst {BLACK, WHITE, EMPTY}.",
+              "coords": [
+                "3,400.16,543.34,124.26,9.46",
+                "3,306.14,556.89,218.45,9.46",
+                "3,306.14,570.44,218.27,9.46",
+                "3,304.05,583.99,123.97,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Our linear probes achieve high accuracy by layer 4. Unbeknownst previously, we show that the emerged board state is linearly encoded.",
+          "coords": [
+            "3,317.05,597.58,207.54,9.46",
+            "3,305.76,611.13,218.65,9.46",
+            "3,306.14,624.68,175.52,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Our linear probes achieve high accuracy by layer 4.",
+              "coords": [
+                "3,317.05,597.58,207.54,9.46",
+                "3,305.76,611.13,8.35,9.46"
+              ]
+            },
+            {
+              "text": "Unbeknownst previously, we show that the emerged board state is linearly encoded.",
+              "coords": [
+                "3,323.49,611.13,200.93,9.46",
+                "3,306.14,624.68,175.52,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Intervening with Linear Directions",
+          "coords": [
+            "3,306.14,647.45,195.80,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this section we demonstrate how we intervene on OthelloGPT's board state using linear probes.",
+          "coords": [
+            "3,306.14,669.62,218.27,9.46",
+            "3,306.14,683.17,213.01,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In this section we demonstrate how we intervene on OthelloGPT's board state using linear probes.",
+              "coords": [
+                "3,306.14,669.62,218.27,9.46",
+                "3,306.14,683.17,213.01,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Method",
+          "coords": [
+            "3,306.14,705.28,60.91,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "An inherent issue with probing is that it is correlational, not causal (Belinkov, 2022b). To validate that our probes have found a true world model, we confirm that the model uses the encoded board state for its predictions.",
+          "coords": [
+            "3,305.75,723.27,220.47,9.46",
+            "3,306.14,736.82,76.52,9.46",
+            "3,465.35,736.82,59.07,9.46",
+            "3,306.14,750.37,218.27,9.46",
+            "3,306.14,763.92,218.27,9.46",
+            "4,70.87,74.72,79.69,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "An inherent issue with probing is that it is correlational, not causal (Belinkov, 2022b).",
+              "coords": [
+                "3,305.75,723.27,220.47,9.46",
+                "3,306.14,736.82,164.11,9.46"
+              ]
+            },
+            {
+              "text": "To validate that our probes have found a true world model, we confirm that the model uses the encoded board state for its predictions.",
+              "coords": [
+                "3,474.83,736.82,49.58,9.46",
+                "3,306.14,750.37,218.27,9.46",
+                "3,306.14,763.92,218.27,9.46",
+                "4,70.87,74.72,79.69,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To verify this, we conduct the same intervention experiment as Li et al. (2023a). Namely, given an input game sequence (and its corresponding board state B), we intervene to make the model believe in an altered board state B ′ . We then observe whether the model's prediction reflects the made-believe board state B ′ or the original board state B.",
+          "coords": [
+            "4,81.78,88.27,207.36,9.46",
+            "4,70.87,101.82,61.43,9.46",
+            "4,204.15,101.82,84.99,9.46",
+            "4,70.87,115.37,218.26,9.46",
+            "4,70.87,128.57,218.27,9.81",
+            "4,70.87,142.12,101.58,9.81",
+            "4,173.00,140.17,2.30,6.99",
+            "4,175.79,142.47,113.53,9.46",
+            "4,70.87,156.02,218.27,9.46",
+            "4,70.87,169.22,58.56,9.81",
+            "4,129.98,167.27,2.30,6.99",
+            "4,135.50,169.22,126.38,9.81"
+          ],
+          "sentences": [
+            {
+              "text": "To verify this, we conduct the same intervention experiment as Li et al. (2023a).",
+              "coords": [
+                "4,81.78,88.27,207.36,9.46",
+                "4,70.87,101.82,137.92,9.46"
+              ]
+            },
+            {
+              "text": "Namely, given an input game sequence (and its corresponding board state B), we intervene to make the model believe in an altered board state B ′ .",
+              "coords": [
+                "4,212.17,101.82,76.97,9.46",
+                "4,70.87,115.37,218.26,9.46",
+                "4,70.87,128.57,218.27,9.81",
+                "4,70.87,142.12,101.58,9.81",
+                "4,173.00,140.17,2.30,6.99",
+                "4,175.79,142.47,2.67,9.46"
+              ]
+            },
+            {
+              "text": "We then observe whether the model's prediction reflects the made-believe board state B ′ or the original board state B.",
+              "coords": [
+                "4,181.79,142.47,107.53,9.46",
+                "4,70.87,156.02,218.27,9.46",
+                "4,70.87,169.22,58.56,9.81",
+                "4,129.98,167.27,2.30,6.99",
+                "4,135.50,169.22,126.38,9.81"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Our intervention approach is simple: we add our linear vectors to the residual stream of each layer:",
+          "coords": [
+            "4,81.78,183.12,207.54,9.46",
+            "4,70.87,196.67,217.35,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Our intervention approach is simple: we add our linear vectors to the residual stream of each layer:",
+              "coords": [
+                "4,81.78,183.12,207.54,9.46",
+                "4,70.87,196.67,217.35,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "x ′ ← x + αp λ d (x)",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "where d indicates a direction amongst {MINE, YOURS, EMPTY} and α is a scaling factor. In other words, to flip a tile from YOURS to MINE, we simply push the residual stream at every layer in the MINE direction, or to \"erase\" a previously played tile, we push in the EMPTY direction. 4 5 Note that this intervention is much simpler than that of Li et al. (2023a). Namely, Li et al. (2023a) edits the activation space (x) of OthelloGPT using several iterations of gradient descent from their non-linear probe. Instead, we perform a single vector addition.",
+          "coords": [
+            "4,81.78,255.59,208.72,9.81",
+            "4,70.46,269.14,218.68,9.81",
+            "4,70.87,283.04,219.63,9.46",
+            "4,70.47,296.59,218.84,9.46",
+            "4,70.87,310.14,218.64,9.46",
+            "4,70.87,323.69,195.11,9.46",
+            "4,81.78,337.24,207.36,9.46",
+            "4,70.87,350.79,28.47,9.46",
+            "4,171.16,350.79,44.99,9.46",
+            "4,70.87,364.34,218.26,9.46",
+            "4,70.87,377.89,218.45,9.46",
+            "4,70.87,391.44,218.27,9.46",
+            "4,70.59,404.98,68.31,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "where d indicates a direction amongst {MINE, YOURS, EMPTY} and α is a scaling factor.",
+              "coords": [
+                "4,81.78,255.59,208.72,9.81",
+                "4,70.46,269.14,201.46,9.81"
+              ]
+            },
+            {
+              "text": "In other words, to flip a tile from YOURS to MINE, we simply push the residual stream at every layer in the MINE direction, or to \"erase\" a previously played tile, we push in the EMPTY direction.",
+              "coords": [
+                "4,279.87,269.49,9.27,9.46",
+                "4,70.87,283.04,219.63,9.46",
+                "4,70.47,296.59,218.84,9.46",
+                "4,70.87,310.14,218.64,9.46",
+                "4,70.87,323.69,195.11,9.46"
+              ]
+            },
+            {
+              "text": "4 5 Note that this intervention is much simpler than that of Li et al. (2023a).",
+              "coords": [
+                "4,269.36,321.64,11.85,6.91",
+                "4,81.78,337.24,207.36,9.46",
+                "4,70.87,350.79,104.93,9.46"
+              ]
+            },
+            {
+              "text": "Namely, Li et al. (2023a) edits the activation space (x) of OthelloGPT using several iterations of gradient descent from their non-linear probe.",
+              "coords": [
+                "4,179.18,350.79,110.68,9.46",
+                "4,70.87,364.34,218.26,9.46",
+                "4,70.87,377.89,218.45,9.46",
+                "4,70.87,391.44,78.05,9.46"
+              ]
+            },
+            {
+              "text": "Instead, we perform a single vector addition.",
+              "coords": [
+                "4,156.71,391.44,132.43,9.46",
+                "4,70.59,404.98,68.31,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Experiment Setup",
+          "coords": [
+            "4,70.87,426.67,109.09,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "For our intervention experiment, we adopt the same setup and metrics as Li et al. (2023a). We use an evaluation benchmark consisting of 1,000 test cases. Each test case consists of a partial game sequence (B) and a targeted board state B ′ .",
+          "coords": [
+            "4,70.87,444.58,218.27,9.46",
+            "4,70.87,458.13,94.11,9.46",
+            "4,243.15,458.13,45.99,9.46",
+            "4,70.87,471.67,218.27,9.46",
+            "4,70.87,485.22,218.27,9.46",
+            "4,70.87,498.42,183.81,9.81",
+            "4,255.22,496.47,2.30,6.99",
+            "4,258.02,498.77,2.73,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "For our intervention experiment, we adopt the same setup and metrics as Li et al. (2023a).",
+              "coords": [
+                "4,70.87,444.58,218.27,9.46",
+                "4,70.87,458.13,176.96,9.46"
+              ]
+            },
+            {
+              "text": "We use an evaluation benchmark consisting of 1,000 test cases.",
+              "coords": [
+                "4,255.56,458.13,33.58,9.46",
+                "4,70.87,471.67,218.27,9.46",
+                "4,70.87,485.22,26.26,9.46"
+              ]
+            },
+            {
+              "text": "Each test case consists of a partial game sequence (B) and a targeted board state B ′ .",
+              "coords": [
+                "4,103.74,485.22,185.40,9.46",
+                "4,70.87,498.42,183.81,9.81",
+                "4,255.22,496.47,2.30,6.99",
+                "4,258.02,498.77,2.73,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We measure the efficacy of our intervention by treating the task as a multi-label classification problem. Namely, we compare the top-N predictions post-intervention against the groundtruth set of legal moves at state B ′ , where N is the number of legal moves at B ′ . We then compute error rate, or the number of false positives and false negatives. Li et al. (2023a) only considers the scenario of flipping the colour of a tile. To also validate our EMPTY direction, we also experiment with \"erasing\" a previously played tile by making it empty.",
+          "coords": [
+            "4,81.78,512.32,207.74,9.46",
+            "4,70.87,525.87,220.08,9.46",
+            "4,70.87,539.42,218.27,9.46",
+            "4,70.87,552.97,220.08,9.46",
+            "4,70.87,566.17,91.63,9.81",
+            "4,163.04,564.22,2.30,6.99",
+            "4,165.84,566.17,123.30,9.81",
+            "4,70.87,579.72,74.08,9.81",
+            "4,145.49,577.77,2.30,6.99",
+            "4,148.29,580.07,141.03,9.46",
+            "4,70.87,593.62,213.20,9.46",
+            "4,156.25,607.17,132.88,9.46",
+            "4,70.87,620.72,218.45,9.46",
+            "4,71.14,634.27,219.81,9.46",
+            "4,70.87,647.81,213.25,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We measure the efficacy of our intervention by treating the task as a multi-label classification problem.",
+              "coords": [
+                "4,81.78,512.32,207.74,9.46",
+                "4,70.87,525.87,220.08,9.46",
+                "4,70.87,539.42,19.47,9.46"
+              ]
+            },
+            {
+              "text": "Namely, we compare the top-N predictions post-intervention against the groundtruth set of legal moves at state B ′ , where N is the number of legal moves at B ′ .",
+              "coords": [
+                "4,94.54,539.42,194.59,9.46",
+                "4,70.87,552.97,220.08,9.46",
+                "4,70.87,566.17,91.63,9.81",
+                "4,163.04,564.22,2.30,6.99",
+                "4,165.84,566.17,123.30,9.81",
+                "4,70.87,579.72,74.08,9.81",
+                "4,145.49,577.77,2.30,6.99",
+                "4,148.29,580.07,2.76,9.46"
+              ]
+            },
+            {
+              "text": "We then compute error rate, or the number of false positives and false negatives.",
+              "coords": [
+                "4,154.42,580.07,134.90,9.46",
+                "4,70.87,593.62,213.20,9.46"
+              ]
+            },
+            {
+              "text": "Li et al. (2023a) only considers the scenario of flipping the colour of a tile.",
+              "coords": [
+                "4,81.78,607.17,207.36,9.46",
+                "4,70.87,620.72,124.31,9.46"
+              ]
+            },
+            {
+              "text": "To also validate our EMPTY direction, we also experiment with \"erasing\" a previously played tile by making it empty.",
+              "coords": [
+                "4,200.24,620.72,89.07,9.46",
+                "4,71.14,634.27,219.81,9.46",
+                "4,70.87,647.81,213.25,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Results",
+          "coords": [
+            "4,70.87,669.50,58.48,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 2 shows the average error rates after our interventions. Our interventions are equally effective as that of gradient-based editing, and confirms that Flipping colours Avg. # Errors Null Intervention Baseline 2.723 Non-Linear Intervention 0.12 Linear Probe Addition 0.10 Erasing Avg. # Errors Null Intervention 2.73 Non-Linear Intervention 0.11 Linear Probe Addition 0.02",
+          "coords": [
+            "4,70.53,687.41,220.42,9.46",
+            "4,70.87,700.96,218.27,9.46",
+            "4,70.87,714.50,218.27,9.46",
+            "4,343.62,77.31,71.83,9.46",
+            "4,449.28,77.31,59.53,9.46",
+            "4,321.74,91.26,115.58,9.46",
+            "4,466.77,91.26,24.55,9.46",
+            "4,326.14,104.81,106.78,9.46",
+            "4,469.50,104.81,19.09,9.46",
+            "4,330.45,118.36,98.17,9.46",
+            "4,469.50,117.93,19.09,9.81",
+            "4,362.87,137.61,33.33,9.46",
+            "4,449.28,137.61,59.53,9.46",
+            "4,341.89,151.56,75.28,9.46",
+            "4,469.49,151.56,19.09,9.46",
+            "4,326.14,165.10,106.78,9.46",
+            "4,469.50,165.10,19.09,9.46",
+            "4,330.45,178.65,98.17,9.46",
+            "4,469.50,178.23,19.09,9.81"
+          ],
+          "sentences": [
+            {
+              "text": "Table 2 shows the average error rates after our interventions.",
+              "coords": [
+                "4,70.53,687.41,220.42,9.46",
+                "4,70.87,700.96,50.12,9.46"
+              ]
+            },
+            {
+              "text": "Our interventions are equally effective as that of gradient-based editing, and confirms that Flipping colours Avg.",
+              "coords": [
+                "4,124.39,700.96,164.75,9.46",
+                "4,70.87,714.50,218.27,9.46",
+                "4,343.62,77.31,71.83,9.46",
+                "4,449.28,77.31,20.71,9.46"
+              ]
+            },
+            {
+              "text": "# Errors Null Intervention Baseline 2.723 Non-Linear Intervention 0.12 Linear Probe Addition 0.10 Erasing Avg.",
+              "coords": [
+                "4,473.36,77.31,35.44,9.46",
+                "4,321.74,91.26,115.58,9.46",
+                "4,466.77,91.26,24.55,9.46",
+                "4,326.14,104.81,106.78,9.46",
+                "4,469.50,104.81,19.09,9.46",
+                "4,330.45,118.36,98.17,9.46",
+                "4,469.50,117.93,19.09,9.81",
+                "4,362.87,137.61,33.33,9.46",
+                "4,449.28,137.61,20.71,9.46"
+              ]
+            },
+            {
+              "text": "# Errors Null Intervention 2.73 Non-Linear Intervention 0.11 Linear Probe Addition 0.02",
+              "coords": [
+                "4,473.37,137.61,35.44,9.46",
+                "4,341.89,151.56,75.28,9.46",
+                "4,469.49,151.56,19.09,9.46",
+                "4,326.14,165.10,106.78,9.46",
+                "4,469.50,165.10,19.09,9.46",
+                "4,330.45,178.65,98.17,9.46",
+                "4,469.50,178.23,19.09,9.81"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 2: Error rates from interventions.",
+          "coords": [
+            "4,337.00,204.50,156.25,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Table 2: Error rates from interventions.",
+              "coords": [
+                "4,337.00,204.50,156.25,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "our interpretation of each linear direction matches how the model uses such directions.",
+          "coords": [
+            "4,306.14,241.24,218.27,9.46",
+            "4,306.14,254.79,157.29,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "our interpretation of each linear direction matches how the model uses such directions.",
+              "coords": [
+                "4,306.14,241.24,218.27,9.46",
+                "4,306.14,254.79,157.29,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Additional Linear Interpretations",
+          "coords": [
+            "4,306.14,282.40,190.29,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The linear representation hypothesis is of interest to the mechanistic interpretability community because it provides a foothold into understanding a system. The internal state of the transformer, the residual stream, is the sum of the outputs of all previous components (heads, layers, embeddings and neurons) (Elhage et al., 2021), so any linear function of the residual stream can be linearly decomposed into contributions from each component, allowing us to trace back where a computation is coming from.",
+          "coords": [
+            "4,305.80,308.04,218.61,9.46",
+            "4,306.14,321.58,220.08,9.46",
+            "4,306.14,335.13,218.27,9.46",
+            "4,306.14,348.68,218.27,9.46",
+            "4,306.14,362.23,218.27,9.46",
+            "4,306.14,375.78,218.27,9.46",
+            "4,306.14,389.33,58.40,9.46",
+            "4,458.31,389.33,66.28,9.46",
+            "4,306.14,402.88,220.08,9.46",
+            "4,306.14,416.43,219.63,9.46",
+            "4,306.14,429.98,218.27,9.46",
+            "4,306.14,443.53,59.39,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "The linear representation hypothesis is of interest to the mechanistic interpretability community because it provides a foothold into understanding a system.",
+              "coords": [
+                "4,305.80,308.04,218.61,9.46",
+                "4,306.14,321.58,220.08,9.46",
+                "4,306.14,335.13,218.27,9.46",
+                "4,306.14,348.68,33.69,9.46"
+              ]
+            },
+            {
+              "text": "The internal state of the transformer, the residual stream, is the sum of the outputs of all previous components (heads, layers, embeddings and neurons) (Elhage et al., 2021), so any linear function of the residual stream can be linearly decomposed into contributions from each component, allowing us to trace back where a computation is coming from.",
+              "coords": [
+                "4,344.00,348.68,180.42,9.46",
+                "4,306.14,362.23,218.27,9.46",
+                "4,306.14,375.78,218.27,9.46",
+                "4,306.14,389.33,218.45,9.46",
+                "4,306.14,402.88,220.08,9.46",
+                "4,306.14,416.43,219.63,9.46",
+                "4,306.14,429.98,218.27,9.46",
+                "4,306.14,443.53,59.39,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this section we leverage our newfound linear representation of board state to provide additional interpretations of OthelloGPT, as proof of concept of how discovering linear representations unlocks downstream interpretability applications.",
+          "coords": [
+            "4,317.05,458.52,207.54,9.46",
+            "4,306.14,472.07,218.27,9.46",
+            "4,306.14,485.62,218.27,9.46",
+            "4,306.14,499.17,218.27,9.46",
+            "4,306.14,512.72,178.80,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In this section we leverage our newfound linear representation of board state to provide additional interpretations of OthelloGPT, as proof of concept of how discovering linear representations unlocks downstream interpretability applications.",
+              "coords": [
+                "4,317.05,458.52,207.54,9.46",
+                "4,306.14,472.07,218.27,9.46",
+                "4,306.14,485.62,218.27,9.46",
+                "4,306.14,499.17,218.27,9.46",
+                "4,306.14,512.72,178.80,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Interpreting Empty Tiles",
+          "coords": [
+            "4,306.14,539.67,141.01,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Here we interpret how OthelloGPT derives the status of empty tiles.",
+          "coords": [
+            "4,306.14,560.43,220.08,9.46",
+            "4,306.14,573.98,78.19,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Here we interpret how OthelloGPT derives the status of empty tiles.",
+              "coords": [
+                "4,306.14,560.43,220.08,9.46",
+                "4,306.14,573.98,78.19,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "The EMPTY Circuit.",
+          "coords": [
+            "4,306.14,599.46,96.33,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "A key insight for EMPTY is that input tokens each correspond to a tile on the board (i.e., A4), and once played, the tile can only change colour but remains non-empty.",
+          "coords": [
+            "4,413.38,599.89,111.30,9.46",
+            "4,306.14,613.44,218.27,9.46",
+            "4,306.14,626.99,218.65,9.46",
+            "4,306.14,640.54,167.23,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "A key insight for EMPTY is that input tokens each correspond to a tile on the board (i.e., A4), and once played, the tile can only change colour but remains non-empty.",
+              "coords": [
+                "4,413.38,599.89,111.30,9.46",
+                "4,306.14,613.44,218.27,9.46",
+                "4,306.14,626.99,218.65,9.46",
+                "4,306.14,640.54,167.23,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We view OthelloGPT as using attention heads to \"broadcast\" which moves have been played: given a move at timestep t, attention heads write this information into other residual streams. This information (PLAYED) can be represented as following. First, each move m (A4) is embedded: Emb[m].",
+          "coords": [
+            "4,317.05,655.53,207.36,9.46",
+            "4,304.69,669.08,219.72,9.46",
+            "4,306.14,682.28,218.27,9.81",
+            "4,306.14,696.18,220.08,9.46",
+            "4,306.14,709.73,220.17,9.46",
+            "4,306.14,722.93,220.18,9.81"
+          ],
+          "sentences": [
+            {
+              "text": "We view OthelloGPT as using attention heads to \"broadcast\" which moves have been played: given a move at timestep t, attention heads write this information into other residual streams.",
+              "coords": [
+                "4,317.05,655.53,207.36,9.46",
+                "4,304.69,669.08,219.72,9.46",
+                "4,306.14,682.28,218.27,9.81",
+                "4,306.14,696.18,170.48,9.46"
+              ]
+            },
+            {
+              "text": "This information (PLAYED) can be represented as following.",
+              "coords": [
+                "4,480.01,696.18,46.22,9.46",
+                "4,306.14,709.73,220.17,9.46"
+              ]
+            },
+            {
+              "text": "First, each move m (A4) is embedded: Emb[m].",
+              "coords": [
+                "4,306.14,722.93,220.18,9.81"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Then the model writes this information to other residual streams using linear projections Att.V and Att.O (Section 2.3):",
+          "coords": [
+            "4,305.80,736.82,218.80,9.46",
+            "4,306.14,750.02,218.27,9.81",
+            "4,306.14,763.57,89.83,9.81"
+          ],
+          "sentences": [
+            {
+              "text": "Then the model writes this information to other residual streams using linear projections Att.V and Att.O (Section 2.3):",
+              "coords": [
+                "4,305.80,736.82,218.80,9.46",
+                "4,306.14,750.02,218.27,9.81",
+                "4,306.14,763.57,89.83,9.81"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "PLAYED h (m) = Emb[m]@Att h .V @Att h .O",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "For each attention head in the first layer,foot_3 we compute the cosine similarity between PLAYED and the p λ EMPTY direction:",
+          "coords": [
+            "5,81.78,305.09,185.91,9.46",
+            "5,267.69,303.04,3.99,6.91",
+            "5,276.16,305.09,12.97,9.46",
+            "5,70.87,318.63,218.00,9.46",
+            "5,70.87,331.83,40.03,9.81",
+            "5,110.89,329.88,4.94,6.99",
+            "5,111.09,337.83,23.18,5.53",
+            "5,137.69,332.18,41.81,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "For each attention head in the first layer,foot_3 we compute the cosine similarity between PLAYED and the p λ EMPTY direction:",
+              "coords": [
+                "5,81.78,305.09,207.36,9.46",
+                "5,70.87,318.63,218.00,9.46",
+                "5,70.87,331.83,40.03,9.81",
+                "5,110.89,329.88,4.94,6.99",
+                "5,111.09,337.83,23.18,5.53",
+                "5,137.69,332.18,41.81,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "max h∈H CosSim(PLAYED h (m), p λ EMPTY (m))",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "Since the two terms encode opposite information, we expect a high negative cosine similarity.",
+          "coords": [
+            "5,81.78,398.42,208.72,9.65",
+            "5,70.47,412.16,189.65,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Since the two terms encode opposite information, we expect a high negative cosine similarity.",
+              "coords": [
+                "5,81.78,398.42,208.72,9.65",
+                "5,70.47,412.16,189.65,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We observe an average similarity score of -0.862 across all 60 squares,foot_4 , confirming that p EMPTY is encoding NOT PLAYED. This tells us that p EMPTY is a linear function of the token embeddings.",
+          "coords": [
+            "5,81.78,425.29,207.36,9.88",
+            "5,70.87,439.27,95.31,9.46",
+            "5,166.17,437.22,3.99,6.91",
+            "5,170.66,438.92,118.48,10.81",
+            "5,70.87,452.47,217.97,10.81",
+            "5,70.87,466.37,194.41,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We observe an average similarity score of -0.862 across all 60 squares,foot_4 , confirming that p EMPTY is encoding NOT PLAYED.",
+              "coords": [
+                "5,81.78,425.29,207.36,9.88",
+                "5,70.87,438.92,218.27,10.81",
+                "5,70.87,452.82,108.95,9.46"
+              ]
+            },
+            {
+              "text": "This tells us that p EMPTY is a linear function of the token embeddings.",
+              "coords": [
+                "5,183.20,452.47,105.64,10.81",
+                "5,70.87,466.37,194.41,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "This also implies that OthelloGPT knows which tiles are empty by x 0_mid : after the first attention heads but before the MLP layer. On a binary classification task of EMPTY vs. NOT-EMPTY from 1,000 games in our test split, our probe achieves an accuracy of 76.8% and 98.9%, when projecting from X 0_pre and x 0_mid respectively.",
+          "coords": [
+            "5,81.78,479.93,207.36,9.46",
+            "5,70.87,493.13,88.98,9.81",
+            "5,159.85,491.17,22.95,6.99",
+            "5,183.29,493.48,105.84,9.46",
+            "5,70.87,507.02,220.07,9.46",
+            "5,70.87,520.57,218.27,9.46",
+            "5,70.05,534.12,219.09,9.46",
+            "5,70.87,547.25,218.27,9.88",
+            "5,70.87,560.87,32.97,9.81",
+            "5,104.69,558.92,20.46,6.99",
+            "5,128.39,560.87,24.71,9.81",
+            "5,153.10,558.92,22.95,6.99",
+            "5,179.28,561.22,54.29,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "This also implies that OthelloGPT knows which tiles are empty by x 0_mid : after the first attention heads but before the MLP layer.",
+              "coords": [
+                "5,81.78,479.93,207.36,9.46",
+                "5,70.87,493.13,88.98,9.81",
+                "5,159.85,491.17,22.95,6.99",
+                "5,183.29,493.48,105.84,9.46",
+                "5,70.87,507.02,141.14,9.46"
+              ]
+            },
+            {
+              "text": "On a binary classification task of EMPTY vs. NOT-EMPTY from 1,000 games in our test split, our probe achieves an accuracy of 76.8% and 98.9%, when projecting from X 0_pre and x 0_mid respectively.",
+              "coords": [
+                "5,215.39,507.02,75.55,9.46",
+                "5,70.87,520.57,218.27,9.46",
+                "5,70.05,534.12,219.09,9.46",
+                "5,70.87,547.25,218.27,9.88",
+                "5,70.87,560.87,32.97,9.81",
+                "5,104.69,558.92,20.46,6.99",
+                "5,128.39,560.87,24.71,9.81",
+                "5,153.10,558.92,22.95,6.99",
+                "5,179.28,561.22,54.29,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Logit Attribute for EMPTY. The previous analysis is based on the weights of the model. Here we provide an alternative analysis by studying the activations during inference.",
+          "coords": [
+            "5,70.87,581.74,220.08,9.88",
+            "5,70.59,595.52,218.54,9.65",
+            "5,70.47,609.26,218.66,9.46",
+            "5,70.87,622.62,125.13,9.65"
+          ],
+          "sentences": [
+            {
+              "text": "Logit Attribute for EMPTY.",
+              "coords": [
+                "5,70.87,581.74,127.98,9.81"
+              ]
+            },
+            {
+              "text": "The previous analysis is based on the weights of the model.",
+              "coords": [
+                "5,209.75,582.17,81.20,9.46",
+                "5,70.59,595.52,190.96,9.65"
+              ]
+            },
+            {
+              "text": "Here we provide an alternative analysis by studying the activations during inference.",
+              "coords": [
+                "5,267.51,595.72,21.62,9.46",
+                "5,70.47,609.26,218.66,9.46",
+                "5,70.87,622.62,125.13,9.65"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "First, we select a move m (A4) that we wish to explain. We then construct a \"clean\" and \"corrupt\" set of partial game sequences (N=4,569). Our clean set always includes m, while our corrupt set replaces all timesteps with m in the clean set with an alternative move. We ensure that all games in our corrupt set remain legal sequences. Finally, we study the difference in probability that m is empty, according to our probes, in our two sets. Namely, we project the outputs from each attention head onto the EMPTY direction and apply a softmax:",
+          "coords": [
+            "5,81.78,636.02,207.36,9.81",
+            "5,70.87,649.92,220.08,9.46",
+            "5,70.87,663.47,218.46,9.46",
+            "5,70.87,676.67,218.27,9.81",
+            "5,70.87,690.22,218.26,9.81",
+            "5,70.87,704.12,218.27,9.46",
+            "5,306.14,281.45,218.27,9.46",
+            "5,306.14,294.65,219.63,9.81",
+            "5,306.14,308.55,219.63,9.46",
+            "5,305.75,322.10,218.66,9.46",
+            "5,306.14,335.65,207.23,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "First, we select a move m (A4) that we wish to explain.",
+              "coords": [
+                "5,81.78,636.02,207.36,9.81",
+                "5,70.87,649.92,46.97,9.46"
+              ]
+            },
+            {
+              "text": "We then construct a \"clean\" and \"corrupt\" set of partial game sequences (N=4,569).",
+              "coords": [
+                "5,121.83,649.92,169.11,9.46",
+                "5,70.87,663.47,198.55,9.46"
+              ]
+            },
+            {
+              "text": "Our clean set always includes m, while our corrupt set replaces all timesteps with m in the clean set with an alternative move.",
+              "coords": [
+                "5,272.70,663.47,16.62,9.46",
+                "5,70.87,676.67,218.27,9.81",
+                "5,70.87,690.22,218.26,9.81",
+                "5,70.87,704.12,90.30,9.46"
+              ]
+            },
+            {
+              "text": "We ensure that all games in our corrupt set remain legal sequences.",
+              "coords": [
+                "5,165.47,704.12,123.67,9.46",
+                "5,306.14,281.45,167.31,9.46"
+              ]
+            },
+            {
+              "text": "Finally, we study the difference in probability that m is empty, according to our probes, in our two sets.",
+              "coords": [
+                "5,476.83,281.45,47.58,9.46",
+                "5,306.14,294.65,219.63,9.81",
+                "5,306.14,308.55,178.80,9.46"
+              ]
+            },
+            {
+              "text": "Namely, we project the outputs from each attention head onto the EMPTY direction and apply a softmax:",
+              "coords": [
+                "5,488.47,308.55,37.30,9.46",
+                "5,305.75,322.10,218.66,9.46",
+                "5,306.14,335.65,207.23,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "P EMPTY[m] (σ) = Sof tmax(σ * p λ EMPTY[m] )",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "where σ is the output from each attention head.",
+          "coords": [
+            "5,317.05,398.45,206.28,9.81"
+          ],
+          "sentences": [
+            {
+              "text": "where σ is the output from each attention head.",
+              "coords": [
+                "5,317.05,398.45,206.28,9.81"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Figure 3 shows the difference in probability that A4 is empty, between our clean and corrupt inputs, measured in each attention head of the first layer. The figure decomposes two scenarios: when A4 was originally played by ME or YOU. This is because some attention heads only attend to MY moves (4, 7), while some only attend to YOURS (1, 3, 8), which we show below.",
+          "coords": [
+            "5,317.05,412.42,28.08,9.46",
+            "5,355.97,412.42,168.44,9.46",
+            "5,305.75,425.97,220.48,9.46",
+            "5,306.14,439.52,218.27,9.46",
+            "5,306.14,453.07,218.26,9.46",
+            "5,305.75,466.62,218.66,9.46",
+            "5,306.14,480.17,218.54,9.46",
+            "5,306.14,493.72,219.63,9.46",
+            "5,306.14,507.26,124.18,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Figure 3 shows the difference in probability that A4 is empty, between our clean and corrupt inputs, measured in each attention head of the first layer.",
+              "coords": [
+                "5,317.05,412.42,207.36,9.46",
+                "5,305.75,425.97,220.48,9.46",
+                "5,306.14,439.52,218.27,9.46",
+                "5,306.14,453.07,23.61,9.46"
+              ]
+            },
+            {
+              "text": "The figure decomposes two scenarios: when A4 was originally played by ME or YOU.",
+              "coords": [
+                "5,333.16,453.07,191.25,9.46",
+                "5,305.75,466.62,185.10,9.46"
+              ]
+            },
+            {
+              "text": "This is because some attention heads only attend to MY moves (4, 7), while some only attend to YOURS (1, 3, 8), which we show below.",
+              "coords": [
+                "5,494.41,466.62,30.00,9.46",
+                "5,306.14,480.17,218.54,9.46",
+                "5,306.14,493.72,219.63,9.46",
+                "5,306.14,507.26,124.18,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Attending to MY & YOUR Timesteps",
+          "coords": [
+            "5,306.14,529.48,196.87,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We find that some attention heads only attend to either MY or YOUR moves. Figure 4 shows two examples: at each timestep, each head alternates between attending to even or odd timesteps. Such behavior further indicates how the model computes its world model based on MINE and YOURS as opposed to BLACK and WHITE.",
+          "coords": [
+            "5,305.63,547.52,218.78,9.46",
+            "5,306.14,561.07,158.96,9.46",
+            "5,477.07,561.07,47.34,9.46",
+            "5,306.14,574.43,218.27,9.65",
+            "5,306.14,588.17,218.26,9.46",
+            "5,306.14,601.72,218.27,9.46",
+            "5,306.14,615.27,218.27,9.46",
+            "5,306.14,628.82,140.49,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We find that some attention heads only attend to either MY or YOUR moves.",
+              "coords": [
+                "5,305.63,547.52,218.78,9.46",
+                "5,306.14,561.07,125.10,9.46"
+              ]
+            },
+            {
+              "text": "Figure 4 shows two examples: at each timestep, each head alternates between attending to even or odd timesteps.",
+              "coords": [
+                "5,436.05,561.07,88.36,9.46",
+                "5,306.14,574.43,218.27,9.65",
+                "5,306.14,588.17,192.87,9.46"
+              ]
+            },
+            {
+              "text": "Such behavior further indicates how the model computes its world model based on MINE and YOURS as opposed to BLACK and WHITE.",
+              "coords": [
+                "5,502.39,588.17,22.01,9.46",
+                "5,306.14,601.72,218.27,9.46",
+                "5,306.14,615.27,218.27,9.46",
+                "5,306.14,628.82,140.49,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Additional Linear Concepts: FLIPPED",
+          "coords": [
+            "5,306.14,651.03,203.45,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In addition to linearly representing the board state, we find that OthelloGPT also encodes which tiles are being flipped, or captured, at each timestep. To test this, we modify our probing task to classify between FLIPPED vs. NOT-FLIPPED, with the same training setup described above. Given the class imbalance, for this experiment we report F 1 scores. Table 3 demonstrates high F 1 scores by layer 3.",
+          "coords": [
+            "5,306.14,669.08,219.63,9.46",
+            "5,305.75,682.63,218.66,9.46",
+            "5,306.14,696.18,218.27,9.46",
+            "5,306.14,709.73,220.08,9.46",
+            "5,306.14,723.27,218.27,9.46",
+            "5,306.14,736.82,220.08,9.46",
+            "5,306.14,750.02,220.18,9.81",
+            "5,305.80,763.92,23.97,9.46",
+            "5,340.68,763.57,175.47,9.81"
+          ],
+          "sentences": [
+            {
+              "text": "In addition to linearly representing the board state, we find that OthelloGPT also encodes which tiles are being flipped, or captured, at each timestep.",
+              "coords": [
+                "5,306.14,669.08,219.63,9.46",
+                "5,305.75,682.63,218.66,9.46",
+                "5,306.14,696.18,203.82,9.46"
+              ]
+            },
+            {
+              "text": "To test this, we modify our probing task to classify between FLIPPED vs. NOT-FLIPPED, with the same training setup described above.",
+              "coords": [
+                "5,513.35,696.18,11.07,9.46",
+                "5,306.14,709.73,220.08,9.46",
+                "5,306.14,723.27,218.27,9.46",
+                "5,306.14,736.82,133.64,9.46"
+              ]
+            },
+            {
+              "text": "Given the class imbalance, for this experiment we report F 1 scores.",
+              "coords": [
+                "5,443.18,736.82,83.04,9.46",
+                "5,306.14,750.02,220.18,9.81"
+              ]
+            },
+            {
+              "text": "Table 3 demonstrates high F 1 scores by layer 3.",
+              "coords": [
+                "5,305.80,763.57,210.35,9.81"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "x 0 x 1 x 2 x 3 x 4 x 5 x 6",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "x 7 Linear {FLIPPED, NOT-FLIPPED} 74.76 85.75 91.62 94.82 96.44 97.13 96.82 96. 3 Table 3: F 1 score for probing on FLIPPED tiles. In addition to the board state, the model also linearly encodes concepts such as flipped tiles per timestep. We also conduct a modified version of our intervention experiment, in which we always randomly select a flipped tile at the current timestep to intervene on. Then, instead of adding either p λ MINE , p λ YOURS , or p λ EMPTY , we subtract p λ FLIPPED . This tests whether the FLIPPED feature is causally relevant for computing the next move, by exploring whether this is sufficient to cause the model to play valid moves in the new board state. We get an average error rate of 0.486, compared to a null intervention baseline rate of 1.686.",
+          "coords": [
+            "6,500.89,73.30,6.23,9.57",
+            "6,507.13,71.35,4.23,6.99",
+            "6,79.35,87.60,431.80,9.46",
+            "6,70.56,110.69,453.85,8.96",
+            "6,70.87,122.96,169.62,8.64",
+            "6,81.78,394.83,209.17,9.46",
+            "6,70.59,408.38,218.92,9.46",
+            "6,70.87,421.93,220.08,9.46",
+            "6,70.87,435.13,197.06,9.81",
+            "6,267.93,433.18,4.94,6.99",
+            "6,268.13,440.55,18.90,6.91",
+            "6,287.72,435.48,2.78,9.46",
+            "6,70.87,448.68,5.49,9.57",
+            "6,76.36,446.73,4.94,6.99",
+            "6,76.55,454.09,24.12,6.91",
+            "6,101.37,448.68,22.55,9.81",
+            "6,123.92,446.73,4.94,6.99",
+            "6,124.11,454.09,24.16,6.91",
+            "6,148.97,448.68,63.99,9.81",
+            "6,212.96,446.73,4.94,6.99",
+            "6,213.16,454.09,28.40,6.91",
+            "6,242.25,449.03,46.88,9.46",
+            "6,70.47,462.58,218.66,9.46",
+            "6,70.87,476.13,218.46,9.46",
+            "6,70.87,489.68,218.27,9.46",
+            "6,70.87,503.23,218.27,9.46",
+            "6,70.87,516.35,218.27,9.88",
+            "6,70.87,529.90,96.64,9.88"
+          ],
+          "sentences": [
+            {
+              "text": "x 7 Linear {FLIPPED, NOT-FLIPPED} 74.76 85.75 91.62 94.82 96.44 97.13 96.82 96.",
+              "coords": [
+                "6,500.89,73.30,6.23,9.57",
+                "6,507.13,71.35,4.23,6.99",
+                "6,79.35,87.60,431.80,9.46"
+              ]
+            },
+            {
+              "text": "3 Table 3: F 1 score for probing on FLIPPED tiles.",
+              "coords": [
+                "6,511.15,87.60,4.77,9.46",
+                "6,70.56,110.69,197.51,8.96"
+              ]
+            },
+            {
+              "text": "In addition to the board state, the model also linearly encodes concepts such as flipped tiles per timestep.",
+              "coords": [
+                "6,272.06,111.01,252.35,8.64",
+                "6,70.87,122.96,169.62,8.64"
+              ]
+            },
+            {
+              "text": "We also conduct a modified version of our intervention experiment, in which we always randomly select a flipped tile at the current timestep to intervene on.",
+              "coords": [
+                "6,81.78,394.83,209.17,9.46",
+                "6,70.59,408.38,218.92,9.46",
+                "6,70.87,421.93,220.08,9.46",
+                "6,70.87,435.48,49.57,9.46"
+              ]
+            },
+            {
+              "text": "Then, instead of adding either p λ MINE , p λ YOURS , or p λ EMPTY , we subtract p λ FLIPPED .",
+              "coords": [
+                "6,124.88,435.13,143.05,9.81",
+                "6,267.93,433.18,4.94,6.99",
+                "6,268.13,440.55,18.90,6.91",
+                "6,287.72,435.48,2.78,9.46",
+                "6,70.87,448.68,5.49,9.57",
+                "6,76.36,446.73,4.94,6.99",
+                "6,76.55,454.09,24.12,6.91",
+                "6,101.37,448.68,22.55,9.81",
+                "6,123.92,446.73,4.94,6.99",
+                "6,124.11,454.09,24.16,6.91",
+                "6,148.97,448.68,63.99,9.81",
+                "6,212.96,446.73,4.94,6.99",
+                "6,213.16,454.09,28.40,6.91",
+                "6,242.25,449.03,2.68,9.46"
+              ]
+            },
+            {
+              "text": "This tests whether the FLIPPED feature is causally relevant for computing the next move, by exploring whether this is sufficient to cause the model to play valid moves in the new board state.",
+              "coords": [
+                "6,248.31,449.03,40.82,9.46",
+                "6,70.47,462.58,218.66,9.46",
+                "6,70.87,476.13,218.46,9.46",
+                "6,70.87,489.68,218.27,9.46",
+                "6,70.87,503.23,132.49,9.46"
+              ]
+            },
+            {
+              "text": "We get an average error rate of 0.486, compared to a null intervention baseline rate of 1.686.",
+              "coords": [
+                "6,207.41,503.23,81.73,9.46",
+                "6,70.87,516.35,218.27,9.88",
+                "6,70.87,529.90,96.64,9.88"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "One can consider FLIPPED tiles as the difference between the previous and current board state. One might naturally think that a recurrent computation could derive the current board state by iteratively applying such differences. However, transformer models do not make recursive computations! 8 We view FLIPPED to be both an unexpected encoding and a hint for the rest of the board circuit.",
+          "coords": [
+            "6,81.78,544.41,207.36,9.46",
+            "6,70.87,557.96,218.27,9.46",
+            "6,70.87,571.51,218.27,9.46",
+            "6,70.87,585.06,218.65,9.46",
+            "6,70.87,598.61,218.45,9.46",
+            "6,70.87,611.73,196.17,9.88",
+            "6,274.91,612.16,14.23,9.46",
+            "6,70.59,625.70,218.54,9.46",
+            "6,70.87,639.25,181.78,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "One can consider FLIPPED tiles as the difference between the previous and current board state.",
+              "coords": [
+                "6,81.78,544.41,207.36,9.46",
+                "6,70.87,557.96,196.78,9.46"
+              ]
+            },
+            {
+              "text": "One might naturally think that a recurrent computation could derive the current board state by iteratively applying such differences.",
+              "coords": [
+                "6,271.03,557.96,18.10,9.46",
+                "6,70.87,571.51,218.27,9.46",
+                "6,70.87,585.06,218.65,9.46",
+                "6,70.87,598.61,117.14,9.46"
+              ]
+            },
+            {
+              "text": "However, transformer models do not make recursive computations!",
+              "coords": [
+                "6,192.01,598.61,97.31,9.46",
+                "6,70.87,611.73,196.17,9.88"
+              ]
+            },
+            {
+              "text": "8 We view FLIPPED to be both an unexpected encoding and a hint for the rest of the board circuit.",
+              "coords": [
+                "6,267.03,610.11,3.99,6.91",
+                "6,274.91,612.16,14.23,9.46",
+                "6,70.59,625.70,218.54,9.46",
+                "6,70.87,639.25,181.78,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Multiple Circuits Hypothesis",
+          "coords": [
+            "6,70.87,663.06,158.90,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Although we find a board state circuit and its causality on move predictions, we find that it does not explain the entire model. If our understanding is correct, we expect the model to compute the board 8 Doing so would require our transformer model to have the same number of layers as the maximum game sequence length of 60. state before computing valid moves. However, we find that in end games, this is not the case.",
+          "coords": [
+            "6,70.47,682.02,220.47,9.46",
+            "6,70.87,695.57,218.27,9.46",
+            "6,70.87,709.12,218.27,9.46",
+            "6,70.87,722.67,218.27,9.46",
+            "6,83.52,743.40,2.99,5.18",
+            "6,87.01,745.26,202.13,7.77",
+            "6,70.87,755.22,218.27,7.77",
+            "6,70.87,765.19,45.58,7.77",
+            "6,306.14,394.83,218.27,9.46",
+            "6,306.14,408.38,184.48,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Although we find a board state circuit and its causality on move predictions, we find that it does not explain the entire model.",
+              "coords": [
+                "6,70.47,682.02,220.47,9.46",
+                "6,70.87,695.57,218.27,9.46",
+                "6,70.87,709.12,111.54,9.46"
+              ]
+            },
+            {
+              "text": "If our understanding is correct, we expect the model to compute the board 8 Doing so would require our transformer model to have the same number of layers as the maximum game sequence length of 60.",
+              "coords": [
+                "6,187.01,709.12,102.13,9.46",
+                "6,70.87,722.67,218.27,9.46",
+                "6,83.52,743.40,2.99,5.18",
+                "6,87.01,745.26,202.13,7.77",
+                "6,70.87,755.22,218.27,7.77",
+                "6,70.87,765.19,45.58,7.77"
+              ]
+            },
+            {
+              "text": "state before computing valid moves.",
+              "coords": [
+                "6,306.14,394.83,157.87,9.46"
+              ]
+            },
+            {
+              "text": "However, we find that in end games, this is not the case.",
+              "coords": [
+                "6,467.40,394.83,57.01,9.46",
+                "6,306.14,408.38,184.48,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To check for the correct board state, we apply our linear probes on each layer, and check the earliest layer in which all 64 tiles are correctly predicted. 9To check for correct move predictions, we project from each layer using the unembedding layer, and check the earliest layer in which the top-N move predictions are all correct, where N is the number of groundtruth legal moves.",
+          "coords": [
+            "6,317.05,423.09,207.54,9.46",
+            "6,306.14,436.64,218.27,9.46",
+            "6,306.14,450.19,213.78,9.46",
+            "6,305.80,463.74,218.60,9.46",
+            "6,306.14,477.29,218.27,9.46",
+            "6,306.14,490.84,218.27,9.46",
+            "6,306.14,504.39,218.45,9.46",
+            "6,306.14,517.94,120.65,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "To check for the correct board state, we apply our linear probes on each layer, and check the earliest layer in which all 64 tiles are correctly predicted.",
+              "coords": [
+                "6,317.05,423.09,207.54,9.46",
+                "6,306.14,436.64,218.27,9.46",
+                "6,306.14,450.19,213.78,9.46"
+              ]
+            },
+            {
+              "text": "9To check for correct move predictions, we project from each layer using the unembedding layer, and check the earliest layer in which the top-N move predictions are all correct, where N is the number of groundtruth legal moves.",
+              "coords": [
+                "6,519.93,448.15,3.99,6.91",
+                "6,305.80,463.74,218.60,9.46",
+                "6,306.14,477.29,218.27,9.46",
+                "6,306.14,490.84,218.27,9.46",
+                "6,306.14,504.39,218.45,9.46",
+                "6,306.14,517.94,120.65,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Figure 5 plots the proportion of times the board state is computed before (or after) valid moves (first y-axis). We also overlay the average earliest layer in which board or moves are correctly computed (second y-axis, aqua and lime curves). To our surprise, we find that in end games, the model often computes legal moves before the board state (black bars). We henceforth refer to this behavior as MOVEFIRST, and share some thoughts.",
+          "coords": [
+            "6,317.05,532.65,28.51,9.46",
+            "6,356.45,532.65,167.96,9.46",
+            "6,306.14,546.20,218.27,9.46",
+            "6,305.78,559.74,218.63,9.46",
+            "6,306.14,573.29,220.08,9.46",
+            "6,306.14,586.84,218.27,9.46",
+            "6,306.14,600.39,218.27,9.46",
+            "6,306.14,613.74,218.27,9.65",
+            "6,305.78,627.49,218.81,9.46",
+            "6,306.14,641.04,184.59,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Figure 5 plots the proportion of times the board state is computed before (or after) valid moves (first y-axis).",
+              "coords": [
+                "6,317.05,532.65,207.36,9.46",
+                "6,306.14,546.20,218.27,9.46",
+                "6,305.78,559.74,57.09,9.46"
+              ]
+            },
+            {
+              "text": "We also overlay the average earliest layer in which board or moves are correctly computed (second y-axis, aqua and lime curves).",
+              "coords": [
+                "6,366.25,559.74,158.16,9.46",
+                "6,306.14,573.29,220.08,9.46",
+                "6,306.14,586.84,201.62,9.46"
+              ]
+            },
+            {
+              "text": "To our surprise, we find that in end games, the model often computes legal moves before the board state (black bars).",
+              "coords": [
+                "6,512.92,586.84,11.49,9.46",
+                "6,306.14,600.39,218.27,9.46",
+                "6,306.14,613.74,218.27,9.65",
+                "6,305.78,627.49,55.46,9.46"
+              ]
+            },
+            {
+              "text": "We henceforth refer to this behavior as MOVEFIRST, and share some thoughts.",
+              "coords": [
+                "6,364.63,627.49,159.96,9.46",
+                "6,306.14,641.04,184.59,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "End Game Circuits. First, MOVEFIRST starts to occur around move 30, which is the mid-point of the game. Second, MOVEFIRST occurs more frequently as we near the end of the game (increasing black bars). Interestingly, in Othello, starting from the mid-point, there are progressively fewer empty tiles than there are filled tiles as the board fills up. Also note that as the game progresses, it becomes more likely for every empty tile to be a legal move.",
+          "coords": [
+            "6,306.14,665.54,218.26,9.88",
+            "6,306.14,679.52,218.27,9.46",
+            "6,306.14,693.07,220.08,9.46",
+            "6,306.14,706.62,218.27,9.46",
+            "6,306.14,720.17,218.27,9.46",
+            "7,70.87,74.72,218.65,9.46",
+            "7,70.87,88.27,220.18,9.46",
+            "7,70.47,101.82,218.66,9.46",
+            "7,70.87,115.37,220.06,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "End Game Circuits.",
+              "coords": [
+                "6,306.14,665.54,90.69,9.81"
+              ]
+            },
+            {
+              "text": "First, MOVEFIRST starts to occur around move 30, which is the mid-point of the game.",
+              "coords": [
+                "6,407.74,665.97,116.67,9.46",
+                "6,306.14,679.52,218.27,9.46",
+                "6,306.14,693.07,43.26,9.46"
+              ]
+            },
+            {
+              "text": "Second, MOVEFIRST occurs more frequently as we near the end of the game (increasing black bars).",
+              "coords": [
+                "6,353.13,693.07,173.09,9.46",
+                "6,306.14,706.62,218.27,9.46",
+                "6,306.14,720.17,50.41,9.46"
+              ]
+            },
+            {
+              "text": "Interestingly, in Othello, starting from the mid-point, there are progressively fewer empty tiles than there are filled tiles as the board fills up.",
+              "coords": [
+                "6,359.97,720.17,164.44,9.46",
+                "7,70.87,74.72,218.65,9.46",
+                "7,70.87,88.27,220.18,9.46"
+              ]
+            },
+            {
+              "text": "Also note that as the game progresses, it becomes more likely for every empty tile to be a legal move.",
+              "coords": [
+                "7,70.47,101.82,218.66,9.46",
+                "7,70.87,115.37,220.06,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "One possible explanation for this phenomenon is that in the end game, it may be possible to predict legal moves with simpler circuits that do not require the entire board state. For instance, perhaps it combines EMPTY with other features such as IS-SURROUNDED-BY-MINE or IS-BORDER and so on.",
+          "coords": [
+            "7,81.78,128.97,207.36,9.46",
+            "7,70.87,142.52,220.08,9.46",
+            "7,70.87,156.07,218.27,9.46",
+            "7,70.87,169.62,218.27,9.46",
+            "7,70.87,183.17,220.08,9.46",
+            "7,71.14,196.72,217.99,9.46",
+            "7,70.87,210.27,13.64,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "One possible explanation for this phenomenon is that in the end game, it may be possible to predict legal moves with simpler circuits that do not require the entire board state.",
+              "coords": [
+                "7,81.78,128.97,207.36,9.46",
+                "7,70.87,142.52,220.08,9.46",
+                "7,70.87,156.07,218.27,9.46",
+                "7,70.87,169.62,124.28,9.46"
+              ]
+            },
+            {
+              "text": "For instance, perhaps it combines EMPTY with other features such as IS-SURROUNDED-BY-MINE or IS-BORDER and so on.",
+              "coords": [
+                "7,198.45,169.62,90.68,9.46",
+                "7,70.87,183.17,220.08,9.46",
+                "7,71.14,196.72,217.99,9.46",
+                "7,70.87,210.27,13.64,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Multiple Circuits. Interestingly, the model still uses the board circuit at end games. To demonstrate this, we run our intervention experiment on 1,000 end games, 10 and still achieve a low error rate of 0.112. 11 We thus hypothesize that Othel-loGPT (and more broadly, sequence models) consist of multiple circuits. Another hypothesis is that residual networks make \"iterative inferences\" (Section 5.5), and for end games, OthelloGPT uses simpler circuits in the early layers and refines its predictions at late layers using board state.",
+          "coords": [
+            "7,70.87,230.93,218.26,9.88",
+            "7,70.87,244.90,220.08,9.46",
+            "7,70.87,258.45,218.27,9.46",
+            "7,70.05,271.80,79.56,9.65",
+            "7,149.61,269.95,7.97,6.91",
+            "7,161.92,272.00,127.40,9.46",
+            "7,70.87,285.12,60.72,9.88",
+            "7,145.69,285.55,145.26,9.46",
+            "7,70.87,299.10,220.08,9.46",
+            "7,70.87,312.65,218.27,9.46",
+            "7,70.87,326.20,220.08,9.46",
+            "7,70.87,339.75,218.27,9.46",
+            "7,70.87,353.29,218.27,9.46",
+            "7,70.87,366.84,185.73,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Multiple Circuits.",
+              "coords": [
+                "7,70.87,230.93,83.73,9.81"
+              ]
+            },
+            {
+              "text": "Interestingly, the model still uses the board circuit at end games.",
+              "coords": [
+                "7,165.50,231.35,123.63,9.46",
+                "7,70.87,244.90,164.35,9.46"
+              ]
+            },
+            {
+              "text": "To demonstrate this, we run our intervention experiment on 1,000 end games, 10 and still achieve a low error rate of 0.112.",
+              "coords": [
+                "7,241.70,244.90,49.24,9.46",
+                "7,70.87,258.45,218.27,9.46",
+                "7,70.05,271.80,79.56,9.65",
+                "7,149.61,269.95,7.97,6.91",
+                "7,161.92,272.00,127.40,9.46",
+                "7,70.87,285.12,60.72,9.88"
+              ]
+            },
+            {
+              "text": "11 We thus hypothesize that Othel-loGPT (and more broadly, sequence models) consist of multiple circuits.",
+              "coords": [
+                "7,131.59,283.50,7.97,6.91",
+                "7,145.69,285.55,145.26,9.46",
+                "7,70.87,299.10,220.08,9.46",
+                "7,70.87,312.65,101.92,9.46"
+              ]
+            },
+            {
+              "text": "Another hypothesis is that residual networks make \"iterative inferences\" (Section 5.5), and for end games, OthelloGPT uses simpler circuits in the early layers and refines its predictions at late layers using board state.",
+              "coords": [
+                "7,176.20,312.65,112.93,9.46",
+                "7,70.87,326.20,220.08,9.46",
+                "7,70.87,339.75,218.27,9.46",
+                "7,70.87,353.29,218.27,9.46",
+                "7,70.87,366.84,185.73,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "End Game Board Accuracy. We observe that board state accuracy drops near end games. This can be seen by the growing red bars, but also by measuring per-timestep accuracy of our probes (see Appendix). It is unclear whether 1) the model does not bother to compute the perfect board state, as alternative circuits allow the model to still correctly predict legal moves, or 2) the model learns an alternative circuit because it struggles to compute the correct board state at end games.",
+          "coords": [
+            "7,70.87,387.50,218.26,9.88",
+            "7,70.87,401.48,218.27,9.46",
+            "7,70.87,415.03,218.65,9.46",
+            "7,70.87,428.58,218.27,9.46",
+            "7,70.47,442.13,218.66,9.46",
+            "7,70.87,455.68,218.27,9.46",
+            "7,70.87,469.22,218.65,9.46",
+            "7,70.87,482.77,220.08,9.46",
+            "7,70.87,496.32,218.27,9.46",
+            "7,70.87,509.87,142.93,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "End Game Board Accuracy.",
+              "coords": [
+                "7,70.87,387.50,135.01,9.81"
+              ]
+            },
+            {
+              "text": "We observe that board state accuracy drops near end games.",
+              "coords": [
+                "7,216.78,387.93,72.35,9.46",
+                "7,70.87,401.48,194.26,9.46"
+              ]
+            },
+            {
+              "text": "This can be seen by the growing red bars, but also by measuring per-timestep accuracy of our probes (see Appendix).",
+              "coords": [
+                "7,269.35,401.48,19.78,9.46",
+                "7,70.87,415.03,218.65,9.46",
+                "7,70.87,428.58,218.27,9.46",
+                "7,70.47,442.13,48.40,9.46"
+              ]
+            },
+            {
+              "text": "It is unclear whether",
+              "coords": [
+                "7,122.25,442.13,87.72,9.46"
+              ]
+            },
+            {
+              "text": "1) the model does not bother to compute the perfect board state, as alternative circuits allow the model to still correctly predict legal moves, or",
+              "coords": [
+                "7,212.68,442.13,76.45,9.46",
+                "7,70.87,455.68,218.27,9.46",
+                "7,70.87,469.22,218.65,9.46",
+                "7,70.87,482.77,97.43,9.46"
+              ]
+            },
+            {
+              "text": "2) the model learns an alternative circuit because it struggles to compute the correct board state at end games.",
+              "coords": [
+                "7,170.95,482.77,119.99,9.46",
+                "7,70.87,496.32,218.27,9.46",
+                "7,70.87,509.87,142.93,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Memorization. Note that in the first few timesteps, the board and legal moves are sometimes both computed in the same layer (dark grey bars). This may be due to memorization: 1) these predictions both occur at the first layer, and 2) there are only so many openings in an Othello game.",
+          "coords": [
+            "7,70.87,530.53,218.67,9.88",
+            "7,70.87,544.51,220.08,9.46",
+            "7,70.87,558.06,218.65,9.46",
+            "7,70.87,571.61,218.27,9.46",
+            "7,70.87,585.15,218.27,9.46",
+            "7,70.87,598.70,205.52,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Memorization.",
+              "coords": [
+                "7,70.87,530.53,70.15,9.81"
+              ]
+            },
+            {
+              "text": "Note that in the first few timesteps, the board and legal moves are sometimes both computed in the same layer (dark grey bars).",
+              "coords": [
+                "7,151.92,530.96,137.61,9.46",
+                "7,70.87,544.51,220.08,9.46",
+                "7,70.87,558.06,218.65,9.46",
+                "7,70.87,571.61,24.88,9.46"
+              ]
+            },
+            {
+              "text": "This may be due to memorization:",
+              "coords": [
+                "7,99.14,571.61,151.92,9.46"
+              ]
+            },
+            {
+              "text": "1) these predictions both occur at the first layer, and",
+              "coords": [
+                "7,254.46,571.61,34.68,9.46",
+                "7,70.87,585.15,183.29,9.46"
+              ]
+            },
+            {
+              "text": "2) there are only so many openings in an Othello game.",
+              "coords": [
+                "7,256.50,585.15,32.63,9.46",
+                "7,70.87,598.70,205.52,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Iterative Feature Refinements",
+          "coords": [
+            "7,70.87,620.84,163.21,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Figure 6 visualizes OthelloGPT's \"iterative inference\" (Jastrzebski et al., 2018;Belrose et al., 2023;Veit et al., 2016;nostalgebraist, 2020), or iterative refinement of features. For each layer, we plot the projected board states using our probes, and projected next-move predictions using the unembedding layer. Multiple evidence of iterative refinements are provided in the Appendix. 10 We intervene on a timestep > 30 11 Non-intervention baseline: 1.988.",
+          "coords": [
+            "7,70.87,638.84,29.05,9.46",
+            "7,111.19,638.84,179.75,9.46",
+            "7,70.87,652.39,24.33,9.46",
+            "7,244.73,665.94,46.22,9.46",
+            "7,70.87,679.49,218.27,9.46",
+            "7,70.87,693.03,219.63,9.46",
+            "7,70.87,706.58,220.08,9.46",
+            "7,70.87,720.13,218.27,9.46",
+            "7,70.87,733.68,184.05,9.46",
+            "7,86.58,754.34,115.77,7.77",
+            "7,80.53,763.32,5.98,5.18",
+            "7,87.01,765.19,120.94,7.77"
+          ],
+          "sentences": [
+            {
+              "text": "Figure 6 visualizes OthelloGPT's \"iterative inference\" (Jastrzebski et al., 2018;Belrose et al., 2023;Veit et al., 2016;nostalgebraist, 2020), or iterative refinement of features.",
+              "coords": [
+                "7,70.87,638.84,220.08,9.46",
+                "7,70.87,652.39,219.17,9.46",
+                "7,70.47,665.94,220.48,9.46",
+                "7,70.87,679.49,123.89,9.46"
+              ]
+            },
+            {
+              "text": "For each layer, we plot the projected board states using our probes, and projected next-move predictions using the unembedding layer.",
+              "coords": [
+                "7,202.74,679.49,86.40,9.46",
+                "7,70.87,693.03,219.63,9.46",
+                "7,70.87,706.58,220.08,9.46",
+                "7,70.87,720.13,77.64,9.46"
+              ]
+            },
+            {
+              "text": "Multiple evidence of iterative refinements are provided in the Appendix.",
+              "coords": [
+                "7,154.97,720.13,134.17,9.46",
+                "7,70.87,733.68,184.05,9.46"
+              ]
+            },
+            {
+              "text": "10 We intervene on a timestep > 30 11 Non-intervention baseline: 1.988.",
+              "coords": [
+                "7,80.53,752.47,5.98,5.18",
+                "7,86.58,754.34,115.77,7.77",
+                "7,80.53,763.32,5.98,5.18",
+                "7,87.01,765.19,120.94,7.77"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Discussions 6.1 On Linear vs. Non-Linear Interpretations",
+          "coords": [
+            "7,306.14,73.58,76.39,10.75",
+            "7,306.14,95.02,218.27,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "One challenge with probing is knowing which features to look for. 12 For instance, classifying {BLACK, WHITE} versus {MINE, YOURS} leads to different takeaways, which illustrates the danger of projecting our preconceptions. What might seem \"sensible\" to a human interpreter (BLACK, WHITE) may not be for a model. 13 More broadly, what is \"sensible\", or alternatively, how we choose to interpret linear or nonlinear encodings, can be relative to how we see the world. Suppose we had a perfect world model of our physical world. Further suppose that if and when it computes a gravitational force between two objects (Newton's law), we discover a neuron whose square root was the distance between two objects. Is this a non-linear representation of distance? Or, given the form of Netwon's law, is the square of the distance a more natural way for the model to represent the feature, and thus considered a linear representation? As this example shows, what constitutes a natural feature may be in the eye of the beholder.",
+          "coords": [
+            "7,306.14,112.92,218.27,9.46",
+            "7,306.14,126.47,91.08,9.46",
+            "7,413.15,126.47,111.26,9.46",
+            "7,304.05,140.02,220.37,9.46",
+            "7,306.14,153.57,220.08,9.46",
+            "7,306.14,166.92,218.27,9.65",
+            "7,306.14,180.66,219.62,9.46",
+            "7,305.87,194.21,143.18,9.46",
+            "7,317.05,207.76,209.17,9.46",
+            "7,306.14,221.31,220.08,9.46",
+            "7,306.14,234.86,218.27,9.46",
+            "7,305.75,248.41,218.66,9.46",
+            "7,306.14,261.96,218.27,9.46",
+            "7,305.75,275.51,218.66,9.46",
+            "7,306.14,289.06,218.27,9.46",
+            "7,305.75,302.61,218.66,9.46",
+            "7,306.14,316.16,220.08,9.46",
+            "7,306.14,329.71,218.27,9.46",
+            "7,306.14,343.25,218.27,9.46",
+            "7,306.14,356.80,218.27,9.46",
+            "7,306.14,370.35,219.63,9.46",
+            "7,305.75,383.90,218.66,9.46",
+            "7,306.14,397.45,68.17,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "One challenge with probing is knowing which features to look for.",
+              "coords": [
+                "7,306.14,112.92,218.27,9.46",
+                "7,306.14,126.47,91.08,9.46"
+              ]
+            },
+            {
+              "text": "12 For instance, classifying {BLACK, WHITE} versus {MINE, YOURS} leads to different takeaways, which illustrates the danger of projecting our preconceptions.",
+              "coords": [
+                "7,397.22,124.42,7.97,6.91",
+                "7,413.15,126.47,111.26,9.46",
+                "7,304.05,140.02,220.37,9.46",
+                "7,306.14,153.57,220.08,9.46",
+                "7,306.14,166.92,162.90,9.65"
+              ]
+            },
+            {
+              "text": "What might seem \"sensible\" to a human interpreter (BLACK, WHITE) may not be for a model.",
+              "coords": [
+                "7,472.44,167.12,51.97,9.46",
+                "7,306.14,180.66,219.62,9.46",
+                "7,305.87,194.21,143.18,9.46"
+              ]
+            },
+            {
+              "text": "13 More broadly, what is \"sensible\", or alternatively, how we choose to interpret linear or nonlinear encodings, can be relative to how we see the world.",
+              "coords": [
+                "7,449.05,192.17,7.97,6.91",
+                "7,317.05,207.76,209.17,9.46",
+                "7,306.14,221.31,220.08,9.46",
+                "7,306.14,234.86,218.27,9.46",
+                "7,305.75,248.41,28.63,9.46"
+              ]
+            },
+            {
+              "text": "Suppose we had a perfect world model of our physical world.",
+              "coords": [
+                "7,338.37,248.41,186.04,9.46",
+                "7,306.14,261.96,88.14,9.46"
+              ]
+            },
+            {
+              "text": "Further suppose that if and when it computes a gravitational force between two objects (Newton's law), we discover a neuron whose square root was the distance between two objects.",
+              "coords": [
+                "7,400.96,261.96,123.46,9.46",
+                "7,305.75,275.51,218.66,9.46",
+                "7,306.14,289.06,218.27,9.46",
+                "7,305.75,302.61,218.66,9.46",
+                "7,306.14,316.16,34.31,9.46"
+              ]
+            },
+            {
+              "text": "Is this a non-linear representation of distance?",
+              "coords": [
+                "7,344.58,316.16,181.64,9.46",
+                "7,306.14,329.71,28.42,9.46"
+              ]
+            },
+            {
+              "text": "Or, given the form of Netwon's law, is the square of the distance a more natural way for the model to represent the feature, and thus considered a linear representation?",
+              "coords": [
+                "7,338.00,329.71,186.42,9.46",
+                "7,306.14,343.25,218.27,9.46",
+                "7,306.14,356.80,218.27,9.46",
+                "7,306.14,370.35,105.72,9.46"
+              ]
+            },
+            {
+              "text": "As this example shows, what constitutes a natural feature may be in the eye of the beholder.",
+              "coords": [
+                "7,418.27,370.35,107.50,9.46",
+                "7,305.75,383.90,218.66,9.46",
+                "7,306.14,397.45,68.17,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "On the Emergence of Linear Representations",
+          "coords": [
+            "7,306.14,419.22,157.15,9.81",
+            "7,330.69,432.77,74.95,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Linear representations in sequence models have been observed before: iGPT (Chen et al., 2020), which was autoregressively trained to predict next pixels of images, lead to robust linear image representations. The question remains, why do linear feature representations emerge? What linear representations are currently encoded in large language models? One reason might be simply that matrix multiplication can easily extract a different subset of linear features for each neuron. However, we leave a complete explanation to future work.",
+          "coords": [
+            "7,306.14,450.67,218.27,9.46",
+            "7,306.14,464.22,128.32,9.46",
+            "7,520.98,464.22,4.79,9.46",
+            "7,305.75,477.77,218.66,9.46",
+            "7,306.14,491.32,220.08,9.46",
+            "7,306.14,504.87,218.45,9.46",
+            "7,306.14,518.41,220.08,9.46",
+            "7,306.14,531.96,218.27,9.46",
+            "7,306.14,545.51,218.54,9.46",
+            "7,306.14,559.06,218.27,9.46",
+            "7,306.14,572.61,218.27,9.46",
+            "7,306.14,586.16,194.15,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Linear representations in sequence models have been observed before: iGPT (Chen et al., 2020), which was autoregressively trained to predict next pixels of images, lead to robust linear image representations.",
+              "coords": [
+                "7,306.14,450.67,218.27,9.46",
+                "7,306.14,464.22,219.63,9.46",
+                "7,305.75,477.77,218.66,9.46",
+                "7,306.14,491.32,220.08,9.46",
+                "7,306.14,504.87,55.11,9.46"
+              ]
+            },
+            {
+              "text": "The question remains, why do linear feature representations emerge?",
+              "coords": [
+                "7,364.63,504.87,159.96,9.46",
+                "7,306.14,518.41,137.35,9.46"
+              ]
+            },
+            {
+              "text": "What linear representations are currently encoded in large language models?",
+              "coords": [
+                "7,446.91,518.41,79.31,9.46",
+                "7,306.14,531.96,218.27,9.46",
+                "7,306.14,545.51,37.09,9.46"
+              ]
+            },
+            {
+              "text": "One reason might be simply that matrix multiplication can easily extract a different subset of linear features for each neuron.",
+              "coords": [
+                "7,347.15,545.51,177.54,9.46",
+                "7,306.14,559.06,218.27,9.46",
+                "7,306.14,572.61,153.89,9.46"
+              ]
+            },
+            {
+              "text": "However, we leave a complete explanation to future work.",
+              "coords": [
+                "7,465.44,572.61,58.97,9.46",
+                "7,306.14,586.16,194.15,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "7 Related Work",
+          "coords": [
+            "7,306.14,608.58,89.09,10.75"
+          ],
+          "sentences": [
+            {
+              "text": "7 Related Work",
+              "coords": [
+                "7,306.14,608.58,89.09,10.75"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We discuss three broad related areas: understanding internal representations, interventions, and mechanistic interpretability.",
+          "coords": [
+            "7,305.63,630.45,218.78,9.46",
+            "7,306.14,644.00,220.08,9.46",
+            "7,306.14,657.55,93.23,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We discuss three broad related areas: understanding internal representations, interventions, and mechanistic interpretability.",
+              "coords": [
+                "7,305.63,630.45,218.78,9.46",
+                "7,306.14,644.00,220.08,9.46",
+                "7,306.14,657.55,93.23,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Understanding Internal Representations",
+          "coords": [
+            "7,306.14,679.31,212.67,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Multiple researchers have studied world representations in sequence models. Li et al. (2021) train sequence models on a synthetic task, and uncover 12 For a longer discussion on probing, see Appendix. 13 In hindsight, given the symmetric game-play of Othello, encoding MINE, YOURS is perfectly \"sensible\" for the model. world models in their activations. Patel and Pavlick (2022) demonstrate that language models can learn to ground concepts (e.g., direction, colour) to real world representations. Burns et al. (2022) find linear vectors that encode \"truthfulness\".",
+          "coords": [
+            "7,306.14,697.22,220.07,9.46",
+            "7,306.14,710.76,123.11,9.46",
+            "7,504.02,710.76,20.40,9.46",
+            "7,306.14,724.31,218.45,9.46",
+            "7,322.28,744.37,180.42,7.77",
+            "7,322.28,755.22,203.25,7.77",
+            "7,306.14,765.19,218.27,7.77",
+            "8,70.47,231.05,218.93,9.46",
+            "8,70.51,244.60,218.63,9.46",
+            "8,70.87,258.15,218.27,9.46",
+            "8,70.47,271.70,220.47,9.46",
+            "8,70.87,285.25,166.76,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Multiple researchers have studied world representations in sequence models.",
+              "coords": [
+                "7,306.14,697.22,220.07,9.46",
+                "7,306.14,710.76,123.11,9.46"
+              ]
+            },
+            {
+              "text": "Li et al. (2021) train sequence models on a synthetic task, and uncover 12 For a longer discussion on probing, see Appendix.",
+              "coords": [
+                "7,433.52,710.76,90.90,9.46",
+                "7,306.14,724.31,218.45,9.46",
+                "7,315.81,742.51,5.98,5.18",
+                "7,322.28,744.37,180.42,7.77"
+              ]
+            },
+            {
+              "text": "13 In hindsight, given the symmetric game-play of Othello, encoding MINE, YOURS is perfectly \"sensible\" for the model.",
+              "coords": [
+                "7,315.81,753.36,5.98,5.18",
+                "7,322.28,755.22,203.25,7.77",
+                "7,306.14,765.19,218.27,7.77"
+              ]
+            },
+            {
+              "text": "world models in their activations.",
+              "coords": [
+                "8,70.47,231.05,142.21,9.46"
+              ]
+            },
+            {
+              "text": "Patel and Pavlick (2022) demonstrate that language models can learn to ground concepts (e.g., direction, colour) to real world representations.",
+              "coords": [
+                "8,216.00,231.05,73.40,9.46",
+                "8,70.51,244.60,218.63,9.46",
+                "8,70.87,258.15,218.27,9.46",
+                "8,70.47,271.70,97.23,9.46"
+              ]
+            },
+            {
+              "text": "Burns et al. (2022) find linear vectors that encode \"truthfulness\".",
+              "coords": [
+                "8,171.10,271.70,119.84,9.46",
+                "8,70.87,285.25,166.76,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Many studies also build or study linear representations for language. Word embeddings (Mikolov et al., 2013b,a) build vectoral word representations. Linear probes have also been used to extract linguistic characteristics in sentence embeddings (Conneau et al., 2018;Tenney et al., 2019).",
+          "coords": [
+            "8,81.78,299.23,209.17,9.46",
+            "8,70.87,312.78,174.33,9.46",
+            "8,137.56,326.33,153.49,9.46",
+            "8,70.87,339.88,220.08,9.46",
+            "8,70.87,353.42,190.40,9.46",
+            "8,233.09,366.97,4.70,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Many studies also build or study linear representations for language.",
+              "coords": [
+                "8,81.78,299.23,209.17,9.46",
+                "8,70.87,312.78,90.48,9.46"
+              ]
+            },
+            {
+              "text": "Word embeddings (Mikolov et al., 2013b,a) build vectoral word representations.",
+              "coords": [
+                "8,164.75,312.78,124.65,9.46",
+                "8,70.87,326.33,220.18,9.46"
+              ]
+            },
+            {
+              "text": "Linear probes have also been used to extract linguistic characteristics in sentence embeddings (Conneau et al., 2018;Tenney et al., 2019).",
+              "coords": [
+                "8,70.87,339.88,220.08,9.46",
+                "8,70.87,353.42,220.08,9.46",
+                "8,70.87,366.97,166.92,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Linear representations are found outside of language models as well.",
+          "coords": [
+            "8,81.78,380.96,209.17,9.46",
+            "8,70.87,394.51,93.56,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Linear representations are found outside of language models as well.",
+              "coords": [
+                "8,81.78,380.96,209.17,9.46",
+                "8,70.87,394.51,93.56,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Intervening On Language Models",
+          "coords": [
+            "8,70.87,485.71,181.61,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "A growing body of work has intervened on language models, by which we mean controlling their behavior by altering their activations.",
+          "coords": [
+            "8,70.47,504.48,220.48,9.46",
+            "8,70.87,518.03,218.45,9.46",
+            "8,70.87,531.58,162.55,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "A growing body of work has intervened on language models, by which we mean controlling their behavior by altering their activations.",
+              "coords": [
+                "8,70.47,504.48,220.48,9.46",
+                "8,70.87,518.03,218.45,9.46",
+                "8,70.87,531.58,162.55,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We consider two broad categories. Parametric approaches often use optimizations (i.e. gradient descent) to locate and alter activations (Li et al., 2023a;Meng et al., 2022a,b;Hernandez et al., 2023;Hase et al., 2023). Meanwhile, inference-time interventions typically apply linear arithmetics, for instance by using \"truthful\" vectors (Li et al., 2023b), \"task vectors\" (Ilharco et al., 2022), or other \"steering vectors\" (Subramani et al., 2022;Turner et al., 2023).",
+          "coords": [
+            "8,81.78,545.56,209.17,9.46",
+            "8,70.87,559.11,220.08,9.46",
+            "8,70.87,572.66,200.87,9.46",
+            "8,220.33,599.75,70.16,9.46",
+            "8,70.87,613.30,218.45,9.46",
+            "8,70.87,626.85,220.08,9.46",
+            "8,70.87,640.40,16.05,9.46",
+            "8,159.99,640.40,67.65,9.46",
+            "8,93.88,653.95,118.95,9.46",
+            "8,180.51,667.50,4.70,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "We consider two broad categories.",
+              "coords": [
+                "8,81.78,545.56,160.23,9.46"
+              ]
+            },
+            {
+              "text": "Parametric approaches often use optimizations (i.e. gradient descent) to locate and alter activations (Li et al., 2023a;Meng et al., 2022a,b;Hernandez et al., 2023;Hase et al., 2023).",
+              "coords": [
+                "8,250.94,545.56,40.00,9.46",
+                "8,70.87,559.11,220.08,9.46",
+                "8,70.87,572.66,218.27,9.46",
+                "8,70.87,586.21,218.27,9.46",
+                "8,70.87,599.75,154.26,9.46"
+              ]
+            },
+            {
+              "text": "Meanwhile, inference-time interventions typically apply linear arithmetics, for instance by using \"truthful\" vectors (Li et al., 2023b), \"task vectors\" (Ilharco et al., 2022), or other \"steering vectors\" (Subramani et al., 2022;Turner et al., 2023).",
+              "coords": [
+                "8,237.65,599.75,52.84,9.46",
+                "8,70.87,613.30,218.45,9.46",
+                "8,70.87,626.85,220.08,9.46",
+                "8,70.87,640.40,219.63,9.46",
+                "8,70.87,653.95,219.63,9.46",
+                "8,70.87,667.50,114.34,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Mechanistic Interpretability",
+          "coords": [
+            "8,70.87,690.96,156.04,9.81"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Mechanistic interpretability (MI) studies neural networks by reverse-engineering their behavior (Olah et al., 2020;Elhage et al., 2021). The goal of MI is to understand the underlying computations and representations of a model, with a broader goal of validating that their behavior aligns with what researchers have intended. Such framework has allowed researchers to understand grokking (Nanda et al., 2023), superposition (Elhage et al., 2022b;Scherlis et al., 2022;Arora et al., 2018), or to study individual neurons (Mu and Andreas, 2020;Antverg and Belinkov, 2021;Gurnee et al., 2023).",
+          "coords": [
+            "8,70.87,709.73,220.08,9.46",
+            "8,70.47,723.27,191.26,9.46",
+            "8,212.07,736.82,77.07,9.46",
+            "8,70.87,750.37,218.27,9.46",
+            "8,70.87,763.92,218.27,9.46",
+            "8,306.14,231.05,218.27,9.46",
+            "8,306.14,244.60,220.08,9.46",
+            "8,306.14,258.15,183.23,9.46",
+            "8,357.90,271.70,67.93,9.46",
+            "8,492.20,285.25,32.22,9.46",
+            "8,306.14,298.79,108.72,9.46",
+            "8,520.09,312.34,4.70,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Mechanistic interpretability (MI) studies neural networks by reverse-engineering their behavior (Olah et al., 2020;Elhage et al., 2021).",
+              "coords": [
+                "8,70.87,709.73,220.08,9.46",
+                "8,70.47,723.27,218.66,9.46",
+                "8,70.87,736.82,145.99,9.46"
+              ]
+            },
+            {
+              "text": "The goal of MI is to understand the underlying computations and representations of a model, with a broader goal of validating that their behavior aligns with what researchers have intended.",
+              "coords": [
+                "8,220.93,736.82,68.21,9.46",
+                "8,70.87,750.37,218.27,9.46",
+                "8,70.87,763.92,218.27,9.46",
+                "8,306.14,231.05,218.27,9.46",
+                "8,306.14,244.60,114.03,9.46"
+              ]
+            },
+            {
+              "text": "Such framework has allowed researchers to understand grokking (Nanda et al., 2023), superposition (Elhage et al., 2022b;Scherlis et al., 2022;Arora et al., 2018), or to study individual neurons (Mu and Andreas, 2020;Antverg and Belinkov, 2021;Gurnee et al., 2023).",
+              "coords": [
+                "8,423.56,244.60,102.66,9.46",
+                "8,306.14,258.15,218.27,9.46",
+                "8,306.14,271.70,219.17,9.46",
+                "8,306.14,285.25,218.27,9.46",
+                "8,306.14,298.79,219.17,9.46",
+                "8,305.75,312.34,219.03,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Conclusion",
+          "coords": [
+            "8,306.14,348.56,75.07,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work we demonstrated that the emergent world model in Othello-playing sequence models is full of linear representations. Previously unbeknownst, we demonstrated that the board state in OthelloGPT is linearly represented by encoding the colour of each tile relative to the player at each timestep (MINE, YOURS, EMPTY) as opposed to absolute colour (BLACK, WHITE, EMPTY). We showed that we can accurately control the model's behaviour with simple vector arithmetic on the internal world model. Lastly, we mechanistically interpreted multiple facets of the sequence model, analysing how empty tiles are detected, and linear representations of which pieces are flipped. We find hints that multiple circuits might exist for predicting legal moves in the end game, as well as further evidence that residual networks iteratively refine their features across layers.",
+          "coords": [
+            "8,306.14,380.35,218.27,9.46",
+            "8,305.75,393.90,218.66,9.46",
+            "8,306.14,407.45,220.08,9.46",
+            "8,306.14,421.00,218.27,9.46",
+            "8,306.14,434.55,218.27,9.46",
+            "8,306.14,447.90,218.27,9.65",
+            "8,306.14,461.65,218.27,9.46",
+            "8,306.14,475.20,218.27,9.46",
+            "8,306.14,488.75,218.27,9.46",
+            "8,306.14,502.30,220.08,9.46",
+            "8,306.14,515.85,218.65,9.46",
+            "8,306.14,529.40,219.63,9.46",
+            "8,306.14,542.94,218.45,9.46",
+            "8,306.14,556.49,218.27,9.46",
+            "8,306.14,570.04,220.08,9.46",
+            "8,306.14,583.59,218.27,9.46",
+            "8,306.14,597.14,218.65,9.46",
+            "8,306.14,610.69,146.31,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In this work we demonstrated that the emergent world model in Othello-playing sequence models is full of linear representations.",
+              "coords": [
+                "8,306.14,380.35,218.27,9.46",
+                "8,305.75,393.90,218.66,9.46",
+                "8,306.14,407.45,139.93,9.46"
+              ]
+            },
+            {
+              "text": "Previously unbeknownst, we demonstrated that the board state in OthelloGPT is linearly represented by encoding the colour of each tile relative to the player at each timestep (MINE, YOURS, EMPTY) as opposed to absolute colour (BLACK, WHITE, EMPTY).",
+              "coords": [
+                "8,450.49,407.45,75.73,9.46",
+                "8,306.14,421.00,218.27,9.46",
+                "8,306.14,434.55,218.27,9.46",
+                "8,306.14,447.90,218.27,9.65",
+                "8,306.14,461.65,218.27,9.46",
+                "8,306.14,475.20,197.81,9.46"
+              ]
+            },
+            {
+              "text": "We showed that we can accurately control the model's behaviour with simple vector arithmetic on the internal world model.",
+              "coords": [
+                "8,509.84,475.20,14.58,9.46",
+                "8,306.14,488.75,218.27,9.46",
+                "8,306.14,502.30,220.08,9.46",
+                "8,306.14,515.85,89.96,9.46"
+              ]
+            },
+            {
+              "text": "Lastly, we mechanistically interpreted multiple facets of the sequence model, analysing how empty tiles are detected, and linear representations of which pieces are flipped.",
+              "coords": [
+                "8,403.56,515.85,121.23,9.46",
+                "8,306.14,529.40,219.63,9.46",
+                "8,306.14,542.94,218.45,9.46",
+                "8,306.14,556.49,197.40,9.46"
+              ]
+            },
+            {
+              "text": "We find hints that multiple circuits might exist for predicting legal moves in the end game, as well as further evidence that residual networks iteratively refine their features across layers.",
+              "coords": [
+                "8,509.84,556.49,14.58,9.46",
+                "8,306.14,570.04,220.08,9.46",
+                "8,306.14,583.59,218.27,9.46",
+                "8,306.14,597.14,218.65,9.46",
+                "8,306.14,610.69,146.31,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Neel Nanda discovered the linear representation in terms of relative board state, and showed that simple vector arithmetic sufficed for causal interventions. He led an initial version of the experiments and write-ups, and advised throughout.",
+          "coords": [
+            "9,70.87,95.58,218.27,9.46",
+            "9,70.87,109.13,220.08,9.46",
+            "9,70.87,122.67,220.08,9.46",
+            "9,70.87,136.22,218.27,9.46",
+            "9,70.87,149.77,170.28,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Neel Nanda discovered the linear representation in terms of relative board state, and showed that simple vector arithmetic sufficed for causal interventions.",
+              "coords": [
+                "9,70.87,95.58,218.27,9.46",
+                "9,70.87,109.13,220.08,9.46",
+                "9,70.87,122.67,220.08,9.46",
+                "9,70.87,136.22,24.26,9.46"
+              ]
+            },
+            {
+              "text": "He led an initial version of the experiments and write-ups, and advised throughout.",
+              "coords": [
+                "9,98.50,136.22,190.63,9.46",
+                "9,70.87,149.77,170.28,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Andrew Lee led this write-up and performed all experiments in this paper. He discovered the flipped linear representation, the empty results, and the multiple circuit hypothesis results.",
+          "coords": [
+            "9,81.78,163.32,207.36,9.46",
+            "9,70.87,176.87,218.27,9.46",
+            "9,70.87,190.42,218.27,9.46",
+            "9,70.87,203.97,166.31,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Andrew Lee led this write-up and performed all experiments in this paper.",
+              "coords": [
+                "9,81.78,163.32,207.36,9.46",
+                "9,70.87,176.87,131.05,9.46"
+              ]
+            },
+            {
+              "text": "He discovered the flipped linear representation, the empty results, and the multiple circuit hypothesis results.",
+              "coords": [
+                "9,207.65,176.87,81.49,9.46",
+                "9,70.87,190.42,218.27,9.46",
+                "9,70.87,203.97,166.31,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Martin Wattenberg helped with editing and distilling the paper, and contributed the analogy about a linear vs quadratic representation of distance.",
+          "coords": [
+            "9,81.78,217.52,209.17,9.46",
+            "9,70.87,231.07,218.27,9.46",
+            "9,70.87,244.62,205.70,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Martin Wattenberg helped with editing and distilling the paper, and contributed the analogy about a linear vs quadratic representation of distance.",
+              "coords": [
+                "9,81.78,217.52,209.17,9.46",
+                "9,70.87,231.07,218.27,9.46",
+                "9,70.87,244.62,205.70,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "A Hyperparameters for Linear Probes",
+          "coords": [
+            "12,70.87,423.37,204.89,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 4 provides hyperparameters used for our linear probes.",
+          "coords": [
+            "12,70.53,445.19,23.90,9.46",
+            "12,105.33,445.19,185.62,9.46",
+            "12,70.87,458.74,47.86,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Table 4 provides hyperparameters used for our linear probes.",
+              "coords": [
+                "12,70.53,445.19,220.42,9.46",
+                "12,70.87,458.74,47.86,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "B Intervening on Different Layers",
+          "coords": [
+            "12,70.87,481.12,182.39,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In practice there are a lot of ways to intervene using linear vectors. Figure 7 demonstrates different error rates depending on which layers are intervened.",
+          "coords": [
+            "12,70.87,502.94,218.27,9.46",
+            "12,70.87,516.49,95.02,9.46",
+            "12,176.91,516.49,114.04,9.46",
+            "12,70.87,530.04,220.18,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In practice there are a lot of ways to intervene using linear vectors.",
+              "coords": [
+                "12,70.87,502.94,218.27,9.46",
+                "12,70.87,516.49,62.65,9.46"
+              ]
+            },
+            {
+              "text": "Figure 7 demonstrates different error rates depending on which layers are intervened.",
+              "coords": [
+                "12,136.92,516.49,154.03,9.46",
+                "12,70.87,530.04,220.18,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "From our experiments, we observe that either a sufficient number of layers need to be intervened for OthelloGPT to alter its predictions. We offer a couple of hypotheses for this. First, we hypothesize that this is because of the residual structure of transformer models, and while each layer may write additional information into the residual streams, there may still be information from earlier layers that the model uses. A somewhat related hypothesis is that OthelloGPT might be demonstrating the Hydra effect (McGrath et al., 2023), in which language models demonstrate the ability to self-repair its computations after an intervention.",
+          "coords": [
+            "12,70.87,543.59,218.27,9.46",
+            "12,70.87,557.14,218.27,9.46",
+            "12,70.87,570.68,218.27,9.46",
+            "12,70.87,584.23,218.27,9.46",
+            "12,70.87,597.78,220.08,9.46",
+            "12,70.87,611.33,218.27,9.46",
+            "12,70.87,624.88,219.63,9.46",
+            "12,70.87,638.43,218.27,9.46",
+            "12,70.87,651.98,220.08,9.46",
+            "12,70.87,665.53,218.27,9.46",
+            "12,70.87,679.08,55.06,9.46",
+            "12,225.40,679.08,65.54,9.46",
+            "12,70.87,692.63,218.45,9.46",
+            "12,70.87,706.18,165.58,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "From our experiments, we observe that either a sufficient number of layers need to be intervened for OthelloGPT to alter its predictions.",
+              "coords": [
+                "12,70.87,543.59,218.27,9.46",
+                "12,70.87,557.14,218.27,9.46",
+                "12,70.87,570.68,169.34,9.46"
+              ]
+            },
+            {
+              "text": "We offer a couple of hypotheses for this.",
+              "coords": [
+                "12,243.59,570.68,45.55,9.46",
+                "12,70.87,584.23,124.60,9.46"
+              ]
+            },
+            {
+              "text": "First, we hypothesize that this is because of the residual structure of transformer models, and while each layer may write additional information into the residual streams, there may still be information from earlier layers that the model uses.",
+              "coords": [
+                "12,198.71,584.23,90.42,9.46",
+                "12,70.87,597.78,220.08,9.46",
+                "12,70.87,611.33,218.27,9.46",
+                "12,70.87,624.88,219.63,9.46",
+                "12,70.87,638.43,218.27,9.46",
+                "12,70.87,651.98,87.29,9.46"
+              ]
+            },
+            {
+              "text": "A somewhat related hypothesis is that OthelloGPT might be demonstrating the Hydra effect (McGrath et al., 2023), in which language models demonstrate the ability to self-repair its computations after an intervention.",
+              "coords": [
+                "12,161.54,651.98,129.41,9.46",
+                "12,70.87,665.53,218.27,9.46",
+                "12,70.87,679.08,220.08,9.46",
+                "12,70.87,692.63,218.45,9.46",
+                "12,70.87,706.18,165.58,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "C Multiple Circuits",
+          "coords": [
+            "12,70.87,728.55,108.37,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In Section 5.4, we find hints that OthelloGPT sometimes computes moves before boards at end games.",
+          "coords": [
+            "12,70.87,750.37,220.08,9.46",
+            "12,70.87,763.92,220.18,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "In Section 5.4, we find hints that OthelloGPT sometimes computes moves before boards at end games.",
+              "coords": [
+                "12,70.87,750.37,220.08,9.46",
+                "12,70.87,763.92,220.18,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Namely, we check the earliest layers in which the board is correctly predicted with 100% accuracy. Could it be that at end games, legal moves can be predicted without needing the entire board? To this point, we experiment with variations of this experiment. In Figure 8, we check the earliest layer in which at least 90% of the board is first correctly computed. In Figure 9, we check the earliest layer in which the \"minimum set\" of tiles are correctly computed, where the minimum set is set of tiles that make each legal move playable (see Figure 10 for example). Despite a looser criteria for board state, we still see OthelloGPT computing moves before boards at end games. Interestingly, our probes lose accuracy starts to drop in the end game as well (Figure 11). It is unclear whether 1) the model does not bother to compute the perfect board state, as alternative circuits might exist at end games, or 2) the model learns an alternative circuit because it struggles to compute the correct board state at end games.",
+          "coords": [
+            "12,306.14,74.72,218.27,9.46",
+            "12,306.14,88.27,220.18,9.46",
+            "12,306.14,101.82,218.27,9.46",
+            "12,306.14,115.37,218.27,9.46",
+            "12,306.14,128.92,220.08,9.46",
+            "12,306.14,142.47,73.53,9.46",
+            "12,386.81,142.47,137.60,9.46",
+            "12,305.75,156.02,219.04,9.46",
+            "12,306.14,169.57,89.29,9.46",
+            "12,402.25,169.57,122.34,9.46",
+            "12,306.14,183.12,218.65,9.46",
+            "12,306.14,196.67,218.27,9.46",
+            "12,306.14,210.22,204.76,9.46",
+            "12,306.14,223.76,218.27,9.46",
+            "12,306.14,237.31,218.27,9.46",
+            "12,306.14,250.86,122.03,9.46",
+            "12,317.05,264.65,207.36,9.46",
+            "12,306.14,278.20,171.54,9.46",
+            "12,490.43,278.20,33.99,9.46",
+            "12,306.14,291.75,218.27,9.46",
+            "12,306.14,305.30,220.08,9.46",
+            "12,306.14,318.85,218.27,9.46",
+            "12,306.14,332.39,218.27,9.46",
+            "12,306.14,345.94,199.29,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Namely, we check the earliest layers in which the board is correctly predicted with 100% accuracy.",
+              "coords": [
+                "12,306.14,74.72,218.27,9.46",
+                "12,306.14,88.27,220.18,9.46"
+              ]
+            },
+            {
+              "text": "Could it be that at end games, legal moves can be predicted without needing the entire board?",
+              "coords": [
+                "12,306.14,101.82,218.27,9.46",
+                "12,306.14,115.37,185.86,9.46"
+              ]
+            },
+            {
+              "text": "To this point, we experiment with variations of this experiment.",
+              "coords": [
+                "12,495.34,115.37,29.07,9.46",
+                "12,306.14,128.92,220.08,9.46",
+                "12,306.14,142.47,28.13,9.46"
+              ]
+            },
+            {
+              "text": "In Figure 8, we check the earliest layer in which at least 90% of the board is first correctly computed.",
+              "coords": [
+                "12,338.38,142.47,186.04,9.46",
+                "12,305.75,156.02,219.04,9.46",
+                "12,306.14,169.57,45.66,9.46"
+              ]
+            },
+            {
+              "text": "In Figure 9, we check the earliest layer in which the \"minimum set\" of tiles are correctly computed, where the minimum set is set of tiles that make each legal move playable (see Figure 10 for example).",
+              "coords": [
+                "12,355.20,169.57,169.40,9.46",
+                "12,306.14,183.12,218.65,9.46",
+                "12,306.14,196.67,218.27,9.46",
+                "12,306.14,210.22,218.26,9.46",
+                "12,306.14,223.76,60.34,9.46"
+              ]
+            },
+            {
+              "text": "Despite a looser criteria for board state, we still see OthelloGPT computing moves before boards at end games.",
+              "coords": [
+                "12,371.73,223.76,152.69,9.46",
+                "12,306.14,237.31,218.27,9.46",
+                "12,306.14,250.86,122.03,9.46"
+              ]
+            },
+            {
+              "text": "Interestingly, our probes lose accuracy starts to drop in the end game as well (Figure 11).",
+              "coords": [
+                "12,317.05,264.65,207.36,9.46",
+                "12,306.14,278.20,193.09,9.46"
+              ]
+            },
+            {
+              "text": "It is unclear whether",
+              "coords": [
+                "12,506.24,278.20,18.17,9.46",
+                "12,306.14,291.75,72.00,9.46"
+              ]
+            },
+            {
+              "text": "1) the model does not bother to compute the perfect board state, as alternative circuits might exist at end games, or",
+              "coords": [
+                "12,381.55,291.75,142.86,9.46",
+                "12,306.14,305.30,220.08,9.46",
+                "12,306.14,318.85,155.94,9.46"
+              ]
+            },
+            {
+              "text": "2) the model learns an alternative circuit because it struggles to compute the correct board state at end games.",
+              "coords": [
+                "12,465.96,318.85,58.45,9.46",
+                "12,306.14,332.39,218.27,9.46",
+                "12,306.14,345.94,199.29,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "D Evidence of Iterative Feature Refinements",
+          "coords": [
+            "12,306.14,369.38,168.90,10.75",
+            "12,326.73,383.33,63.09,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "As mentioned in Section 5.5, OthelloGPT demonstrates multiple evidence of iterative feature refinements: 1) Board state accuracy (as well as FLIPPED) improves from layer to layer (Table 1, 3). 2) Next-move predictions also improve from layer to layer. Table 5 reports the top-1 error rate when applying the unembedding layer on every layer using our test set from Section 3. As a baseline, we apply the same unembedding layer from OthelloGPT to the residual streams of a randomly initialized GPT model. 3) Linear probes across layers share similar directions. Figure 12 plots the cosine similarity between all linear probes, averaged across all 64 tiles and directions (MINE, YOURS, EMPTY).",
+          "coords": [
+            "12,305.75,405.97,220.47,9.46",
+            "12,306.14,419.52,220.08,9.46",
+            "12,306.14,433.07,218.27,9.46",
+            "12,306.42,446.62,207.67,9.46",
+            "12,521.60,446.62,4.17,9.46",
+            "12,306.14,460.17,218.27,9.46",
+            "12,306.14,473.72,89.27,9.46",
+            "12,406.70,473.72,117.72,9.46",
+            "12,305.75,487.27,219.04,9.46",
+            "12,306.14,500.82,220.08,9.46",
+            "12,306.14,514.37,218.27,9.46",
+            "12,306.14,527.92,218.65,9.46",
+            "12,306.14,541.47,218.27,9.46",
+            "12,306.14,555.01,177.09,9.46",
+            "12,502.77,555.01,21.64,9.46",
+            "12,306.14,568.56,220.08,9.46",
+            "12,306.14,582.11,219.63,9.46",
+            "12,305.74,595.66,78.71,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "As mentioned in Section 5.5, OthelloGPT demonstrates multiple evidence of iterative feature refinements:",
+              "coords": [
+                "12,305.75,405.97,220.47,9.46",
+                "12,306.14,419.52,220.08,9.46",
+                "12,306.14,433.07,46.37,9.46"
+              ]
+            },
+            {
+              "text": "1) Board state accuracy (as well as FLIPPED) improves from layer to layer (Table 1, 3).",
+              "coords": [
+                "12,359.52,433.07,164.90,9.46",
+                "12,306.42,446.62,219.36,9.46",
+                "12,306.14,460.17,12.05,9.46"
+              ]
+            },
+            {
+              "text": "2) Next-move predictions also improve from layer to layer.",
+              "coords": [
+                "12,323.30,460.17,201.11,9.46",
+                "12,306.14,473.72,61.04,9.46"
+              ]
+            },
+            {
+              "text": "Table 5 reports the top-1 error rate when applying the unembedding layer on every layer using our test set from Section 3.",
+              "coords": [
+                "12,370.95,473.72,153.47,9.46",
+                "12,305.75,487.27,219.04,9.46",
+                "12,306.14,500.82,170.68,9.46"
+              ]
+            },
+            {
+              "text": "As a baseline, we apply the same unembedding layer from OthelloGPT to the residual streams of a randomly initialized GPT model.",
+              "coords": [
+                "12,480.19,500.82,46.03,9.46",
+                "12,306.14,514.37,218.27,9.46",
+                "12,306.14,527.92,218.65,9.46",
+                "12,306.14,541.47,103.92,9.46"
+              ]
+            },
+            {
+              "text": "3) Linear probes across layers share similar directions.",
+              "coords": [
+                "12,416.95,541.47,107.47,9.46",
+                "12,306.14,555.01,140.24,9.46"
+              ]
+            },
+            {
+              "text": "Figure 12 plots the cosine similarity between all linear probes, averaged across all 64 tiles and directions (MINE, YOURS, EMPTY).",
+              "coords": [
+                "12,454.18,555.01,70.24,9.46",
+                "12,306.14,568.56,220.08,9.46",
+                "12,306.14,582.11,219.63,9.46",
+                "12,305.74,595.66,78.71,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "E On Principled Ways of Probing",
+          "coords": [
+            "12,306.14,619.10,179.69,10.75"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Probing has produced both excitement and skepticism amongst researchers (Belinkov, 2022b). Here we provide our learnings regarding probing. One criticism of probes is whether the discovered features are actually used by the model, i.e., correlation vs. causation. Intervention is commonly used to study causality (Giulianelli et al., 2018;Tucker et al., 2021), but have often reached mixed conclusions (Belinkov, 2022b). While both linear and non-linear probes have demonstrated 0 10 20 30 40 50 0 0.2 0.4 0.6 0.8 1 0 1 2 3 4 5 6 7 Earliest Layer (Board) Earliest Layer (Moves) Incorrect (Board) After Same Before Moves (Timestep) % of Games Figure 9: Percentage of times the \"minimum set\" of necessary board state is computed before/after move predictions are made. 1 2 3 4 5 6 7 8 H G F E D C B A Figure 10: Example of \"minimum set\" of tiles that make move G2 legal.",
+          "coords": [
+            "12,306.14,641.74,220.08,9.46",
+            "12,306.14,655.29,110.26,9.46",
+            "12,495.47,655.29,28.94,9.46",
+            "12,305.75,668.84,192.31,9.46",
+            "12,317.05,682.63,209.17,9.46",
+            "12,306.14,696.18,219.63,9.46",
+            "12,306.14,709.73,220.08,9.46",
+            "12,306.14,723.27,135.75,9.46",
+            "12,417.73,736.82,106.68,9.46",
+            "12,306.14,750.37,81.19,9.46",
+            "12,467.54,750.37,56.87,9.46",
+            "12,306.14,763.92,218.27,9.46",
+            "13,103.61,373.56,4.95,4.62",
+            "13,148.10,373.56,9.90,4.62",
+            "13,195.06,373.56,9.90,4.62",
+            "13,242.02,373.56,9.90,4.62",
+            "13,288.98,373.56,9.90,4.62",
+            "13,335.94,373.56,9.90,4.62",
+            "13,98.23,367.94,4.95,4.62",
+            "13,90.81,346.30,12.37,4.62",
+            "13,90.81,324.66,12.37,4.62",
+            "13,90.81,303.02,12.37,4.62",
+            "13,90.81,281.38,12.37,4.62",
+            "13,98.23,259.74,4.95,4.62",
+            "13,383.71,367.94,4.95,4.62",
+            "13,383.71,351.67,4.95,4.62",
+            "13,383.71,335.40,4.95,4.62",
+            "13,383.71,319.13,4.95,4.62",
+            "13,383.71,302.86,4.95,4.62",
+            "13,383.71,286.59,4.95,4.62",
+            "13,383.71,270.32,4.95,4.62",
+            "13,383.71,254.04,4.95,4.62",
+            "13,429.16,263.02,84.65,4.62",
+            "13,429.16,274.80,86.70,4.62",
+            "13,429.16,286.58,65.86,4.62",
+            "13,429.16,298.36,18.68,4.62",
+            "13,429.16,310.14,22.07,4.62",
+            "13,429.16,321.92,25.43,4.62",
+            "13,201.36,387.96,84.17,5.61",
+            "13,80.91,330.65,5.61,8.97",
+            "13,80.91,318.54,5.61,9.10",
+            "13,80.91,282.50,5.61,33.04",
+            "13,70.87,404.94,453.54,9.03",
+            "13,70.87,417.28,85.49,8.64",
+            "13,128.63,582.95,102.69,6.54",
+            "13,116.41,568.35,8.27,6.54",
+            "13,116.16,554.68,8.52,6.54",
+            "13,118.35,541.01,6.33,6.54",
+            "13,117.73,527.34,6.95,6.54",
+            "13,116.21,513.67,8.47,6.54",
+            "13,117.00,500.00,7.68,6.54",
+            "13,117.13,486.33,7.55,6.54",
+            "13,117.15,472.66,7.52,6.54",
+            "13,70.87,611.92,218.27,8.64",
+            "13,70.87,623.88,84.62,8.64"
+          ],
+          "sentences": [
+            {
+              "text": "Probing has produced both excitement and skepticism amongst researchers (Belinkov, 2022b).",
+              "coords": [
+                "12,306.14,641.74,220.08,9.46",
+                "12,306.14,655.29,194.06,9.46"
+              ]
+            },
+            {
+              "text": "Here we provide our learnings regarding probing.",
+              "coords": [
+                "12,503.58,655.29,20.84,9.46",
+                "12,305.75,668.84,192.31,9.46"
+              ]
+            },
+            {
+              "text": "One criticism of probes is whether the discovered features are actually used by the model, i.e., correlation vs. causation.",
+              "coords": [
+                "12,317.05,682.63,209.17,9.46",
+                "12,306.14,696.18,219.63,9.46",
+                "12,306.14,709.73,118.43,9.46"
+              ]
+            },
+            {
+              "text": "Intervention is commonly used to study causality (Giulianelli et al., 2018;Tucker et al., 2021), but have often reached mixed conclusions (Belinkov, 2022b).",
+              "coords": [
+                "12,432.94,709.73,93.28,9.46",
+                "12,306.14,723.27,219.63,9.46",
+                "12,306.14,736.82,218.27,9.46",
+                "12,306.14,750.37,166.19,9.46"
+              ]
+            },
+            {
+              "text": "While both linear and non-linear probes have demonstrated 0 10 20 30 40 50 0 0.2 0.4 0.6 0.8 1 0 1 2 3 4 5 6 7 Earliest Layer (Board) Earliest Layer (Moves) Incorrect (Board) After Same Before Moves (Timestep) % of Games Figure 9: Percentage of times the \"minimum set\" of necessary board state is computed before/after move predictions are made.",
+              "coords": [
+                "12,475.72,750.37,48.69,9.46",
+                "12,306.14,763.92,218.27,9.46",
+                "13,103.61,373.56,4.95,4.62",
+                "13,148.10,373.56,9.90,4.62",
+                "13,195.06,373.56,9.90,4.62",
+                "13,242.02,373.56,9.90,4.62",
+                "13,288.98,373.56,9.90,4.62",
+                "13,335.94,373.56,9.90,4.62",
+                "13,98.23,367.94,4.95,4.62",
+                "13,90.81,346.30,12.37,4.62",
+                "13,90.81,324.66,12.37,4.62",
+                "13,90.81,303.02,12.37,4.62",
+                "13,90.81,281.38,12.37,4.62",
+                "13,98.23,259.74,4.95,4.62",
+                "13,383.71,367.94,4.95,4.62",
+                "13,383.71,351.67,4.95,4.62",
+                "13,383.71,335.40,4.95,4.62",
+                "13,383.71,319.13,4.95,4.62",
+                "13,383.71,302.86,4.95,4.62",
+                "13,383.71,286.59,4.95,4.62",
+                "13,383.71,270.32,4.95,4.62",
+                "13,383.71,254.04,4.95,4.62",
+                "13,429.16,263.02,84.65,4.62",
+                "13,429.16,274.80,86.70,4.62",
+                "13,429.16,286.58,65.86,4.62",
+                "13,429.16,298.36,18.68,4.62",
+                "13,429.16,310.14,22.07,4.62",
+                "13,429.16,321.92,25.43,4.62",
+                "13,201.36,387.96,84.17,5.61",
+                "13,80.91,330.65,5.61,8.97",
+                "13,80.91,318.54,5.61,9.10",
+                "13,80.91,282.50,5.61,33.04",
+                "13,70.87,404.94,453.54,9.03",
+                "13,70.87,417.28,85.49,8.64"
+              ]
+            },
+            {
+              "text": "1 2 3 4 5 6 7 8 H G F E D C B A Figure 10: Example of \"minimum set\" of tiles that make move G2 legal.",
+              "coords": [
+                "13,128.63,582.95,102.69,6.54",
+                "13,116.41,568.35,8.27,6.54",
+                "13,116.16,554.68,8.52,6.54",
+                "13,118.35,541.01,6.33,6.54",
+                "13,117.73,527.34,6.95,6.54",
+                "13,116.21,513.67,8.47,6.54",
+                "13,117.00,500.00,7.68,6.54",
+                "13,117.13,486.33,7.55,6.54",
+                "13,117.15,472.66,7.52,6.54",
+                "13,70.87,611.92,218.27,8.64",
+                "13,70.87,623.88,84.62,8.64"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "successful interventions (Li et al., 2023b;Turner et al., 2023), linear probes are much easier to interpret, as they imply that features simply correspond to vectoral directions.",
+          "coords": [
+            "13,70.87,665.30,106.82,9.46",
+            "13,120.41,678.84,170.54,9.46",
+            "13,70.87,692.39,218.27,9.46",
+            "13,70.87,705.94,94.67,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "successful interventions (Li et al., 2023b;Turner et al., 2023), linear probes are much easier to interpret, as they imply that features simply correspond to vectoral directions.",
+              "coords": [
+                "13,70.87,665.30,218.45,9.46",
+                "13,70.87,678.84,220.08,9.46",
+                "13,70.87,692.39,218.27,9.46",
+                "13,70.87,705.94,94.67,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Another challenge is knowing which features to probe for, which can lead to pitfalls. Taking OthelloGPT as an example, classifying {BLACK, WHITE} versus {MINE, YOURS} leads to different takeaways, which illustrates the danger of projecting our preconceptions.",
+          "coords": [
+            "13,81.78,723.27,207.36,9.46",
+            "13,70.87,736.82,218.27,9.46",
+            "13,70.87,750.37,219.63,9.46",
+            "13,70.59,763.92,218.54,9.46",
+            "13,306.14,652.08,220.08,9.65",
+            "13,306.14,665.63,103.53,9.40"
+          ],
+          "sentences": [
+            {
+              "text": "Another challenge is knowing which features to probe for, which can lead to pitfalls.",
+              "coords": [
+                "13,81.78,723.27,207.36,9.46",
+                "13,70.87,736.82,180.61,9.46"
+              ]
+            },
+            {
+              "text": "Taking OthelloGPT as an example, classifying {BLACK, WHITE} versus {MINE, YOURS} leads to different takeaways, which illustrates the danger of projecting our preconceptions.",
+              "coords": [
+                "13,258.48,736.82,30.66,9.46",
+                "13,70.87,750.37,219.63,9.46",
+                "13,70.59,763.92,218.54,9.46",
+                "13,306.14,652.08,220.08,9.65",
+                "13,306.14,665.63,103.53,9.40"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Speaking of incorrect takeaways, our last point concerns the expressivity of probe models. With an expressive-enough probe, there is a danger of the probe computing or memorizing the desired feature that one is looking for, rather than extracting (Pimentel et al., 2020a;Saphra and Lopez, 2019). Still, some researchers view linear classification Baseline: Random",
+          "coords": [
+            "13,317.05,682.63,207.35,9.46",
+            "13,306.14,696.18,218.27,9.46",
+            "13,306.14,709.73,218.27,9.46",
+            "13,306.14,723.27,220.08,9.46",
+            "13,306.14,736.82,218.27,9.46",
+            "13,521.52,750.37,4.79,9.46",
+            "13,306.14,763.92,218.27,9.46",
+            "14,110.96,73.65,80.96,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Speaking of incorrect takeaways, our last point concerns the expressivity of probe models.",
+              "coords": [
+                "13,317.05,682.63,207.35,9.46",
+                "13,306.14,696.18,181.46,9.46"
+              ]
+            },
+            {
+              "text": "With an expressive-enough probe, there is a danger of the probe computing or memorizing the desired feature that one is looking for, rather than extracting (Pimentel et al., 2020a;Saphra and Lopez, 2019).",
+              "coords": [
+                "13,490.90,696.18,33.51,9.46",
+                "13,306.14,709.73,218.27,9.46",
+                "13,306.14,723.27,220.08,9.46",
+                "13,306.14,736.82,218.27,9.46",
+                "13,305.78,750.37,220.53,9.46"
+              ]
+            },
+            {
+              "text": "Still, some researchers view linear classification Baseline: Random",
+              "coords": [
+                "13,306.14,763.92,218.27,9.46",
+                "14,110.96,73.65,80.96,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "x 1",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "x 2 x 3 x 4 x 5 x 6 x 7 x 8 0.856 0.215 0.152 0.112 0.079 0.049 0.015 0.004 0.001",
+          "coords": [
+            "14,247.56,73.30,6.23,9.57",
+            "14,253.79,71.35,4.23,6.99",
+            "14,284.06,73.30,6.23,9.57",
+            "14,290.29,71.35,4.23,6.99",
+            "14,320.56,73.30,6.23,9.57",
+            "14,326.79,71.35,4.23,6.99",
+            "14,357.06,73.30,6.23,9.57",
+            "14,363.29,71.35,4.23,6.99",
+            "14,393.56,73.30,6.23,9.57",
+            "14,399.79,71.35,4.23,6.99",
+            "14,430.06,73.30,6.23,9.57",
+            "14,436.30,71.35,4.23,6.99",
+            "14,466.56,73.30,6.23,9.57",
+            "14,472.80,71.35,4.23,6.99",
+            "14,139.16,87.60,24.55,9.46",
+            "14,204.27,87.60,280.05,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "x 2 x 3 x 4 x 5 x 6 x 7 x 8 0.856 0.215 0.152 0.112 0.079 0.049 0.015 0.004 0.001",
+              "coords": [
+                "14,247.56,73.30,6.23,9.57",
+                "14,253.79,71.35,4.23,6.99",
+                "14,284.06,73.30,6.23,9.57",
+                "14,290.29,71.35,4.23,6.99",
+                "14,320.56,73.30,6.23,9.57",
+                "14,326.79,71.35,4.23,6.99",
+                "14,357.06,73.30,6.23,9.57",
+                "14,363.29,71.35,4.23,6.99",
+                "14,393.56,73.30,6.23,9.57",
+                "14,399.79,71.35,4.23,6.99",
+                "14,430.06,73.30,6.23,9.57",
+                "14,436.30,71.35,4.23,6.99",
+                "14,466.56,73.30,6.23,9.57",
+                "14,472.80,71.35,4.23,6.99",
+                "14,139.16,87.60,24.55,9.46",
+                "14,204.27,87.60,280.05,9.46"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 5: Top-1 error rates when applying the unembedding layer to earlier layers. As a baseline we apply OthelloGPT's unembedding layer on a randomly initialized GPT model. as inadequate (Pimentel et al., 2020b;Saphra and Lopez, 2019). We view our work as evidence that linear probes do have interpretable and controllable power, and anticipate these findings to generalize to larger language models.",
+          "coords": [
+            "14,70.56,111.01,22.35,8.64",
+            "14,100.73,111.01,424.03,8.64",
+            "14,70.87,122.96,288.07,8.64",
+            "14,70.87,363.40,59.90,9.46",
+            "14,127.50,376.95,161.63,9.46",
+            "14,70.87,390.50,218.27,9.46",
+            "14,70.87,404.05,218.27,9.46",
+            "14,70.87,417.60,115.54,9.46"
+          ],
+          "sentences": [
+            {
+              "text": "Table 5: Top-1 error rates when applying the unembedding layer to earlier layers.",
+              "coords": [
+                "14,70.56,111.01,347.95,8.64"
+              ]
+            },
+            {
+              "text": "As a baseline we apply OthelloGPT's unembedding layer on a randomly initialized GPT model.",
+              "coords": [
+                "14,425.74,111.01,99.02,8.64",
+                "14,70.87,122.96,288.07,8.64"
+              ]
+            },
+            {
+              "text": "as inadequate (Pimentel et al., 2020b;Saphra and Lopez, 2019).",
+              "coords": [
+                "14,70.87,363.40,218.27,9.46",
+                "14,70.87,376.95,61.37,9.46"
+              ]
+            },
+            {
+              "text": "We view our work as evidence that linear probes do have interpretable and controllable power, and anticipate these findings to generalize to larger language models.",
+              "coords": [
+                "14,135.63,376.95,153.50,9.46",
+                "14,70.87,390.50,218.27,9.46",
+                "14,70.87,404.05,218.27,9.46",
+                "14,70.87,417.60,115.54,9.46"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appendices": [],
+  "pages": [
+    {
+      "page": 1,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 2,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 3,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 4,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 5,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 6,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 7,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 8,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 9,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 10,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 11,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 12,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 13,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 14,
+      "width": 595.276,
+      "height": 841.89
+    }
+  ]
+}

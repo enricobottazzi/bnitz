@@ -1,6 +1,7 @@
 """Export the text and anchors used to inspect GROBID's TEI output."""
 
 import json
+import sys
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
@@ -61,5 +62,6 @@ def export(path):
 
 
 if __name__ == "__main__":
-    for path in sorted(Path(__file__).with_name("results").glob("*.tei.xml")):
+    directory = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).with_name("results")
+    for path in sorted(directory.glob("*.tei.xml")):
         export(path)

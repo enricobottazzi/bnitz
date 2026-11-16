@@ -1,0 +1,3891 @@
+{
+  "source": "https://arxiv.org/pdf/2501.12948v1",
+  "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning DeepSeek-AI",
+  "abstract": [
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "paragraph",
+          "text": "We introduce our first-generation reasoning models, DeepSeek-R1-Zero and DeepSeek-R1. DeepSeek-R1-Zero, a model trained via large-scale reinforcement learning (RL) without supervised fine-tuning (SFT) as a preliminary step, demonstrates remarkable reasoning capabilities. Through RL, DeepSeek-R1-Zero naturally emerges with numerous powerful and intriguing reasoning behaviors. However, it encounters challenges such as poor readability, and language mixing. To address these issues and further enhance reasoning performance, we introduce DeepSeek-R1, which incorporates multi-stage training and cold-start data before RL. DeepSeek-R1 achieves performance comparable to OpenAI-o1-1217 on reasoning tasks. To support the research community, we open-source DeepSeek-R1-Zero, DeepSeek-R1, and six dense models (1.5B, 7B, 8B, 14B, 32B, 70B) distilled from DeepSeek-R1 based on Qwen and Llama. AIME 2024 (Pass@1) Codeforces",
+          "coords": [
+            "1,70.32,290.48,456.01,10.54",
+            "1,70.87,304.83,455.36,10.54",
+            "1,70.56,319.18,455.76,10.54",
+            "1,70.53,333.52,453.89,10.54",
+            "1,70.87,347.87,453.54,10.54",
+            "1,70.87,362.22,453.54,10.54",
+            "1,70.87,376.56,455.36,10.54",
+            "1,70.87,390.91,453.54,10.54",
+            "1,70.87,405.25,453.54,10.54",
+            "1,70.50,419.60,403.43,10.54",
+            "1,108.72,690.21,37.65,12.49",
+            "1,117.55,701.36,19.73,7.98",
+            "1,180.82,690.21,37.56,12.49"
+          ],
+          "sentences": [
+            {
+              "text": "We introduce our first-generation reasoning models, DeepSeek-R1-Zero and DeepSeek-R1.",
+              "coords": [
+                "1,70.32,290.48,456.01,10.54"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1-Zero, a model trained via large-scale reinforcement learning (RL) without supervised fine-tuning (SFT) as a preliminary step, demonstrates remarkable reasoning capabilities.",
+              "coords": [
+                "1,70.87,304.83,455.36,10.54",
+                "1,70.56,319.18,455.76,10.54"
+              ]
+            },
+            {
+              "text": "Through RL, DeepSeek-R1-Zero naturally emerges with numerous powerful and intriguing reasoning behaviors.",
+              "coords": [
+                "1,70.53,333.52,453.89,10.54",
+                "1,70.87,347.87,99.25,10.54"
+              ]
+            },
+            {
+              "text": "However, it encounters challenges such as poor readability, and language mixing.",
+              "coords": [
+                "1,173.56,347.87,350.85,10.54",
+                "1,70.87,362.22,37.66,10.54"
+              ]
+            },
+            {
+              "text": "To address these issues and further enhance reasoning performance, we introduce DeepSeek-R1, which incorporates multi-stage training and cold-start data before RL.",
+              "coords": [
+                "1,113.87,362.22,410.54,10.54",
+                "1,70.87,376.56,401.96,10.54"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1 achieves performance comparable to OpenAI-o1-1217 on reasoning tasks.",
+              "coords": [
+                "1,475.55,376.56,50.67,10.54",
+                "1,70.87,390.91,378.08,10.54"
+              ]
+            },
+            {
+              "text": "To support the research community, we open-source DeepSeek-R1-Zero, DeepSeek-R1, and six dense models (1.5B, 7B, 8B, 14B, 32B, 70B) distilled from DeepSeek-R1 based on Qwen and Llama.",
+              "coords": [
+                "1,452.37,390.91,72.03,10.54",
+                "1,70.87,405.25,453.54,10.54",
+                "1,70.50,419.60,403.43,10.54"
+              ]
+            },
+            {
+              "text": "AIME 2024 (Pass@1) Codeforces",
+              "coords": [
+                "1,108.72,690.21,37.65,12.49",
+                "1,117.55,701.36,19.73,7.98",
+                "1,180.82,690.21,37.56,12.49"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Introduction",
+          "coords": [
+            "3,70.87,87.30,91.01,12.15"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In recent years, Large Language Models (LLMs) have been undergoing rapid iteration and evolution (Anthropic, 2024;Google, 2024;OpenAI, 2024a), progressively diminishing the gap towards Artificial General Intelligence (AGI).",
+          "coords": [
+            "3,70.87,113.89,453.55,10.49",
+            "3,70.87,127.43,46.78,10.49",
+            "3,349.71,127.43,175.02,10.49",
+            "3,70.87,140.98,217.73,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "In recent years, Large Language Models (LLMs) have been undergoing rapid iteration and evolution (Anthropic, 2024;Google, 2024;OpenAI, 2024a), progressively diminishing the gap towards Artificial General Intelligence (AGI).",
+              "coords": [
+                "3,70.87,113.89,453.55,10.49",
+                "3,70.87,127.43,453.87,10.49",
+                "3,70.87,140.98,217.73,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Recently, post-training has emerged as an important component of the full training pipeline. It has been shown to enhance accuracy on reasoning tasks, align with social values, and adapt to user preferences, all while requiring relatively minimal computational resources against pre-training. In the context of reasoning capabilities, OpenAI's o1 (OpenAI, 2024b) series models were the first to introduce inference-time scaling by increasing the length of the Chain-of-Thought reasoning process. This approach has achieved significant improvements in various reasoning tasks, such as mathematics, coding, and scientific reasoning. However, the challenge of effective test-time scaling remains an open question for the research community. Several prior works have explored various approaches, including process-based reward models (Lightman et al., 2023;Uesato et al., 2022;Wang et al., 2023), reinforcement learning (Kumar et al., 2024), and search algorithms such as Monte Carlo Tree Search and Beam Search (Feng et al., 2024;Trinh et al., 2024;Xin et al., 2024). However, none of these methods has achieved general reasoning performance comparable to OpenAI's o1 series models.",
+          "coords": [
+            "3,87.80,161.31,438.52,10.49",
+            "3,70.87,174.86,453.54,10.49",
+            "3,70.87,188.41,453.55,10.49",
+            "3,70.54,201.95,307.65,10.49",
+            "3,460.74,201.95,63.68,10.49",
+            "3,70.41,215.50,455.82,10.49",
+            "3,70.53,229.05,453.89,10.49",
+            "3,70.87,242.60,453.55,10.49",
+            "3,70.87,256.15,453.77,10.49",
+            "3,70.41,269.70,399.83,10.49",
+            "3,304.56,283.25,119.92,10.49",
+            "3,520.98,283.25,4.79,10.49",
+            "3,70.87,296.80,342.32,10.49",
+            "3,199.61,310.35,324.80,10.49",
+            "3,70.54,323.90,267.14,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Recently, post-training has emerged as an important component of the full training pipeline.",
+              "coords": [
+                "3,87.80,161.31,438.52,10.49"
+              ]
+            },
+            {
+              "text": "It has been shown to enhance accuracy on reasoning tasks, align with social values, and adapt to user preferences, all while requiring relatively minimal computational resources against pre-training.",
+              "coords": [
+                "3,70.87,174.86,453.54,10.49",
+                "3,70.87,188.41,453.55,10.49",
+                "3,70.54,201.95,59.47,10.49"
+              ]
+            },
+            {
+              "text": "In the context of reasoning capabilities, OpenAI's o1 (OpenAI, 2024b) series models were the first to introduce inference-time scaling by increasing the length of the Chain-of-Thought reasoning process.",
+              "coords": [
+                "3,133.29,201.95,391.12,10.49",
+                "3,70.41,215.50,455.82,10.49",
+                "3,70.53,229.05,135.00,10.49"
+              ]
+            },
+            {
+              "text": "This approach has achieved significant improvements in various reasoning tasks, such as mathematics, coding, and scientific reasoning.",
+              "coords": [
+                "3,208.91,229.05,315.51,10.49",
+                "3,70.87,242.60,337.44,10.49"
+              ]
+            },
+            {
+              "text": "However, the challenge of effective test-time scaling remains an open question for the research community.",
+              "coords": [
+                "3,411.73,242.60,112.68,10.49",
+                "3,70.87,256.15,389.44,10.49"
+              ]
+            },
+            {
+              "text": "Several prior works have explored various approaches, including process-based reward models (Lightman et al., 2023;Uesato et al., 2022;Wang et al., 2023), reinforcement learning (Kumar et al., 2024), and search algorithms such as Monte Carlo Tree Search and Beam Search (Feng et al., 2024;Trinh et al., 2024;Xin et al., 2024).",
+              "coords": [
+                "3,463.64,256.15,60.99,10.49",
+                "3,70.41,269.70,454.00,10.49",
+                "3,70.87,283.25,454.91,10.49",
+                "3,70.87,296.80,453.54,10.49",
+                "3,70.87,310.35,133.51,10.49"
+              ]
+            },
+            {
+              "text": "However, none of these methods has achieved general reasoning performance comparable to OpenAI's o1 series models.",
+              "coords": [
+                "3,207.78,310.35,316.63,10.49",
+                "3,70.54,323.90,267.14,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this paper, we take the first step toward improving language model reasoning capabilities using pure reinforcement learning (RL). Our goal is to explore the potential of LLMs to develop reasoning capabilities without any supervised data, focusing on their self-evolution through a pure RL process. Specifically, we use DeepSeek-V3-Base as the base model and employ GRPO (Shao et al., 2024) as the RL framework to improve model performance in reasoning. During training, DeepSeek-R1-Zero naturally emerged with numerous powerful and interesting reasoning behaviors. After thousands of RL steps, DeepSeek-R1-Zero exhibits super performance on reasoning benchmarks. For instance, the pass@1 score on AIME 2024 increases from 15.6% to 71.0%, and with majority voting, the score further improves to 86.7%, matching the performance of OpenAI-o1-0912.",
+          "coords": [
+            "3,87.80,344.22,436.61,10.49",
+            "3,70.87,357.77,453.87,10.49",
+            "3,70.87,371.32,453.55,10.49",
+            "3,70.87,384.87,453.97,10.49",
+            "3,70.87,398.42,31.39,10.49",
+            "3,195.75,398.42,330.57,10.49",
+            "3,70.87,411.97,453.54,10.49",
+            "3,70.87,425.52,453.54,10.49",
+            "3,70.87,439.07,453.54,10.49",
+            "3,70.87,452.62,453.54,10.49",
+            "3,70.87,466.16,94.41,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "In this paper, we take the first step toward improving language model reasoning capabilities using pure reinforcement learning (RL).",
+              "coords": [
+                "3,87.80,344.22,436.61,10.49",
+                "3,70.87,357.77,189.24,10.49"
+              ]
+            },
+            {
+              "text": "Our goal is to explore the potential of LLMs to develop reasoning capabilities without any supervised data, focusing on their self-evolution through a pure RL process.",
+              "coords": [
+                "3,262.83,357.77,261.91,10.49",
+                "3,70.87,371.32,453.55,10.49",
+                "3,70.87,384.87,94.25,10.49"
+              ]
+            },
+            {
+              "text": "Specifically, we use DeepSeek-V3-Base as the base model and employ GRPO (Shao et al., 2024) as the RL framework to improve model performance in reasoning.",
+              "coords": [
+                "3,172.40,384.87,352.43,10.49",
+                "3,70.87,398.42,455.45,10.49"
+              ]
+            },
+            {
+              "text": "During training, DeepSeek-R1-Zero naturally emerged with numerous powerful and interesting reasoning behaviors.",
+              "coords": [
+                "3,70.87,411.97,453.54,10.49",
+                "3,70.87,425.52,97.46,10.49"
+              ]
+            },
+            {
+              "text": "After thousands of RL steps, DeepSeek-R1-Zero exhibits super performance on reasoning benchmarks.",
+              "coords": [
+                "3,171.49,425.52,352.92,10.49",
+                "3,70.87,439.07,124.40,10.49"
+              ]
+            },
+            {
+              "text": "For instance, the pass@1 score on AIME 2024 increases from 15.6% to 71.0%, and with majority voting, the score further improves to 86.7%, matching the performance of OpenAI-o1-0912.",
+              "coords": [
+                "3,198.67,439.07,325.74,10.49",
+                "3,70.87,452.62,453.54,10.49",
+                "3,70.87,466.16,94.41,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "However, DeepSeek-R1-Zero encounters challenges such as poor readability, and language mixing. To address these issues and further enhance reasoning performance, we introduce DeepSeek-R1, which incorporates a small amount of cold-start data and a multi-stage training pipeline. Specifically, we begin by collecting thousands of cold-start data to fine-tune the DeepSeek-V3-Base model. Following this, we perform reasoning-oriented RL like DeepSeek-R1-Zero. Upon nearing convergence in the RL process, we create new SFT data through rejection sampling on the RL checkpoint, combined with supervised data from DeepSeek-V3 in domains such as writing, factual QA, and self-cognition, and then retrain the DeepSeek-V3-Base model. After fine-tuning with the new data, the checkpoint undergoes an additional RL process, taking into account prompts from all scenarios. After these steps, we obtained a checkpoint referred to as DeepSeek-R1, which achieves performance on par with OpenAI-o1-1217.",
+          "coords": [
+            "3,87.80,486.49,436.60,10.49",
+            "3,70.87,500.04,453.55,10.49",
+            "3,70.87,513.59,453.54,10.49",
+            "3,70.54,527.14,453.87,10.49",
+            "3,70.87,540.68,455.36,10.49",
+            "3,70.87,554.23,453.54,10.49",
+            "3,70.87,567.78,453.55,10.49",
+            "3,70.87,581.33,455.45,10.49",
+            "3,70.44,594.88,453.97,10.49",
+            "3,70.87,608.43,453.54,10.49",
+            "3,70.87,621.98,363.96,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "However, DeepSeek-R1-Zero encounters challenges such as poor readability, and language mixing.",
+              "coords": [
+                "3,87.80,486.49,436.60,10.49",
+                "3,70.87,500.04,37.49,10.49"
+              ]
+            },
+            {
+              "text": "To address these issues and further enhance reasoning performance, we introduce DeepSeek-R1, which incorporates a small amount of cold-start data and a multi-stage training pipeline.",
+              "coords": [
+                "3,114.14,500.04,410.27,10.49",
+                "3,70.87,513.59,453.54,10.49",
+                "3,70.54,527.14,43.01,10.49"
+              ]
+            },
+            {
+              "text": "Specifically, we begin by collecting thousands of cold-start data to fine-tune the DeepSeek-V3-Base model.",
+              "coords": [
+                "3,121.06,527.14,403.35,10.49",
+                "3,70.87,540.68,124.25,10.49"
+              ]
+            },
+            {
+              "text": "Following this, we perform reasoning-oriented RL like DeepSeek-R1-Zero.",
+              "coords": [
+                "3,198.50,540.68,327.73,10.49",
+                "3,70.87,554.23,25.58,10.49"
+              ]
+            },
+            {
+              "text": "Upon nearing convergence in the RL process, we create new SFT data through rejection sampling on the RL checkpoint, combined with supervised data from DeepSeek-V3 in domains such as writing, factual QA, and self-cognition, and then retrain the DeepSeek-V3-Base model.",
+              "coords": [
+                "3,99.83,554.23,424.58,10.49",
+                "3,70.87,567.78,453.55,10.49",
+                "3,70.87,581.33,455.45,10.49"
+              ]
+            },
+            {
+              "text": "After fine-tuning with the new data, the checkpoint undergoes an additional RL process, taking into account prompts from all scenarios.",
+              "coords": [
+                "3,70.44,594.88,453.97,10.49",
+                "3,70.87,608.43,191.12,10.49"
+              ]
+            },
+            {
+              "text": "After these steps, we obtained a checkpoint referred to as DeepSeek-R1, which achieves performance on par with OpenAI-o1-1217.",
+              "coords": [
+                "3,265.37,608.43,259.04,10.49",
+                "3,70.87,621.98,363.96,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We further explore distillation from DeepSeek-R1 to smaller dense models. Using Qwen2.5-32B (Qwen, 2024b) as the base model, direct distillation from DeepSeek-R1 outperforms applying RL on it. This demonstrates that the reasoning patterns discovered by larger base models are crucial for improving reasoning capabilities. We open-source the distilled Qwen and Llama (Dubey et al., 2024) series. Notably, our distilled 14B model outperforms state-of-the-art open-source QwQ-32B-Preview (Qwen, 2024a) by a large margin, and the distilled 32B and 70B models set a new record on the reasoning benchmarks among dense models.",
+          "coords": [
+            "3,87.80,642.30,438.42,10.49",
+            "3,70.87,655.85,17.22,10.49",
+            "3,160.54,655.85,363.87,10.49",
+            "3,70.87,669.40,455.36,10.49",
+            "3,70.87,682.95,415.97,10.49",
+            "3,128.39,696.50,396.02,10.49",
+            "3,70.87,710.05,89.68,10.49",
+            "3,226.70,710.05,297.71,10.49",
+            "3,70.87,723.60,306.60,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "We further explore distillation from DeepSeek-R1 to smaller dense models.",
+              "coords": [
+                "3,87.80,642.30,357.64,10.49"
+              ]
+            },
+            {
+              "text": "Using Qwen2.5-32B (Qwen, 2024b) as the base model, direct distillation from DeepSeek-R1 outperforms applying RL on it.",
+              "coords": [
+                "3,448.83,642.30,77.40,10.49",
+                "3,70.87,655.85,453.54,10.49",
+                "3,70.87,669.40,39.88,10.49"
+              ]
+            },
+            {
+              "text": "This demonstrates that the reasoning patterns discovered by larger base models are crucial for improving reasoning capabilities.",
+              "coords": [
+                "3,114.03,669.40,412.20,10.49",
+                "3,70.87,682.95,193.43,10.49"
+              ]
+            },
+            {
+              "text": "We open-source the distilled Qwen and Llama (Dubey et al., 2024) series.",
+              "coords": [
+                "3,267.72,682.95,257.12,10.49",
+                "3,70.87,696.50,88.04,10.49"
+              ]
+            },
+            {
+              "text": "Notably, our distilled 14B model outperforms state-of-the-art open-source QwQ-32B-Preview (Qwen, 2024a) by a large margin, and the distilled 32B and 70B models set a new record on the reasoning benchmarks among dense models.",
+              "coords": [
+                "3,162.34,696.50,362.07,10.49",
+                "3,70.87,710.05,453.54,10.49",
+                "3,70.87,723.60,306.60,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Contributions",
+          "coords": [
+            "4,70.87,88.67,92.11,10.23"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Post-Training: Large-Scale Reinforcement Learning on the Base Model",
+          "coords": [
+            "4,70.87,110.98,350.32,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• We directly apply RL to the base model without relying on supervised fine-tuning (SFT) as a preliminary step. This approach allows the model to explore chain-of-thought (CoT) for solving complex problems, resulting in the development of DeepSeek-R1-Zero. DeepSeek-R1-Zero demonstrates capabilities such as self-verification, reflection, and generating long CoTs, marking a significant milestone for the research community. Notably, it is the first open research to validate that reasoning capabilities of LLMs can be incentivized purely through RL, without the need for SFT. This breakthrough paves the way for future advancements in this area.",
+          "coords": [
+            "4,86.07,131.22,438.33,10.49",
+            "4,98.14,144.77,426.49,10.49",
+            "4,98.14,158.32,428.08,10.49",
+            "4,98.14,171.87,426.28,10.49",
+            "4,98.14,185.42,426.27,10.49",
+            "4,98.14,198.97,426.28,10.49",
+            "4,97.81,212.52,426.60,10.49",
+            "4,98.14,226.06,127.93,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• We directly apply RL to the base model without relying on supervised fine-tuning (SFT) as a preliminary step.",
+              "coords": [
+                "4,86.07,131.22,438.33,10.49",
+                "4,98.14,144.77,89.96,10.49"
+              ]
+            },
+            {
+              "text": "This approach allows the model to explore chain-of-thought (CoT) for solving complex problems, resulting in the development of DeepSeek-R1-Zero.",
+              "coords": [
+                "4,191.48,144.77,333.15,10.49",
+                "4,98.14,158.32,374.21,10.49"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1-Zero demonstrates capabilities such as self-verification, reflection, and generating long CoTs, marking a significant milestone for the research community.",
+              "coords": [
+                "4,475.76,158.32,50.45,10.49",
+                "4,98.14,171.87,426.28,10.49",
+                "4,98.14,185.42,343.96,10.49"
+              ]
+            },
+            {
+              "text": "Notably, it is the first open research to validate that reasoning capabilities of LLMs can be incentivized purely through RL, without the need for SFT.",
+              "coords": [
+                "4,445.48,185.42,78.93,10.49",
+                "4,98.14,198.97,426.28,10.49",
+                "4,97.81,212.52,215.51,10.49"
+              ]
+            },
+            {
+              "text": "This breakthrough paves the way for future advancements in this area.",
+              "coords": [
+                "4,316.06,212.52,208.35,10.49",
+                "4,98.14,226.06,127.93,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• We introduce our pipeline to develop DeepSeek-R1. The pipeline incorporates two RL stages aimed at discovering improved reasoning patterns and aligning with human preferences, as well as two SFT stages that serve as the seed for the model's reasoning and non-reasoning capabilities. We believe the pipeline will benefit the industry by creating better models.",
+          "coords": [
+            "4,86.07,239.61,438.67,10.49",
+            "4,98.14,253.16,428.09,10.49",
+            "4,98.14,266.71,426.28,10.49",
+            "4,98.14,280.26,426.27,10.49",
+            "4,98.14,293.81,68.64,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• We introduce our pipeline to develop DeepSeek-R1.",
+              "coords": [
+                "4,86.07,239.61,268.06,10.49"
+              ]
+            },
+            {
+              "text": "The pipeline incorporates two RL stages aimed at discovering improved reasoning patterns and aligning with human preferences, as well as two SFT stages that serve as the seed for the model's reasoning and non-reasoning capabilities.",
+              "coords": [
+                "4,358.68,239.61,166.06,10.49",
+                "4,98.14,253.16,428.09,10.49",
+                "4,98.14,266.71,426.28,10.49",
+                "4,98.14,280.26,131.41,10.49"
+              ]
+            },
+            {
+              "text": "We believe the pipeline will benefit the industry by creating better models.",
+              "coords": [
+                "4,232.96,280.26,291.45,10.49",
+                "4,98.14,293.81,68.64,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Distillation: Smaller Models Can Be Powerful Too",
+          "coords": [
+            "4,70.87,329.48,250.63,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• We demonstrate that the reasoning patterns of larger models can be distilled into smaller models, resulting in better performance compared to the reasoning patterns discovered",
+          "coords": [
+            "4,86.07,349.72,438.55,10.49",
+            "4,98.14,363.27,426.28,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• We demonstrate that the reasoning patterns of larger models can be distilled into smaller models, resulting in better performance compared to the reasoning patterns discovered",
+              "coords": [
+                "4,86.07,349.72,438.55,10.49",
+                "4,98.14,363.27,426.28,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "through RL on small models. The open source DeepSeek-R1, as well as its API, will benefit the research community to distill better smaller models in the future. • Using the reasoning data generated by DeepSeek-R1, we fine-tuned several dense models that are widely used in the research community. The evaluation results demonstrate that the distilled smaller dense models perform exceptionally well on benchmarks. DeepSeek-R1-Distill-Qwen-7B achieves 55.5% on AIME 2024, surpassing QwQ-32B-Preview. Additionally, DeepSeek-R1-Distill-Qwen-32B scores 72.6% on AIME 2024, 94.3% on MATH-500, and 57.2% on LiveCodeBench. These results significantly outperform previous opensource models and are comparable to o1-mini. We open-source distilled 1.5B, 7B, 8B, 14B, 32B, and 70B checkpoints based on Qwen2.5 and Llama3 series to the community. 1.2. Summary of Evaluation Results • Reasoning tasks: (1) DeepSeek-R1 achieves a score of 79.8% Pass@1 on AIME 2024, slightly surpassing OpenAI-o1-1217. On MATH-500, it attains an impressive score of 97.3%, performing on par with OpenAI-o1-1217 and significantly outperforming other models. (2) On coding-related tasks, DeepSeek-R1 demonstrates expert level in code competition tasks, as it achieves 2,029 Elo rating on Codeforces outperforming 96.3% human participants in the competition. For engineering-related tasks, DeepSeek-R1 performs slightly better than DeepSeek-V3, which could help developers in real world tasks. • Knowledge: On benchmarks such as MMLU, MMLU-Pro, and GPQA Diamond, DeepSeek-R1 achieves outstanding results, significantly outperforming DeepSeek-V3 with scores of 90.8% on MMLU, 84.0% on MMLU-Pro, and 71.5% on GPQA Diamond. While its performance is slightly below that of OpenAI-o1-1217 on these benchmarks, DeepSeek-R1 surpasses other closed-source models, demonstrating its competitive edge in educational tasks. On the factual benchmark SimpleQA, DeepSeek-R1 outperforms DeepSeek-V3, demonstrating its capability in handling fact-based queries. A similar trend is observed where OpenAI-o1 surpasses 4o on this benchmark. • Others: DeepSeek-R1 also excels in a wide range of tasks, including creative writing, general question answering, editing, summarization, and more. It achieves an impressive length-controlled win-rate of 87.6% on AlpacaEval 2.0 and a win-rate of 92.3% on Are-naHard, showcasing its strong ability to intelligently handle non-exam-oriented queries. Additionally, DeepSeek-R1 demonstrates outstanding performance on tasks requiring long-context understanding, substantially outperforming DeepSeek-V3 on long-context benchmarks.",
+          "coords": [
+            "4,98.14,376.82,426.27,10.49",
+            "4,98.14,390.37,331.05,10.49",
+            "4,86.07,403.92,438.33,10.49",
+            "4,98.14,417.47,426.27,10.49",
+            "4,98.14,431.01,428.08,10.49",
+            "4,98.14,444.56,428.08,10.49",
+            "4,98.14,458.11,427.64,10.49",
+            "4,98.14,471.66,428.08,10.49",
+            "4,98.14,485.21,427.64,10.49",
+            "4,98.14,498.76,393.25,10.49",
+            "4,70.87,531.96,179.68,10.23",
+            "4,86.07,554.19,438.77,10.49",
+            "4,98.14,567.74,427.63,10.49",
+            "4,97.81,581.29,427.69,10.49",
+            "4,98.14,594.84,427.64,10.49",
+            "4,98.14,608.39,426.27,10.49",
+            "4,98.14,621.94,426.28,10.49",
+            "4,98.14,635.49,304.42,10.49",
+            "4,86.07,649.04,440.15,10.49",
+            "4,98.14,662.59,426.28,10.49",
+            "4,98.14,676.13,426.28,10.49",
+            "4,97.81,689.68,427.14,10.49",
+            "4,98.14,703.23,426.27,10.49",
+            "4,98.14,716.78,427.63,10.49",
+            "4,98.14,730.33,426.27,10.49",
+            "4,97.68,743.88,245.32,10.49",
+            "5,86.07,88.58,439.70,10.49",
+            "5,98.14,102.13,426.27,10.49",
+            "5,98.14,115.68,428.08,10.49",
+            "5,98.14,129.23,428.18,10.49",
+            "5,97.71,142.78,426.70,10.49",
+            "5,98.14,156.33,426.27,10.49",
+            "5,98.14,169.88,61.61,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "through RL on small models.",
+              "coords": [
+                "4,98.14,376.82,136.92,10.49"
+              ]
+            },
+            {
+              "text": "The open source DeepSeek-R1, as well as its API, will benefit the research community to distill better smaller models in the future.",
+              "coords": [
+                "4,238.38,376.82,286.02,10.49",
+                "4,98.14,390.37,331.05,10.49"
+              ]
+            },
+            {
+              "text": "• Using the reasoning data generated by DeepSeek-R1, we fine-tuned several dense models that are widely used in the research community.",
+              "coords": [
+                "4,86.07,403.92,438.33,10.49",
+                "4,98.14,417.47,231.23,10.49"
+              ]
+            },
+            {
+              "text": "The evaluation results demonstrate that the distilled smaller dense models perform exceptionally well on benchmarks.",
+              "coords": [
+                "4,332.77,417.47,191.64,10.49",
+                "4,98.14,431.01,373.79,10.49"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1-Distill-Qwen-7B achieves 55.5% on AIME 2024, surpassing QwQ-32B-Preview.",
+              "coords": [
+                "4,475.30,431.01,50.92,10.49",
+                "4,98.14,444.56,395.86,10.49"
+              ]
+            },
+            {
+              "text": "Additionally, DeepSeek-R1-Distill-Qwen-32B scores 72.6% on AIME 2024, 94.3% on MATH-500, and 57.2% on LiveCodeBench.",
+              "coords": [
+                "4,497.43,444.56,28.80,10.49",
+                "4,98.14,458.11,427.64,10.49",
+                "4,98.14,471.66,152.20,10.49"
+              ]
+            },
+            {
+              "text": "These results significantly outperform previous opensource models and are comparable to o1-mini.",
+              "coords": [
+                "4,256.98,471.66,269.24,10.49",
+                "4,98.14,485.21,221.85,10.49"
+              ]
+            },
+            {
+              "text": "We open-source distilled 1.5B, 7B, 8B, 14B, 32B, and 70B checkpoints based on Qwen2.5 and Llama3 series to the community.",
+              "coords": [
+                "4,323.36,485.21,202.42,10.49",
+                "4,98.14,498.76,393.25,10.49"
+              ]
+            },
+            {
+              "text": "1.2.",
+              "coords": [
+                "4,70.87,531.96,16.36,10.23"
+              ]
+            },
+            {
+              "text": "Summary of Evaluation Results • Reasoning tasks: (1) DeepSeek-R1 achieves a score of 79.8% Pass@1 on AIME 2024, slightly surpassing OpenAI-o1-1217.",
+              "coords": [
+                "4,92.68,531.96,157.87,10.23",
+                "4,86.07,554.19,438.77,10.49",
+                "4,98.14,567.74,141.32,10.49"
+              ]
+            },
+            {
+              "text": "On MATH-500, it attains an impressive score of 97.3%, performing on par with OpenAI-o1-1217 and significantly outperforming other models.",
+              "coords": [
+                "4,247.20,567.74,278.57,10.49",
+                "4,97.81,581.29,411.94,10.49"
+              ]
+            },
+            {
+              "text": "(2) On coding-related tasks, DeepSeek-R1 demonstrates expert level in code competition tasks, as it achieves 2,029 Elo rating on Codeforces outperforming 96.3% human participants in the competition.",
+              "coords": [
+                "4,513.04,581.29,12.47,10.49",
+                "4,98.14,594.84,427.64,10.49",
+                "4,98.14,608.39,426.27,10.49",
+                "4,98.14,621.94,77.29,10.49"
+              ]
+            },
+            {
+              "text": "For engineering-related tasks, DeepSeek-R1 performs slightly better than DeepSeek-V3, which could help developers in real world tasks.",
+              "coords": [
+                "4,178.83,621.94,345.58,10.49",
+                "4,98.14,635.49,304.42,10.49"
+              ]
+            },
+            {
+              "text": "• Knowledge: On benchmarks such as MMLU, MMLU-Pro, and GPQA Diamond, DeepSeek-R1 achieves outstanding results, significantly outperforming DeepSeek-V3 with scores of 90.8% on MMLU, 84.0% on MMLU-Pro, and 71.5% on GPQA Diamond.",
+              "coords": [
+                "4,86.07,649.04,440.15,10.49",
+                "4,98.14,662.59,426.28,10.49",
+                "4,98.14,676.13,375.19,10.49"
+              ]
+            },
+            {
+              "text": "While its performance is slightly below that of OpenAI-o1-1217 on these benchmarks, DeepSeek-R1 surpasses other closed-source models, demonstrating its competitive edge in educational tasks.",
+              "coords": [
+                "4,479.69,676.13,44.72,10.49",
+                "4,97.81,689.68,427.14,10.49",
+                "4,98.14,703.23,426.27,10.49",
+                "4,98.14,716.78,27.60,10.49"
+              ]
+            },
+            {
+              "text": "On the factual benchmark SimpleQA, DeepSeek-R1 outperforms DeepSeek-V3, demonstrating its capability in handling fact-based queries.",
+              "coords": [
+                "4,131.59,716.78,394.18,10.49",
+                "4,98.14,730.33,290.29,10.49"
+              ]
+            },
+            {
+              "text": "A similar trend is observed where OpenAI-o1 surpasses 4o on this benchmark.",
+              "coords": [
+                "4,391.81,730.33,132.60,10.49",
+                "4,97.68,743.88,245.32,10.49"
+              ]
+            },
+            {
+              "text": "• Others: DeepSeek-R1 also excels in a wide range of tasks, including creative writing, general question answering, editing, summarization, and more.",
+              "coords": [
+                "5,86.07,88.58,439.70,10.49",
+                "5,98.14,102.13,303.28,10.49"
+              ]
+            },
+            {
+              "text": "It achieves an impressive length-controlled win-rate of 87.6% on AlpacaEval 2.0 and a win-rate of 92.3% on Are-naHard, showcasing its strong ability to intelligently handle non-exam-oriented queries.",
+              "coords": [
+                "5,404.79,102.13,119.61,10.49",
+                "5,98.14,115.68,428.08,10.49",
+                "5,98.14,129.23,428.18,10.49"
+              ]
+            },
+            {
+              "text": "Additionally, DeepSeek-R1 demonstrates outstanding performance on tasks requiring long-context understanding, substantially outperforming DeepSeek-V3 on long-context benchmarks.",
+              "coords": [
+                "5,97.71,142.78,426.70,10.49",
+                "5,98.14,156.33,426.27,10.49",
+                "5,98.14,169.88,61.61,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Approach",
+          "coords": [
+            "5,70.87,202.02,74.47,12.15"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Overview",
+          "coords": [
+            "5,70.87,229.81,70.91,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Previous work has heavily relied on large amounts of supervised data to enhance model performance. In this study, we demonstrate that reasoning capabilities can be significantly improved through large-scale reinforcement learning (RL), even without using supervised fine-tuning (SFT) as a cold start. Furthermore, performance can be further enhanced with the inclusion of a small amount of cold-start data.",
+          "coords": [
+            "5,70.87,252.04,453.55,10.49",
+            "5,70.54,265.59,454.29,10.49",
+            "5,70.87,279.14,453.55,10.49",
+            "5,70.87,292.69,453.55,10.49",
+            "5,70.87,306.24,247.34,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Previous work has heavily relied on large amounts of supervised data to enhance model performance.",
+              "coords": [
+                "5,70.87,252.04,453.55,10.49",
+                "5,70.54,265.59,65.51,10.49"
+              ]
+            },
+            {
+              "text": "In this study, we demonstrate that reasoning capabilities can be significantly improved through large-scale reinforcement learning (RL), even without using supervised fine-tuning (SFT) as a cold start.",
+              "coords": [
+                "5,142.08,265.59,382.76,10.49",
+                "5,70.87,279.14,453.55,10.49",
+                "5,70.87,292.69,162.14,10.49"
+              ]
+            },
+            {
+              "text": "Furthermore, performance can be further enhanced with the inclusion of a small amount of cold-start data.",
+              "coords": [
+                "5,239.79,292.69,284.62,10.49",
+                "5,70.87,306.24,247.34,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In the following sections, we present: (1) DeepSeek-R1-Zero, which applies RL directly to the base model without any SFT data, and (2) DeepSeek-R1, which applies RL starting from a checkpoint fine-tuned with thousands of long Chain-of-Thought (CoT) examples. 3) Distill the reasoning capability from DeepSeek-R1 to small dense models.",
+          "coords": [
+            "5,323.08,306.24,202.43,10.49",
+            "5,70.87,319.78,453.55,10.49",
+            "5,70.51,333.33,453.90,10.49",
+            "5,70.87,346.88,453.55,10.49",
+            "5,70.87,360.43,97.61,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "In the following sections, we present: (1) DeepSeek-R1-Zero, which applies RL directly to the base model without any SFT data, and (2) DeepSeek-R1, which applies RL starting from a checkpoint fine-tuned with thousands of long Chain-of-Thought (CoT) examples.",
+              "coords": [
+                "5,323.08,306.24,202.43,10.49",
+                "5,70.87,319.78,453.55,10.49",
+                "5,70.51,333.33,453.90,10.49",
+                "5,70.87,346.88,189.95,10.49"
+              ]
+            },
+            {
+              "text": "3) Distill the reasoning capability from DeepSeek-R1 to small dense models.",
+              "coords": [
+                "5,264.21,346.88,260.20,10.49",
+                "5,70.87,360.43,97.61,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "DeepSeek-R1-Zero: Reinforcement Learning on the Base Model",
+          "coords": [
+            "5,70.87,391.87,341.85,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Reinforcement learning has demonstrated significant effectiveness in reasoning tasks, as evidenced by our previous works (Shao et al., 2024;Wang et al., 2023). However, these works heavily depended on supervised data, which are time-intensive to gather. In this section, we explore the potential of LLMs to develop reasoning capabilities without any supervised data, focusing on their self-evolution through a pure reinforcement learning process. We start with a brief overview of our RL algorithm, followed by the presentation of some exciting results, and hope this provides the community with valuable insights.",
+          "coords": [
+            "5,70.87,414.10,455.35,10.49",
+            "5,70.87,427.65,155.36,10.49",
+            "5,403.93,427.65,120.48,10.49",
+            "5,70.87,441.20,453.55,10.49",
+            "5,70.87,454.75,454.91,10.49",
+            "5,70.87,468.30,453.55,10.49",
+            "5,70.87,481.85,453.54,10.49",
+            "5,70.87,495.39,278.37,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Reinforcement learning has demonstrated significant effectiveness in reasoning tasks, as evidenced by our previous works (Shao et al., 2024;Wang et al., 2023).",
+              "coords": [
+                "5,70.87,414.10,455.35,10.49",
+                "5,70.87,427.65,337.86,10.49"
+              ]
+            },
+            {
+              "text": "However, these works heavily depended on supervised data, which are time-intensive to gather.",
+              "coords": [
+                "5,413.70,427.65,110.72,10.49",
+                "5,70.87,441.20,361.43,10.49"
+              ]
+            },
+            {
+              "text": "In this section, we explore the potential of LLMs to develop reasoning capabilities without any supervised data, focusing on their self-evolution through a pure reinforcement learning process.",
+              "coords": [
+                "5,435.90,441.20,88.52,10.49",
+                "5,70.87,454.75,454.91,10.49",
+                "5,70.87,468.30,378.07,10.49"
+              ]
+            },
+            {
+              "text": "We start with a brief overview of our RL algorithm, followed by the presentation of some exciting results, and hope this provides the community with valuable insights.",
+              "coords": [
+                "5,452.35,468.30,72.07,10.49",
+                "5,70.87,481.85,453.54,10.49",
+                "5,70.87,495.39,278.37,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Reinforcement Learning Algorithm",
+          "coords": [
+            "5,70.87,524.75,198.88,10.09"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Group Relative Policy Optimization In order to save the training costs of RL, we adopt Group Relative Policy Optimization (GRPO) (Shao et al., 2024), which foregoes the critic model that is typically the same size as the policy model, and estimates the baseline from group scores instead. Specifically, for each question 𝑞, GRPO samples a group of outputs {𝑜 1 , 𝑜 2 , • • • , 𝑜 𝐺 } from the old policy 𝜋 𝜃 𝑜𝑙𝑑 and then optimizes the policy model 𝜋 𝜃 by maximizing the following objective:",
+          "coords": [
+            "5,70.87,546.94,453.87,10.49",
+            "5,70.87,560.49,179.24,10.49",
+            "5,334.23,560.49,190.18,10.49",
+            "5,70.87,574.04,455.45,10.49",
+            "5,70.87,587.30,331.82,10.79",
+            "5,402.69,587.30,53.75,11.67",
+            "5,457.53,587.30,66.88,10.79",
+            "5,70.54,601.14,51.14,10.49",
+            "5,125.71,601.14,190.34,10.49",
+            "5,319.27,601.14,187.92,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Group Relative Policy Optimization In order to save the training costs of RL, we adopt Group Relative Policy Optimization (GRPO) (Shao et al., 2024), which foregoes the critic model that is typically the same size as the policy model, and estimates the baseline from group scores instead.",
+              "coords": [
+                "5,70.87,546.94,453.87,10.49",
+                "5,70.87,560.49,453.55,10.49",
+                "5,70.87,574.04,455.45,10.49"
+              ]
+            },
+            {
+              "text": "Specifically, for each question 𝑞, GRPO samples a group of outputs {𝑜 1 , 𝑜 2 , • • • , 𝑜 𝐺 } from the old policy 𝜋 𝜃 𝑜𝑙𝑑 and then optimizes the policy model 𝜋 𝜃 by maximizing the following objective:",
+              "coords": [
+                "5,70.87,587.30,331.82,10.79",
+                "5,402.69,587.30,53.75,11.67",
+                "5,457.53,587.30,66.88,10.79",
+                "5,70.54,601.14,51.14,10.49",
+                "5,125.71,601.14,190.34,10.49",
+                "5,319.27,601.14,187.92,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "J 𝐺𝑅𝑃𝑂 (𝜃) = E[𝑞 ∼ 𝑃(𝑄), {𝑜 𝑖 } 𝐺 𝑖=1 ∼ 𝜋 𝜃 𝑜𝑙𝑑 (𝑂|𝑞)] 1 𝐺 𝐺 ∑︁ 𝑖=1 min 𝜋 𝜃 (𝑜 𝑖 |𝑞) 𝜋 𝜃 𝑜𝑙𝑑 (𝑜 𝑖 |𝑞) 𝐴 𝑖 , clip 𝜋 𝜃 (𝑜 𝑖 |𝑞) 𝜋 𝜃 𝑜𝑙𝑑 (𝑜 𝑖 |𝑞) , 1 -𝜀, 1 + 𝜀 𝐴 𝑖 -𝛽D 𝐾𝐿 𝜋 𝜃 ||𝜋 𝑟𝑒 𝑓 , (1",
+          "coords": []
+        },
+        {
+          "kind": "formula",
+          "text": ")",
+          "coords": []
+        },
+        {
+          "kind": "formula",
+          "text": "D 𝐾𝐿 𝜋 𝜃 ||𝜋 𝑟𝑒 𝑓 = 𝜋 𝑟𝑒 𝑓 (𝑜 𝑖 |𝑞) 𝜋 𝜃 (𝑜 𝑖 |𝑞) -log 𝜋 𝑟𝑒 𝑓 (𝑜 𝑖 |𝑞) 𝜋 𝜃 (𝑜 𝑖 |𝑞) -1,(2)",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "where 𝜀 and 𝛽 are hyper-parameters, and 𝐴 𝑖 is the advantage, computed using a group of rewards {𝑟 1 , 𝑟 2 , . . . , 𝑟 𝐺 } corresponding to the outputs within each group:",
+          "coords": [
+            "5,70.41,706.89,222.16,10.49",
+            "5,297.01,706.89,227.41,10.49",
+            "5,70.87,720.15,51.05,10.79",
+            "5,121.91,720.44,50.29,11.38",
+            "5,173.29,720.15,241.66,10.79"
+          ],
+          "sentences": [
+            {
+              "text": "where 𝜀 and 𝛽 are hyper-parameters, and 𝐴 𝑖 is the advantage, computed using a group of rewards {𝑟 1 , 𝑟 2 , . . . , 𝑟 𝐺 } corresponding to the outputs within each group:",
+              "coords": [
+                "5,70.41,706.89,222.16,10.49",
+                "5,297.01,706.89,227.41,10.49",
+                "5,70.87,720.15,51.05,10.79",
+                "5,121.91,720.44,50.29,11.38",
+                "5,173.29,720.15,241.66,10.79"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "𝐴 𝑖 = 𝑟 𝑖 -m𝑒𝑎𝑛({𝑟 1 , 𝑟 2 , • • • , 𝑟 𝐺 }) s𝑡𝑑({𝑟 1 , 𝑟 2 , • • • , 𝑟 𝐺 }) .(3)",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "A conversation between User and Assistant. The user asks a question, and the Assistant solves it. The assistant first thinks about the reasoning process in the mind and then provides the user with the answer. The reasoning process and answer are enclosed within <think> </think> and <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>. User: prompt. Assistant:",
+          "coords": [
+            "6,84.02,90.55,427.25,9.58",
+            "6,84.02,102.51,405.98,9.58",
+            "6,84.02,114.46,416.91,9.58",
+            "6,84.02,126.42,378.46,9.58",
+            "6,84.02,138.37,266.54,9.58"
+          ],
+          "sentences": [
+            {
+              "text": "A conversation between User and Assistant.",
+              "coords": [
+                "6,84.02,90.55,194.61,9.58"
+              ]
+            },
+            {
+              "text": "The user asks a question, and the Assistant solves it.",
+              "coords": [
+                "6,281.71,90.55,229.55,9.58"
+              ]
+            },
+            {
+              "text": "The assistant first thinks about the reasoning process in the mind and then provides the user with the answer.",
+              "coords": [
+                "6,84.02,102.51,405.98,9.58",
+                "6,84.02,114.46,72.83,9.58"
+              ]
+            },
+            {
+              "text": "The reasoning process and answer are enclosed within <think> </think> and <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.",
+              "coords": [
+                "6,159.93,114.46,341.00,9.58",
+                "6,84.02,126.42,378.46,9.58",
+                "6,84.02,138.37,155.31,9.58"
+              ]
+            },
+            {
+              "text": "User: prompt.",
+              "coords": [
+                "6,242.41,138.37,61.97,9.58"
+              ]
+            },
+            {
+              "text": "Assistant:",
+              "coords": [
+                "6,307.47,138.37,43.09,9.58"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 1 | Template for DeepSeek-R1-Zero. prompt will be replaced with the specific reasoning question during training.",
+          "coords": [
+            "6,72.67,163.51,25.57,10.49",
+            "6,109.59,163.22,412.68,10.79",
+            "6,236.82,177.06,121.33,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Table 1 | Template for DeepSeek-R1-Zero.",
+              "coords": [
+                "6,72.67,163.22,199.12,10.79"
+              ]
+            },
+            {
+              "text": "prompt will be replaced with the specific reasoning question during training.",
+              "coords": [
+                "6,275.18,163.51,247.09,10.49",
+                "6,236.82,177.06,121.33,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Reward Modeling",
+          "coords": [
+            "6,70.87,212.13,116.97,10.09"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The reward is the source of the training signal, which decides the optimization direction of RL.",
+          "coords": [
+            "6,70.53,234.32,455.79,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "The reward is the source of the training signal, which decides the optimization direction of RL.",
+              "coords": [
+                "6,70.53,234.32,455.79,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To train DeepSeek-R1-Zero, we adopt a rule-based reward system that mainly consists of two types of rewards:",
+          "coords": [
+            "6,70.53,247.87,453.88,10.49",
+            "6,70.87,261.42,83.09,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "To train DeepSeek-R1-Zero, we adopt a rule-based reward system that mainly consists of two types of rewards:",
+              "coords": [
+                "6,70.53,247.87,453.88,10.49",
+                "6,70.87,261.42,83.09,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Accuracy rewards: The accuracy reward model evaluates whether the response is correct. For example, in the case of math problems with deterministic results, the model is required to provide the final answer in a specified format (e.g., within a box), enabling reliable rule-based verification of correctness. Similarly, for LeetCode problems, a compiler can be used to generate feedback based on predefined test cases.",
+          "coords": [
+            "6,86.07,281.75,440.24,10.49",
+            "6,98.14,295.30,426.27,10.49",
+            "6,98.14,308.85,426.28,10.49",
+            "6,98.14,322.39,426.27,10.49",
+            "6,98.14,335.94,276.38,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• Accuracy rewards: The accuracy reward model evaluates whether the response is correct.",
+              "coords": [
+                "6,86.07,281.75,440.24,10.49"
+              ]
+            },
+            {
+              "text": "For example, in the case of math problems with deterministic results, the model is required to provide the final answer in a specified format (e.g., within a box), enabling reliable rule-based verification of correctness.",
+              "coords": [
+                "6,98.14,295.30,426.27,10.49",
+                "6,98.14,308.85,426.28,10.49",
+                "6,98.14,322.39,177.28,10.49"
+              ]
+            },
+            {
+              "text": "Similarly, for LeetCode problems, a compiler can be used to generate feedback based on predefined test cases.",
+              "coords": [
+                "6,278.85,322.39,245.57,10.49",
+                "6,98.14,335.94,276.38,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Format rewards: In addition to the accuracy reward model, we employ a format reward model that enforces the model to put its thinking process between '<think>' and '</think>' tags.",
+          "coords": [
+            "6,86.07,349.49,438.34,10.49",
+            "6,98.14,363.04,428.40,10.49",
+            "6,98.14,376.59,22.43,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• Format rewards: In addition to the accuracy reward model, we employ a format reward model that enforces the model to put its thinking process between '<think>' and '</think>' tags.",
+              "coords": [
+                "6,86.07,349.49,438.34,10.49",
+                "6,98.14,363.04,428.40,10.49",
+                "6,98.14,376.59,22.43,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We do not apply the outcome or process neural reward model in developing DeepSeek-R1-Zero, because we find that the neural reward model may suffer from reward hacking in the large-scale reinforcement learning process, and retraining the reward model needs additional training resources and it complicates the whole training pipeline.",
+          "coords": [
+            "6,70.32,396.91,455.45,10.49",
+            "6,70.87,410.46,453.54,10.49",
+            "6,70.87,424.01,453.55,10.49",
+            "6,70.87,437.56,272.17,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "We do not apply the outcome or process neural reward model in developing DeepSeek-R1-Zero, because we find that the neural reward model may suffer from reward hacking in the large-scale reinforcement learning process, and retraining the reward model needs additional training resources and it complicates the whole training pipeline.",
+              "coords": [
+                "6,70.32,396.91,455.45,10.49",
+                "6,70.87,410.46,453.54,10.49",
+                "6,70.87,424.01,453.55,10.49",
+                "6,70.87,437.56,272.17,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Training Template",
+          "coords": [
+            "6,70.87,468.24,117.79,10.09"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To train DeepSeek-R1-Zero, we begin by designing a straightforward template that guides the base model to adhere to our specified instructions. As depicted in Table 1, this template requires DeepSeek-R1-Zero to first produce a reasoning process, followed by the final answer. We intentionally limit our constraints to this structural format, avoiding any content-specific biases-such as mandating reflective reasoning or promoting particular problem-solving strategies-to ensure that we can accurately observe the model's natural progression during the RL process.",
+          "coords": [
+            "6,70.53,490.44,453.88,10.49",
+            "6,70.87,503.98,374.42,10.49",
+            "6,452.59,503.98,71.83,10.49",
+            "6,70.87,517.53,455.46,10.49",
+            "6,70.32,531.08,454.09,10.49",
+            "6,70.87,544.63,455.36,10.49",
+            "6,70.87,558.18,453.89,10.49",
+            "6,70.54,571.73,38.67,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "To train DeepSeek-R1-Zero, we begin by designing a straightforward template that guides the base model to adhere to our specified instructions.",
+              "coords": [
+                "6,70.53,490.44,453.88,10.49",
+                "6,70.87,503.98,268.50,10.49"
+              ]
+            },
+            {
+              "text": "As depicted in Table 1, this template requires DeepSeek-R1-Zero to first produce a reasoning process, followed by the final answer.",
+              "coords": [
+                "6,343.95,503.98,180.46,10.49",
+                "6,70.87,517.53,455.46,10.49"
+              ]
+            },
+            {
+              "text": "We intentionally limit our constraints to this structural format, avoiding any content-specific biases-such as mandating reflective reasoning or promoting particular problem-solving strategies-to ensure that we can accurately observe the model's natural progression during the RL process.",
+              "coords": [
+                "6,70.32,531.08,454.09,10.49",
+                "6,70.87,544.63,455.36,10.49",
+                "6,70.87,558.18,453.89,10.49",
+                "6,70.54,571.73,38.67,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Performance, Self-evolution Process and Aha Moment of DeepSeek-R1-Zero",
+          "coords": [
+            "6,70.87,602.41,397.51,10.09"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Performance of DeepSeek-R1-Zero Figure 2 depicts the performance trajectory of DeepSeek-R1-Zero on the AIME 2024 benchmark throughout the RL training process. As illustrated,",
+          "coords": [
+            "6,70.87,624.60,455.35,10.49",
+            "6,70.87,638.15,454.91,10.49"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "DeepSeek-R1-Zero demonstrates a steady and consistent enhancement in performance as the RL training advances. Notably, the average pass@1 score on AIME 2024 shows a significant increase, jumping from an initial 15.6% to an impressive 71.0%, reaching performance levels comparable to OpenAI-o1-0912. This significant improvement highlights the efficacy of our RL algorithm in optimizing the model's performance over time.",
+          "coords": [
+            "6,70.87,651.70,453.54,10.49",
+            "6,70.87,665.25,453.55,10.49",
+            "6,70.87,678.80,453.55,10.49",
+            "6,70.87,692.35,453.88,10.49",
+            "6,70.87,705.90,290.29,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "DeepSeek-R1-Zero demonstrates a steady and consistent enhancement in performance as the RL training advances.",
+              "coords": [
+                "6,70.87,651.70,453.54,10.49",
+                "6,70.87,665.25,108.19,10.49"
+              ]
+            },
+            {
+              "text": "Notably, the average pass@1 score on AIME 2024 shows a significant increase, jumping from an initial 15.6% to an impressive 71.0%, reaching performance levels comparable to OpenAI-o1-0912.",
+              "coords": [
+                "6,183.70,665.25,340.72,10.49",
+                "6,70.87,678.80,453.55,10.49",
+                "6,70.87,692.35,152.82,10.49"
+              ]
+            },
+            {
+              "text": "This significant improvement highlights the efficacy of our RL algorithm in optimizing the model's performance over time.",
+              "coords": [
+                "6,227.08,692.35,297.67,10.49",
+                "6,70.87,705.90,290.29,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 2 provides a comparative analysis between DeepSeek-R1-Zero and OpenAI's o1-0912 models across a variety of reasoning-related benchmarks. The findings reveal that RL empowers Model AIME 2024 MATH-500 GPQA LiveCode CodeForces Diamond Bench pass@1 cons@64 pass@1 pass@1 pass@1 rating OpenAI-o1-mini 63.6 80.0 90.0 60.0 53.8 1820 OpenAI-o1-0912 74.4 83.3 94.8 77.3 63.4 1843 DeepSeek-R1-Zero 71.0 86.7 95.9 73.3 50.0 1444 Table 2 | Comparison of DeepSeek-R1-Zero and OpenAI o1 models on reasoning-related benchmarks. DeepSeek-R1-Zero to attain robust reasoning capabilities without the need for any supervised fine-tuning data. This is a noteworthy achievement, as it underscores the model's ability to learn and generalize effectively through RL alone. Additionally, the performance of DeepSeek-R1-Zero can be further augmented through the application of majority voting. For example, when majority voting is employed on the AIME benchmark, DeepSeek-R1-Zero's performance escalates from 71.0% to 86.7%, thereby exceeding the performance of OpenAI-o1-0912. The ability of DeepSeek-R1-Zero to achieve such competitive performance, both with and without majority voting, highlights its strong foundational capabilities and its potential for further advancements in reasoning tasks.",
+          "coords": [
+            "6,87.80,726.22,436.61,10.49",
+            "6,70.87,739.77,453.54,10.49",
+            "7,73.58,104.60,32.63,10.20",
+            "7,196.12,97.85,54.69,10.20",
+            "7,279.07,97.85,54.59,10.20",
+            "7,352.54,91.10,33.23,10.20",
+            "7,404.64,91.10,47.74,10.20",
+            "7,464.29,97.85,57.41,10.20",
+            "7,345.59,104.60,47.13,10.20",
+            "7,413.10,104.60,30.81,10.20",
+            "7,179.76,123.27,87.40,10.46",
+            "7,288.99,123.27,34.76,10.46",
+            "7,351.77,123.27,34.76,10.46",
+            "7,411.12,123.27,34.76,10.46",
+            "7,478.58,123.27,28.82,10.46",
+            "7,73.58,142.32,82.77,10.20",
+            "7,187.63,142.23,19.03,10.46",
+            "7,237.28,142.23,19.03,10.46",
+            "7,296.85,142.23,19.03,10.46",
+            "7,359.63,142.23,19.03,10.46",
+            "7,418.99,142.23,19.03,10.46",
+            "7,482.12,142.23,21.75,10.46",
+            "7,73.58,155.83,80.97,10.20",
+            "7,187.63,155.74,19.03,10.46",
+            "7,237.28,155.74,19.03,10.46",
+            "7,296.85,155.74,19.03,10.46",
+            "7,359.63,155.74,19.03,10.46",
+            "7,418.99,155.74,19.03,10.46",
+            "7,482.12,155.74,21.75,10.46",
+            "7,73.58,174.79,94.26,10.20",
+            "7,187.63,174.71,19.03,10.46",
+            "7,237.28,174.71,19.03,10.46",
+            "7,296.85,174.71,19.03,10.46",
+            "7,359.63,174.71,19.03,10.46",
+            "7,418.99,174.71,19.03,10.46",
+            "7,482.12,174.71,21.75,10.46",
+            "7,85.28,200.63,424.39,10.79",
+            "7,266.83,214.47,61.61,10.49",
+            "7,70.87,517.42,453.54,10.49",
+            "7,70.87,530.97,453.55,10.49",
+            "7,70.87,544.52,455.36,10.49",
+            "7,70.87,558.07,454.91,10.49",
+            "7,70.41,571.62,454.00,10.49",
+            "7,70.87,585.17,453.55,10.49",
+            "7,70.87,598.72,453.55,10.49",
+            "7,70.87,612.27,453.76,10.49",
+            "7,70.87,625.82,161.62,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Table 2 provides a comparative analysis between DeepSeek-R1-Zero and OpenAI's o1-0912 models across a variety of reasoning-related benchmarks.",
+              "coords": [
+                "6,87.80,726.22,436.61,10.49",
+                "6,70.87,739.77,269.96,10.49"
+              ]
+            },
+            {
+              "text": "The findings reveal that RL empowers Model AIME 2024 MATH-500 GPQA LiveCode CodeForces Diamond Bench pass@1 cons@64 pass@1 pass@1 pass@1 rating OpenAI-o1-mini 63.6 80.0 90.0 60.0 53.8 1820 OpenAI-o1-0912 74.4 83.3 94.8 77.3 63.4 1843 DeepSeek-R1-Zero 71.0 86.7 95.9 73.3 50.0 1444 Table 2 | Comparison of DeepSeek-R1-Zero and OpenAI o1 models on reasoning-related benchmarks.",
+              "coords": [
+                "6,344.14,739.77,180.27,10.49",
+                "7,73.58,104.60,32.63,10.20",
+                "7,196.12,97.85,54.69,10.20",
+                "7,279.07,97.85,54.59,10.20",
+                "7,352.54,91.10,33.23,10.20",
+                "7,404.64,91.10,47.74,10.20",
+                "7,464.29,97.85,57.41,10.20",
+                "7,345.59,104.60,47.13,10.20",
+                "7,413.10,104.60,30.81,10.20",
+                "7,179.76,123.27,87.40,10.46",
+                "7,288.99,123.27,34.76,10.46",
+                "7,351.77,123.27,34.76,10.46",
+                "7,411.12,123.27,34.76,10.46",
+                "7,478.58,123.27,28.82,10.46",
+                "7,73.58,142.32,82.77,10.20",
+                "7,187.63,142.23,19.03,10.46",
+                "7,237.28,142.23,19.03,10.46",
+                "7,296.85,142.23,19.03,10.46",
+                "7,359.63,142.23,19.03,10.46",
+                "7,418.99,142.23,19.03,10.46",
+                "7,482.12,142.23,21.75,10.46",
+                "7,73.58,155.83,80.97,10.20",
+                "7,187.63,155.74,19.03,10.46",
+                "7,237.28,155.74,19.03,10.46",
+                "7,296.85,155.74,19.03,10.46",
+                "7,359.63,155.74,19.03,10.46",
+                "7,418.99,155.74,19.03,10.46",
+                "7,482.12,155.74,21.75,10.46",
+                "7,73.58,174.79,94.26,10.20",
+                "7,187.63,174.71,19.03,10.46",
+                "7,237.28,174.71,19.03,10.46",
+                "7,296.85,174.71,19.03,10.46",
+                "7,359.63,174.71,19.03,10.46",
+                "7,418.99,174.71,19.03,10.46",
+                "7,482.12,174.71,21.75,10.46",
+                "7,85.28,200.63,424.39,10.79",
+                "7,266.83,214.47,61.61,10.49"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1-Zero to attain robust reasoning capabilities without the need for any supervised fine-tuning data.",
+              "coords": [
+                "7,70.87,517.42,453.54,10.49",
+                "7,70.87,530.97,82.56,10.49"
+              ]
+            },
+            {
+              "text": "This is a noteworthy achievement, as it underscores the model's ability to learn and generalize effectively through RL alone.",
+              "coords": [
+                "7,158.45,530.97,365.97,10.49",
+                "7,70.87,544.52,240.31,10.49"
+              ]
+            },
+            {
+              "text": "Additionally, the performance of DeepSeek-R1-Zero can be further augmented through the application of majority voting.",
+              "coords": [
+                "7,314.56,544.52,211.66,10.49",
+                "7,70.87,558.07,386.16,10.49"
+              ]
+            },
+            {
+              "text": "For example, when majority voting is employed on the AIME benchmark, DeepSeek-R1-Zero's performance escalates from 71.0% to 86.7%, thereby exceeding the performance of OpenAI-o1-0912.",
+              "coords": [
+                "7,461.52,558.07,64.25,10.49",
+                "7,70.41,571.62,454.00,10.49",
+                "7,70.87,585.17,429.50,10.49"
+              ]
+            },
+            {
+              "text": "The ability of DeepSeek-R1-Zero to achieve such competitive performance, both with and without majority voting, highlights its strong foundational capabilities and its potential for further advancements in reasoning tasks.",
+              "coords": [
+                "7,505.79,585.17,18.63,10.49",
+                "7,70.87,598.72,453.55,10.49",
+                "7,70.87,612.27,453.76,10.49",
+                "7,70.87,625.82,161.62,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Self-evolution Process of DeepSeek-R1-Zero",
+          "coords": [
+            "7,70.87,661.45,216.58,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The self-evolution process of DeepSeek-R1-Zero is a fascinating demonstration of how RL can drive a model to improve its reasoning capabilities autonomously. By initiating RL directly from the base model, we can closely monitor the model's progression without the influence of the supervised fine-tuning stage. This approach provides a clear view of how the model evolves over time, particularly in terms of its ability to handle complex reasoning tasks.",
+          "coords": [
+            "7,298.29,661.36,226.11,10.49",
+            "7,70.87,674.91,453.54,10.49",
+            "7,70.87,688.46,453.54,10.49",
+            "7,70.54,702.01,453.87,10.49",
+            "7,70.87,715.56,453.55,10.49",
+            "7,70.87,729.11,120.84,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "The self-evolution process of DeepSeek-R1-Zero is a fascinating demonstration of how RL can drive a model to improve its reasoning capabilities autonomously.",
+              "coords": [
+                "7,298.29,661.36,226.11,10.49",
+                "7,70.87,674.91,453.54,10.49",
+                "7,70.87,688.46,69.95,10.49"
+              ]
+            },
+            {
+              "text": "By initiating RL directly from the base model, we can closely monitor the model's progression without the influence of the supervised fine-tuning stage.",
+              "coords": [
+                "7,144.07,688.46,380.34,10.49",
+                "7,70.54,702.01,336.26,10.49"
+              ]
+            },
+            {
+              "text": "This approach provides a clear view of how the model evolves over time, particularly in terms of its ability to handle complex reasoning tasks.",
+              "coords": [
+                "7,410.17,702.01,114.24,10.49",
+                "7,70.87,715.56,453.55,10.49",
+                "7,70.87,729.11,120.84,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "As depicted in Figure 3, the thinking time of DeepSeek-R1-Zero shows consistent improve- DeepSeek-R1-Zero naturally learns to solve reasoning tasks with more thinking time.",
+          "coords": [
+            "7,87.80,749.43,104.12,10.49",
+            "7,198.74,749.43,327.48,10.49",
+            "8,113.70,324.31,409.60,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "As depicted in Figure 3, the thinking time of DeepSeek-R1-Zero shows consistent improve- DeepSeek-R1-Zero naturally learns to solve reasoning tasks with more thinking time.",
+              "coords": [
+                "7,87.80,749.43,438.42,10.49",
+                "8,113.70,324.31,409.60,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "ment throughout the training process. This improvement is not the result of external adjustments but rather an intrinsic development within the model. DeepSeek-R1-Zero naturally acquires the ability to solve increasingly complex reasoning tasks by leveraging extended test-time computation. This computation ranges from generating hundreds to thousands of reasoning tokens, allowing the model to explore and refine its thought processes in greater depth.",
+          "coords": [
+            "8,70.87,359.25,453.54,10.49",
+            "8,70.87,372.80,453.55,10.49",
+            "8,70.87,386.35,455.36,10.49",
+            "8,70.87,399.90,454.91,10.49",
+            "8,70.87,413.45,382.45,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "ment throughout the training process.",
+              "coords": [
+                "8,70.87,359.25,177.64,10.49"
+              ]
+            },
+            {
+              "text": "This improvement is not the result of external adjustments but rather an intrinsic development within the model.",
+              "coords": [
+                "8,251.74,359.25,272.67,10.49",
+                "8,70.87,372.80,255.60,10.49"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1-Zero naturally acquires the ability to solve increasingly complex reasoning tasks by leveraging extended test-time computation.",
+              "coords": [
+                "8,329.84,372.80,194.57,10.49",
+                "8,70.87,386.35,455.36,10.49",
+                "8,70.87,399.90,31.24,10.49"
+              ]
+            },
+            {
+              "text": "This computation ranges from generating hundreds to thousands of reasoning tokens, allowing the model to explore and refine its thought processes in greater depth.",
+              "coords": [
+                "8,105.48,399.90,420.30,10.49",
+                "8,70.87,413.45,382.45,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "One of the most remarkable aspects of this self-evolution is the emergence of sophisticated behaviors as the test-time computation increases. Behaviors such as reflection-where the model revisits and reevaluates its previous steps-and the exploration of alternative approaches to problem-solving arise spontaneously. These behaviors are not explicitly programmed but instead emerge as a result of the model's interaction with the reinforcement learning environment. This spontaneous development significantly enhances DeepSeek-R1-Zero's reasoning capabilities, enabling it to tackle more challenging tasks with greater efficiency and accuracy.",
+          "coords": [
+            "8,87.80,433.78,436.61,10.49",
+            "8,70.87,447.32,453.54,10.49",
+            "8,70.87,460.87,453.55,10.49",
+            "8,70.54,474.42,453.87,10.49",
+            "8,70.87,487.97,453.54,10.49",
+            "8,70.87,501.52,454.91,10.49",
+            "8,70.87,515.07,386.14,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "One of the most remarkable aspects of this self-evolution is the emergence of sophisticated behaviors as the test-time computation increases.",
+              "coords": [
+                "8,87.80,433.78,436.61,10.49",
+                "8,70.87,447.32,230.27,10.49"
+              ]
+            },
+            {
+              "text": "Behaviors such as reflection-where the model revisits and reevaluates its previous steps-and the exploration of alternative approaches to problem-solving arise spontaneously.",
+              "coords": [
+                "8,304.42,447.32,219.99,10.49",
+                "8,70.87,460.87,453.55,10.49",
+                "8,70.54,474.42,175.41,10.49"
+              ]
+            },
+            {
+              "text": "These behaviors are not explicitly programmed but instead emerge as a result of the model's interaction with the reinforcement learning environment.",
+              "coords": [
+                "8,249.14,474.42,275.27,10.49",
+                "8,70.87,487.97,429.63,10.49"
+              ]
+            },
+            {
+              "text": "This spontaneous development significantly enhances DeepSeek-R1-Zero's reasoning capabilities, enabling it to tackle more challenging tasks with greater efficiency and accuracy.",
+              "coords": [
+                "8,503.89,487.97,20.52,10.49",
+                "8,70.87,501.52,454.91,10.49",
+                "8,70.87,515.07,386.14,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Aha Moment of DeepSeek-R1-Zero",
+          "coords": [
+            "8,70.87,550.74,175.18,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "A particularly intriguing phenomenon observed during the training of DeepSeek-R1-Zero is the occurrence of an \"aha moment\". This moment, as illustrated in Table 3, occurs in an intermediate version of the model. During this phase, DeepSeek-R1-Zero learns to allocate more thinking time to a problem by reevaluating its initial approach. This behavior is not only a testament to the model's growing reasoning abilities but also a captivating example of how reinforcement learning can lead to unexpected and sophisticated outcomes. This moment is not only an \"aha moment\" for the model but also for the researchers observing its behavior. It underscores the power and beauty of reinforcement learning: rather than explicitly teaching the model on how to solve a problem, we simply provide it with the right incentives, and it autonomously develops advanced problem-solving strategies. The \"aha moment\" serves as a powerful reminder of the potential of RL to unlock new levels of intelligence in artificial systems, paving the way for more autonomous and adaptive models in the future.",
+          "coords": [
+            "8,256.89,550.66,267.52,10.49",
+            "8,70.87,564.20,453.55,10.49",
+            "8,70.87,577.75,94.72,10.49",
+            "8,173.97,577.75,351.80,10.49",
+            "8,70.87,591.30,453.54,10.49",
+            "8,70.87,604.85,453.55,10.49",
+            "8,70.87,618.40,453.55,10.49",
+            "8,70.87,631.95,115.59,10.49",
+            "8,87.80,652.27,436.61,10.49",
+            "8,70.87,665.82,453.77,10.49",
+            "8,70.87,679.37,453.55,10.49",
+            "8,70.87,692.92,453.55,10.49",
+            "8,69.23,706.47,455.18,10.49",
+            "8,70.87,720.02,453.55,10.49",
+            "8,70.87,733.57,50.27,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "A particularly intriguing phenomenon observed during the training of DeepSeek-R1-Zero is the occurrence of an \"aha moment\".",
+              "coords": [
+                "8,256.89,550.66,267.52,10.49",
+                "8,70.87,564.20,364.33,10.49"
+              ]
+            },
+            {
+              "text": "This moment, as illustrated in Table 3, occurs in an intermediate version of the model.",
+              "coords": [
+                "8,441.38,564.20,83.03,10.49",
+                "8,70.87,577.75,353.42,10.49"
+              ]
+            },
+            {
+              "text": "During this phase, DeepSeek-R1-Zero learns to allocate more thinking time to a problem by reevaluating its initial approach.",
+              "coords": [
+                "8,432.12,577.75,93.65,10.49",
+                "8,70.87,591.30,453.54,10.49",
+                "8,70.87,604.85,48.97,10.49"
+              ]
+            },
+            {
+              "text": "This behavior is not only a testament to the model's growing reasoning abilities but also a captivating example of how reinforcement learning can lead to unexpected and sophisticated outcomes.",
+              "coords": [
+                "8,125.51,604.85,398.90,10.49",
+                "8,70.87,618.40,453.55,10.49",
+                "8,70.87,631.95,115.59,10.49"
+              ]
+            },
+            {
+              "text": "This moment is not only an \"aha moment\" for the model but also for the researchers observing its behavior.",
+              "coords": [
+                "8,87.80,652.27,436.61,10.49",
+                "8,70.87,665.82,110.15,10.49"
+              ]
+            },
+            {
+              "text": "It underscores the power and beauty of reinforcement learning: rather than explicitly teaching the model on how to solve a problem, we simply provide it with the right incentives, and it autonomously develops advanced problem-solving strategies.",
+              "coords": [
+                "8,184.43,665.82,340.21,10.49",
+                "8,70.87,679.37,453.55,10.49",
+                "8,70.87,692.92,428.01,10.49"
+              ]
+            },
+            {
+              "text": "The \"aha moment\" serves as a powerful reminder of the potential of RL to unlock new levels of intelligence in artificial systems, paving the way for more autonomous and adaptive models in the future.",
+              "coords": [
+                "8,505.79,692.92,18.63,10.49",
+                "8,69.23,706.47,455.18,10.49",
+                "8,70.87,720.02,453.55,10.49",
+                "8,70.87,733.57,50.27,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Question: If 𝑎 > 1, then the sum of the real solutions of √︁ 𝑎 -√ 𝑎 + 𝑥 = 𝑥 is equal to Response: <think> To solve the equation √︁ 𝑎 -√ 𝑎 + 𝑥 = 𝑥, let's start by squaring both • • • √︁ 𝑎 -√ 𝑎 + 𝑥 2 = 𝑥 2 =⇒ 𝑎 -√ 𝑎 + 𝑥 = 𝑥 2 . Rearrange to isolate the inner square root term: (𝑎 -𝑥 2 ) 2 = 𝑎 + 𝑥 =⇒ 𝑎 2 -2𝑎𝑥 2 + (𝑥 2 ) 2 = 𝑎 + 𝑥 =⇒ 𝑥 4 -2𝑎𝑥 2 -𝑥 + (𝑎 2 -𝑎) = 0 . . . Wait, wait. Wait. That's an aha moment I can flag here. Let's reevaluate this step-by-step to identify if the correct sum can be • • • We started with the equation: √︁ 𝑎 -√ 𝑎 + 𝑥 = 𝑥 First, let's square both sides: 𝑎 -√ 𝑎 + 𝑥 = 𝑥 2 =⇒ √ 𝑎 + 𝑥 = 𝑎 -𝑥 2 Next, I could square both sides again, treating the equation: • • • . . .",
+          "coords": [
+            "9,103.02,93.08,262.30,10.49",
+            "9,368.05,89.57,7.99,3.34",
+            "9,376.25,92.79,14.33,9.37",
+            "9,392.70,84.59,7.67,9.37",
+            "9,400.59,92.79,91.67,10.79",
+            "9,103.02,112.10,90.68,10.49",
+            "9,103.02,127.71,102.50,10.49",
+            "9,208.25,124.20,7.99,3.34",
+            "9,216.45,127.42,14.33,9.37",
+            "9,232.90,119.22,7.67,9.37",
+            "9,240.79,127.42,188.86,10.79",
+            "9,107.99,143.30,7.99,3.34",
+            "9,116.20,146.51,14.33,9.37",
+            "9,132.65,138.32,7.67,9.37",
+            "9,140.53,146.51,20.78,9.37",
+            "9,166.90,139.22,3.99,7.67",
+            "9,174.41,146.74,14.60,9.41",
+            "9,189.63,144.85,47.27,11.31",
+            "9,239.01,138.32,7.67,9.37",
+            "9,246.90,146.51,39.02,9.64",
+            "9,286.54,144.85,3.99,7.67",
+            "9,291.02,146.81,2.73,10.49",
+            "9,103.02,163.35,227.13,10.49",
+            "9,103.56,176.65,25.85,9.37",
+            "9,130.03,174.98,81.00,11.31",
+            "9,211.02,174.98,31.72,12.46",
+            "9,243.35,174.98,105.84,11.31",
+            "9,349.81,174.98,31.72,12.46",
+            "9,382.14,174.98,85.19,12.46",
+            "9,103.02,190.49,11.45,10.49",
+            "9,103.02,204.04,263.47,10.49",
+            "9,103.02,217.29,346.24,10.79",
+            "9,103.02,231.14,141.87,10.49",
+            "9,103.02,243.23,7.99,3.34",
+            "9,111.22,246.45,14.33,9.37",
+            "9,127.67,238.25,7.67,9.37",
+            "9,135.56,246.45,39.03,9.64",
+            "9,103.02,260.29,136.03,10.49",
+            "9,103.24,273.55,14.33,9.37",
+            "9,119.69,265.35,7.67,9.37",
+            "9,127.57,273.55,39.02,9.64",
+            "9,167.21,271.88,26.66,11.31",
+            "9,199.93,265.35,7.67,9.37",
+            "9,207.82,273.55,55.69,9.64",
+            "9,264.12,271.88,3.99,7.67",
+            "9,103.02,287.10,302.68,10.79",
+            "9,103.02,300.94,11.45,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Question: If 𝑎 > 1, then the sum of the real solutions of √︁ 𝑎 -√ 𝑎 + 𝑥 = 𝑥 is equal to Response: <think> To solve the equation √︁ 𝑎 -√ 𝑎 + 𝑥 = 𝑥, let's start by squaring both • • • √︁ 𝑎 -√ 𝑎 + 𝑥 2 = 𝑥 2 =⇒ 𝑎 -√ 𝑎 + 𝑥 = 𝑥 2 .",
+              "coords": [
+                "9,103.02,93.08,262.30,10.49",
+                "9,368.05,89.57,7.99,3.34",
+                "9,376.25,92.79,14.33,9.37",
+                "9,392.70,84.59,7.67,9.37",
+                "9,400.59,92.79,91.67,10.79",
+                "9,103.02,112.10,90.68,10.49",
+                "9,103.02,127.71,102.50,10.49",
+                "9,208.25,124.20,7.99,3.34",
+                "9,216.45,127.42,14.33,9.37",
+                "9,232.90,119.22,7.67,9.37",
+                "9,240.79,127.42,188.86,10.79",
+                "9,107.99,143.30,7.99,3.34",
+                "9,116.20,146.51,14.33,9.37",
+                "9,132.65,138.32,7.67,9.37",
+                "9,140.53,146.51,20.78,9.37",
+                "9,166.90,139.22,3.99,7.67",
+                "9,174.41,146.74,14.60,9.41",
+                "9,189.63,144.85,47.27,11.31",
+                "9,239.01,138.32,7.67,9.37",
+                "9,246.90,146.51,39.02,9.64",
+                "9,286.54,144.85,3.99,7.67",
+                "9,291.02,146.81,2.73,10.49"
+              ]
+            },
+            {
+              "text": "Rearrange to isolate the inner square root term: (𝑎 -𝑥 2 ) 2 = 𝑎 + 𝑥 =⇒ 𝑎 2 -2𝑎𝑥 2 + (𝑥 2 ) 2 = 𝑎 + 𝑥 =⇒ 𝑥 4 -2𝑎𝑥 2 -𝑥 + (𝑎 2 -𝑎) = 0 . . . Wait, wait.",
+              "coords": [
+                "9,103.02,163.35,227.13,10.49",
+                "9,103.56,176.65,25.85,9.37",
+                "9,130.03,174.98,81.00,11.31",
+                "9,211.02,174.98,31.72,12.46",
+                "9,243.35,174.98,105.84,11.31",
+                "9,349.81,174.98,31.72,12.46",
+                "9,382.14,174.98,85.19,12.46",
+                "9,103.02,190.49,11.45,10.49",
+                "9,103.02,204.04,51.56,10.49"
+              ]
+            },
+            {
+              "text": "Wait.",
+              "coords": [
+                "9,157.96,204.04,24.82,10.49"
+              ]
+            },
+            {
+              "text": "That's an aha moment I can flag here.",
+              "coords": [
+                "9,186.16,204.04,180.33,10.49"
+              ]
+            },
+            {
+              "text": "Let's reevaluate this step-by-step to identify if the correct sum can be • • • We started with the equation: √︁ 𝑎 -√ 𝑎 + 𝑥 = 𝑥 First, let's square both sides: 𝑎 -√ 𝑎 + 𝑥 = 𝑥 2 =⇒ √ 𝑎 + 𝑥 = 𝑎 -𝑥 2 Next, I could square both sides again, treating the equation: • • • .",
+              "coords": [
+                "9,103.02,217.29,346.24,10.79",
+                "9,103.02,231.14,141.87,10.49",
+                "9,103.02,243.23,7.99,3.34",
+                "9,111.22,246.45,14.33,9.37",
+                "9,127.67,238.25,7.67,9.37",
+                "9,135.56,246.45,39.03,9.64",
+                "9,103.02,260.29,136.03,10.49",
+                "9,103.24,273.55,14.33,9.37",
+                "9,119.69,265.35,7.67,9.37",
+                "9,127.57,273.55,39.02,9.64",
+                "9,167.21,271.88,26.66,11.31",
+                "9,199.93,265.35,7.67,9.37",
+                "9,207.82,273.55,55.69,9.64",
+                "9,264.12,271.88,3.99,7.67",
+                "9,103.02,287.10,302.68,10.79",
+                "9,103.02,300.94,11.45,10.49"
+              ]
+            },
+            {
+              "text": ". .",
+              "coords": []
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Table 3 | An interesting \"aha moment\" of an intermediate version of DeepSeek-R1-Zero.",
+          "coords": [
+            "9,75.19,324.56,422.91,10.79"
+          ],
+          "sentences": [
+            {
+              "text": "Table 3 | An interesting \"aha moment\" of an intermediate version of DeepSeek-R1-Zero.",
+              "coords": [
+                "9,75.19,324.56,422.91,10.79"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "The model learns to rethink using an anthropomorphic tone. This is also an aha moment for us, allowing us to witness the power and beauty of reinforcement learning.",
+          "coords": [
+            "9,501.49,324.85,18.26,10.49",
+            "9,79.16,338.40,438.32,10.49",
+            "9,125.36,351.95,344.56,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "The model learns to rethink using an anthropomorphic tone.",
+              "coords": [
+                "9,501.49,324.85,18.26,10.49",
+                "9,79.16,338.40,270.75,10.49"
+              ]
+            },
+            {
+              "text": "This is also an aha moment for us, allowing us to witness the power and beauty of reinforcement learning.",
+              "coords": [
+                "9,353.30,338.40,164.18,10.49",
+                "9,125.36,351.95,344.56,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Drawback of DeepSeek-R1-Zero Although",
+          "coords": [
+            "9,70.87,386.90,226.31,10.49"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "DeepSeek-R1-Zero exhibits strong reasoning capabilities and autonomously develops unexpected and powerful reasoning behaviors, it faces several issues. For instance, DeepSeek-R1-Zero struggles with challenges like poor readability, and language mixing. To make reasoning processes more readable and share them with the open community, we explore DeepSeek-R1, a method that utilizes RL with human-friendly cold-start data.",
+          "coords": [
+            "9,301.45,386.90,222.96,10.49",
+            "9,70.87,400.45,453.55,10.49",
+            "9,70.87,414.00,454.91,10.49",
+            "9,70.87,427.54,453.55,10.49",
+            "9,70.87,441.09,453.97,10.49",
+            "9,70.87,454.64,72.36,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "DeepSeek-R1-Zero exhibits strong reasoning capabilities and autonomously develops unexpected and powerful reasoning behaviors, it faces several issues.",
+              "coords": [
+                "9,301.45,386.90,222.96,10.49",
+                "9,70.87,400.45,453.55,10.49",
+                "9,70.87,414.00,68.73,10.49"
+              ]
+            },
+            {
+              "text": "For instance, DeepSeek-R1-Zero struggles with challenges like poor readability, and language mixing.",
+              "coords": [
+                "9,142.97,414.00,382.81,10.49",
+                "9,70.87,427.54,107.83,10.49"
+              ]
+            },
+            {
+              "text": "To make reasoning processes more readable and share them with the open community, we explore DeepSeek-R1, a method that utilizes RL with human-friendly cold-start data.",
+              "coords": [
+                "9,183.30,427.54,341.12,10.49",
+                "9,70.87,441.09,453.97,10.49",
+                "9,70.87,454.64,72.36,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "DeepSeek-R1: Reinforcement Learning with Cold Start",
+          "coords": [
+            "9,70.87,487.85,296.37,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Inspired by the promising results of DeepSeek-R1-Zero, two natural questions arise: 1) Can reasoning performance be further improved or convergence accelerated by incorporating a small amount of high-quality data as a cold start? 2) How can we train a user-friendly model that not only produces clear and coherent Chains of Thought (CoT) but also demonstrates strong general capabilities? To address these questions, we design a pipeline to train DeepSeek-R1. The pipeline consists of four stages, outlined as follows.",
+          "coords": [
+            "9,70.87,510.07,453.55,10.49",
+            "9,70.87,523.62,453.54,10.49",
+            "9,70.87,537.17,453.55,10.49",
+            "9,70.87,550.72,453.55,10.49",
+            "9,70.87,564.27,453.54,10.49",
+            "9,70.54,577.82,247.73,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Inspired by the promising results of DeepSeek-R1-Zero, two natural questions arise:",
+              "coords": [
+                "9,70.87,510.07,416.77,10.49"
+              ]
+            },
+            {
+              "text": "1) Can reasoning performance be further improved or convergence accelerated by incorporating a small amount of high-quality data as a cold start?",
+              "coords": [
+                "9,492.00,510.07,32.41,10.49",
+                "9,70.87,523.62,453.54,10.49",
+                "9,70.87,537.17,215.71,10.49"
+              ]
+            },
+            {
+              "text": "2) How can we train a user-friendly model that not only produces clear and coherent Chains of Thought (CoT) but also demonstrates strong general capabilities?",
+              "coords": [
+                "9,290.96,537.17,233.45,10.49",
+                "9,70.87,550.72,453.55,10.49",
+                "9,70.87,564.27,95.79,10.49"
+              ]
+            },
+            {
+              "text": "To address these questions, we design a pipeline to train DeepSeek-R1.",
+              "coords": [
+                "9,170.00,564.27,333.17,10.49"
+              ]
+            },
+            {
+              "text": "The pipeline consists of four stages, outlined as follows.",
+              "coords": [
+                "9,506.51,564.27,17.90,10.49",
+                "9,70.54,577.82,247.73,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Cold Start",
+          "coords": [
+            "9,70.87,608.50,80.83,10.09"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Unlike DeepSeek-R1-Zero, to prevent the early unstable cold start phase of RL training from the base model, for DeepSeek-R1 we construct and collect a small amount of long CoT data to fine-tune the model as the initial RL actor. To collect such data, we have explored several approaches: using few-shot prompting with a long CoT as an example, directly prompting models to generate detailed answers with reflection and verification, gathering DeepSeek-R1-Zero outputs in a readable format, and refining the results through post-processing by human annotators.",
+          "coords": [
+            "9,70.87,630.69,453.55,10.49",
+            "9,70.87,644.24,453.55,10.49",
+            "9,70.87,657.79,453.55,10.49",
+            "9,70.87,671.34,453.55,10.49",
+            "9,70.87,684.89,455.35,10.49",
+            "9,70.87,698.44,453.54,10.49",
+            "9,70.87,711.99,54.29,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Unlike DeepSeek-R1-Zero, to prevent the early unstable cold start phase of RL training from the base model, for DeepSeek-R1 we construct and collect a small amount of long CoT data to fine-tune the model as the initial RL actor.",
+              "coords": [
+                "9,70.87,630.69,453.55,10.49",
+                "9,70.87,644.24,453.55,10.49",
+                "9,70.87,657.79,220.52,10.49"
+              ]
+            },
+            {
+              "text": "To collect such data, we have explored several approaches: using few-shot prompting with a long CoT as an example, directly prompting models to generate detailed answers with reflection and verification, gathering DeepSeek-R1-Zero outputs in a readable format, and refining the results through post-processing by human annotators.",
+              "coords": [
+                "9,295.82,657.79,228.60,10.49",
+                "9,70.87,671.34,453.55,10.49",
+                "9,70.87,684.89,455.35,10.49",
+                "9,70.87,698.44,453.54,10.49",
+                "9,70.87,711.99,54.29,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work, we collect thousands of cold-start data to fine-tune the DeepSeek-V3-Base as the starting point for RL. Compared to DeepSeek-R1-Zero, the advantages of cold start data include:",
+          "coords": [
+            "9,87.80,732.31,436.61,10.49",
+            "9,70.87,745.86,453.55,10.49",
+            "10,70.87,88.58,38.74,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "In this work, we collect thousands of cold-start data to fine-tune the DeepSeek-V3-Base as the starting point for RL.",
+              "coords": [
+                "9,87.80,732.31,436.61,10.49",
+                "9,70.87,745.86,122.90,10.49"
+              ]
+            },
+            {
+              "text": "Compared to DeepSeek-R1-Zero, the advantages of cold start data include:",
+              "coords": [
+                "9,196.85,745.86,327.56,10.49",
+                "10,70.87,88.58,38.74,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Readability: A key limitation of DeepSeek-R1-Zero is that its content is often not suitable for reading. Responses may mix multiple languages or lack markdown formatting to highlight answers for users. In contrast, when creating cold-start data for DeepSeek-R1, we design a readable pattern that includes a summary at the end of each response and filters out responses that are not reader-friendly. Here, we define the output format as |special_token|<reasoning_process>|special_token|<summary>, where the reasoning process is the CoT for the query, and the summary is used to summarize the reasoning results.",
+          "coords": [
+            "10,86.07,108.90,438.33,10.49",
+            "10,98.14,122.45,426.28,10.49",
+            "10,98.14,136.00,427.63,10.49",
+            "10,97.68,149.55,426.73,10.49",
+            "10,98.14,163.10,426.28,10.49",
+            "10,98.14,176.65,426.27,10.49",
+            "10,97.81,190.20,426.60,10.49",
+            "10,98.14,203.75,34.63,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• Readability: A key limitation of DeepSeek-R1-Zero is that its content is often not suitable for reading.",
+              "coords": [
+                "10,86.07,108.90,438.33,10.49",
+                "10,98.14,122.45,58.23,10.49"
+              ]
+            },
+            {
+              "text": "Responses may mix multiple languages or lack markdown formatting to highlight answers for users.",
+              "coords": [
+                "10,161.99,122.45,362.43,10.49",
+                "10,98.14,136.00,136.13,10.49"
+              ]
+            },
+            {
+              "text": "In contrast, when creating cold-start data for DeepSeek-R1, we design a readable pattern that includes a summary at the end of each response and filters out responses that are not reader-friendly.",
+              "coords": [
+                "10,237.65,136.00,288.12,10.49",
+                "10,97.68,149.55,426.73,10.49",
+                "10,98.14,163.10,238.18,10.49"
+              ]
+            },
+            {
+              "text": "Here, we define the output format as |special_token|<reasoning_process>|special_token|<summary>, where the reasoning process is the CoT for the query, and the summary is used to summarize the reasoning results.",
+              "coords": [
+                "10,340.94,163.10,183.48,10.49",
+                "10,98.14,176.65,426.27,10.49",
+                "10,97.81,190.20,426.60,10.49",
+                "10,98.14,203.75,34.63,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Potential: By carefully designing the pattern for cold-start data with human priors, we observe better performance against DeepSeek-R1-Zero. We believe the iterative training is a better way for reasoning models.",
+          "coords": [
+            "10,86.07,217.30,438.34,10.49",
+            "10,98.14,230.85,426.28,10.49",
+            "10,98.14,244.40,166.83,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• Potential: By carefully designing the pattern for cold-start data with human priors, we observe better performance against DeepSeek-R1-Zero.",
+              "coords": [
+                "10,86.07,217.30,438.34,10.49",
+                "10,98.14,230.85,261.22,10.49"
+              ]
+            },
+            {
+              "text": "We believe the iterative training is a better way for reasoning models.",
+              "coords": [
+                "10,362.77,230.85,161.65,10.49",
+                "10,98.14,244.40,166.83,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Reasoning-oriented Reinforcement Learning",
+          "coords": [
+            "10,70.87,275.07,243.74,10.09"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "After fine-tuning DeepSeek-V3-Base on the cold start data, we apply the same large-scale reinforcement learning training process as employed in DeepSeek-R1-Zero. This phase focuses on enhancing the model's reasoning capabilities, particularly in reasoning-intensive tasks such as coding, mathematics, science, and logic reasoning, which involve well-defined problems with clear solutions. During the training process, we observe that CoT often exhibits language mixing, particularly when RL prompts involve multiple languages. To mitigate the issue of language mixing, we introduce a language consistency reward during RL training, which is calculated as the proportion of target language words in the CoT. Although ablation experiments show that such alignment results in a slight degradation in the model's performance, this reward aligns with human preferences, making it more readable. Finally, we combine the accuracy of reasoning tasks and the reward for language consistency by directly summing them to form the final reward. We then apply RL training on the fine-tuned model until it achieves convergence on reasoning tasks.",
+          "coords": [
+            "10,70.44,297.27,453.97,10.49",
+            "10,70.87,310.82,453.55,10.49",
+            "10,70.87,324.37,453.55,10.49",
+            "10,70.87,337.92,453.54,10.49",
+            "10,70.87,351.47,454.91,10.49",
+            "10,70.54,365.01,453.87,10.49",
+            "10,70.87,378.56,453.55,10.49",
+            "10,70.87,392.11,454.00,10.49",
+            "10,70.87,405.66,453.55,10.49",
+            "10,70.87,419.21,453.54,10.49",
+            "10,70.87,432.76,453.54,10.49",
+            "10,70.87,446.31,453.54,10.49",
+            "10,70.87,459.86,92.13,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "After fine-tuning DeepSeek-V3-Base on the cold start data, we apply the same large-scale reinforcement learning training process as employed in DeepSeek-R1-Zero.",
+              "coords": [
+                "10,70.44,297.27,453.97,10.49",
+                "10,70.87,310.82,360.56,10.49"
+              ]
+            },
+            {
+              "text": "This phase focuses on enhancing the model's reasoning capabilities, particularly in reasoning-intensive tasks such as coding, mathematics, science, and logic reasoning, which involve well-defined problems with clear solutions.",
+              "coords": [
+                "10,434.79,310.82,89.62,10.49",
+                "10,70.87,324.37,453.55,10.49",
+                "10,70.87,337.92,453.54,10.49",
+                "10,70.87,351.47,70.72,10.49"
+              ]
+            },
+            {
+              "text": "During the training process, we observe that CoT often exhibits language mixing, particularly when RL prompts involve multiple languages.",
+              "coords": [
+                "10,144.85,351.47,380.93,10.49",
+                "10,70.54,365.01,289.23,10.49"
+              ]
+            },
+            {
+              "text": "To mitigate the issue of language mixing, we introduce a language consistency reward during RL training, which is calculated as the proportion of target language words in the CoT.",
+              "coords": [
+                "10,363.15,365.01,161.26,10.49",
+                "10,70.87,378.56,453.55,10.49",
+                "10,70.87,392.11,267.81,10.49"
+              ]
+            },
+            {
+              "text": "Although ablation experiments show that such alignment results in a slight degradation in the model's performance, this reward aligns with human preferences, making it more readable.",
+              "coords": [
+                "10,341.57,392.11,183.30,10.49",
+                "10,70.87,405.66,453.55,10.49",
+                "10,70.87,419.21,277.34,10.49"
+              ]
+            },
+            {
+              "text": "Finally, we combine the accuracy of reasoning tasks and the reward for language consistency by directly summing them to form the final reward.",
+              "coords": [
+                "10,351.59,419.21,172.82,10.49",
+                "10,70.87,432.76,453.54,10.49",
+                "10,70.87,446.31,61.65,10.49"
+              ]
+            },
+            {
+              "text": "We then apply RL training on the fine-tuned model until it achieves convergence on reasoning tasks.",
+              "coords": [
+                "10,135.92,446.31,388.49,10.49",
+                "10,70.87,459.86,92.13,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Rejection Sampling and Supervised Fine-Tuning",
+          "coords": [
+            "10,70.87,490.54,261.75,10.09"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "When reasoning-oriented RL converges, we utilize the resulting checkpoint to collect SFT (Supervised Fine-Tuning) data for the subsequent round. Unlike the initial cold-start data, which primarily focuses on reasoning, this stage incorporates data from other domains to enhance the model's capabilities in writing, role-playing, and other general-purpose tasks. Specifically, we generate the data and fine-tune the model as described below.",
+          "coords": [
+            "10,70.32,512.73,454.43,10.49",
+            "10,70.51,526.28,453.90,10.49",
+            "10,70.54,539.83,453.87,10.49",
+            "10,70.87,553.38,453.55,10.49",
+            "10,70.87,566.93,298.05,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "When reasoning-oriented RL converges, we utilize the resulting checkpoint to collect SFT (Supervised Fine-Tuning) data for the subsequent round.",
+              "coords": [
+                "10,70.32,512.73,454.43,10.49",
+                "10,70.51,526.28,266.91,10.49"
+              ]
+            },
+            {
+              "text": "Unlike the initial cold-start data, which primarily focuses on reasoning, this stage incorporates data from other domains to enhance the model's capabilities in writing, role-playing, and other general-purpose tasks.",
+              "coords": [
+                "10,340.70,526.28,183.71,10.49",
+                "10,70.54,539.83,453.87,10.49",
+                "10,70.87,553.38,376.35,10.49"
+              ]
+            },
+            {
+              "text": "Specifically, we generate the data and fine-tune the model as described below.",
+              "coords": [
+                "10,450.59,553.38,73.83,10.49",
+                "10,70.87,566.93,298.05,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Reasoning data We curate reasoning prompts and generate reasoning trajectories by performing rejection sampling from the checkpoint from the above RL training. In the previous stage, we only included data that could be evaluated using rule-based rewards. However, in this stage, we expand the dataset by incorporating additional data, some of which use a generative reward model by feeding the ground-truth and model predictions into DeepSeek-V3 for judgment.",
+          "coords": [
+            "10,70.87,602.51,455.35,10.49",
+            "10,70.87,616.06,454.91,10.49",
+            "10,70.41,629.61,455.37,10.49",
+            "10,70.41,643.16,454.01,10.49",
+            "10,70.87,656.71,455.45,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Reasoning data We curate reasoning prompts and generate reasoning trajectories by performing rejection sampling from the checkpoint from the above RL training.",
+              "coords": [
+                "10,70.87,602.51,455.35,10.49",
+                "10,70.87,616.06,346.86,10.49"
+              ]
+            },
+            {
+              "text": "In the previous stage, we only included data that could be evaluated using rule-based rewards.",
+              "coords": [
+                "10,421.12,616.06,104.65,10.49",
+                "10,70.41,629.61,344.24,10.49"
+              ]
+            },
+            {
+              "text": "However, in this stage, we expand the dataset by incorporating additional data, some of which use a generative reward model by feeding the ground-truth and model predictions into DeepSeek-V3 for judgment.",
+              "coords": [
+                "10,418.00,629.61,107.78,10.49",
+                "10,70.41,643.16,454.01,10.49",
+                "10,70.87,656.71,455.45,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Additionally, because the model output is sometimes chaotic and difficult to read, we have filtered out chain-of-thought with mixed languages, long parapraphs, and code blocks. For each prompt, we sample multiple responses and retain only the correct ones. In total, we collect about 600k reasoning related training samples.",
+          "coords": [
+            "10,70.44,670.26,453.97,10.49",
+            "10,70.87,683.81,453.76,10.49",
+            "10,70.87,697.36,453.55,10.49",
+            "10,70.87,710.91,224.83,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Additionally, because the model output is sometimes chaotic and difficult to read, we have filtered out chain-of-thought with mixed languages, long parapraphs, and code blocks.",
+              "coords": [
+                "10,70.44,670.26,453.97,10.49",
+                "10,70.87,683.81,431.98,10.49"
+              ]
+            },
+            {
+              "text": "For each prompt, we sample multiple responses and retain only the correct ones.",
+              "coords": [
+                "10,507.97,683.81,16.66,10.49",
+                "10,70.87,697.36,363.69,10.49"
+              ]
+            },
+            {
+              "text": "In total, we collect about 600k reasoning related training samples.",
+              "coords": [
+                "10,437.94,697.36,86.47,10.49",
+                "10,70.87,710.91,224.83,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Non-Reasoning data For non-reasoning data, such as writing, factual QA, self-cognition, and translation, we adopt the DeepSeek-V3 pipeline and reuse portions of the SFT dataset of DeepSeek-V3. For certain non-reasoning tasks, we call DeepSeek-V3 to generate a potential chain-of-thought before answering the question by prompting. However, for simpler queries, such as \"hello\" we do not provide a CoT in response. In the end, we collected a total of approximately 200k training samples that are unrelated to reasoning.",
+          "coords": [
+            "11,70.87,88.58,454.90,10.49",
+            "11,70.87,102.13,453.55,10.49",
+            "11,70.87,115.68,453.55,10.49",
+            "11,70.87,129.23,454.91,10.49",
+            "11,70.87,142.78,453.55,10.49",
+            "11,70.87,156.33,332.13,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Non-Reasoning data For non-reasoning data, such as writing, factual QA, self-cognition, and translation, we adopt the DeepSeek-V3 pipeline and reuse portions of the SFT dataset of DeepSeek-V3.",
+              "coords": [
+                "11,70.87,88.58,454.90,10.49",
+                "11,70.87,102.13,453.55,10.49",
+                "11,70.87,115.68,68.73,10.49"
+              ]
+            },
+            {
+              "text": "For certain non-reasoning tasks, we call DeepSeek-V3 to generate a potential chain-of-thought before answering the question by prompting.",
+              "coords": [
+                "11,144.44,115.68,379.97,10.49",
+                "11,70.87,129.23,305.93,10.49"
+              ]
+            },
+            {
+              "text": "However, for simpler queries, such as \"hello\" we do not provide a CoT in response.",
+              "coords": [
+                "11,380.23,129.23,145.55,10.49",
+                "11,70.87,142.78,274.31,10.49"
+              ]
+            },
+            {
+              "text": "In the end, we collected a total of approximately 200k training samples that are unrelated to reasoning.",
+              "coords": [
+                "11,352.69,142.78,171.73,10.49",
+                "11,70.87,156.33,332.13,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We fine-tune DeepSeek-V3-Base for two epochs using the above curated dataset of about 800k samples.",
+          "coords": [
+            "11,87.80,176.65,436.61,10.49",
+            "11,70.87,190.20,67.18,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "We fine-tune DeepSeek-V3-Base for two epochs using the above curated dataset of about 800k samples.",
+              "coords": [
+                "11,87.80,176.65,436.61,10.49",
+                "11,70.87,190.20,67.18,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Reinforcement Learning for all Scenarios",
+          "coords": [
+            "11,70.87,220.88,227.98,10.09"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To further align the model with human preferences, we implement a secondary reinforcement learning stage aimed at improving the model's helpfulness and harmlessness while simultaneously refining its reasoning capabilities. Specifically, we train the model using a combination of reward signals and diverse prompt distributions. For reasoning data, we adhere to the methodology outlined in DeepSeek-R1-Zero, which utilizes rule-based rewards to guide the learning process in math, code, and logical reasoning domains. For general data, we resort to reward models to capture human preferences in complex and nuanced scenarios. We build upon the DeepSeek-V3 pipeline and adopt a similar distribution of preference pairs and training prompts. For helpfulness, we focus exclusively on the final summary, ensuring that the assessment emphasizes the utility and relevance of the response to the user while minimizing interference with the underlying reasoning process. For harmlessness, we evaluate the entire response of the model, including both the reasoning process and the summary, to identify and mitigate any potential risks, biases, or harmful content that may arise during the generation process. Ultimately, the integration of reward signals and diverse data distributions enables us to train a model that excels in reasoning while prioritizing helpfulness and harmlessness.",
+          "coords": [
+            "11,70.53,243.07,453.88,10.49",
+            "11,70.87,256.62,455.36,10.49",
+            "11,70.87,270.17,453.55,10.49",
+            "11,70.87,283.72,453.55,10.49",
+            "11,70.87,297.27,453.55,10.49",
+            "11,70.87,310.82,453.54,10.49",
+            "11,70.87,324.37,453.55,10.49",
+            "11,70.87,337.92,455.36,10.49",
+            "11,70.87,351.47,453.55,10.49",
+            "11,70.87,365.01,453.55,10.49",
+            "11,70.87,378.56,453.55,10.49",
+            "11,70.87,392.11,453.55,10.49",
+            "11,70.87,405.66,453.55,10.49",
+            "11,70.54,419.21,453.87,10.49",
+            "11,70.87,432.76,428.88,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "To further align the model with human preferences, we implement a secondary reinforcement learning stage aimed at improving the model's helpfulness and harmlessness while simultaneously refining its reasoning capabilities.",
+              "coords": [
+                "11,70.53,243.07,453.88,10.49",
+                "11,70.87,256.62,455.36,10.49",
+                "11,70.87,270.17,194.50,10.49"
+              ]
+            },
+            {
+              "text": "Specifically, we train the model using a combination of reward signals and diverse prompt distributions.",
+              "coords": [
+                "11,268.78,270.17,255.63,10.49",
+                "11,70.87,283.72,260.41,10.49"
+              ]
+            },
+            {
+              "text": "For reasoning data, we adhere to the methodology outlined in DeepSeek-R1-Zero, which utilizes rule-based rewards to guide the learning process in math, code, and logical reasoning domains.",
+              "coords": [
+                "11,338.13,283.72,186.28,10.49",
+                "11,70.87,297.27,453.55,10.49",
+                "11,70.87,310.82,306.98,10.49"
+              ]
+            },
+            {
+              "text": "For general data, we resort to reward models to capture human preferences in complex and nuanced scenarios.",
+              "coords": [
+                "11,381.23,310.82,143.17,10.49",
+                "11,70.87,324.37,403.49,10.49"
+              ]
+            },
+            {
+              "text": "We build upon the DeepSeek-V3 pipeline and adopt a similar distribution of preference pairs and training prompts.",
+              "coords": [
+                "11,479.50,324.37,44.91,10.49",
+                "11,70.87,337.92,455.36,10.49",
+                "11,70.87,351.47,63.75,10.49"
+              ]
+            },
+            {
+              "text": "For helpfulness, we focus exclusively on the final summary, ensuring that the assessment emphasizes the utility and relevance of the response to the user while minimizing interference with the underlying reasoning process.",
+              "coords": [
+                "11,139.57,351.47,384.85,10.49",
+                "11,70.87,365.01,453.55,10.49",
+                "11,70.87,378.56,252.16,10.49"
+              ]
+            },
+            {
+              "text": "For harmlessness, we evaluate the entire response of the model, including both the reasoning process and the summary, to identify and mitigate any potential risks, biases, or harmful content that may arise during the generation process.",
+              "coords": [
+                "11,326.43,378.56,197.98,10.49",
+                "11,70.87,392.11,453.55,10.49",
+                "11,70.87,405.66,453.55,10.49",
+                "11,70.54,419.21,38.56,10.49"
+              ]
+            },
+            {
+              "text": "Ultimately, the integration of reward signals and diverse data distributions enables us to train a model that excels in reasoning while prioritizing helpfulness and harmlessness.",
+              "coords": [
+                "11,112.48,419.21,411.93,10.49",
+                "11,70.87,432.76,428.88,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Distillation: Empower Small Models with Reasoning Capability",
+          "coords": [
+            "11,70.87,465.96,342.10,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To equip more efficient smaller models with reasoning capabilities like DeepSeek-R1, we directly fine-tuned open-source models like Qwen (Qwen, 2024b) and Llama (AI@Meta, 2024) using the 800k samples curated with DeepSeek-R1, as detailed in §2.3.3. Our findings indicate that this straightforward distillation method significantly enhances the reasoning abilities of smaller models. The base models we use here are Qwen2.5-Math-1.5B, Qwen2.5-Math-7B, Qwen2.5-14B, Qwen2.5-32B, Llama-3.1-8B, and Llama-3.3-70B-Instruct. We select Llama-3.3 because its reasoning capability is slightly better than that of Llama-3.1.",
+          "coords": [
+            "11,70.53,488.19,454.31,10.49",
+            "11,70.87,501.74,207.79,10.49",
+            "11,356.49,501.74,167.92,10.49",
+            "11,70.87,515.29,453.55,10.49",
+            "11,70.87,528.84,453.76,10.49",
+            "11,70.87,542.39,455.35,10.49",
+            "11,70.32,555.94,454.09,10.49",
+            "11,70.87,569.49,289.10,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "To equip more efficient smaller models with reasoning capabilities like DeepSeek-R1, we directly fine-tuned open-source models like Qwen (Qwen, 2024b) and Llama (AI@Meta, 2024) using the 800k samples curated with DeepSeek-R1, as detailed in §2.3.3.",
+              "coords": [
+                "11,70.53,488.19,454.31,10.49",
+                "11,70.87,501.74,453.55,10.49",
+                "11,70.87,515.29,322.44,10.49"
+              ]
+            },
+            {
+              "text": "Our findings indicate that this straightforward distillation method significantly enhances the reasoning abilities of smaller models.",
+              "coords": [
+                "11,396.96,515.29,127.45,10.49",
+                "11,70.87,528.84,453.76,10.49",
+                "11,70.87,542.39,38.77,10.49"
+              ]
+            },
+            {
+              "text": "The base models we use here are Qwen2.5-Math-1.5B, Qwen2.5-Math-7B, Qwen2.5-14B, Qwen2.5-32B, Llama-3.1-8B, and Llama-3.3-70B-Instruct.",
+              "coords": [
+                "11,113.94,542.39,412.28,10.49",
+                "11,70.32,555.94,299.16,10.49"
+              ]
+            },
+            {
+              "text": "We select Llama-3.3 because its reasoning capability is slightly better than that of Llama-3.1.",
+              "coords": [
+                "11,372.85,555.94,151.56,10.49",
+                "11,70.87,569.49,289.10,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "For distilled models, we apply only SFT and do not include an RL stage, even though incorporating RL could substantially boost model performance. Our primary goal here is to demonstrate the effectiveness of the distillation technique, leaving the exploration of the RL stage to the broader research community.",
+          "coords": [
+            "11,87.80,589.81,436.61,10.49",
+            "11,70.87,603.36,453.55,10.49",
+            "11,70.87,616.91,453.88,10.49",
+            "11,70.87,630.46,198.22,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "For distilled models, we apply only SFT and do not include an RL stage, even though incorporating RL could substantially boost model performance.",
+              "coords": [
+                "11,87.80,589.81,436.61,10.49",
+                "11,70.87,603.36,313.98,10.49"
+              ]
+            },
+            {
+              "text": "Our primary goal here is to demonstrate the effectiveness of the distillation technique, leaving the exploration of the RL stage to the broader research community.",
+              "coords": [
+                "11,389.11,603.36,135.31,10.49",
+                "11,70.87,616.91,453.88,10.49",
+                "11,70.87,630.46,198.22,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Experiment",
+          "coords": [
+            "11,70.87,665.24,84.53,12.15"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Benchmarks We evaluate models on MMLU (Hendrycks et al., 2020), MMLU-Redux (Gema et al., 2024), MMLU-Pro (Wang et al., 2024), C-Eval (Huang et al., 2023), and CMMLU (Li et al., 2023), IFEval (Zhou et al., 2023), FRAMES (Krishna et al., 2024), GPQA Diamond (Rein et al., 2023), SimpleQA (OpenAI, 2024c), C-SimpleQA (He et al., 2024), SWE-Bench Verified (OpenAI, 2024d), Aiderfoot_0 , LiveCodeBench (Jain et al., 2024) (2024-08 -2025-01), Codeforcesfoot_1 , Chinese National High School Mathematics Olympiad (CNMO 2024)foot_2 , and American Invitational Mathematics Examination 2024 (AIME 2024) (MAA, 2024). In addition to standard benchmarks, we also evaluate our models on open-ended generation tasks using LLMs as judges. Specifically, we adhere to the original configurations of AlpacaEval 2.0 (Dubois et al., 2024) and Arena-Hard (Li et al., 2024), which leverage GPT-4-Turbo-1106 as judges for pairwise comparisons. Here, we only feed the final summary to evaluation to avoid the length bias. For distilled models, we report representative results on AIME 2024, MATH-500, GPQA Diamond, Codeforces, and LiveCodeBench.",
+          "coords": [
+            "11,70.87,691.83,224.52,10.49",
+            "11,410.32,691.83,78.84,10.49",
+            "11,122.63,705.38,63.44,10.49",
+            "11,274.66,705.38,40.22,10.49",
+            "11,409.21,705.38,72.09,10.49",
+            "11,94.77,718.93,39.29,10.49",
+            "11,222.52,718.93,52.88,10.49",
+            "11,376.11,718.93,89.30,10.49",
+            "11,94.21,732.48,205.21,10.49",
+            "11,374.27,732.48,151.51,10.49",
+            "12,70.87,88.58,67.18,10.49",
+            "12,145.63,88.58,83.75,10.49",
+            "12,316.94,88.58,154.42,10.49",
+            "12,478.96,88.58,45.45,10.49",
+            "12,70.87,102.13,287.93,10.49",
+            "12,363.28,102.13,162.94,10.49",
+            "12,70.87,115.68,453.55,10.49",
+            "12,70.87,129.23,453.54,10.49",
+            "12,70.87,142.78,259.57,10.49",
+            "12,429.69,142.78,78.69,10.49",
+            "12,123.63,156.33,400.79,10.49",
+            "12,70.87,169.88,453.55,10.49",
+            "12,70.87,183.42,453.55,10.49",
+            "12,70.87,196.97,78.97,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Benchmarks We evaluate models on MMLU (Hendrycks et al., 2020), MMLU-Redux (Gema et al., 2024), MMLU-Pro (Wang et al., 2024), C-Eval (Huang et al., 2023), and CMMLU (Li et al., 2023), IFEval (Zhou et al., 2023), FRAMES (Krishna et al., 2024), GPQA Diamond (Rein et al., 2023), SimpleQA (OpenAI, 2024c), C-SimpleQA (He et al., 2024), SWE-Bench Verified (OpenAI, 2024d), Aiderfoot_0 , LiveCodeBench (Jain et al., 2024) (2024-08 -2025-01), Codeforcesfoot_1 , Chinese National High School Mathematics Olympiad (CNMO 2024)foot_2 , and American Invitational Mathematics Examination 2024 (AIME 2024) (MAA, 2024).",
+              "coords": [
+                "11,70.87,691.83,453.54,10.49",
+                "11,70.87,705.38,454.91,10.49",
+                "11,70.87,718.93,454.90,10.49",
+                "11,70.87,732.48,454.91,10.49",
+                "12,70.87,88.58,453.55,10.49",
+                "12,70.87,102.13,455.35,10.49",
+                "12,70.87,115.68,256.71,10.49"
+              ]
+            },
+            {
+              "text": "In addition to standard benchmarks, we also evaluate our models on open-ended generation tasks using LLMs as judges.",
+              "coords": [
+                "12,330.99,115.68,193.42,10.49",
+                "12,70.87,129.23,378.43,10.49"
+              ]
+            },
+            {
+              "text": "Specifically, we adhere to the original configurations of AlpacaEval 2.0 (Dubois et al., 2024) and Arena-Hard (Li et al., 2024), which leverage GPT-4-Turbo-1106 as judges for pairwise comparisons.",
+              "coords": [
+                "12,452.61,129.23,71.80,10.49",
+                "12,70.87,142.78,453.54,10.49",
+                "12,70.87,156.33,405.86,10.49"
+              ]
+            },
+            {
+              "text": "Here, we only feed the final summary to evaluation to avoid the length bias.",
+              "coords": [
+                "12,480.15,156.33,44.26,10.49",
+                "12,70.87,169.88,329.83,10.49"
+              ]
+            },
+            {
+              "text": "For distilled models, we report representative results on AIME 2024, MATH-500, GPQA Diamond, Codeforces, and LiveCodeBench.",
+              "coords": [
+                "12,404.98,169.88,119.43,10.49",
+                "12,70.87,183.42,453.55,10.49",
+                "12,70.87,196.97,78.97,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Evaluation Prompts Following the setup in DeepSeek-V3, standard benchmarks such as MMLU, DROP, GPQA Diamond, and SimpleQA are evaluated using prompts from the simpleevals framework. For MMLU-Redux, we adopt the Zero-Eval prompt format (Lin, 2024) in a zero-shot setting. In terms of MMLU-Pro, C-Eval and CLUE-WSC, since the original prompts are few-shot, we slightly modify the prompt to the zero-shot setting. The CoT in few-shot may hurt the performance of DeepSeek-R1. Other datasets follow their original evaluation protocols with default prompts provided by their creators. For code and math benchmarks, the HumanEval-Mul dataset covers eight mainstream programming languages (Python, Java, C++, C#, JavaScript, TypeScript, PHP, and Bash). Model performance on LiveCodeBench is evaluated using CoT format, with data collected between August 2024 and January 2025. The Codeforces dataset is evaluated using problems from 10 Div.2 contests along with expert-crafted test cases, after which the expected ratings and percentages of competitors are calculated. SWE-Bench verified results are obtained via the agentless framework (Xia et al., 2024). AIDER-related benchmarks are measured using a \"diff\" format. DeepSeek-R1 outputs are capped at a maximum of 32,768 tokens for each benchmark.",
+          "coords": [
+            "12,70.87,232.37,453.54,10.49",
+            "12,70.87,245.92,455.36,10.49",
+            "12,70.87,259.47,378.09,10.49",
+            "12,506.33,259.47,18.08,10.49",
+            "12,70.87,273.02,453.54,10.49",
+            "12,70.87,286.56,453.55,10.49",
+            "12,70.87,300.11,453.55,10.49",
+            "12,70.54,313.66,453.87,10.49",
+            "12,70.87,327.21,454.91,10.49",
+            "12,70.87,340.76,453.55,10.49",
+            "12,70.87,354.31,453.55,10.49",
+            "12,70.87,367.86,454.90,10.49",
+            "12,70.87,381.41,453.55,10.49",
+            "12,70.56,394.96,286.54,10.49",
+            "12,439.77,394.96,84.64,10.49",
+            "12,70.87,408.51,453.54,10.49",
+            "12,70.87,422.06,177.76,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Evaluation Prompts Following the setup in DeepSeek-V3, standard benchmarks such as MMLU, DROP, GPQA Diamond, and SimpleQA are evaluated using prompts from the simpleevals framework.",
+              "coords": [
+                "12,70.87,232.37,453.54,10.49",
+                "12,70.87,245.92,455.36,10.49",
+                "12,70.87,259.47,85.48,10.49"
+              ]
+            },
+            {
+              "text": "For MMLU-Redux, we adopt the Zero-Eval prompt format (Lin, 2024) in a zero-shot setting.",
+              "coords": [
+                "12,159.95,259.47,364.46,10.49",
+                "12,70.87,273.02,83.77,10.49"
+              ]
+            },
+            {
+              "text": "In terms of MMLU-Pro, C-Eval and CLUE-WSC, since the original prompts are few-shot, we slightly modify the prompt to the zero-shot setting.",
+              "coords": [
+                "12,158.03,273.02,366.38,10.49",
+                "12,70.87,286.56,344.37,10.49"
+              ]
+            },
+            {
+              "text": "The CoT in few-shot may hurt the performance of DeepSeek-R1.",
+              "coords": [
+                "12,421.40,286.56,103.02,10.49",
+                "12,70.87,300.11,216.46,10.49"
+              ]
+            },
+            {
+              "text": "Other datasets follow their original evaluation protocols with default prompts provided by their creators.",
+              "coords": [
+                "12,293.09,300.11,231.33,10.49",
+                "12,70.54,313.66,279.01,10.49"
+              ]
+            },
+            {
+              "text": "For code and math benchmarks, the HumanEval-Mul dataset covers eight mainstream programming languages (Python, Java, C++, C#, JavaScript, TypeScript, PHP, and Bash).",
+              "coords": [
+                "12,352.94,313.66,171.47,10.49",
+                "12,70.87,327.21,454.91,10.49",
+                "12,70.87,340.76,203.81,10.49"
+              ]
+            },
+            {
+              "text": "Model performance on LiveCodeBench is evaluated using CoT format, with data collected between August 2024 and January 2025.",
+              "coords": [
+                "12,278.08,340.76,246.33,10.49",
+                "12,70.87,354.31,375.62,10.49"
+              ]
+            },
+            {
+              "text": "The Codeforces dataset is evaluated using problems from 10 Div.2 contests along with expert-crafted test cases, after which the expected ratings and percentages of competitors are calculated.",
+              "coords": [
+                "12,449.87,354.31,74.54,10.49",
+                "12,70.87,367.86,454.90,10.49",
+                "12,70.87,381.41,391.38,10.49"
+              ]
+            },
+            {
+              "text": "SWE-Bench verified results are obtained via the agentless framework (Xia et al., 2024).",
+              "coords": [
+                "12,466.92,381.41,57.49,10.49",
+                "12,70.56,394.96,374.00,10.49"
+              ]
+            },
+            {
+              "text": "AIDER-related benchmarks are measured using a \"diff\" format.",
+              "coords": [
+                "12,451.37,394.96,73.04,10.49",
+                "12,70.87,408.51,224.12,10.49"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1 outputs are capped at a maximum of 32,768 tokens for each benchmark.",
+              "coords": [
+                "12,298.27,408.51,226.13,10.49",
+                "12,70.87,422.06,177.76,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Baselines We conduct comprehensive evaluations against several strong baselines, including DeepSeek-V3, Claude-Sonnet-3.5-1022, GPT-4o-0513, OpenAI-o1-mini, and OpenAI-o1-1217. Since accessing the OpenAI-o1-1217 API is challenging in mainland China, we report its performance based on official reports. For distilled models, we also compare the open-source model QwQ-32B-Preview (Qwen, 2024a).",
+          "coords": [
+            "12,70.87,457.45,453.54,10.49",
+            "12,70.87,471.00,455.45,10.49",
+            "12,70.87,484.55,455.35,10.49",
+            "12,70.87,498.10,453.54,10.49",
+            "12,70.87,511.65,90.68,10.49",
+            "12,231.43,511.65,4.80,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Baselines We conduct comprehensive evaluations against several strong baselines, including DeepSeek-V3, Claude-Sonnet-3.5-1022, GPT-4o-0513, OpenAI-o1-mini, and OpenAI-o1-1217.",
+              "coords": [
+                "12,70.87,457.45,453.54,10.49",
+                "12,70.87,471.00,455.45,10.49"
+              ]
+            },
+            {
+              "text": "Since accessing the OpenAI-o1-1217 API is challenging in mainland China, we report its performance based on official reports.",
+              "coords": [
+                "12,70.87,484.55,455.35,10.49",
+                "12,70.87,498.10,153.11,10.49"
+              ]
+            },
+            {
+              "text": "For distilled models, we also compare the open-source model QwQ-32B-Preview (Qwen, 2024a).",
+              "coords": [
+                "12,227.35,498.10,297.06,10.49",
+                "12,70.87,511.65,165.37,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Evaluation Setup",
+          "coords": [
+            "12,70.87,547.13,87.97,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We set the maximum generation length to 32,768 tokens for the models. We found that using greedy decoding to evaluate long-output reasoning models results in higher repetition rates and significant variability across different checkpoints. Therefore, we default to pass@𝑘 evaluation (Chen et al., 2021) and report pass@1 using a non-zero temperature. Specifically, we use a sampling temperature of 0.6 and a top-𝑝 value of 0.95 to generate 𝑘 responses (typically between 4 and 64, depending on the test set size) for each question. Pass@1 is then calculated as",
+          "coords": [
+            "12,169.68,547.04,356.63,10.49",
+            "12,70.32,560.59,454.09,10.49",
+            "12,70.87,574.14,453.55,10.49",
+            "12,70.87,587.69,135.02,10.49",
+            "12,294.80,587.69,231.51,10.49",
+            "12,70.87,601.24,453.43,10.49",
+            "12,70.87,614.79,454.09,10.49",
+            "12,70.87,628.34,96.51,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "We set the maximum generation length to 32,768 tokens for the models.",
+              "coords": [
+                "12,169.68,547.04,356.63,10.49"
+              ]
+            },
+            {
+              "text": "We found that using greedy decoding to evaluate long-output reasoning models results in higher repetition rates and significant variability across different checkpoints.",
+              "coords": [
+                "12,70.32,560.59,454.09,10.49",
+                "12,70.87,574.14,381.70,10.49"
+              ]
+            },
+            {
+              "text": "Therefore, we default to pass@𝑘 evaluation (Chen et al., 2021) and report pass@1 using a non-zero temperature.",
+              "coords": [
+                "12,456.57,574.14,67.84,10.49",
+                "12,70.87,587.69,455.45,10.49"
+              ]
+            },
+            {
+              "text": "Specifically, we use a sampling temperature of 0.6 and a top-𝑝 value of 0.95 to generate 𝑘 responses (typically between 4 and 64, depending on the test set size) for each question.",
+              "coords": [
+                "12,70.87,601.24,453.43,10.49",
+                "12,70.87,614.79,416.30,10.49"
+              ]
+            },
+            {
+              "text": "Pass@1 is then calculated as",
+              "coords": [
+                "12,490.54,614.79,34.41,10.49",
+                "12,70.87,628.34,96.51,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "formula",
+          "text": "pass@1 = 1 𝑘 𝑘 ∑︁ 𝑖=1 𝑝 𝑖 ,",
+          "coords": []
+        },
+        {
+          "kind": "paragraph",
+          "text": "where 𝑝 𝑖 denotes the correctness of the 𝑖-th response. This method provides more reliable performance estimates. For AIME 2024, we also report consensus (majority vote) results (Wang et al., 2022) using 64 samples, denoted as cons@64. DeepSeek-R1 also delivers impressive results on IF-Eval, a benchmark designed to assess a model's ability to follow format instructions. These improvements can be linked to the inclusion of instruction-following data during the final stages of supervised fine-tuning (SFT) and RL training. Furthermore, remarkable performance is observed on AlpacaEval2.0 and ArenaHard, indicating DeepSeek-R1's strengths in writing tasks and open-domain question answering. Its significant outperformance of DeepSeek-V3 underscores the generalization benefits of large-scale RL, which not only boosts reasoning capabilities but also improves performance across diverse domains. Moreover, the summary lengths generated by DeepSeek-R1 are concise, with an average of 689 tokens on ArenaHard and 2,218 characters on AlpacaEval 2.0. This indicates that",
+          "coords": [
+            "12,70.41,678.24,42.68,10.49",
+            "12,117.52,678.24,406.88,10.49",
+            "12,70.54,691.79,420.00,10.49",
+            "12,127.36,705.34,186.64,10.49",
+            "13,87.80,639.87,436.60,10.49",
+            "13,70.87,653.42,453.54,10.49",
+            "13,70.87,666.97,453.88,10.49",
+            "13,70.87,680.52,454.90,10.49",
+            "13,70.87,694.07,453.55,10.49",
+            "13,70.87,707.62,453.54,10.49",
+            "13,70.87,721.17,453.55,10.49",
+            "13,70.87,734.72,453.55,10.49",
+            "13,70.87,748.26,453.55,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "where 𝑝 𝑖 denotes the correctness of the 𝑖-th response.",
+              "coords": [
+                "12,70.41,678.24,42.68,10.49",
+                "12,117.52,678.24,220.23,10.49"
+              ]
+            },
+            {
+              "text": "This method provides more reliable performance estimates.",
+              "coords": [
+                "12,344.53,678.24,179.87,10.49",
+                "12,70.54,691.79,111.15,10.49"
+              ]
+            },
+            {
+              "text": "For AIME 2024, we also report consensus (majority vote) results (Wang et al., 2022) using 64 samples, denoted as cons@64.",
+              "coords": [
+                "12,185.07,691.79,339.34,10.49",
+                "12,70.87,705.34,243.14,10.49"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1 also delivers impressive results on IF-Eval, a benchmark designed to assess a model's ability to follow format instructions.",
+              "coords": [
+                "13,87.80,639.87,436.60,10.49",
+                "13,70.87,653.42,210.73,10.49"
+              ]
+            },
+            {
+              "text": "These improvements can be linked to the inclusion of instruction-following data during the final stages of supervised fine-tuning (SFT) and RL training.",
+              "coords": [
+                "13,284.93,653.42,239.48,10.49",
+                "13,70.87,666.97,453.88,10.49",
+                "13,70.87,680.52,41.04,10.49"
+              ]
+            },
+            {
+              "text": "Furthermore, remarkable performance is observed on AlpacaEval2.0 and ArenaHard, indicating DeepSeek-R1's strengths in writing tasks and open-domain question answering.",
+              "coords": [
+                "13,115.32,680.52,410.45,10.49",
+                "13,70.87,694.07,438.29,10.49"
+              ]
+            },
+            {
+              "text": "Its significant outperformance of DeepSeek-V3 underscores the generalization benefits of large-scale RL, which not only boosts reasoning capabilities but also improves performance across diverse domains.",
+              "coords": [
+                "13,512.53,694.07,11.88,10.49",
+                "13,70.87,707.62,453.54,10.49",
+                "13,70.87,721.17,453.55,10.49",
+                "13,70.87,734.72,45.48,10.49"
+              ]
+            },
+            {
+              "text": "Moreover, the summary lengths generated by DeepSeek-R1 are concise, with an average of 689 tokens on ArenaHard and 2,218 characters on AlpacaEval 2.0.",
+              "coords": [
+                "13,122.73,734.72,401.68,10.49",
+                "13,70.87,748.26,363.26,10.49"
+              ]
+            },
+            {
+              "text": "This indicates that",
+              "coords": [
+                "13,437.53,748.26,86.88,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "DeepSeek-R1 Evaluation",
+          "coords": [
+            "13,70.87,88.67,146.35,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "DeepSeek-R1 avoids introducing length bias during GPT-based evaluations, further solidifying its robustness across multiple tasks.",
+          "coords": [
+            "14,70.87,88.58,453.55,10.49",
+            "14,70.87,102.13,171.70,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "DeepSeek-R1 avoids introducing length bias during GPT-based evaluations, further solidifying its robustness across multiple tasks.",
+              "coords": [
+                "14,70.87,88.58,453.55,10.49",
+                "14,70.87,102.13,171.70,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "On math tasks, DeepSeek-R1 demonstrates performance on par with OpenAI-o1-1217, surpassing other models by a large margin. A similar trend is observed on coding algorithm tasks, such as LiveCodeBench and Codeforces, where reasoning-focused models dominate these benchmarks. On engineering-oriented coding tasks, OpenAI-o1-1217 outperforms DeepSeek-R1 on Aider but achieves comparable performance on SWE Verified. We believe the engineering performance of DeepSeek-R1 will improve in the next version, as the amount of related RL training data currently remains very limited. As shown in Table 5, simply distilling DeepSeek-R1's outputs enables the efficient DeepSeek-R1-7B (i.e., DeepSeek-R1-Distill-Qwen-7B, abbreviated similarly below) to outperform nonreasoning models like GPT-4o-0513 across the board. DeepSeek-R1-14B surpasses QwQ-32B-Preview on all evaluation metrics, while DeepSeek-R1-32B and DeepSeek-R1-70B significantly exceed o1-mini on most benchmarks. These results demonstrate the strong potential of distillation. Additionally, we found that applying RL to these distilled models yields significant further gains. We believe this warrants further exploration and therefore present only the results of the simple SFT-distilled models here.",
+          "coords": [
+            "14,87.80,122.45,437.97,10.49",
+            "14,70.87,136.00,453.55,10.49",
+            "14,70.87,149.55,453.54,10.49",
+            "14,70.87,163.10,454.09,10.49",
+            "14,70.87,176.65,453.54,10.49",
+            "14,70.54,190.20,454.20,10.49",
+            "14,70.87,203.75,215.08,10.49",
+            "14,87.80,486.15,86.83,10.49",
+            "14,181.26,486.15,344.95,10.49",
+            "14,70.87,499.70,455.35,10.49",
+            "14,70.87,513.25,455.35,10.49",
+            "14,70.87,526.79,453.97,10.49",
+            "14,70.87,540.34,455.35,10.49",
+            "14,70.87,553.89,453.77,10.49",
+            "14,70.87,567.44,453.55,10.49",
+            "14,70.87,580.99,160.44,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "On math tasks, DeepSeek-R1 demonstrates performance on par with OpenAI-o1-1217, surpassing other models by a large margin.",
+              "coords": [
+                "14,87.80,122.45,437.97,10.49",
+                "14,70.87,136.00,212.91,10.49"
+              ]
+            },
+            {
+              "text": "A similar trend is observed on coding algorithm tasks, such as LiveCodeBench and Codeforces, where reasoning-focused models dominate these benchmarks.",
+              "coords": [
+                "14,287.44,136.00,236.98,10.49",
+                "14,70.87,149.55,453.54,10.49",
+                "14,70.87,163.10,60.57,10.49"
+              ]
+            },
+            {
+              "text": "On engineering-oriented coding tasks, OpenAI-o1-1217 outperforms DeepSeek-R1 on Aider but achieves comparable performance on SWE Verified.",
+              "coords": [
+                "14,134.80,163.10,390.16,10.49",
+                "14,70.87,176.65,318.08,10.49"
+              ]
+            },
+            {
+              "text": "We believe the engineering performance of DeepSeek-R1 will improve in the next version, as the amount of related RL training data currently remains very limited.",
+              "coords": [
+                "14,392.33,176.65,132.08,10.49",
+                "14,70.54,190.20,454.20,10.49",
+                "14,70.87,203.75,215.08,10.49"
+              ]
+            },
+            {
+              "text": "As shown in Table 5, simply distilling DeepSeek-R1's outputs enables the efficient DeepSeek-R1-7B (i.e., DeepSeek-R1-Distill-Qwen-7B, abbreviated similarly below) to outperform nonreasoning models like GPT-4o-0513 across the board.",
+              "coords": [
+                "14,87.80,486.15,438.41,10.49",
+                "14,70.87,499.70,455.35,10.49",
+                "14,70.87,513.25,259.28,10.49"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1-14B surpasses QwQ-32B-Preview on all evaluation metrics, while DeepSeek-R1-32B and DeepSeek-R1-70B significantly exceed o1-mini on most benchmarks.",
+              "coords": [
+                "14,333.88,513.25,192.34,10.49",
+                "14,70.87,526.79,453.97,10.49",
+                "14,70.87,540.34,178.17,10.49"
+              ]
+            },
+            {
+              "text": "These results demonstrate the strong potential of distillation.",
+              "coords": [
+                "14,252.47,540.34,273.74,10.49",
+                "14,70.87,553.89,21.33,10.49"
+              ]
+            },
+            {
+              "text": "Additionally, we found that applying RL to these distilled models yields significant further gains.",
+              "coords": [
+                "14,95.55,553.89,429.08,10.49",
+                "14,70.87,567.44,28.11,10.49"
+              ]
+            },
+            {
+              "text": "We believe this warrants further exploration and therefore present only the results of the simple SFT-distilled models here.",
+              "coords": [
+                "14,102.39,567.44,422.02,10.49",
+                "14,70.87,580.99,160.44,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Distilled Model Evaluation",
+          "coords": [
+            "14,70.87,236.95,158.15,10.23"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Discussion",
+          "coords": [
+            "14,70.87,615.78,81.63,12.15"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Distillation v.s. Reinforcement Learning",
+          "coords": [
+            "14,70.87,643.57,222.13,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In Section 3.2, we can see that by distilling DeepSeek-R1, the small model can achieve impressive results. However, there is still one question left: can the model achieve comparable performance through the large-scale RL training discussed in the paper without distillation?",
+          "coords": [
+            "14,70.87,665.80,453.54,10.49",
+            "14,70.87,679.35,453.54,10.49",
+            "14,70.87,692.90,379.68,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "In Section 3.2, we can see that by distilling DeepSeek-R1, the small model can achieve impressive results.",
+              "coords": [
+                "14,70.87,665.80,453.54,10.49",
+                "14,70.87,679.35,33.93,10.49"
+              ]
+            },
+            {
+              "text": "However, there is still one question left: can the model achieve comparable performance through the large-scale RL training discussed in the paper without distillation?",
+              "coords": [
+                "14,108.16,679.35,416.25,10.49",
+                "14,70.87,692.90,379.68,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "To answer this question, we conduct large-scale RL training on Qwen-32B-Base using math, code, and STEM data, training for over 10K steps, resulting in DeepSeek-R1-Zero-Qwen-32B. The experimental results, shown in Therefore, we can draw two conclusions: First, distilling more powerful models into smaller ones yields excellent results, whereas smaller models relying on the large-scale RL mentioned in this paper require enormous computational power and may not even achieve the performance of distillation. Second, while distillation strategies are both economical and effective, advancing beyond the boundaries of intelligence may still require more powerful base models and largerscale reinforcement learning.",
+          "coords": [
+            "14,87.80,713.22,437.97,10.49",
+            "14,70.87,726.77,453.54,10.49",
+            "14,70.87,740.32,149.64,10.49",
+            "15,87.80,251.72,436.83,10.49",
+            "15,70.87,265.27,453.54,10.49",
+            "15,70.87,278.82,453.54,10.49",
+            "15,70.87,292.37,453.55,10.49",
+            "15,70.87,305.92,455.35,10.49",
+            "15,70.87,319.47,139.00,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "To answer this question, we conduct large-scale RL training on Qwen-32B-Base using math, code, and STEM data, training for over 10K steps, resulting in DeepSeek-R1-Zero-Qwen-32B.",
+              "coords": [
+                "14,87.80,713.22,437.97,10.49",
+                "14,70.87,726.77,433.40,10.49"
+              ]
+            },
+            {
+              "text": "The experimental results, shown in Therefore, we can draw two conclusions: First, distilling more powerful models into smaller ones yields excellent results, whereas smaller models relying on the large-scale RL mentioned in this paper require enormous computational power and may not even achieve the performance of distillation.",
+              "coords": [
+                "14,506.51,726.77,17.90,10.49",
+                "14,70.87,740.32,149.64,10.49",
+                "15,87.80,251.72,436.83,10.49",
+                "15,70.87,265.27,453.54,10.49",
+                "15,70.87,278.82,453.54,10.49",
+                "15,70.87,292.37,65.98,10.49"
+              ]
+            },
+            {
+              "text": "Second, while distillation strategies are both economical and effective, advancing beyond the boundaries of intelligence may still require more powerful base models and largerscale reinforcement learning.",
+              "coords": [
+                "15,140.23,292.37,384.19,10.49",
+                "15,70.87,305.92,455.35,10.49",
+                "15,70.87,319.47,139.00,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Unsuccessful Attempts",
+          "coords": [
+            "15,70.87,351.90,136.63,10.23"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In the early stages of developing DeepSeek-R1, we also encountered failures and setbacks along the way. We share our failure experiences here to provide insights, but this does not imply that these approaches are incapable of developing effective reasoning models.",
+          "coords": [
+            "15,70.87,374.13,453.55,10.49",
+            "15,70.87,387.68,453.55,10.49",
+            "15,70.87,401.23,352.94,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "In the early stages of developing DeepSeek-R1, we also encountered failures and setbacks along the way.",
+              "coords": [
+                "15,70.87,374.13,453.55,10.49",
+                "15,70.87,387.68,39.79,10.49"
+              ]
+            },
+            {
+              "text": "We share our failure experiences here to provide insights, but this does not imply that these approaches are incapable of developing effective reasoning models.",
+              "coords": [
+                "15,114.05,387.68,410.37,10.49",
+                "15,70.87,401.23,352.94,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Process Reward Model (PRM) PRM is a reasonable method to guide the model toward better approaches for solving reasoning tasks (Lightman et al., 2023;Uesato et al., 2022;Wang et al., 2023). However, in practice, PRM has three main limitations that may hinder its ultimate success. First, it is challenging to explicitly define a fine-grain step in general reasoning. Second, determining whether the current intermediate step is correct is a challenging task. Automated annotation using models may not yield satisfactory results, while manual annotation is not conducive to scaling up. Third, once a model-based PRM is introduced, it inevitably leads to reward hacking (Gao et al., 2022), and retraining the reward model needs additional training resources and it complicates the whole training pipeline. In conclusion, while PRM demonstrates a good ability to rerank the top-N responses generated by the model or assist in guided search (Snell et al., 2024), its advantages are limited compared to the additional computational overhead it introduces during the large-scale reinforcement learning process in our experiments. (Silver et al., 2017b) and AlphaZero (Silver et al., 2017a), we explored using Monte Carlo Tree Search (MCTS) to enhance test-time compute scalability. This approach involves breaking answers into smaller parts to allow the model to explore the solution space systematically. To facilitate this, we prompt the model to generate multiple tags that correspond to specific reasoning steps necessary for the search. For training, we first use collected prompts to find answers via MCTS guided by a pre-trained value model. Subsequently, we use the resulting question-answer pairs to train both the actor model and the value model, iteratively refining the process.",
+          "coords": [
+            "15,70.87,436.45,453.76,10.49",
+            "15,70.87,450.00,190.63,10.49",
+            "15,94.70,463.55,431.52,10.49",
+            "15,70.87,477.10,454.91,10.49",
+            "15,70.87,490.65,453.55,10.49",
+            "15,70.87,504.20,455.35,10.49",
+            "15,70.87,517.75,453.54,10.49",
+            "15,70.87,531.30,38.03,10.49",
+            "15,189.09,531.30,335.32,10.49",
+            "15,70.87,544.84,453.54,10.49",
+            "15,70.87,558.39,423.15,10.49",
+            "15,123.39,571.94,401.02,10.49",
+            "15,70.87,585.49,406.94,10.49",
+            "15,434.82,620.71,71.70,10.49",
+            "15,150.14,634.26,374.27,10.49",
+            "15,70.87,647.81,453.55,10.49",
+            "15,70.87,661.36,453.55,10.49",
+            "15,70.87,674.91,453.76,10.49",
+            "15,70.87,688.46,453.54,10.49",
+            "15,70.87,702.01,453.55,10.49",
+            "15,70.87,715.56,253.43,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Process Reward Model (PRM) PRM is a reasonable method to guide the model toward better approaches for solving reasoning tasks (Lightman et al., 2023;Uesato et al., 2022;Wang et al., 2023).",
+              "coords": [
+                "15,70.87,436.45,453.76,10.49",
+                "15,70.87,450.00,454.91,10.49",
+                "15,70.87,463.55,28.60,10.49"
+              ]
+            },
+            {
+              "text": "However, in practice, PRM has three main limitations that may hinder its ultimate success.",
+              "coords": [
+                "15,102.84,463.55,423.38,10.49",
+                "15,70.87,477.10,22.49,10.49"
+              ]
+            },
+            {
+              "text": "First, it is challenging to explicitly define a fine-grain step in general reasoning.",
+              "coords": [
+                "15,96.80,477.10,387.27,10.49"
+              ]
+            },
+            {
+              "text": "Second, determining whether the current intermediate step is correct is a challenging task.",
+              "coords": [
+                "15,487.53,477.10,38.24,10.49",
+                "15,70.87,490.65,394.90,10.49"
+              ]
+            },
+            {
+              "text": "Automated annotation using models may not yield satisfactory results, while manual annotation is not conducive to scaling up.",
+              "coords": [
+                "15,469.19,490.65,55.22,10.49",
+                "15,70.87,504.20,455.35,10.49",
+                "15,70.87,517.75,97.34,10.49"
+              ]
+            },
+            {
+              "text": "Third, once a model-based PRM is introduced, it inevitably leads to reward hacking (Gao et al., 2022), and retraining the reward model needs additional training resources and it complicates the whole training pipeline.",
+              "coords": [
+                "15,171.51,517.75,352.90,10.49",
+                "15,70.87,531.30,453.54,10.49",
+                "15,70.87,544.84,223.42,10.49"
+              ]
+            },
+            {
+              "text": "In conclusion, while PRM demonstrates a good ability to rerank the top-N responses generated by the model or assist in guided search (Snell et al., 2024), its advantages are limited compared to the additional computational overhead it introduces during the large-scale reinforcement learning process in our experiments.",
+              "coords": [
+                "15,297.67,544.84,226.74,10.49",
+                "15,70.87,558.39,453.55,10.49",
+                "15,70.87,571.94,453.54,10.49",
+                "15,70.87,585.49,406.94,10.49"
+              ]
+            },
+            {
+              "text": "(Silver et al., 2017b) and AlphaZero (Silver et al., 2017a), we explored using Monte Carlo Tree Search (MCTS) to enhance test-time compute scalability.",
+              "coords": [
+                "15,342.49,620.71,185.07,10.49",
+                "15,70.56,634.26,453.85,10.49",
+                "15,70.87,647.81,97.10,10.49"
+              ]
+            },
+            {
+              "text": "This approach involves breaking answers into smaller parts to allow the model to explore the solution space systematically.",
+              "coords": [
+                "15,171.35,647.81,353.07,10.49",
+                "15,70.87,661.36,248.25,10.49"
+              ]
+            },
+            {
+              "text": "To facilitate this, we prompt the model to generate multiple tags that correspond to specific reasoning steps necessary for the search.",
+              "coords": [
+                "15,322.50,661.36,201.92,10.49",
+                "15,70.87,674.91,434.07,10.49"
+              ]
+            },
+            {
+              "text": "For training, we first use collected prompts to find answers via MCTS guided by a pre-trained value model.",
+              "coords": [
+                "15,508.33,674.91,16.30,10.49",
+                "15,70.87,688.46,453.54,10.49",
+                "15,70.87,702.01,33.38,10.49"
+              ]
+            },
+            {
+              "text": "Subsequently, we use the resulting question-answer pairs to train both the actor model and the value model, iteratively refining the process.",
+              "coords": [
+                "15,107.63,702.01,416.78,10.49",
+                "15,70.87,715.56,253.43,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Monte Carlo Tree Search (MCTS) Inspired by AlphaGo",
+          "coords": [
+            "15,70.87,620.71,269.55,10.49"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "However, this approach encounters several challenges when scaling up the training. First, unlike chess, where the search space is relatively well-defined, token generation presents an exponentially larger search space. To address this, we set a maximum extension limit for each node, but this can lead to the model getting stuck in local optima. Second, the value model directly influences the quality of generation since it guides each step of the search process. Training a fine-grained value model is inherently difficult, which makes it challenging for the model to iteratively improve. While AlphaGo's core success relied on training a value model to progressively enhance its performance, this principle proves difficult to replicate in our setup due to the complexities of token generation.",
+          "coords": [
+            "15,87.80,735.88,437.97,10.49",
+            "15,70.87,749.43,453.55,10.49",
+            "16,70.87,88.58,453.54,10.49",
+            "16,70.87,102.13,453.55,10.49",
+            "16,70.87,115.68,455.45,10.49",
+            "16,70.53,129.23,453.88,10.49",
+            "16,70.87,142.78,453.55,10.49",
+            "16,70.54,156.33,454.19,10.49",
+            "16,70.87,169.88,211.39,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "However, this approach encounters several challenges when scaling up the training.",
+              "coords": [
+                "15,87.80,735.88,409.82,10.49"
+              ]
+            },
+            {
+              "text": "First, unlike chess, where the search space is relatively well-defined, token generation presents an exponentially larger search space.",
+              "coords": [
+                "15,501.00,735.88,24.78,10.49",
+                "15,70.87,749.43,453.55,10.49",
+                "16,70.87,88.58,163.80,10.49"
+              ]
+            },
+            {
+              "text": "To address this, we set a maximum extension limit for each node, but this can lead to the model getting stuck in local optima.",
+              "coords": [
+                "16,238.04,88.58,286.37,10.49",
+                "16,70.87,102.13,326.72,10.49"
+              ]
+            },
+            {
+              "text": "Second, the value model directly influences the quality of generation since it guides each step of the search process.",
+              "coords": [
+                "16,402.50,102.13,121.91,10.49",
+                "16,70.87,115.68,455.45,10.49"
+              ]
+            },
+            {
+              "text": "Training a fine-grained value model is inherently difficult, which makes it challenging for the model to iteratively improve.",
+              "coords": [
+                "16,70.53,129.23,453.88,10.49",
+                "16,70.87,142.78,139.41,10.49"
+              ]
+            },
+            {
+              "text": "While AlphaGo's core success relied on training a value model to progressively enhance its performance, this principle proves difficult to replicate in our setup due to the complexities of token generation.",
+              "coords": [
+                "16,213.68,142.78,310.74,10.49",
+                "16,70.54,156.33,454.19,10.49",
+                "16,70.87,169.88,211.39,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In conclusion, while MCTS can improve performance during inference when paired with a pre-trained value model, iteratively boosting model performance through self-search remains a significant challenge.",
+          "coords": [
+            "16,87.80,190.20,436.60,10.49",
+            "16,70.54,203.75,453.87,10.49",
+            "16,70.87,217.30,101.51,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "In conclusion, while MCTS can improve performance during inference when paired with a pre-trained value model, iteratively boosting model performance through self-search remains a significant challenge.",
+              "coords": [
+                "16,87.80,190.20,436.60,10.49",
+                "16,70.54,203.75,453.87,10.49",
+                "16,70.87,217.30,101.51,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "blocks": [
+        {
+          "kind": "head",
+          "text": "Conclusion, Limitations, and Future Work",
+          "coords": [
+            "16,70.87,252.08,264.87,12.15"
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In this work, we share our journey in enhancing model reasoning abilities through reinforcement learning. DeepSeek-R1-Zero represents a pure RL approach without relying on cold-start data, achieving strong performance across various tasks. DeepSeek-R1 is more powerful, leveraging cold-start data alongside iterative RL fine-tuning. Ultimately, DeepSeek-R1 achieves performance comparable to OpenAI-o1-1217 on a range of tasks.",
+          "coords": [
+            "16,70.87,278.67,453.54,10.49",
+            "16,70.87,292.22,453.55,10.49",
+            "16,70.87,305.77,454.91,10.49",
+            "16,70.87,319.32,453.55,10.49",
+            "16,70.54,332.87,310.64,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "In this work, we share our journey in enhancing model reasoning abilities through reinforcement learning.",
+              "coords": [
+                "16,70.87,278.67,453.54,10.49",
+                "16,70.87,292.22,43.69,10.49"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1-Zero represents a pure RL approach without relying on cold-start data, achieving strong performance across various tasks.",
+              "coords": [
+                "16,122.23,292.22,402.18,10.49",
+                "16,70.87,305.77,287.02,10.49"
+              ]
+            },
+            {
+              "text": "DeepSeek-R1 is more powerful, leveraging cold-start data alongside iterative RL fine-tuning.",
+              "coords": [
+                "16,365.96,305.77,159.81,10.49",
+                "16,70.87,319.32,288.37,10.49"
+              ]
+            },
+            {
+              "text": "Ultimately, DeepSeek-R1 achieves performance comparable to OpenAI-o1-1217 on a range of tasks.",
+              "coords": [
+                "16,362.67,319.32,161.74,10.49",
+                "16,70.54,332.87,310.64,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "We further explore distillation the reasoning capability to small dense models. We use DeepSeek-R1 as the teacher model to generate 800K training samples, and fine-tune several small dense models. The results are promising: DeepSeek-R1-Distill-Qwen-1.5B outperforms GPT-4o and Claude-3.5-Sonnet on math benchmarks with 28.9% on AIME and 83.9% on MATH. Other dense models also achieve impressive results, significantly outperforming other instructiontuned models based on the same underlying checkpoints.",
+          "coords": [
+            "16,87.80,353.19,436.61,10.49",
+            "16,70.87,366.74,453.54,10.49",
+            "16,70.87,380.29,453.55,10.49",
+            "16,70.87,393.84,453.76,10.49",
+            "16,70.87,407.39,455.35,10.49",
+            "16,70.87,420.94,277.35,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "We further explore distillation the reasoning capability to small dense models.",
+              "coords": [
+                "16,87.80,353.19,393.88,10.49"
+              ]
+            },
+            {
+              "text": "We use DeepSeek-R1 as the teacher model to generate 800K training samples, and fine-tune several small dense models.",
+              "coords": [
+                "16,488.37,353.19,36.04,10.49",
+                "16,70.87,366.74,453.54,10.49",
+                "16,70.87,380.29,68.33,10.49"
+              ]
+            },
+            {
+              "text": "The results are promising: DeepSeek-R1-Distill-Qwen-1.5B outperforms GPT-4o and Claude-3.5-Sonnet on math benchmarks with 28.9% on AIME and 83.9% on MATH.",
+              "coords": [
+                "16,142.58,380.29,381.83,10.49",
+                "16,70.87,393.84,423.06,10.49"
+              ]
+            },
+            {
+              "text": "Other dense models also achieve impressive results, significantly outperforming other instructiontuned models based on the same underlying checkpoints.",
+              "coords": [
+                "16,496.67,393.84,27.96,10.49",
+                "16,70.87,407.39,455.35,10.49",
+                "16,70.87,420.94,277.35,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "In the future, we plan to invest in research across the following directions for DeepSeek-R1.",
+          "coords": [
+            "16,87.80,441.26,438.52,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "In the future, we plan to invest in research across the following directions for DeepSeek-R1.",
+              "coords": [
+                "16,87.80,441.26,438.52,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• General Capability: Currently, the capabilities of DeepSeek-R1 fall short of DeepSeek-V3 in tasks such as function calling, multi-turn, complex role-playing, and JSON output.",
+          "coords": [
+            "16,86.07,461.59,438.34,10.49",
+            "16,98.14,475.14,428.18,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• General Capability: Currently, the capabilities of DeepSeek-R1 fall short of DeepSeek-V3 in tasks such as function calling, multi-turn, complex role-playing, and JSON output.",
+              "coords": [
+                "16,86.07,461.59,438.34,10.49",
+                "16,98.14,475.14,428.18,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Moving forward, we plan to explore how long CoT can be leveraged to enhance tasks in these fields.",
+          "coords": [
+            "16,98.14,488.69,426.27,10.49",
+            "16,98.14,502.24,56.73,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "Moving forward, we plan to explore how long CoT can be leveraged to enhance tasks in these fields.",
+              "coords": [
+                "16,98.14,488.69,426.27,10.49",
+                "16,98.14,502.24,56.73,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Language Mixing: DeepSeek-R1 is currently optimized for Chinese and English, which may result in language mixing issues when handling queries in other languages. For instance, DeepSeek-R1 might use English for reasoning and responses, even if the query is in a language other than English or Chinese. We aim to address this limitation in future updates.",
+          "coords": [
+            "16,86.07,515.78,438.33,10.49",
+            "16,98.14,529.33,426.49,10.49",
+            "16,98.14,542.88,426.27,10.49",
+            "16,98.14,556.43,426.27,10.49",
+            "16,98.14,569.98,41.39,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• Language Mixing: DeepSeek-R1 is currently optimized for Chinese and English, which may result in language mixing issues when handling queries in other languages.",
+              "coords": [
+                "16,86.07,515.78,438.33,10.49",
+                "16,98.14,529.33,403.96,10.49"
+              ]
+            },
+            {
+              "text": "For instance, DeepSeek-R1 might use English for reasoning and responses, even if the query is in a language other than English or Chinese.",
+              "coords": [
+                "16,507.97,529.33,16.66,10.49",
+                "16,98.14,542.88,426.27,10.49",
+                "16,98.14,556.43,216.57,10.49"
+              ]
+            },
+            {
+              "text": "We aim to address this limitation in future updates.",
+              "coords": [
+                "16,318.11,556.43,206.30,10.49",
+                "16,98.14,569.98,41.39,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Prompting Engineering: When evaluating DeepSeek-R1, we observe that it is sensitive to prompts. Few-shot prompting consistently degrades its performance. Therefore, we recommend users directly describe the problem and specify the output format using a zero-shot setting for optimal results.",
+          "coords": [
+            "16,86.07,583.53,438.33,10.49",
+            "16,98.14,597.08,426.28,10.49",
+            "16,98.14,610.63,426.28,10.49",
+            "16,98.14,624.18,174.36,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• Prompting Engineering: When evaluating DeepSeek-R1, we observe that it is sensitive to prompts.",
+              "coords": [
+                "16,86.07,583.53,438.33,10.49",
+                "16,98.14,597.08,57.18,10.49"
+              ]
+            },
+            {
+              "text": "Few-shot prompting consistently degrades its performance.",
+              "coords": [
+                "16,159.15,597.08,293.66,10.49"
+              ]
+            },
+            {
+              "text": "Therefore, we recommend users directly describe the problem and specify the output format using a zero-shot setting for optimal results.",
+              "coords": [
+                "16,456.64,597.08,67.78,10.49",
+                "16,98.14,610.63,426.28,10.49",
+                "16,98.14,624.18,174.36,10.49"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "• Software Engineering Tasks: Due to the long evaluation times, which impact the efficiency of the RL process, large-scale RL has not been applied extensively in software engineering tasks. As a result, DeepSeek-R1 has not demonstrated a huge improvement over DeepSeek-V3 on software engineering benchmarks. Future versions will address this by implementing rejection sampling on software engineering data or incorporating asynchronous evaluations during the RL process to improve efficiency.",
+          "coords": [
+            "16,86.07,637.73,440.15,10.49",
+            "16,98.14,651.28,426.28,10.49",
+            "16,98.14,664.83,426.27,10.49",
+            "16,98.14,678.37,426.28,10.49",
+            "16,98.14,691.92,426.27,10.49",
+            "16,98.14,705.47,340.58,10.49"
+          ],
+          "sentences": [
+            {
+              "text": "• Software Engineering Tasks: Due to the long evaluation times, which impact the efficiency of the RL process, large-scale RL has not been applied extensively in software engineering tasks.",
+              "coords": [
+                "16,86.07,637.73,440.15,10.49",
+                "16,98.14,651.28,426.28,10.49",
+                "16,98.14,664.83,88.06,10.49"
+              ]
+            },
+            {
+              "text": "As a result, DeepSeek-R1 has not demonstrated a huge improvement over DeepSeek-V3 on software engineering benchmarks.",
+              "coords": [
+                "16,189.61,664.83,334.80,10.49",
+                "16,98.14,678.37,280.66,10.49"
+              ]
+            },
+            {
+              "text": "Future versions will address this by implementing rejection sampling on software engineering data or incorporating asynchronous evaluations during the RL process to improve efficiency.",
+              "coords": [
+                "16,383.65,678.37,140.76,10.49",
+                "16,98.14,691.92,426.27,10.49",
+                "16,98.14,705.47,340.58,10.49"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appendices": [
+    [
+      {
+        "kind": "section",
+        "blocks": [
+          {
+            "kind": "head",
+            "text": "Appendix A. Contributions and Acknowledgments",
+            "coords": [
+              "20,70.87,87.30,58.99,12.15",
+              "20,70.87,113.00,243.53,12.15"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "section",
+        "blocks": [
+          {
+            "kind": "head",
+            "text": "Core Contributors",
+            "coords": [
+              "20,70.87,144.86,90.60,10.23"
+            ]
+          },
+          {
+            "kind": "formula",
+            "text": "Daya Guo Dejian Yang Haowei Zhang Junxiao Song Ruoyu Zhang Runxin Xu Qihao Zhu Shirong Ma Peiyi Wang Xiao Bi Xiaokang Zhang Xingkai Yu Yu Wu Z.F. Wu Zhibin Gou Zhihong Shao Zhuoshu Li Ziyi Gao Contributors Aixin Liu Bing Xue Bingxuan Wang Bochao Wu Bei Feng Chengda Lu Chenggang Zhao Chengqi Deng Chong Ruan Damai Dai Deli Chen Dongjie Ji Erhang Li Fangyun Lin Fucong Dai Fuli Luo* Guangbo Hao Guanting Chen Guowei Li H. Zhang Hanwei Xu Honghui Ding Huazuo Gao Hui Qu Hui Li Jianzhong Guo Jiashi Li Jingchang Chen Jingyang Yuan Jinhao Tu Junjie Qiu Junlong Li J.L. Cai Jiaqi Ni Jian Liang Jin Chen Kai Dong Kai Hu* Kaichao You Kaige Gao Kang Guan Kexin Huang Kuai Yu Lean Wang Lecong Zhang Liang Zhao Litong Wang Liyue Zhang Lei Xu Leyi Xia Mingchuan Zhang Minghua Zhang Minghui Tang Mingxu Zhou Meng Li Miaojun",
+            "coords": []
+          },
+          {
+            "kind": "paragraph",
+            "text": "Wang Mingming Li Ning Tian Panpan Huang Peng Zhang Qiancheng Wang Qinyu Chen Qiushi Du Ruiqi Ge* Ruisong Zhang Ruizhe Pan Runji Wang R.J. Chen R.L. Jin Ruyi Chen Shanghao Lu Shangyan Zhou Shanhuang Chen Shengfeng Ye Shiyu Wang Shuiping Yu Shunfeng Zhou Shuting Pan S.S. Li Shuang Zhou Shaoqing Wu Shengfeng Ye Tao Yun Tian Pei Tianyu Sun T. Wang Wangding Zeng Wen Liu Wenfeng Liang Wenjun Gao Wenqin Yu* Wentao Zhang W.L. Xiao Wei An Xiaodong Liu Xiaohan Wang Xiaokang Chen Xiaotao Nie Xin Cheng Xin Liu Xin Xie Xingchao Liu Xinyu Yang Xinyuan Li Xuecheng Su Xuheng Lin X.Q. Li Xiangyue Jin Xiaojin Shen Xiaosha Chen Xiaowen Sun Xiaoxiang Wang Xinnan Song Xinyi Zhou Xianzu Wang Xinxia Shan",
+            "coords": [
+              "20,348.22,564.79,27.77,10.49",
+              "20,305.11,578.34,63.70,10.49",
+              "20,305.11,591.89,48.45,10.49",
+              "20,305.11,605.44,73.00,10.49",
+              "20,305.11,618.99,58.45,10.49",
+              "20,305.11,632.54,82.89,10.49",
+              "20,305.11,646.09,59.13,10.49",
+              "20,305.11,659.64,50.23,10.49",
+              "20,305.11,673.19,46.84,10.49",
+              "20,305.11,686.74,74.26,10.49",
+              "20,305.11,700.29,55.19,10.49",
+              "20,305.11,713.84,56.44,10.49",
+              "20,305.11,727.38,44.76,10.49",
+              "20,305.11,740.93,35.29,10.49",
+              "21,70.87,88.58,51.49,10.49",
+              "21,70.87,102.13,63.68,10.49",
+              "21,70.87,115.68,76.70,10.49",
+              "21,70.87,129.23,83.06,10.49",
+              "21,70.87,142.78,65.21,10.49",
+              "21,70.87,156.33,58.40,10.49",
+              "21,70.87,169.88,59.57,10.49",
+              "21,70.87,183.42,75.16,10.49",
+              "21,70.87,196.97,58.92,10.49",
+              "21,70.87,210.52,29.48,10.49",
+              "21,70.87,224.07,65.41,10.49",
+              "21,70.87,237.62,64.85,10.49",
+              "21,70.87,251.17,65.21,10.49",
+              "21,70.53,264.72,39.04,10.49",
+              "21,70.53,278.27,38.78,10.49",
+              "21,70.53,291.82,55.09,10.49",
+              "21,70.53,305.37,39.11,10.49",
+              "21,70.32,318.92,77.67,10.49",
+              "21,70.32,332.47,40.63,10.49",
+              "21,70.32,346.01,73.19,10.49",
+              "21,70.32,359.56,59.42,10.49",
+              "21,70.32,373.11,56.96,10.49",
+              "21,70.32,386.66,70.67,10.49",
+              "21,70.32,400.21,46.61,10.49",
+              "21,70.32,413.76,35.87,10.49",
+              "21,70.51,427.31,66.04,10.49",
+              "21,70.51,440.86,70.52,10.49",
+              "21,70.51,454.41,74.18,10.49",
+              "21,70.51,467.96,57.02,10.49",
+              "21,70.51,481.51,51.25,10.49",
+              "21,70.51,495.06,35.95,10.49",
+              "21,70.51,508.60,35.20,10.49",
+              "21,70.51,522.15,64.61,10.49",
+              "21,70.51,535.70,56.31,10.49",
+              "21,70.51,549.25,53.81,10.49",
+              "21,70.51,562.80,62.95,10.49",
+              "21,70.51,576.35,56.76,10.49",
+              "21,70.51,589.90,33.87,10.49",
+              "21,70.51,603.45,62.07,10.49",
+              "21,70.51,617.00,60.32,10.49",
+              "21,70.51,630.55,66.68,10.49",
+              "21,70.51,644.10,63.92,10.49",
+              "21,70.51,657.65,79.04,10.49",
+              "21,70.51,671.20,61.78,10.49",
+              "21,70.51,684.74,54.93,10.49",
+              "21,70.51,698.29,64.79,10.49",
+              "21,70.51,711.84,57.67,10.49"
+            ],
+            "sentences": [
+              {
+                "text": "Wang Mingming Li Ning Tian Panpan Huang Peng Zhang Qiancheng Wang Qinyu Chen Qiushi Du Ruiqi Ge* Ruisong Zhang Ruizhe Pan Runji Wang R.J. Chen R.L. Jin Ruyi Chen Shanghao Lu Shangyan Zhou Shanhuang Chen Shengfeng Ye Shiyu Wang Shuiping Yu Shunfeng Zhou Shuting Pan S.S. Li Shuang Zhou Shaoqing Wu Shengfeng Ye Tao Yun Tian Pei Tianyu Sun T. Wang Wangding Zeng Wen Liu Wenfeng Liang Wenjun Gao Wenqin Yu* Wentao Zhang W.L. Xiao Wei An Xiaodong Liu Xiaohan Wang Xiaokang Chen Xiaotao Nie Xin Cheng Xin Liu Xin Xie Xingchao Liu Xinyu Yang Xinyuan Li Xuecheng Su Xuheng Lin X.Q. Li Xiangyue Jin Xiaojin Shen Xiaosha Chen Xiaowen Sun Xiaoxiang Wang Xinnan Song Xinyi Zhou Xianzu Wang Xinxia Shan",
+                "coords": [
+                  "20,348.22,564.79,27.77,10.49",
+                  "20,305.11,578.34,63.70,10.49",
+                  "20,305.11,591.89,48.45,10.49",
+                  "20,305.11,605.44,73.00,10.49",
+                  "20,305.11,618.99,58.45,10.49",
+                  "20,305.11,632.54,82.89,10.49",
+                  "20,305.11,646.09,59.13,10.49",
+                  "20,305.11,659.64,50.23,10.49",
+                  "20,305.11,673.19,46.84,10.49",
+                  "20,305.11,686.74,74.26,10.49",
+                  "20,305.11,700.29,55.19,10.49",
+                  "20,305.11,713.84,56.44,10.49",
+                  "20,305.11,727.38,44.76,10.49",
+                  "20,305.11,740.93,35.29,10.49",
+                  "21,70.87,88.58,51.49,10.49",
+                  "21,70.87,102.13,63.68,10.49",
+                  "21,70.87,115.68,76.70,10.49",
+                  "21,70.87,129.23,83.06,10.49",
+                  "21,70.87,142.78,65.21,10.49",
+                  "21,70.87,156.33,58.40,10.49",
+                  "21,70.87,169.88,59.57,10.49",
+                  "21,70.87,183.42,75.16,10.49",
+                  "21,70.87,196.97,58.92,10.49",
+                  "21,70.87,210.52,29.48,10.49",
+                  "21,70.87,224.07,65.41,10.49",
+                  "21,70.87,237.62,64.85,10.49",
+                  "21,70.87,251.17,65.21,10.49",
+                  "21,70.53,264.72,39.04,10.49",
+                  "21,70.53,278.27,38.78,10.49",
+                  "21,70.53,291.82,55.09,10.49",
+                  "21,70.53,305.37,39.11,10.49",
+                  "21,70.32,318.92,77.67,10.49",
+                  "21,70.32,332.47,40.63,10.49",
+                  "21,70.32,346.01,73.19,10.49",
+                  "21,70.32,359.56,59.42,10.49",
+                  "21,70.32,373.11,56.96,10.49",
+                  "21,70.32,386.66,70.67,10.49",
+                  "21,70.32,400.21,46.61,10.49",
+                  "21,70.32,413.76,35.87,10.49",
+                  "21,70.51,427.31,66.04,10.49",
+                  "21,70.51,440.86,70.52,10.49",
+                  "21,70.51,454.41,74.18,10.49",
+                  "21,70.51,467.96,57.02,10.49",
+                  "21,70.51,481.51,51.25,10.49",
+                  "21,70.51,495.06,35.95,10.49",
+                  "21,70.51,508.60,35.20,10.49",
+                  "21,70.51,522.15,64.61,10.49",
+                  "21,70.51,535.70,56.31,10.49",
+                  "21,70.51,549.25,53.81,10.49",
+                  "21,70.51,562.80,62.95,10.49",
+                  "21,70.51,576.35,56.76,10.49",
+                  "21,70.51,589.90,33.87,10.49",
+                  "21,70.51,603.45,62.07,10.49",
+                  "21,70.51,617.00,60.32,10.49",
+                  "21,70.51,630.55,66.68,10.49",
+                  "21,70.51,644.10,63.92,10.49",
+                  "21,70.51,657.65,79.04,10.49",
+                  "21,70.51,671.20,61.78,10.49",
+                  "21,70.51,684.74,54.93,10.49",
+                  "21,70.51,698.29,64.79,10.49",
+                  "21,70.51,711.84,57.67,10.49"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 2,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 3,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 4,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 5,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 6,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 7,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 8,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 9,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 10,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 11,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 12,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 13,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 14,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 15,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 16,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 17,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 18,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 19,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 20,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 21,
+      "width": 595.276,
+      "height": 841.89
+    },
+    {
+      "page": 22,
+      "width": 595.276,
+      "height": 841.89
+    }
+  ]
+}
