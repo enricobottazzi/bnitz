@@ -61,16 +61,17 @@
     }
   },
   {
-    "source": "https://arxiv.org/html/1710.02060v2",
+    "source": "https://doi.org/10.1038/30918",
+    "readerMap": "examples/collective_dynamics_of_small_world_networks.bnitz",
     "input": {
-      "title": "On the best Hardy constant for quasi-arithmetic means and homogeneous deviation meansThanks: The research of the first author was supported by the Hungarian Scientific Research Fund (OTKA) Grant K-111651 and by the EFOP-3.6.1-16-2016-00022 project. This project is co-financed by the European Union and the European Social Fund.",
+      "title": "Collective Dynamics of ‘Small-World’ Networks",
       "authors": [
-        "Zsolt Páles",
-        "Paweł Pasteczka"
+        "Duncan J. Watts",
+        "Steven H. Strogatz"
       ],
       "affiliations": [],
-      "date": "18 Feb 2018",
-      "abstract": "The aim of this paper is to characterize the so-called Hardy means, i.e., those means $M\\colon\\bigcup_{n=1}^{\\infty}\\mathbb{R}_{+}^{n}\\to\\mathbb{R}_{+}$ that satisfy the inequality\n\n$$\\displaystyle\\sum_{n=1}^{\\infty}M(x_{1},\\dots,x_{n})\\leq C\\sum_{n=1}^{\\infty}x_{n}$$\n\nfor all positive sequences $(x_{n})$ with some finite positive constant $C$. The smallest constant $C$ satisfying this property is called the Hardy constant of the mean $M$.\n\nIn this paper we determine the Hardy constant in the cases when the mean $M$ is either a concave quasi-arithmetic or a concave and homogeneous deviation mean."
+      "date": "1998",
+      "abstract": "Networks of coupled dynamical systems have been used to model biological oscillators, Josephson junction arrays, excitable media, neural networks, spatial games, genetic control networks and many other self-organizing systems. Ordinarily, the connection topology is assumed to be either completely regular or completely random. But many biological, technological and social networks lie somewhere between these two extremes. Here we explore simple models of networks that can be tuned through this middle ground: regular networks ‘rewired’ to introduce increasing amounts of disorder. We find that these systems can be highly clustered, like regular lattices, yet have small characteristic path lengths, like random graphs. We call them ‘small-world’ networks, by analogy with the small-world phenomenon (popularly known as six degrees of separation). The neural network of the worm Caenorhabditis elegans, the power grid of the western United States, and the collaboration graph of film actors are shown to be small-world networks. Models of dynamical systems with small-world coupling display enhanced signal-propagation speed, computational power, and synchronizability. In particular, infectious diseases spread more easily in small-world networks than in regular lattices."
     },
     "output": {
       "planets": [
@@ -79,16 +80,31 @@
           "parent": "",
           "relation": "nucleus",
           "highlights": [
-            "In this paper we determine the Hardy constant in the cases when the mean $M$ is either a concave quasi-arithmetic or a concave and homogeneous deviation mean."
+            "We find that these systems can be highly clustered, like regular lattices, yet have small characteristic path lengths, like random graphs."
           ]
         },
         {
           "id": "p2",
           "parent": "p1",
-          "relation": "background",
+          "relation": "problem",
           "highlights": [
-            "$$\\displaystyle\\sum_{n=1}^{\\infty}M(x_{1},\\dots,x_{n})\\leq C\\sum_{n=1}^{\\infty}x_{n}$$",
-            "The smallest constant $C$ satisfying this property is called the Hardy constant"
+            "Ordinarily, the connection topology is assumed to be either completely regular or completely random. But many biological, technological and social networks lie somewhere between these two extremes."
+          ]
+        },
+        {
+          "id": "p3",
+          "parent": "p1",
+          "relation": "method",
+          "highlights": [
+            "regular networks ‘rewired’ to introduce increasing amounts of disorder"
+          ]
+        },
+        {
+          "id": "p4",
+          "parent": "p1",
+          "relation": "evidence",
+          "highlights": [
+            "The neural network of the worm Caenorhabditis elegans, the power grid of the western United States, and the collaboration graph of film actors are shown to be small-world networks."
           ]
         }
       ]
@@ -267,17 +283,20 @@
     }
   },
   {
-    "source": "https://arxiv.org/html/2509.05261v1",
+    "source": "https://arxiv.org/abs/2306.03341",
+    "readerMap": "examples/inference_time_intervention_eliciting_truthful_answers_from_a_language_model.bnitz",
     "input": {
-      "title": "Generation of realistic cardiac ultrasound sequences with ground truth motion and speckle decorrelation Thanks: This work was supported by the NSERC Canada Graduate Scholarships-Doctoral programs, the FRQNT Doctoral Training Scholarships, the French National Research Agency (LABEX PRIMES [ANR-11-LABX-0063], and ORCHID [ANR-22-CE45-0029-01] project).",
+      "title": "Inference-Time Intervention: Eliciting Truthful Answers from a Language Model",
       "authors": [
-        "Thierry Judge1,2, Nicolas Duchateau1,3, Khuram Faraz1, Pierre-Marc Jodoin2 and Olivier Bernard1"
+        "Kenneth Li",
+        "Oam Patel",
+        "Fernanda Viégas",
+        "Hanspeter Pfister",
+        "Martin Wattenberg"
       ],
-      "affiliations": [
-        "1 INSA, Universite Claude Bernard Lyon 1, CNRS UMR 5220, Inserm U1206, CREATIS, Villeurbanne, France. 2 Department of Computer Science, University of Sherbrooke, Sherbrooke, QC, Canada 3Institut Universitaire de France (IUF) thierry.judge@usherbrooke.ca"
-      ],
-      "date": "05 Sep 2025",
-      "abstract": "Simulated ultrasound image sequences are key for training and validating machine learning algorithms for left ventricular strain estimation. Several simulation pipelines have been proposed to generate sequences with corresponding ground truth motion, but they suffer from limited realism as they do not consider speckle decorrelation. In this work, we address this limitation by proposing an improved simulation framework that explicitly accounts for speckle decorrelation. Our method builds on an existing ultrasound simulation pipeline by incorporating a dynamic model of speckle variation. Starting from real ultrasound sequences and myocardial segmentations, we generate meshes that guide image formation. Instead of applying a fixed ratio of myocardial and background scatterers, we introduce a coherence map that adapts locally over time. This map is derived from correlation values measured directly from the real ultrasound data, ensuring that simulated sequences capture the characteristic temporal changes observed in practice. We evaluated the realism of our approach using ultrasound data from 98 patients in the CAMUS database. Performance was assessed by comparing correlation curves from real and simulated images. The proposed method achieved lower mean absolute error compared to the baseline pipeline, indicating that it more faithfully reproduces the decorrelation behavior seen in clinical data."
+      "affiliations": [],
+      "date": "2023",
+      "abstract": "We introduce Inference-Time Intervention (ITI), a technique designed to enhance the \"truthfulness\" of large language models (LLMs). ITI operates by shifting model activations during inference, following a set of directions across a limited number of attention heads. This intervention significantly improves the performance of LLaMA models on the TruthfulQA benchmark. On an instruction-finetuned LLaMA called Alpaca, ITI improves its truthfulness from 32.5% to 65.1%. We identify a tradeoff between truthfulness and helpfulness and demonstrate how to balance it by tuning the intervention strength. ITI is minimally invasive and computationally inexpensive. Moreover, the technique is data efficient: while approaches like RLHF require extensive annotations, ITI locates truthful directions using only few hundred examples. Our findings suggest that LLMs may have an internal representation of the likelihood of something being true, even as they produce falsehoods on the surface."
     },
     "output": {
       "planets": [
@@ -286,33 +305,24 @@
           "parent": "",
           "relation": "nucleus",
           "highlights": [
-            "improved simulation framework that explicitly accounts for speckle decorrelation"
+            "On an instruction-finetuned LLaMA called Alpaca, ITI improves its truthfulness from 32.5% to 65.1%.",
+            "This intervention significantly improves the performance of LLaMA models on the TruthfulQA benchmark."
           ]
         },
         {
           "id": "p2",
           "parent": "p1",
-          "relation": "problem",
+          "relation": "method",
           "highlights": [
-            "limited realism as they do not consider speckle decorrelation"
+            "ITI operates by shifting model activations during inference, following a set of directions across a limited number of attention heads."
           ]
         },
         {
           "id": "p3",
           "parent": "p1",
-          "relation": "method",
+          "relation": "scope",
           "highlights": [
-            "coherence map that adapts locally over time",
-            "correlation values measured directly from the real ultrasound data"
-          ]
-        },
-        {
-          "id": "p4",
-          "parent": "p1",
-          "relation": "evidence",
-          "highlights": [
-            "The proposed method achieved lower mean absolute error compared to the baseline pipeline",
-            "ultrasound data from 98 patients in the CAMUS database"
+            "We identify a tradeoff between truthfulness and helpfulness and demonstrate how to balance it by tuning the intervention strength."
           ]
         }
       ]

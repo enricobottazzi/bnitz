@@ -21,17 +21,37 @@ exportButton.addEventListener('click', () => {
   setTimeout(() => URL.revokeObjectURL(url), 30000);
 });
 
+function elapsedSeconds(started) {
+  return ((performance.now() - started) / 1000).toFixed(1);
+}
+
+function logPrefix(arxivId) {
+  return `[BNITZ] [${arxivId}]`;
+}
+
 async function mapAbstract({title, abstract, authors, affiliations, date}, arxivId, signal) {
-  const response = await fetch(config.origin + '/v1/abstract-map', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({arxivId, title, text: abstract, authors, affiliations, date}),
-    signal,
-  });
-  const result = await response.json().catch(() => null);
-  signal.throwIfAborted();
-  if (!response.ok) throw new Error(result?.error || 'BNITZ generation failed.');
-  return BNITZModel.validate(result);
+  const started = performance.now();
+  const waiting = setInterval(() => {
+    console.info(`${logPrefix(arxivId)} Still waiting for the map (${elapsedSeconds(started)} s).`);
+  }, 5000);
+  try {
+    const response = await fetch(config.origin + '/v1/abstract-map', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({arxivId, title, text: abstract, authors, affiliations, date}),
+      signal,
+    });
+    const result = await response.json().catch(() => null);
+    signal.throwIfAborted();
+    if (!response.ok) throw new Error(result?.error || 'BNITZ generation failed.');
+    return {
+      article: BNITZModel.validate(result),
+      requestSeconds: elapsedSeconds(started),
+      cached: response.headers.get('BNITZ-Cache') === 'HIT',
+    };
+  } finally {
+    clearInterval(waiting);
+  }
 }
 
 async function start() {
@@ -54,16 +74,23 @@ async function start() {
     return;
   }
 
+  const started = performance.now();
+  let prefix = logPrefix(requested.id);
   try {
+    console.info(`${prefix} Reading paper…`);
     const extracted = await chrome.tabs.sendMessage(tab.id, {type: 'bnitz-paper'}).catch(() => null);
-    if (signal.aborted) return;
+    signal.throwIfAborted();
     if (!extracted?.abstract) throw new Error(extracted?.error ?? 'Reload this arXiv HTML page to connect BNITZ.');
     const paper = arxivPaperFromUrl(extracted.source);
     if (!paper?.version || paper.paperId !== requested.paperId || (requested.version && requested.id !== paper.id)) {
       throw new Error('Could not verify the arXiv HTML revision.');
     }
-    const article = await mapAbstract(extracted, paper.id, AbortSignal.any([signal, AbortSignal.timeout(100000)]));
-    if (signal.aborted) return;
+    prefix = logPrefix(paper.id);
+    console.info(`${prefix} Paper read in ${elapsedSeconds(started)} s. Waiting for the map…`);
+    const {article, requestSeconds, cached} = await mapAbstract(
+      extracted, paper.id, AbortSignal.any([signal, AbortSignal.timeout(100000)]),
+    );
+    signal.throwIfAborted();
     if (article.source !== paper.source || article.text !== extracted.abstract) {
       throw new Error('The map does not match this arXiv page.');
     }
@@ -83,10 +110,12 @@ async function start() {
     exportButton.disabled = false;
     progress.hidden = true;
     map.hidden = false;
+    console.info(`${prefix} Map ready in ${elapsedSeconds(started)} s (request: ${requestSeconds} s${cached ? ', cached' : ''}).`);
   } catch (error) {
     if (signal.aborted) return;
     progress.hidden = true;
     status.textContent = error.name === 'TimeoutError' ? 'Map generation timed out.' : error.message;
+    console.warn(`${prefix} ${status.textContent} (${elapsedSeconds(started)} s)`);
     current = null;
   }
 }
