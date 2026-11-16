@@ -1,14 +1,27 @@
 import BNITZModel from '../../lang/model.js';
 
+const roleDefinitions = [
+  `- nucleus: ${BNITZModel.nucleusDefinition}`,
+  ...Object.entries(BNITZModel.relations).map(([role, [, , , definition]]) => `- ${role}: ${definition}`),
+].join('\n');
+
 const mapSystemPrompt = `Map the abstract as the smallest tree that preserves its argument. Use the metadata as context.
 
-Choose one nucleus (the main result, claim, or proposal). Attach each other planet to the claim it serves or tests. Use problem (gap or question), background (context), method (approach), evidence (support or test), implication (what follows), or scope (limits). Keep brief qualifiers with their claim.
+Choose one nucleus. Attach each other planet to the claim it serves or tests.
+
+${roleDefinitions}
 
 Return only JSON in this shape.
 {"planets":[{"id":"...","parent":"...","relation":"...","highlights":["..."]}]}
 
-- Give each planet a unique ID. The root has relation "nucleus" and parent "". All other parents are planet IDs that lead back to the root.
-- Give each planet one or more verbatim highlights from the abstract. Put the excerpt that best states the point first. Keep enough context to understand the point. Each highlight must occur exactly once in the abstract.`;
+- Give each planet a unique ID.
+- The root has relation "nucleus" and parent "".
+- All other parents are planet IDs that lead back to the root.
+- Give each planet one or more verbatim highlights from the abstract.
+- Highlight the words that carry a planet’s main point.
+- Include only the context needed to understand it.
+- Put the excerpt that best states the point first.
+- Each highlight must occur exactly once in the abstract.`;
 
 function object(properties) {
   return {type: 'object', properties, required: Object.keys(properties), additionalProperties: false};

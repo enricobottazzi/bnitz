@@ -4,12 +4,12 @@ Open the paper’s arXiv HTML page and click BNITZ in the Chrome toolbar. Select
 
 ```mermaid
 flowchart LR
-    A["arXiv HTML"] --> B["paper.json"]
-    B -->|Abstract and metadata| C["paper.bnitz"]
-    C --> D["HTML highlights"]
+    A["arXiv HTML"] -->|Step 1| B["paper.json"]
+    B -->|Step 2| C["paper.bnitz"]
+    C -->|Step 3| D["HTML highlights"]
 ```
 
-1. Chrome extracts, from the arXiv HTML, the abstract and ordered body blocks into a `paper.json` document in memory. It skips navigation, bylines, notes, and the bibliography, and retains section headings and appendices.
+1. Chrome extracts the metadata, abstract, and ordered body blocks into a `paper.json` document in memory. It uses the same text extraction rules for the title and abstract. The body keeps main-text headings and list markers and skips navigation, bylines, notes, the bibliography, appendices, and acknowledgements. Appendix and acknowledgement headings also identify ordinary sections to skip. The `source` URL includes the arXiv version recorded on the page.
 2. The Worker maps, via an LLM, the abstract with the [prompt](worker/recipes.mjs) and [worked examples](worker/abstract-map-examples.json). It verifies the quotes and planet tree and returns a v3 `.bnitz` document. The body stays in Chrome.
 3. Selecting a planet matches the `.bnitz` document to the open abstract and paints its highlight ranges. **Export abstract map** downloads the same document.
 

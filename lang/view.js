@@ -1,5 +1,5 @@
 const BNITZView = (() => {
-  const {relations, label, relationDirection, planetRadius, layout} = BNITZModel;
+  const {nucleusDefinition, relations, label, relationDirection, planetRadius, layout} = BNITZModel;
   const iconUrl = icon => `../assets/${icon}.svg?v=0.0.5`;
 
   function textElement(tag, text) {
@@ -95,10 +95,10 @@ const BNITZView = (() => {
     }
 
     const entries = {
-      nucleus: ['Nucleus', null, null, 'The paper’s main contribution. It can be a finding, theorem, argument, synthesis, artifact, guideline, or research plan.'],
+      nucleus: ['Nucleus', null, null, nucleusDefinition],
       ...relations,
     };
-    for (const [key, [label, slot, icon, description]] of Object.entries(entries)) {
+    for (const [key, [label, slot, icon, definition, guidance]] of Object.entries(entries)) {
       const button = document.createElement('button');
       button.type = 'button';
       button.setAttribute('aria-pressed', 'false');
@@ -120,6 +120,7 @@ const BNITZView = (() => {
         onSelect?.(key);
         showRelation(key);
       });
+      const description = guidance ? `${definition} ${guidance}` : definition;
       buttons.set(key, {button, description: `${label} — ${description}`});
       clock.append(button);
     }

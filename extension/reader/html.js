@@ -1,7 +1,8 @@
 (() => {
   const omitted = 'nav, script, style, template, form, .ltx_title_abstract, .ltx_keywords, .ltx_note, .ltx_rdf';
   const bodyOmitted = `${omitted}, footer, .ltx_abstract, .ltx_title_document, .ltx_authors, .ltx_dates,
-    .ltx_pubnotes, .ltx_toclist, .ltx_pagination, .ltx_bibliography`;
+    .ltx_pubnotes, .ltx_toclist, .ltx_pagination, .ltx_bibliography,
+    .ltx_appendix, .ltx_acknowledgements, .ltx_acknowledgments`;
   const blocks = 'h1, h2, h3, h4, h5, h6, p, pre, li, tr, figcaption, .ltx_para, .ltx_equation';
   const clean = text => text.replace(/\s+/g, ' ').trim();
 
@@ -22,7 +23,7 @@
     return {authors: unique(names.some(Boolean) ? names : declared), affiliations: unique(affiliations)};
   }
 
-  function readText(root, parts, exclude = omitted) {
+  function readText(root, parts, exclude = node => node.matches(omitted)) {
     let text = '', pending = '';
     const separate = value => { if (text && value.length > pending.length) pending = value; };
     function append(value, node, offset) {
@@ -38,7 +39,7 @@
           if (word.trim()) append(word, node, index);
           else separate(' ');
         }
-      } else if (node.nodeType === Node.ELEMENT_NODE && !node.matches(exclude)) {
+      } else if (node.nodeType === Node.ELEMENT_NODE && !exclude(node)) {
         const paragraph = node.matches(blocks);
         if (paragraph) separate('\n\n');
         if (node.localName === 'math') {
@@ -54,8 +55,17 @@
         else if (node.matches('td, th')) separate(' ');
       }
     }
-    visit(root);
+    if (root) visit(root);
     return text;
+  }
+
+  function omitFromBody(node) {
+    if (node.matches(bodyOmitted)) return true;
+    if (!node.matches('section, .ltx_section')) return false;
+    const heading = node.querySelector(':scope > :is(h1, h2, h3, h4, h5, h6)');
+    const label = clean(readText(heading, null, element => element.matches(`${omitted}, .ltx_tag`)))
+      .replace(/^\d+(?:\.\d+)*[.)]?\s+/, '');
+    return /^appendi(?:x|ces)(?:$|[\s:.–—])/i.test(label) || /^acknowledg(?:e)?ments?[.!:]?$/i.test(label);
   }
 
   function paperPage() {
@@ -74,8 +84,10 @@
     const {article, abstract, revision, source, date} = paperPage();
     const text = readText(abstract);
     if (!text) throw new Error('The tagged arXiv abstract is empty.');
-    const title = clean(article.querySelector('.ltx_title_document, h1')?.textContent ?? '') || 'arXiv ' + revision;
-    const body = readText(article, null, bodyOmitted).split('\n\n').filter(Boolean)
+    const titleNode = article.querySelector('.ltx_title_document, h1');
+    const titleText = readText(titleNode, null, node => node.matches(`${omitted}, .ltx_pubnotes`));
+    const title = clean(titleText) || 'arXiv ' + revision;
+    const body = readText(article, null, omitFromBody).split('\n\n').filter(Boolean)
       .map((text, index) => ({id: `b${index + 1}`, text}));
     return {title, source, ...readByline(article), date, abstract: text, body};
   }

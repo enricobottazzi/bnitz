@@ -1,11 +1,16 @@
 const BNITZModel = (() => {
+  const nucleusDefinition = 'The paper’s main contribution. It can be a finding, theorem, argument, synthesis, artifact, guideline, or research plan.';
   const relations = {
     problem: ['Problem', 6, 'problem', 'States the question, gap, or practical problem the parent addresses.'],
     background: ['Background', 1, 'background', 'Gives prior work, definitions, or other context needed to understand the parent.'],
     method: ['Method', 2, 'method', 'Describes how the parent’s result was obtained or how its proposed work would be carried out.'],
-    implication: ['Implication', 3, 'implication', 'States what follows from the parent, such as a prediction, an application, or a next step.'],
+    implication: ['Implication', 3, 'implication', 'States what follows from the parent, such as a prediction, an application, a next step, or a higher-level consequence.'],
     evidence: ['Evidence', 4, 'evidence', 'Uses results, analyses, or comparisons to support, challenge, or assess the parent.'],
-    scope: ['Scope', 5, 'scope', 'Specifies where, when, or under what conditions the parent applies, including limitations and assumptions. Give a limitation or assumption its own Scope planet when it needs separate attention, and fold brief qualifiers into the parent.'],
+    scope: [
+      'Scope', 5, 'scope',
+      'Specifies where, when, or under what conditions the parent applies, including limitations and assumptions.',
+      'Give a limitation or assumption its own Scope planet when it needs separate attention, and fold brief qualifiers into the parent.',
+    ],
   };
 
   function validRange(text, start, end) {
@@ -119,7 +124,7 @@ const BNITZModel = (() => {
     return {rings, planets, radius: root.radius + gap};
   }
 
-  return {relations, validRange, validate, label, highlights, relationDirection, planetRadius, layout};
+  return {nucleusDefinition, relations, validRange, validate, label, highlights, relationDirection, planetRadius, layout};
 })();
 
 if (typeof module !== 'undefined') module.exports = BNITZModel;
