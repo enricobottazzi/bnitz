@@ -12,14 +12,8 @@ let current;
 exportButton.addEventListener('click', () => {
   const article = current?.article;
   if (!article) return;
-  const data = JSON.stringify(article, null, 2) + '\n';
-  const url = URL.createObjectURL(new Blob([data], {type: 'application/json'}));
-  const link = document.createElement('a');
   const paperId = article.arxivId.replaceAll('/', '-');
-  link.href = url;
-  link.download = `bnitz-${paperId}.bnitz`;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 30000);
+  BNITZView.download(article, `bnitz-${paperId}.bnitz`);
 });
 
 function elapsedSeconds(started) {

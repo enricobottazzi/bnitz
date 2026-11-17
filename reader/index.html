@@ -8,7 +8,7 @@
   <title>BNITZ</title>
   <link rel="icon" type="image/svg+xml" href="/assets/problem.svg?v=0.0.5">
   <link rel="stylesheet" href="/bnitz.css?v=0.0.4">
-  <link rel="stylesheet" href="/reader.css?v=0.0.7">
+  <link rel="stylesheet" href="/reader.css?v=0.0.17">
   <link rel="preload" as="image" href="/assets/problem.svg?v=0.0.5">
   <link rel="preload" as="image" href="/assets/background.svg?v=0.0.5">
   <link rel="preload" as="image" href="/assets/method.svg?v=0.0.5">
@@ -16,15 +16,18 @@
   <link rel="preload" as="image" href="/assets/evidence.svg?v=0.0.5">
   <link rel="preload" as="image" href="/assets/scope.svg?v=0.0.5">
   <script defer src="/vendor/katex.min.js"></script>
-  <script defer src="/lang/model.js"></script>
-  <script defer src="/lang/view.js?v=0.0.6"></script>
-  <script defer src="/reader.js?v=0.0.9"></script>
+  <script defer src="/lang/model.js?v=0.0.11"></script>
+  <script defer src="/lang/view.js?v=0.0.7"></script>
+  <script defer src="/reader.js?v=0.0.16"></script>
 </head>
 <body>
   <header class="sidebar">
     <a class="wordmark" href="#" aria-label="BNITZ home"><span>BNITZ</span></a>
     <p class="tagline">The layout of ideas</p>
     <div class="reader-links">
+      <a id="playground-link" href="#playground" aria-label="Playground" title="Playground">
+        <img src="/assets/orbit.svg" alt="" width="16" height="16">
+      </a>
       <a role="link" aria-disabled="true" aria-label="BNITZ Chrome extension">
         <img src="/assets/chrome.svg" alt="" width="16" height="16">
       </a>
@@ -44,6 +47,24 @@
         <h1 id="title" tabindex="-1"></h1>
         <p id="metadata"></p>
       </header>
+      <div id="playground-tools" hidden>
+        <div class="actions">
+          <button type="button" id="import-document">Import .bnitz</button>
+          <input type="file" id="document-file" accept=".bnitz,application/json" hidden>
+          <button type="button" id="export-document">Export .bnitz</button>
+        </div>
+        <p id="document-status" class="status" role="status"></p>
+        <details id="document-details">
+          <summary>Text &amp; details</summary>
+          <form id="document-fields">
+            <label class="document-wide">Title<input id="document-title" name="title" required></label>
+            <label>Author<input id="document-author" name="author"></label>
+            <label>Year<input id="document-year" name="year" type="number" min="1" max="9999" step="1"></label>
+            <label class="document-wide">Source<input id="document-source" name="source" type="url"></label>
+            <label class="document-wide">Text<textarea id="document-text" name="text" rows="8" required></textarea></label>
+          </form>
+        </details>
+      </div>
       <form id="planet-editor" aria-label="Playground" hidden>
         <div class="actions">
           <button type="button" id="add-planet">Add planet</button>
@@ -65,16 +86,14 @@
       </form>
       <div class="reader-grid">
         <article id="abstract" class="reader-text" aria-label="Abstract" tabindex="0"></article>
-        <div class="reader-layout">
-          <div id="map" class="map map-pane" aria-label="BNITZ language map"></div>
-          <details class="reader-legend">
-            <summary>Legend</summary>
-            <div class="reader-legend-panel">
-              <div id="legend"></div>
-              <a href="https://github.com/enricobottazzi/bnitz/blob/main/RULES.md" target="_blank" rel="noopener noreferrer">RULES.md</a>
-            </div>
-          </details>
-        </div>
+        <div id="map" class="map map-pane" aria-label="BNITZ language map"></div>
+        <details class="reader-legend">
+          <summary>Legend</summary>
+          <div class="reader-legend-panel">
+            <div id="legend"></div>
+            <a href="https://github.com/enricobottazzi/bnitz/blob/main/RULES.md" target="_blank" rel="noopener noreferrer">RULES.md</a>
+          </div>
+        </details>
       </div>
     </section>
   </main>

@@ -62,10 +62,12 @@ Pass a folder instead to open a reading list.
 
 The deployed Reader displays the maps in `examples/`. [Open the live Reader](https://bnitz.org/).
 
+The orbit icon opens a random example in the **Playground**. Import a v3 `.bnitz` file, edit its text and details, adjust planets and highlights, then export it. The `playground` link on a reading opens an editable copy. The Playground is available on desktop and mobile. Text edits move the passage offsets with the text; if a passage is deleted entirely, select a new highlight or remove its planet before exporting. Changes stay in the current page until exported.
+
 ## Repository structure
 
 - [`lang/`](lang/) defines the `.bnitz` language model and map layout in `model.js`. `view.js` renders the text, highlights, map, and legend.
-- [`reader/`](reader/) contains the reading list, article view, inline Playground, and local server.
+- [`reader/`](reader/) contains the reading list, article view, Playground, and local server.
 - [`extension/`](extension/) contains the Chrome extension and its [privacy policy](extension/PRIVACY.md).
 - [`examples/`](examples/) contains the published paper maps. [`archive/`](archive/) holds maps outside the reading list.
 - [`assets/`](assets/), [`bnitz.css`](bnitz.css), and [`vendor/`](vendor/) provide the icons, base styles, and bundled KaTeX.

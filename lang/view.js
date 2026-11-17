@@ -8,6 +8,18 @@ const BNITZView = (() => {
     return element;
   }
 
+  function download(article, filename) {
+    const data = JSON.stringify(article, null, 2) + '\n';
+    const url = URL.createObjectURL(new Blob([data], {type: 'application/json'}));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+  }
+
   const latex = new RegExp([
     /(?<![\\$])\$\$(?<display>(?:\\.|[^\\$])+)\$\$/,
     /(?<![\\$])\$(?![\s$])(?<inline>(?:\\.|[^\\$\r\n])+?)(?<!\s)\$(?![\d$])/,
@@ -181,5 +193,5 @@ const BNITZView = (() => {
     }
   }
 
-  return {textElement, legend, paintText, map, select};
+  return {textElement, download, legend, paintText, map, select};
 })();

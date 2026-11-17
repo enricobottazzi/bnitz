@@ -81,6 +81,44 @@ const BNITZModel = (() => {
   const label = span => relations[span.relation]?.[0] ?? 'Nucleus';
   const highlights = span => span.highlights ?? [{start: span.start, end: span.end}];
 
+  // Track a textarea edit in UTF-16 offsets, keeping insertions at a passage's
+  // edges outside the passage. Deleted anchors stay empty until re-highlighted.
+  function editText(document, text, selection) {
+    const before = document.text;
+    if (text === before) return document;
+    if (selection?.inputType?.endsWith('Backward') && selection.start === selection.end && text.length < before.length) {
+      selection = {...selection, start: Math.max(0, selection.start + text.length - before.length)};
+    }
+    let start = 0;
+    while (start < (selection?.start ?? before.length) && start < text.length && before[start] === text[start]) start++;
+    if (start > 0 && (/[\uDC00-\uDFFF]/.test(before.charAt(start)) || /[\uDC00-\uDFFF]/.test(text.charAt(start)))) start--;
+    let oldEnd = before.length;
+    let newEnd = text.length;
+    while (oldEnd > (selection?.end ?? 0) && newEnd > (selection ? start : 0) && before[oldEnd - 1] === text[newEnd - 1]) {
+      oldEnd--;
+      newEnd--;
+    }
+    start = Math.min(start, oldEnd, newEnd);
+    if (/[\uDC00-\uDFFF]/.test(before.charAt(oldEnd))) { oldEnd++; newEnd++; }
+    const delta = newEnd - oldEnd;
+    const move = range => {
+      const from = range.start >= oldEnd ? range.start + delta : Math.min(range.start, start);
+      const to = range.end <= start ? range.end : range.end >= oldEnd ? range.end + delta : newEnd;
+      return {...range, start: from, end: Math.max(from, to)};
+    };
+    return {...document, text, spans: document.spans.map(span => {
+      const next = {...span, ...move({start: span.start, end: span.end})};
+      if (span.highlights) {
+        next.highlights = span.highlights.map(move).filter(range => validRange(text, range.start, range.end));
+        if (!validRange(text, next.start, next.end) && next.highlights.length) {
+          const {start, end} = next.highlights[0];
+          Object.assign(next, {start, end});
+        }
+      }
+      return next;
+    })};
+  }
+
   const point = angle => [Math.sin(angle), -Math.cos(angle)];
   const turn = 2 * Math.PI;
   const slotCount = Object.keys(relations).length;
@@ -148,7 +186,7 @@ const BNITZModel = (() => {
     return {rings, planets, radius: root.radius + gap};
   }
 
-  return {nucleusDefinition, relations, validRange, validate, validateAbstractMap, validateArxiv, label, highlights, relationDirection, planetRadius, layout};
+  return {nucleusDefinition, relations, validRange, validate, validateAbstractMap, validateArxiv, label, highlights, editText, relationDirection, planetRadius, layout};
 })();
 
 if (typeof module !== 'undefined') module.exports = BNITZModel;

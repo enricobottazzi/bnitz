@@ -8,6 +8,15 @@ const abstract = document.querySelector('#abstract');
 const map = document.querySelector('#map');
 const status = document.querySelector('#status');
 const playground = textElement('a', 'playground');
+const playgroundLink = document.querySelector('#playground-link');
+const playgroundTools = document.querySelector('#playground-tools');
+const importDocument = document.querySelector('#import-document');
+const exportDocument = document.querySelector('#export-document');
+const documentFile = document.querySelector('#document-file');
+const documentStatus = document.querySelector('#document-status');
+const documentDetails = document.querySelector('#document-details');
+const documentFields = document.querySelector('#document-fields');
+const fields = documentFields.elements;
 const editor = document.querySelector('#planet-editor');
 const addPlanet = document.querySelector('#add-planet');
 const removePlanet = document.querySelector('#remove-planet');
@@ -29,6 +38,8 @@ let selectedId;
 let hovered;
 let draft;
 let pendingRange;
+let textSelection;
+let workspace;
 
 const showLegendRelation = BNITZView.legend(document.querySelector('#legend'), key => {
   if (!relation.disabled && [...relation.options].some(option => option.value === key)) relation.value = key;
@@ -47,6 +58,34 @@ function sourceLink(source) {
   } catch {
     return null;
   }
+}
+
+function renderHeading() {
+  const editing = active === workspace;
+  title.textContent = article.title || 'Playground';
+  document.title = `BNITZ - ${editing ? 'Playground' : article.title}`;
+  abstract.setAttribute('aria-label', article.title ? `${article.title} article text` : 'Article text');
+  const details = [article.author, article.year && textElement('time', article.year), sourceLink(article.source),
+    !editing && playground].filter(Boolean);
+  metadata.replaceChildren(...details.flatMap((part, index) => index ? [' · ', part] : [part]));
+}
+
+function openWorkspace(document, name) {
+  workspace = {article: document, name};
+  if (location.hash === '#playground') show();
+  else location.hash = '#playground';
+}
+
+function openRandomExample() {
+  const examples = [...library.values()];
+  const example = examples[Math.floor(Math.random() * examples.length)];
+  if (example) openWorkspace(structuredClone(example.article), example.name);
+  else location.hash = '#playground';
+}
+
+function checkPassages() {
+  documentStatus.textContent = article.spans.some(span => !BNITZModel.validRange(article.text, span.start, span.end))
+    ? 'A passage was deleted. Select its planet and set a new highlight, or remove the planet.' : '';
 }
 
 function paintArticle() {
@@ -79,6 +118,7 @@ function paintArticle() {
   abstract.replaceChildren(fragment);
   abstract.scrollTop = scrollTop;
   highlight();
+  updateEditor();
 }
 
 function highlight() {
@@ -102,17 +142,13 @@ function selectPlanet(planet) {
   highlight();
   updateEditor();
   editorStatus.textContent = '';
-  const first = abstract.querySelector('mark.highlighted');
-  if (!first) return;
-  abstract.scrollTop = Math.max(0, first.offsetTop - abstract.clientHeight / 4);
-  if (editor.hidden && matchMedia('(max-width: 600px)').matches) abstract.scrollIntoView({block: 'start'});
 }
 
 function redrawMap() {
   if (article.nucleus) BNITZView.map(map, article, selectPlanet);
   else map.replaceChildren();
   paintArticle();
-  updateEditor();
+  if (active === workspace) checkPassages();
 }
 
 function selectPrompt(select) {
@@ -175,7 +211,9 @@ function updateEditor() {
   const editing = Boolean(draft);
   const hasHighlights = Boolean(draft?.highlights.length);
   const isNucleus = !article?.nucleus || draft?.planet?.id === article.nucleus;
-  addPlanet.disabled = map.inert = editing;
+  map.inert = editing;
+  addPlanet.disabled = editing || !article?.text.trim();
+  importDocument.disabled = exportDocument.disabled = documentDetails.inert = editing;
   removePlanet.disabled = editPlanet.disabled = editing || !selectedId;
   clearHighlights.disabled = !hasHighlights;
   cancelPlanet.disabled = !editing;
@@ -194,7 +232,6 @@ function startDraft(planet) {
   editorStatus.textContent = '';
   configurePlanetSettings(planet);
   paintArticle();
-  updateEditor();
   abstract.focus({preventScroll: true});
 }
 
@@ -218,21 +255,69 @@ function setHighlight() {
   window.getSelection().removeAllRanges();
   pendingRange = null;
   paintArticle();
-  updateEditor();
 }
 
-playground.setAttribute('aria-controls', editor.id);
+playgroundLink.addEventListener('click', event => {
+  event.preventDefault();
+  openRandomExample();
+});
+
+playground.href = '#playground';
 playground.addEventListener('click', event => {
   event.preventDefault();
-  const opening = editor.hidden;
-  if (opening && article === active.article) article = structuredClone(article);
-  editor.hidden = !opening;
-  playground.setAttribute('aria-expanded', String(opening));
-  if (!opening && draft) {
-    resetDraft();
-    paintArticle();
+  openWorkspace(structuredClone(article), active.name);
+});
+
+importDocument.addEventListener('click', () => documentFile.click());
+documentFile.addEventListener('change', async () => {
+  const file = documentFile.files[0];
+  if (!file) return;
+  try {
+    const imported = BNITZModel.validate(JSON.parse((await file.text()).replace(/^\uFEFF/, '')));
+    openWorkspace(imported, file.name);
+  } catch (error) {
+    documentStatus.textContent = `Could not import: ${error.message}`;
+  } finally {
+    documentFile.value = '';
   }
-  updateEditor();
+});
+
+exportDocument.addEventListener('click', () => {
+  if (!documentFields.checkValidity()) {
+    documentDetails.open = true;
+    documentFields.reportValidity();
+    return;
+  }
+  try {
+    BNITZView.download(BNITZModel.validate(article), workspace.name);
+    documentStatus.textContent = '';
+  } catch (error) {
+    documentStatus.textContent = `Could not export: ${error.message}`;
+  }
+});
+
+documentFields.addEventListener('submit', event => event.preventDefault());
+documentFields.addEventListener('input', ({target: {name, value}}) => {
+  if (name === 'text') return;
+  if (name !== 'title' && !value) delete article[name];
+  else article[name] = name === 'year' ? Number(value) : value;
+  renderHeading();
+});
+fields.text.addEventListener('beforeinput', event => {
+  textSelection = event.inputType.startsWith('history') ? undefined
+    : {start: fields.text.selectionStart, end: fields.text.selectionEnd, inputType: event.inputType};
+});
+fields.text.addEventListener('input', () => {
+  // Textareas use LF line endings; adjust imported CRLF offsets before typing.
+  for (const match of [...article.text.matchAll(/\r\n?/g)].reverse()) {
+    const end = match.index + match[0].length;
+    article = BNITZModel.editText(article, article.text.slice(0, match.index) + '\n' + article.text.slice(end),
+      {start: match.index, end});
+  }
+  article = workspace.article = BNITZModel.editText(article, fields.text.value, textSelection);
+  textSelection = undefined;
+  pendingRange = null;
+  redrawMap();
 });
 
 addPlanet.addEventListener('click', () => startDraft());
@@ -241,7 +326,6 @@ cancelPlanet.addEventListener('click', () => {
   const trigger = draft.planet ? editPlanet : addPlanet;
   resetDraft();
   paintArticle();
-  updateEditor();
   trigger.focus({preventScroll: true});
 });
 
@@ -268,7 +352,6 @@ clearHighlights.addEventListener('click', () => {
   pendingRange = null;
   window.getSelection().removeAllRanges();
   paintArticle();
-  updateEditor();
 });
 
 relation.addEventListener('change', () => showLegendRelation(relation.value));
@@ -311,28 +394,29 @@ abstract.addEventListener('keyup', updateTextSelection);
 
 function show() {
   const previous = active;
-  active = library.get(location.hash);
+  active = location.hash === '#playground' ? workspace : library.get(location.hash);
   reading.hidden = !active;
   readings.hidden = Boolean(active);
   if (active === previous) return;
   selectedId = hovered = null;
   article = active?.article;
   resetDraft();
-  editor.hidden = true;
-  playground.setAttribute('aria-expanded', 'false');
-  document.title = active ? `BNITZ - ${active.article.title}` : 'BNITZ';
+  const editing = active === workspace;
+  editor.hidden = playgroundTools.hidden = !editing;
+  if (editing) playgroundLink.setAttribute('aria-current', 'page');
+  else playgroundLink.removeAttribute('aria-current');
+  document.title = 'BNITZ';
   if (active) {
-    const {author, year} = active;
-    title.textContent = article.title;
-    abstract.setAttribute('aria-label', `${article.title} article text`);
-    playground.href = active.row.hash;
-    const details = [author, year && textElement('time', year), sourceLink(article.source), playground].filter(Boolean);
-    metadata.replaceChildren(...details.flatMap((part, index) => index ? [' · ', part] : [part]));
+    renderHeading();
+    if (editing) {
+      for (const input of fields) input.value = article[input.name] ?? '';
+      documentDetails.open = !article.text;
+    }
     redrawMap();
     abstract.scrollTop = 0;
     title.focus({preventScroll: true});
   } else {
-    previous?.row.focus({preventScroll: true});
+    previous?.row?.focus({preventScroll: true});
   }
   window.scrollTo(0, 0);
 }
@@ -368,7 +452,7 @@ async function load() {
   if (!fromFolder && entries.length && !location.href.includes('#')) {
     history.replaceState(null, '', entries[0].row.hash);
   }
-  window.addEventListener('hashchange', show);
+  if (location.hash === '#playground' && !workspace && entries.length) openRandomExample();
   show();
 }
 
@@ -376,9 +460,17 @@ abstract.addEventListener('pointerover', event => {
   if (!draft && event.pointerType !== 'touch') hoverText(event.target.closest('mark'));
 });
 abstract.addEventListener('pointerleave', () => hoverText(null));
+// Keep pointer selection from scrolling a focusable map or legend item into view.
+for (const container of [map, document.querySelector('#legend')]) {
+  container.addEventListener('pointerdown', event => {
+    if (event.target.closest('.planet, button')) event.preventDefault();
+  });
+}
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && !draft && (selectedId || hovered)) selectPlanet(null);
 });
+window.addEventListener('hashchange', show);
+show();
 load().catch(error => {
   status.textContent = error.message;
   status.hidden = false;
