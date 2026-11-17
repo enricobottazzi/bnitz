@@ -62,7 +62,7 @@ Pass a folder instead to open a reading list.
 
 The deployed Reader displays the maps in `examples/`. [Open the live Reader](https://bnitz.org/).
 
-The orbit icon opens a random example in the **Playground**. Import a v3 `.bnitz` file, edit its text and details, adjust planets and highlights, then export it. The `playground` link on a reading opens an editable copy. The Playground is available on desktop and mobile. Text edits move the passage offsets with the text; if a passage is deleted entirely, select a new highlight or remove its planet before exporting. Changes stay in the current page until exported.
+The orbit icon opens a random example in the **Playground**. Import a v3 `.bnitz` file, edit its text and details, adjust planets and highlights, then export it. Exports use the current title as the filename and include the current metadata. **Start fresh** clears the document and map. The `playground` link on a reading opens an editable copy. The Playground is available on desktop and mobile. Text edits move the passage offsets with the text; if a passage is deleted entirely, select a new highlight or remove its planet before exporting. Changes stay in the current page until exported.
 
 ## Repository structure
 

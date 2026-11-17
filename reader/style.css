@@ -20,6 +20,7 @@ main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); pa
 .reader-heading h1 { margin: 0 0 7px; }
 .reader-heading h1:focus { outline: none; }
 .reader-heading a { text-decoration: underline; }
+.placeholder, #document-fields ::placeholder { color: #aaa; opacity: 1; }
 #playground-tools { margin: -12px 0 26px; }
 #document-details { margin-top: 12px; }
 #document-details summary { width: fit-content; cursor: pointer; }

@@ -12,6 +12,7 @@ const playgroundLink = document.querySelector('#playground-link');
 const playgroundTools = document.querySelector('#playground-tools');
 const importDocument = document.querySelector('#import-document');
 const exportDocument = document.querySelector('#export-document');
+const resetDocument = document.querySelector('#reset-document');
 const documentFile = document.querySelector('#document-file');
 const documentStatus = document.querySelector('#document-status');
 const documentDetails = document.querySelector('#document-details');
@@ -62,16 +63,25 @@ function sourceLink(source) {
 
 function renderHeading() {
   const editing = active === workspace;
-  title.textContent = article.title || 'Playground';
+  title.textContent = article.title || 'Title';
+  title.classList.toggle('placeholder', !article.title);
   document.title = `BNITZ - ${editing ? 'Playground' : article.title}`;
   abstract.setAttribute('aria-label', article.title ? `${article.title} article text` : 'Article text');
-  const details = [article.author, article.year && textElement('time', article.year), sourceLink(article.source),
+  const placeholder = label => {
+    const span = textElement('span', label);
+    span.className = 'placeholder';
+    return span;
+  };
+  const details = [
+    article.author || (editing && placeholder('Author')),
+    article.year ? textElement('time', article.year) : editing && placeholder('Year'),
+    sourceLink(article.source) || (editing && placeholder('Source')),
     !editing && playground].filter(Boolean);
   metadata.replaceChildren(...details.flatMap((part, index) => index ? [' · ', part] : [part]));
 }
 
-function openWorkspace(document, name) {
-  workspace = {article: document, name};
+function openWorkspace(document) {
+  workspace = {article: document};
   if (location.hash === '#playground') show();
   else location.hash = '#playground';
 }
@@ -79,7 +89,7 @@ function openWorkspace(document, name) {
 function openRandomExample() {
   const examples = [...library.values()];
   const example = examples[Math.floor(Math.random() * examples.length)];
-  if (example) openWorkspace(structuredClone(example.article), example.name);
+  if (example) openWorkspace(structuredClone(example.article));
   else location.hash = '#playground';
 }
 
@@ -265,7 +275,14 @@ playgroundLink.addEventListener('click', event => {
 playground.href = '#playground';
 playground.addEventListener('click', event => {
   event.preventDefault();
-  openWorkspace(structuredClone(article), active.name);
+  openWorkspace(structuredClone(article));
+});
+
+resetDocument.addEventListener('click', () => {
+  window.getSelection().removeAllRanges();
+  textSelection = undefined;
+  showLegendRelation('nucleus');
+  openWorkspace({version: 3, title: '', text: '', nucleus: null, spans: []});
 });
 
 importDocument.addEventListener('click', () => documentFile.click());
@@ -274,7 +291,7 @@ documentFile.addEventListener('change', async () => {
   if (!file) return;
   try {
     const imported = BNITZModel.validate(JSON.parse((await file.text()).replace(/^\uFEFF/, '')));
-    openWorkspace(imported, file.name);
+    openWorkspace(imported);
   } catch (error) {
     documentStatus.textContent = `Could not import: ${error.message}`;
   } finally {
@@ -289,7 +306,7 @@ exportDocument.addEventListener('click', () => {
     return;
   }
   try {
-    BNITZView.download(BNITZModel.validate(article), workspace.name);
+    BNITZView.download(BNITZModel.validate(article));
     documentStatus.textContent = '';
   } catch (error) {
     documentStatus.textContent = `Could not export: ${error.message}`;

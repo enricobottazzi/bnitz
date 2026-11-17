@@ -13,7 +13,8 @@ const BNITZView = (() => {
     const url = URL.createObjectURL(new Blob([data], {type: 'application/json'}));
     const link = document.createElement('a');
     link.href = url;
-    link.download = filename;
+    const title = article.title?.trim().replace(/[\u0000-\u001f<>:"/\\|?*]/g, '-').replace(/[. ]+$/g, '');
+    link.download = filename ?? `${title || 'paper'}.bnitz`;
     document.body.append(link);
     link.click();
     link.remove();
