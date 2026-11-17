@@ -5,6 +5,11 @@
     .ltx_appendix, .ltx_acknowledgements, .ltx_acknowledgments`;
   const blocks = 'h1, h2, h3, h4, h5, h6, p, pre, li, tr, figcaption, .ltx_para, .ltx_equation';
   const clean = text => text.replace(/\s+/g, ' ').trim();
+  let snapshot, track;
+  let targets = [];
+  const markedMath = new Set();
+  const resizeObserver = new ResizeObserver(updateTrack);
+  window.addEventListener('resize', updateTrack);
 
   function readByline(article) {
     const unique = values => [...new Set(values.filter(Boolean))];
@@ -82,48 +87,108 @@
 
   function readPaper() {
     const {article, abstract, revision, source, date} = paperPage();
-    const text = readText(abstract);
+    const abstractParts = [], bodyParts = [];
+    const text = readText(abstract, abstractParts);
     if (!text) throw new Error('The tagged arXiv abstract is empty.');
     const titleNode = article.querySelector('.ltx_title_document, h1');
     const titleText = readText(titleNode, null, node => node.matches(`${omitted}, .ltx_pubnotes`));
     const title = clean(titleText) || 'arXiv ' + revision;
-    const body = readText(article, null, omitFromBody).split('\n\n').filter(Boolean)
+    const bodyText = readText(article, bodyParts, omitFromBody);
+    const body = bodyText.split('\n\n').filter(Boolean)
       .map((text, index) => ({id: `b${index + 1}`, text}));
-    return {title, source, ...readByline(article), date, abstract: text, body};
+    const snapshotId = crypto.randomUUID();
+    snapshot = {revision, snapshotId, sections: new Map([
+      ['abstract', {text, parts: abstractParts}], ['body', {text: bodyText, parts: bodyParts}],
+    ])};
+    clearHighlights();
+    resizeObserver.disconnect();
+    resizeObserver.observe(article);
+    return {title, source, ...readByline(article), date, abstract: text, body, snapshotId};
   }
 
-  function highlight(bnitz, planetId) {
-    CSS.highlights.delete('bnitz-abstract');
-    for (const node of document.querySelectorAll('math[data-bnitz-highlight]')) node.removeAttribute('data-bnitz-highlight');
-    const {abstract, source} = paperPage();
-    const parts = [];
-    const planet = bnitz.spans.find(span => span.id === planetId);
-    if (source !== bnitz.source || readText(abstract, parts) !== bnitz.text || !planet) {
+  function clearHighlights() {
+    CSS.highlights.delete('bnitz-paper');
+    for (const node of markedMath) node.removeAttribute('data-bnitz-highlight');
+    markedMath.clear();
+    targets = [];
+    track?.replaceChildren();
+  }
+
+  function updateTrack() {
+    if (!track) return;
+    const height = document.scrollingElement.scrollHeight;
+    const markers = [];
+    for (const elements of targets) {
+      for (const element of elements) {
+        const rect = element.getBoundingClientRect();
+        if (!rect.height) continue;
+        const top = Math.min(100, Math.max(0, 100 * (rect.top + window.scrollY) / height));
+        const tick = document.createElement('span');
+        tick.style.top = `${top}%`;
+        markers.push(tick);
+        break;
+      }
+    }
+    track.replaceChildren(...markers);
+  }
+
+  function highlight({arxivId, snapshotId, ranges}) {
+    if (!snapshot || arxivId !== snapshot.revision || snapshotId !== snapshot.snapshotId || !Array.isArray(ranges)) {
       throw new Error('The map does not match this arXiv page.');
     }
+    clearHighlights();
     const marks = new Highlight();
-    for (const {start, end} of planet.highlights ?? [planet]) {
+    const math = new Set(), locations = [];
+    for (const {section, start, end} of ranges) {
+      const data = snapshot.sections.get(section);
+      if (!data || !Number.isInteger(start) || !Number.isInteger(end) || start < 0 || start >= end || end > data.text.length) {
+        throw new Error('The map has an invalid highlight.');
+      }
       const bounds = new Map();
-      for (const part of parts) {
+      for (const part of data.parts) {
         if (part.start >= end) break;
         const from = Math.max(start, part.start), to = Math.min(end, part.end);
         const {node, offset} = part;
         if (from >= to) continue;
+        if (!node.isConnected || (node.nodeType === Node.TEXT_NODE &&
+          node.data.slice(offset, offset + part.end - part.start) !== data.text.slice(part.start, part.end))) {
+          throw new Error('The arXiv page changed. Reload it to remap the paper.');
+        }
         if (node.nodeType === Node.ELEMENT_NODE) {
-          node.setAttribute('data-bnitz-highlight', '');
+          bounds.set(node, null);
         } else {
           const existing = bounds.get(node);
           bounds.set(node, [existing?.[0] ?? offset + from - part.start, offset + to - part.start]);
         }
       }
-      for (const [node, [from, to]] of bounds) {
+      const anchors = [];
+      for (const [node, offsets] of bounds) {
+        if (!offsets) {
+          math.add(node);
+          anchors.push(node);
+          continue;
+        }
         const range = new Range();
-        range.setStart(node, from);
-        range.setEnd(node, to);
+        range.setStart(node, offsets[0]);
+        range.setEnd(node, offsets[1]);
         marks.add(range);
+        anchors.push(range);
       }
+      locations.push(anchors);
     }
-    CSS.highlights.set('bnitz-abstract', marks);
+    for (const node of math) {
+      node.setAttribute('data-bnitz-highlight', '');
+      markedMath.add(node);
+    }
+    CSS.highlights.set('bnitz-paper', marks);
+    if (!track) {
+      track = document.createElement('div');
+      track.className = 'bnitz-highlight-track';
+      track.setAttribute('aria-hidden', 'true');
+      document.body.append(track);
+    }
+    targets = locations;
+    updateTrack();
   }
 
   chrome.runtime.onMessage.addListener((message, _sender, respond) => {
@@ -131,7 +196,7 @@
       if (message.type === 'bnitz-paper') {
         respond(readPaper());
       } else if (message.type === 'bnitz-highlight') {
-        highlight(message.bnitz, message.planetId);
+        highlight(message);
         respond({});
       }
     } catch (error) {

@@ -21,19 +21,43 @@ const BNITZModel = (() => {
 
   function validate(document) {
     if (document?.version !== 3) throw new Error('Expected a version 3 .bnitz file.');
-    const {title, text, nucleus, spans} = document;
-    if (typeof title !== 'string' || !title.trim() || typeof text !== 'string' || !Array.isArray(spans)) {
+    const {title, text} = document;
+    if (typeof title !== 'string' || !title.trim() || typeof text !== 'string' || !Array.isArray(document.spans)) {
       throw new Error('The file needs a title, abstract, and planets.');
     }
+    return validateMap(document, text, span => !Object.hasOwn(span, 'highlights') ||
+      (Array.isArray(span.highlights) && span.highlights.every(range => range && validRange(text, range.start, range.end))));
+  }
+
+  function validateAbstractMap(map, {arxivId, abstract}) {
+    if (!arxivId || map?.arxivId !== arxivId) throw new Error('The abstract map does not match the arXiv revision.');
+    return validateMap(map, abstract, ({highlights}) => Array.isArray(highlights) && highlights.length > 0 &&
+      highlights.every(range => range && validRange(abstract, range.start, range.end)));
+  }
+
+  function validateArxiv(document, {arxivId, abstract, body}) {
+    if (document?.version !== '3arxiv') throw new Error('Expected a v3arxiv .bnitz file.');
+    if (!arxivId || document.arxivId !== arxivId) throw new Error('The map does not match the arXiv revision.');
+    if (Object.keys(document).some(key => !['version', 'arxivId', 'nucleus', 'spans'].includes(key))) {
+      throw new Error('The arXiv map has unexpected fields.');
+    }
+    return validateMap(document, abstract, ({highlights}) => Array.isArray(highlights) &&
+      highlights.some(range => range?.section === 'abstract') && highlights.every(range => range && (
+        (range.section === 'abstract' && validRange(abstract, range.start, range.end)) ||
+        (range.section === 'body' && validRange(body, range.start, range.end))
+      )));
+  }
+
+  function validateMap(document, abstract, validHighlights) {
+    const {nucleus, spans} = document;
+    if (!Array.isArray(spans)) throw new Error('The map needs planets.');
     const byId = new Map();
     for (const span of spans) {
       if (!span || typeof span.id !== 'string' || !span.id || byId.has(span.id)) {
         throw new Error('Every planet needs a unique ID.');
       }
-      if (!validRange(text, span.start, span.end)) throw new Error('A planet needs a passage in the abstract.');
-      if (Object.hasOwn(span, 'highlights') && (!Array.isArray(span.highlights) || span.highlights.some(range =>
-        !range || !validRange(text, range.start, range.end)
-      ))) throw new Error('A planet has an invalid highlight.');
+      if (!validRange(abstract, span.start, span.end)) throw new Error('A planet needs a passage in the abstract.');
+      if (!validHighlights(span)) throw new Error('A planet has an invalid highlight.');
       byId.set(span.id, span);
     }
     const root = byId.get(nucleus);
@@ -124,7 +148,7 @@ const BNITZModel = (() => {
     return {rings, planets, radius: root.radius + gap};
   }
 
-  return {nucleusDefinition, relations, validRange, validate, label, highlights, relationDirection, planetRadius, layout};
+  return {nucleusDefinition, relations, validRange, validate, validateAbstractMap, validateArxiv, label, highlights, relationDirection, planetRadius, layout};
 })();
 
 if (typeof module !== 'undefined') module.exports = BNITZModel;

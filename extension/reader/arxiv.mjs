@@ -12,3 +12,7 @@ export function arxivPaper(id) {
   const [, paperId, version] = match;
   return {id, paperId, version, source: `${origin}/html/${id}`};
 }
+
+// Body ranges count the blank lines between blocks, just as the HTML extractor does.
+export const bodySeparator = '\n\n';
+export const bodyText = blocks => blocks.map(({text}) => text).join(bodySeparator);

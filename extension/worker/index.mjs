@@ -1,7 +1,9 @@
-import {recipe, revision} from '../worker-dist/recipe.mjs';
-import {arxivPaper} from '../reader/arxiv.mjs';
-import {openGenerationCache} from './cache.mjs';
+import BNITZModel from '../../lang/model.js';
+import {recipes} from '../worker-dist/recipe.mjs';
+import {arxivPaper, bodySeparator, bodyText} from '../reader/arxiv.mjs';
+import {openPaperCache} from './cache.mjs';
 import {generateMap} from './map.mjs';
+import {generateBodyHighlights, paperMap} from './passages.mjs';
 
 class RequestError extends Error {
   constructor(status, message, headers) {
@@ -64,31 +66,63 @@ async function complete(request, env, body, timeout) {
 
 const isText = value => typeof value === 'string' && Boolean(value.trim());
 const isTextList = value => Array.isArray(value) && value.every(isText);
+const isBody = value => Array.isArray(value) && value.every((block, index) =>
+  block?.id === `b${index + 1}` && isText(block.text) && !block.text.includes(bodySeparator));
 
 export default {
   async fetch(request, env) {
-    if (new URL(request.url).pathname !== '/v1/abstract-map') {
+    if (new URL(request.url).pathname !== '/v1/paper-map') {
       return Response.json({error: 'Unknown BNITZ endpoint.'}, {status: 404});
     }
     if (request.method !== 'POST') return Response.json({error: 'Use POST.'}, {status: 405, headers: {Allow: 'POST'}});
+    const headers = new Headers({'Access-Control-Expose-Headers': 'BNITZ-Cache, Server-Timing'});
+    const timed = async (step, generate) => {
+      const started = performance.now();
+      try {
+        return await generate();
+      } finally {
+        headers.append('Server-Timing', `step${step};dur=${Math.round(performance.now() - started)}`);
+      }
+    };
     try {
-      const {arxivId, title, text, authors, affiliations, date} = await readJson(request, 32 * 1024) ?? {};
+      const {arxivId, title, abstract, authors, affiliations, date, body} = await readJson(request, 1024 * 1024) ?? {};
       const paper = arxivPaper(arxivId);
-      if (!paper?.version || !isText(title) || !isText(text) || !isTextList(authors) || !isTextList(affiliations) ||
-          (date !== null && !isText(date))) throw new RequestError(400, 'Invalid BNITZ generation input.');
-      const input = {title, text, authors, affiliations, date};
-      const cache = await openGenerationCache(env.GENERATION_CACHE, arxivId, revision, input);
+      if (!paper?.version || arxivId.length > 128 || !isText(title) || !isText(abstract) ||
+          !isTextList(authors) || !isTextList(affiliations) || (date !== null && !isText(date)) || !isBody(body)) {
+        throw new RequestError(400, 'Invalid BNITZ generation input.');
+      }
+      const input = {arxivId, title, abstract, authors, affiliations, date, body: body.map(({id, text}) => ({id, text}))};
+      const text = {arxivId, abstract, body: bodyText(body)};
+      const cache = await openPaperCache(env.GENERATION_CACHE, text);
       const cached = await cache?.get();
-      const graph = cached ?? await generateMap(input, recipe, (body, timeout) => complete(request, env, body, timeout));
-      if (!cached) await cache?.put(graph);
-      return Response.json({version: 3, title, source: paper.source, text, nucleus: graph.nucleus, spans: graph.spans}, {
-        headers: {'BNITZ-Cache': cached ? 'HIT' : cache ? 'MISS' : 'BYPASS'},
-      });
+      if (cached) {
+        try {
+          const result = BNITZModel.validateArxiv(cached, text);
+          headers.set('BNITZ-Cache', 'HIT');
+          return Response.json(result, {headers});
+        } catch {
+          // Regenerate stale or invalid cache entries.
+        }
+      }
+      const run = (payload, timeout) => complete(request, env, payload, timeout);
+      const map = await timed(2, () => generateMap(input, recipes.abstract, run));
+      let result;
+      try {
+        const highlights = body.length ? await timed(3, () => generateBodyHighlights(input, map, recipes.body, run)) : undefined;
+        result = BNITZModel.validateArxiv(paperMap(map, highlights), text);
+      } catch {
+        const fallback = BNITZModel.validateArxiv(paperMap(map), text);
+        return Response.json({map: fallback, error: 'Body highlighting failed. The abstract map is available.'}, {headers});
+      }
+      await cache?.put(result);
+      headers.set('BNITZ-Cache', cache ? 'MISS' : 'BYPASS');
+      return Response.json(result, {headers});
     } catch (error) {
       if (error instanceof RequestError) {
-        return Response.json({error: error.message}, {status: error.status, headers: error.headers});
+        for (const [name, value] of Object.entries(error.headers ?? {})) headers.set(name, value);
+        return Response.json({error: error.message}, {status: error.status, headers});
       }
-      return Response.json({error: 'BNITZ could not generate a valid result.'}, {status: 502});
+      return Response.json({error: 'BNITZ could not generate a valid result.'}, {status: 502, headers});
     }
   },
 };

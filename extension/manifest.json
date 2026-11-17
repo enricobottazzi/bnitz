@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "BNITZ",
-  "description": "Map and highlight abstracts on arXiv HTML pages.",
+  "description": "Map and highlight papers on arXiv HTML pages.",
   "version": "0.1.4",
   "minimum_chrome_version": "116",
   "icons": {

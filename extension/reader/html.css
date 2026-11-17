@@ -1,2 +1,21 @@
-::highlight(bnitz-abstract) { background-color: #e0ff54; color: #111; }
+::highlight(bnitz-paper) { background-color: #e0ff54; color: #111; }
 math[data-bnitz-highlight] { background-color: #e0ff54; color: #111; }
+
+.bnitz-highlight-track {
+  position: fixed;
+  inset: 8px 3px 8px auto;
+  width: 8px;
+  z-index: 1000;
+  pointer-events: none;
+  border-left: 1px solid #999;
+}
+.bnitz-highlight-track:empty { display: none; }
+.bnitz-highlight-track > span {
+  position: absolute;
+  inset-inline: 0;
+  height: 4px;
+  transform: translateY(-50%);
+  border: 1px solid #627300;
+  border-radius: 2px;
+  background: #e0ff54;
+}

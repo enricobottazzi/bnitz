@@ -1,17 +1,18 @@
 import BNITZModel from '../../lang/model.js';
 
-function paperMessage({title, authors, affiliations, date, text}) {
-  return {role: 'user', content: JSON.stringify({title, authors, affiliations, date, abstract: text})};
+function paperMessage({title, authors, affiliations, date, abstract}) {
+  return {role: 'user', content: JSON.stringify({title, authors, affiliations, date, abstract})};
 }
 
-function uniqueRange(text, excerpt) {
+export function uniqueRange(text, excerpt) {
   if (typeof excerpt !== 'string' || !excerpt.trim()) return null;
   const start = text.indexOf(excerpt);
   if (start < 0 || text.indexOf(excerpt, start + 1) >= 0) return null;
-  return {start, end: start + excerpt.length};
+  const end = start + excerpt.length;
+  return BNITZModel.validRange(text, start, end) ? {start, end} : null;
 }
 
-function toGraph({planets}, {title, text}) {
+function toGraph({planets}, {arxivId, abstract}) {
   const roots = planets.filter(planet => planet.relation === 'nucleus');
   if (roots.length !== 1 || roots[0].parent !== '') throw new Error('The map needs exactly one nucleus.');
   const [root] = roots;
@@ -20,7 +21,7 @@ function toGraph({planets}, {title, text}) {
       throw new Error('Each planet needs a highlight.');
     }
     const highlights = planet.highlights.map(excerpt => {
-      const match = uniqueRange(text, excerpt);
+      const match = uniqueRange(abstract, excerpt);
       if (!match) throw new Error('A highlight does not uniquely match the abstract.');
       return match;
     });
@@ -28,9 +29,7 @@ function toGraph({planets}, {title, text}) {
     const parent = planet === root ? {} : {parent: planet.parent, relation: planet.relation};
     return {id: planet.id, ...anchor, ...parent, highlights};
   });
-  const graph = {nucleus: root.id, spans};
-  BNITZModel.validate({version: 3, title, text, ...graph});
-  return graph;
+  return BNITZModel.validateAbstractMap({arxivId, nucleus: root.id, spans}, {arxivId, abstract});
 }
 
 export async function generateMap(article, recipe, complete) {
