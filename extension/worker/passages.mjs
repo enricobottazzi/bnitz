@@ -31,6 +31,9 @@ export async function generateBodyHighlights(paper, map, recipe, complete) {
     if (ranges.some(range => range.start === start && range.end === end)) continue;
     ranges.push({section: 'body', start, end});
   }
+  if (passages.length && ![...highlights.values()].some(ranges => ranges.length)) {
+    throw new Error('None of the proposed body highlights match the paper.');
+  }
   return highlights;
 }
 

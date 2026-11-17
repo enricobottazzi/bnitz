@@ -25,11 +25,12 @@
       </svg>
     </a>
   </nav>
-  <div id="progress">
-    <div id="loading-orbit" role="progressbar" aria-label="Generating paper map">
+  <div id="progress" hidden>
+    <div id="loading-orbit" role="progressbar" aria-label="Generating paper map" aria-describedby="loading-message">
       <span class="loading-nucleus"></span>
       <span class="loading-track"><img src="../assets/problem.svg" alt=""></span>
     </div>
+    <p id="loading-message">Generating the map can take about 60 seconds. Don't switch tab.</p>
   </div>
   <p id="status" role="status"></p>
   <main id="map" class="map" hidden></main>

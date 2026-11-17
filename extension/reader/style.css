@@ -1,4 +1,4 @@
-body { margin: 0; }
+body { margin: 0; font-size: 12px; }
 
 .panel-actions {
   position: fixed;
@@ -39,7 +39,9 @@ body { margin: 0; }
   text-align: center;
 }
 #progress[hidden], #status:empty { display: none; }
-#status { color: #555; margin: 48px 16px 0; }
+#loading-message { margin-top: 20px; max-width: 30ch; }
+#status { margin: 48px 16px 0; }
+#status a { text-decoration: underline; }
 #status:not(:empty) + #map { padding-top: 16px; min-height: auto; }
 #loading-orbit {
   position: relative;

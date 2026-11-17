@@ -29,20 +29,28 @@ function logPrefix(arxivId) {
   return `[BNITZ] [${arxivId}]`;
 }
 
-function logStepTimes(arxivId, response, hasBody, bodyFailed) {
+function logStepTimes(arxivId, response, hasBody, failed) {
   const prefix = logPrefix(arxivId);
   if (response.headers.get('BNITZ-Cache') === 'HIT') {
     console.info(`${prefix} Cache hit. Steps 2 and 3 skipped.`);
     return;
   }
   const timing = response.headers.get('Server-Timing') ?? '';
-  const steps = [[2, 'abstract map', !response.ok], [3, 'body highlighting', bodyFailed]];
-  for (const [step, label, failed] of steps) {
+  const failedStep = failed ? (timing.includes('step3;dur=') ? 3 : 2) : null;
+  const steps = [[2, 'abstract map'], [3, 'body highlighting']];
+  for (const [step, label] of steps) {
     const milliseconds = new RegExp(`(?:^|,\\s*)step${step};dur=(\\d+)`).exec(timing)?.[1];
     if (milliseconds === undefined) continue;
-    console[failed ? 'warn' : 'info'](`${prefix} Step ${step} (${label}) ${failed ? 'failed after' : 'took'} ${(Number(milliseconds) / 1000).toFixed(1)} s.`);
+    const stepFailed = step === failedStep;
+    console[stepFailed ? 'warn' : 'info'](`${prefix} Step ${step} (${label}) ${stepFailed ? 'failed after' : 'took'} ${(Number(milliseconds) / 1000).toFixed(1)} s.`);
   }
-  if (response.ok && !hasBody) console.info(`${prefix} Step 3 skipped. The paper has no body blocks.`);
+  if (!failed && !hasBody) console.info(`${prefix} Step 3 skipped. The paper has no body blocks.`);
+}
+
+class WorkerResponseError extends Error {
+  constructor(code, message) {
+    super(`HTTP ${code}: ${message}`);
+  }
 }
 
 async function mapPaper({title, abstract, authors, affiliations, date, body}, arxivId, signal) {
@@ -59,11 +67,14 @@ async function mapPaper({title, abstract, authors, affiliations, date, body}, ar
     });
     const result = await response.json().catch(() => null);
     signal.throwIfAborted();
-    logStepTimes(arxivId, response, body.length > 0, Boolean(result?.map && result?.error));
-    if (!response.ok) throw new Error(result?.error || 'BNITZ generation failed.');
+    const failed = !response.ok || Boolean(result?.error);
+    logStepTimes(arxivId, response, body.length > 0, failed);
+    if (failed) {
+      const message = typeof result?.error === 'string' && result.error;
+      throw new WorkerResponseError(response.status, message || 'BNITZ generation failed.');
+    }
     return {
-      article: BNITZModel.validateArxiv(result?.map ?? result, {arxivId, abstract, body: bodyText(body)}),
-      warning: result?.error ?? '',
+      article: BNITZModel.validateArxiv(result, {arxivId, abstract, body: bodyText(body)}),
       requestSeconds: elapsedSeconds(started),
       cached: response.headers.get('BNITZ-Cache') === 'HIT',
     };
@@ -75,7 +86,8 @@ async function mapPaper({title, abstract, authors, affiliations, date, body}, ar
 async function start() {
   const [tab] = await chrome.tabs.query({active: true, windowId});
   const requested = arxivPaperFromUrl(tab?.url);
-  const tabKey = `${tab?.id}:${requested?.id}`;
+  const pdf = arxivPaperFromUrl(tab?.url, 'pdf');
+  const tabKey = `${tab?.id}:${requested?.id ?? ''}:${pdf?.id ?? ''}`;
   if (tabKey === current?.tabKey) return;
   current?.controller.abort();
   const controller = new AbortController();
@@ -87,6 +99,15 @@ async function start() {
   progress.hidden = !requested;
   status.textContent = '';
 
+  if (pdf) {
+    const link = document.createElement('a');
+    link.href = pdf.source;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'Open the HTML version of this paper';
+    status.append(link);
+    return;
+  }
   if (!requested) {
     status.textContent = 'Open an arXiv HTML paper.';
     return;
@@ -105,7 +126,7 @@ async function start() {
     }
     prefix = logPrefix(paper.id);
     console.info(`${prefix} Paper read in ${elapsedSeconds(started)} s. Waiting for the map…`);
-    const {article, warning, requestSeconds, cached} = await mapPaper(
+    const {article, requestSeconds, cached} = await mapPaper(
       extracted, paper.id, AbortSignal.any([signal, AbortSignal.timeout(190000)]),
     );
     signal.throwIfAborted();
@@ -114,24 +135,32 @@ async function start() {
     BNITZView.map(map, {...article, text: extracted.abstract}, async planet => {
       const request = ++selection;
       BNITZView.select(map, planet.id);
-      status.textContent = warning;
+      status.textContent = '';
       const answer = await chrome.tabs.sendMessage(tab.id, {
         type: 'bnitz-highlight', arxivId: article.arxivId, snapshotId: extracted.snapshotId, ranges: planet.highlights,
       }).catch(() => null);
       if (signal.aborted || request !== selection) return;
       if (!answer || answer.error) status.textContent = answer?.error ?? 'BNITZ could not connect to the page.';
     });
-    current.article = warning ? null : article;
-    exportButton.disabled = Boolean(warning);
-    status.textContent = warning;
+    current.article = article;
+    exportButton.disabled = false;
     progress.hidden = true;
     map.hidden = false;
     console.info(`${prefix} Map ready in ${elapsedSeconds(started)} s (request: ${requestSeconds} s${cached ? ', cached' : ''}).`);
   } catch (error) {
     if (signal.aborted) return;
     progress.hidden = true;
-    status.textContent = error.name === 'TimeoutError' ? 'Map generation timed out.' : error.message;
-    console.warn(`${prefix} ${status.textContent} (${elapsedSeconds(started)} s)`);
+    const message = error.name === 'TimeoutError' ? 'Map generation timed out.' : error.message;
+    status.textContent = message;
+    if (error instanceof WorkerResponseError) {
+      const link = document.createElement('a');
+      link.href = 'https://github.com/enricobottazzi/bnitz/blob/main/extension/ERRORS.md';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = 'ERRORS.md';
+      status.append(' ', link);
+    }
+    console.warn(`${prefix} ${message} (${elapsedSeconds(started)} s)`);
     current = null;
   }
 }
@@ -146,6 +175,7 @@ chrome.tabs.onUpdated.addListener((_id, change, tab) => {
     current = null;
     exportButton.disabled = true;
     map.hidden = true;
+    status.textContent = '';
   }
   if (change.status === 'complete') start();
 });

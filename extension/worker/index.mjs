@@ -106,14 +106,8 @@ export default {
       }
       const run = (payload, timeout) => complete(request, env, payload, timeout);
       const map = await timed(2, () => generateMap(input, recipes.abstract, run));
-      let result;
-      try {
-        const highlights = body.length ? await timed(3, () => generateBodyHighlights(input, map, recipes.body, run)) : undefined;
-        result = BNITZModel.validateArxiv(paperMap(map, highlights), text);
-      } catch {
-        const fallback = BNITZModel.validateArxiv(paperMap(map), text);
-        return Response.json({map: fallback, error: 'Body highlighting failed. The abstract map is available.'}, {headers});
-      }
+      const highlights = body.length ? await timed(3, () => generateBodyHighlights(input, map, recipes.body, run)) : undefined;
+      const result = BNITZModel.validateArxiv(paperMap(map, highlights), text);
       await cache?.put(result);
       headers.set('BNITZ-Cache', cache ? 'MISS' : 'BYPASS');
       return Response.json(result, {headers});
