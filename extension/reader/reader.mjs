@@ -1,5 +1,6 @@
 import {arxivPaperFromUrl, bodyText} from './arxiv.mjs';
 import config from './config.mjs';
+import {hasConsent} from './consent.mjs';
 
 const status = document.querySelector('#status');
 const progress = document.querySelector('#progress');
@@ -84,6 +85,7 @@ async function mapPaper({title, abstract, authors, affiliations, date, body}, ar
 }
 
 async function start() {
+  if (!await hasConsent()) return;
   const [tab] = await chrome.tabs.query({active: true, windowId});
   const requested = arxivPaperFromUrl(tab?.url);
   const pdf = arxivPaperFromUrl(tab?.url, 'pdf');
