@@ -1,0 +1,48 @@
+{
+  "version": 3,
+  "title": "Ironies of Automation",
+  "text": "This paper discusses the ways in which automation of industrial processes may expand rather than eliminate problems with the human operator. Some comments will be made on methods of alleviating these problems within the \"classic' approach of leaving the operator with responsibility for abnormal conditions, and on the potential for continued use of the human operator for on-line decision-making within human-computer collaboration. ",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "highlights": [
+        {
+          "start": 39,
+          "end": 141
+        }
+      ],
+      "start": 39,
+      "end": 141
+    },
+    {
+      "id": "s2",
+      "parent": "s1",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 171,
+          "end": 308
+        }
+      ],
+      "start": 171,
+      "end": 308
+    },
+    {
+      "id": "s3",
+      "parent": "s1",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 319,
+          "end": 434
+        }
+      ],
+      "start": 319,
+      "end": 434
+    }
+  ],
+  "author": "L. Bainbridge",
+  "year": 1983,
+  "source": "https://www.sciencedirect.com/science/article/pii/0005109883900468"
+}
