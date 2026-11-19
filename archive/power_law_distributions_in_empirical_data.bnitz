@@ -1,0 +1,74 @@
+{
+  "version": 3,
+  "title": "Power-law distributions in empirical data",
+  "author": "Aaron Clauset, Cosma Rohilla Shalizi, and M. E. J. Newman",
+  "year": 2009,
+  "source": "https://arxiv.org/abs/0706.1062v2",
+  "text": "Power-law distributions occur in many situations of scientific interest and have significant consequences for our understanding of natural and man-made phenomena. Unfortunately, the detection and characterization of power laws is complicated by the large fluctuations that occur in the tail of the distribution -- the part of the distribution representing large but rare events -- and by the difficulty of identifying the range over which power-law behavior holds. Commonly used methods for analyzing power-law data, such as least-squares fitting, can produce substantially inaccurate estimates of parameters for power-law distributions, and even in cases where such methods return accurate answers they are still unsatisfactory because they give no indication of whether the data obey a power law at all. Here we present a principled statistical framework for discerning and quantifying power-law behavior in empirical data. Our approach combines maximum-likelihood fitting methods with goodness-of-fit tests based on the Kolmogorov-Smirnov statistic and likelihood ratios. We evaluate the effectiveness of the approach with tests on synthetic data and give critical comparisons to previous approaches. We also apply the proposed methods to twenty-four real-world data sets from a range of different disciplines, each of which has been conjectured to follow a power-law distribution. In some cases we find these conjectures to be consistent with the data while in others the power law is ruled out.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 806,
+      "end": 925,
+      "highlights": [
+        {
+          "start": 806,
+          "end": 925
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "parent": "s1",
+      "relation": "method",
+      "start": 926,
+      "end": 1074,
+      "highlights": [
+        {
+          "start": 926,
+          "end": 1074
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "parent": "s1",
+      "relation": "evidence",
+      "start": 1075,
+      "end": 1203,
+      "highlights": [
+        {
+          "start": 1075,
+          "end": 1203
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "parent": "s1",
+      "relation": "evidence",
+      "start": 1204,
+      "end": 1499,
+      "highlights": [
+        {
+          "start": 1204,
+          "end": 1499
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "parent": "s1",
+      "relation": "problem",
+      "start": 163,
+      "end": 805,
+      "highlights": [
+        {
+          "start": 163,
+          "end": 805
+        }
+      ]
+    }
+  ]
+}

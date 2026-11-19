@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {test} from 'node:test';
 import worker from './index.mjs';
+import {mapRecipe} from './recipes.mjs';
 
 const paper = {
   arxivId: '2601.00001v1',
@@ -14,6 +15,7 @@ const paper = {
 };
 const abstractMap = {
   planets: [{id: 'root', parent: '', relation: 'nucleus', highlights: [paper.abstract]}],
+  decision_note: 'The gain in accuracy is the nucleus because it is the only finding reported.',
 };
 const bodyMap = {
   passages: [{planetId: 'root', block: 'b1', highlight: paper.body[0].text}],
@@ -55,11 +57,32 @@ function setup(t, replies = [], {withinQuota = true} = {}) {
   return {send, model: model.mock, entries};
 }
 
+test('Worker sends the evaluated Gemini Lean-6 abstract recipe', async t => {
+  const examples = JSON.parse(readFileSync(new URL('./abstract-map-examples.json', import.meta.url), 'utf8'));
+  const recipe = mapRecipe(examples.slice(0, 6), 'lean');
+  const {send, model} = setup(t, [modelReply(abstractMap)]);
+  assert.equal((await send({...paper, body: []})).status, 200);
+
+  const request = JSON.parse(model.calls[0].arguments[1].body);
+  assert.equal(request.model, 'google/gemini-4-carbon');
+  assert.deepEqual(request.messages.slice(0, -1), recipe.messages);
+  assert.equal(JSON.parse(request.messages.at(-1).content).abstract, paper.abstract);
+});
+
 test('Generation failure', async t => {
   await t.test('an invalid abstract map returns an error without caching after one retry', async t => {
-    const invalid = () => modelReply({planets: []});
+    const invalid = () => modelReply({...abstractMap, planets: []});
     const {send, model, entries} = setup(t, [invalid(), invalid()]);
 
+    await assertDocumentedError(await send(), 502);
+    assert.equal(model.callCount(), 2);
+    assert.equal(entries.size, 0);
+  });
+
+  await t.test('a missing or blank abstract decision note requires a retry', async t => {
+    const {send, model, entries} = setup(t, [
+      modelReply({planets: abstractMap.planets}), modelReply({...abstractMap, decision_note: ' '}),
+    ]);
     await assertDocumentedError(await send(), 502);
     assert.equal(model.callCount(), 2);
     assert.equal(entries.size, 0);

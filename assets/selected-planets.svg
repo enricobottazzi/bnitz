@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 173" width="840" height="173" role="img" aria-labelledby="title">
+  <title id="title">BNITZ selected planet tiles</title>
+  <rect width="840" height="173" rx="8" fill="#f7f4ec"/>
+  <g font-family="Avenir Next, Helvetica, sans-serif" font-size="19" font-weight="550" text-anchor="middle" fill="#26231e">
+    <g id="problem" transform="translate(0 0)">
+      <g transform="translate(35 28) scale(.7)">
+        <circle cx="50" cy="50" r="43.5" fill="#fff" stroke="#000" stroke-width="13"/>
+        <path d="M50 6.5
+                 Q39.1 43.5 12.33 71.75
+                 H87.67
+                 Q60.9 43.5 50 6.5Z"
+              fill="none" stroke="#000" stroke-width="8" stroke-linejoin="round"/>
+      </g>
+      <text x="70" y="135">Problem</text>
+    </g>
+    <g id="background" transform="translate(140 0)">
+      <g transform="translate(35 28) scale(.7)">
+        <circle cx="50" cy="50" r="43.5" fill="#fff" stroke="#000" stroke-width="13"/>
+        <path d="M10.4 32H89.6 M6.5 50H93.5 M10.4 68H89.6"
+              fill="none" stroke="#000" stroke-width="8" stroke-linecap="round"/>
+      </g>
+      <text x="70" y="135">Background</text>
+    </g>
+    <g id="method" transform="translate(280 0)">
+      <g transform="translate(35 28) scale(.7)">
+        <circle cx="50" cy="50" r="43.5" fill="#fff" stroke="#000" stroke-width="13"/>
+        <path d="M50 6.5 A43.5 43.5 0 0 1 6.5 50 M50 93.5 A43.5 43.5 0 0 1 93.5 50" fill="none" stroke="#000" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="70" y="135">Method</text>
+    </g>
+    <g id="implication" transform="translate(420 0)">
+      <g transform="translate(35 28) scale(.7)">
+        <circle cx="50" cy="50" r="43.5" fill="#fff" stroke="#000" stroke-width="13"/>
+        <path d="M50 6.5
+                 Q39.1 43.5 12.33 71.75
+                 H87.67
+                 Q60.9 43.5 50 6.5Z"
+              transform="rotate(180 50 50)"
+              fill="none" stroke="#000" stroke-width="8" stroke-linejoin="round"/>
+      </g>
+      <text x="70" y="135">Implication</text>
+    </g>
+    <g id="evidence" transform="translate(560 0)">
+      <g transform="translate(35 28) scale(.7)">
+        <circle cx="50" cy="50" r="43.5" fill="#fff" stroke="#000" stroke-width="13"/>
+        <circle cx="50" cy="50" r="9" fill="#000"/>
+      </g>
+      <text x="70" y="135">Evidence</text>
+    </g>
+    <g id="scope" transform="translate(700 0)">
+      <g transform="translate(35 28) scale(.7)">
+        <circle cx="50" cy="50" r="43.5" fill="#fff" stroke="#000" stroke-width="13"/>
+        <path d="M50 6.5
+                 A43.5 43.5 0 0 0 93.5 50
+                 A43.5 43.5 0 0 0 50 93.5
+                 A43.5 43.5 0 0 0 6.5 50
+                 A43.5 43.5 0 0 0 50 6.5Z"
+              fill="none" stroke="#000" stroke-width="8" stroke-linejoin="round"/>
+      </g>
+      <text x="70" y="135">Scope</text>
+    </g>
+  </g>
+</svg>

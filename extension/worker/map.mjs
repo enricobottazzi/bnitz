@@ -12,7 +12,10 @@ export function uniqueRange(text, excerpt) {
   return BNITZModel.validRange(text, start, end) ? {start, end} : null;
 }
 
-function toGraph({planets}, {arxivId, abstract}) {
+function toGraph({planets, decision_note}, {arxivId, abstract}) {
+  if (typeof decision_note !== 'string' || !decision_note.trim()) {
+    throw new Error('Include a one-sentence decision_note explaining a mapping choice.');
+  }
   const roots = planets.filter(planet => planet.relation === 'nucleus');
   if (roots.length !== 1 || roots[0].parent !== '') throw new Error('The map needs exactly one nucleus.');
   const [root] = roots;

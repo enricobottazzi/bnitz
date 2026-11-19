@@ -1,0 +1,87 @@
+{
+  "version": 3,
+  "title": "Interaction Ruling Animal Collective Behaviour Depends on Topological rather than Metric Distance: Evidence from a Field Study",
+  "text": "Numerical models indicate that collective animal behaviour may emerge from simple local rules of interaction among the individuals. However, very little is known about the nature of such interaction, so that models and theories mostly rely on aprioristic assumptions. By reconstructing the three-dimensional position of individual birds in airborne flocks of few thousands members, we prove that the interaction does not depend on the metric distance, as most current models and theories assume, but rather on the topological distance. In fact, we discover that each bird interacts on average with a fixed number of neighbours (six-seven), rather than with all neighbours within a fixed metric distance. We argue that a topological interaction is indispensable to maintain flock's cohesion against the large density changes caused by external perturbations, typically predation. We support this hypothesis by numerical simulations, showing that a topological interaction grants significantly higher cohesion of the aggregation compared to a standard metric one.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "highlights": [
+        {
+          "start": 400,
+          "end": 535
+        }
+      ],
+      "start": 400,
+      "end": 535
+    },
+    {
+      "id": "s2",
+      "parent": "s1",
+      "relation": "method",
+      "highlights": [
+        {
+          "start": 268,
+          "end": 382
+        }
+      ],
+      "start": 268,
+      "end": 382
+    },
+    {
+      "id": "s3",
+      "parent": "s1",
+      "relation": "problem",
+      "highlights": [
+        {
+          "start": 0,
+          "end": 267
+        }
+      ],
+      "start": 0,
+      "end": 267
+    },
+    {
+      "id": "s4",
+      "parent": "s1",
+      "relation": "evidence",
+      "highlights": [
+        {
+          "start": 536,
+          "end": 702
+        }
+      ],
+      "start": 536,
+      "end": 702
+    },
+    {
+      "id": "s5",
+      "parent": "s1",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 704,
+          "end": 878
+        }
+      ],
+      "start": 704,
+      "end": 878
+    },
+    {
+      "id": "s6",
+      "parent": "s5",
+      "relation": "evidence",
+      "highlights": [
+        {
+          "start": 879,
+          "end": 1061
+        }
+      ],
+      "start": 879,
+      "end": 1061
+    }
+  ],
+  "author": "M. Ballerini et al.",
+  "year": 2007,
+  "source": "https://arxiv.org/pdf/0709.1916"
+}

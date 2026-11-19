@@ -1,0 +1,160 @@
+{
+  "version": "3arxiv",
+  "arxivId": "2502.07924v1",
+  "nucleus": "p1",
+  "spans": [
+    {
+      "id": "p1",
+      "start": 428,
+      "end": 562,
+      "highlights": [
+        {
+          "section": "abstract",
+          "start": 428,
+          "end": 562
+        },
+        {
+          "section": "abstract",
+          "start": 1164,
+          "end": 1314
+        },
+        {
+          "section": "body",
+          "start": 4531,
+          "end": 4743
+        },
+        {
+          "section": "body",
+          "start": 22139,
+          "end": 22471
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "start": 65,
+      "end": 185,
+      "parent": "p1",
+      "relation": "problem",
+      "highlights": [
+        {
+          "section": "abstract",
+          "start": 65,
+          "end": 185
+        },
+        {
+          "section": "abstract",
+          "start": 318,
+          "end": 427
+        },
+        {
+          "section": "body",
+          "start": 13800,
+          "end": 13936
+        },
+        {
+          "section": "body",
+          "start": 3805,
+          "end": 3979
+        },
+        {
+          "section": "body",
+          "start": 3282,
+          "end": 3498
+        }
+      ]
+    },
+    {
+      "id": "p3",
+      "start": 187,
+      "end": 317,
+      "parent": "p1",
+      "relation": "method",
+      "highlights": [
+        {
+          "section": "abstract",
+          "start": 187,
+          "end": 317
+        },
+        {
+          "section": "abstract",
+          "start": 563,
+          "end": 774
+        },
+        {
+          "section": "body",
+          "start": 19398,
+          "end": 19768
+        },
+        {
+          "section": "body",
+          "start": 19787,
+          "end": 19966
+        },
+        {
+          "section": "body",
+          "start": 20030,
+          "end": 20164
+        }
+      ]
+    },
+    {
+      "id": "p4",
+      "start": 785,
+      "end": 931,
+      "parent": "p1",
+      "relation": "scope",
+      "highlights": [
+        {
+          "section": "abstract",
+          "start": 785,
+          "end": 931
+        },
+        {
+          "section": "body",
+          "start": 22894,
+          "end": 23241
+        },
+        {
+          "section": "body",
+          "start": 16616,
+          "end": 16806
+        },
+        {
+          "section": "body",
+          "start": 17843,
+          "end": 17982
+        }
+      ]
+    },
+    {
+      "id": "p5",
+      "start": 933,
+      "end": 1139,
+      "parent": "p1",
+      "relation": "scope",
+      "highlights": [
+        {
+          "section": "abstract",
+          "start": 933,
+          "end": 1139
+        },
+        {
+          "section": "body",
+          "start": 24348,
+          "end": 24629
+        },
+        {
+          "section": "body",
+          "start": 25981,
+          "end": 26139
+        },
+        {
+          "section": "body",
+          "start": 25430,
+          "end": 25633
+        }
+      ]
+    }
+  ]
+}

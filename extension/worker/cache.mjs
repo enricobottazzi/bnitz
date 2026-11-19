@@ -4,8 +4,8 @@ export async function openPaperCache(namespace, {arxivId, abstract, body}) {
   if (!namespace) return null;
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify([abstract, body])));
   const fingerprint = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
-  // Earlier cache entries can include abstract-only maps from failed body validation.
-  const key = `paper-map:v2:${encodeURIComponent(arxivId)}`;
+  // Maps from earlier abstract recipes expire under their original keys.
+  const key = `paper-map:v3:${encodeURIComponent(arxivId)}`;
 
   return {
     async get() {

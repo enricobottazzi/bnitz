@@ -9,44 +9,27 @@
   "spans": [
     {
       "id": "s1",
-      "start": 529,
-      "end": 623,
+      "start": 0,
+      "end": 622,
       "highlights": [
         {
-          "start": 529,
-          "end": 623
+          "start": 0,
+          "end": 622
         }
       ]
     },
     {
       "id": "s3",
       "start": 623,
-      "end": 705,
+      "end": 704,
       "highlights": [
         {
           "start": 623,
-          "end": 705
+          "end": 704
         }
       ],
       "parent": "s1",
       "relation": "evidence"
-    },
-    {
-      "id": "s5",
-      "start": 378,
-      "end": 458,
-      "highlights": [
-        {
-          "start": 86,
-          "end": 377
-        },
-        {
-          "start": 378,
-          "end": 458
-        }
-      ],
-      "parent": "s1",
-      "relation": "problem"
     }
   ]
 }

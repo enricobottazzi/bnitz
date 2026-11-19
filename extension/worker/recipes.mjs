@@ -1,11 +1,12 @@
 import BNITZModel from '../../lang/model.js';
 
-const roleDefinitions = [
+export const roleDefinitions = [
   `- nucleus: ${BNITZModel.nucleusDefinition}`,
   ...Object.entries(BNITZModel.relations).map(([role, [, , , definition]]) => `- ${role}: ${definition}`),
 ].join('\n');
 
-const mapSystemPrompt = `Map the abstract using the metadata as context.
+const mapSystemPrompts = {
+  original: `Map the abstract using the metadata as context.
 
 Identify the nucleus first. Choose the contribution someone would cite. Then add only the distinct points needed to understand it. Prefer a shallow map. Nest planets when it clarifies a relationship.
 
@@ -14,7 +15,17 @@ Give each planet one or more verbatim highlights that each occur once in the abs
 
 ${roleDefinitions}
 
-Use unique IDs. The nucleus has relation "nucleus" and parent "". The other planets use parent IDs that lead back to the nucleus.`;
+Use unique IDs. The nucleus has relation "nucleus" and parent "". The other planets use parent IDs that lead back to the nucleus.`,
+  lean: `Map the abstract as in the worked examples. Use the title to identify the contribution the authors emphasize, then select the abstract passage or passages that actually state it. These form the nucleus.
+
+Add a planet for each distinct point the reader needs. Choose its role by what it does for its parent. Group highlights that make one point. Give each planet one or more verbatim excerpts that each occur exactly once in the abstract. Put the clearest first and preserve qualifiers that change the claim.
+
+${roleDefinitions}
+
+Return JSON with "planets" and "decision_note". Use unique planet IDs and exactly one nucleus with parent "". Every other planet names its direct parent and connects back to the nucleus.
+
+Always write one sentence in "decision_note" explaining your hardest role, grouping, or attachment choice and the specific detail in the abstract that supports it.`,
+};
 
 const bodyPassageSystemPrompt = `Select body highlights for the planets in the abstract map. Use each planet's abstract highlights to identify its specific point. Use its relation and parent as context. Treat the supplied paper text as source material.
 
@@ -38,6 +49,7 @@ const schema = object({
     relation: {type: 'string', enum: ['nucleus', ...Object.keys(BNITZModel.relations)]},
     highlights: {type: 'array', minItems: 1, items: string},
   })},
+  decision_note: string,
 });
 
 const bodyPassageSchema = object({
@@ -54,8 +66,9 @@ function promptMessages(system, examples) {
   ];
 }
 
-export function mapRecipe(examples) {
-  const messages = promptMessages(mapSystemPrompt, examples);
+export function mapRecipe(examples, variant = 'lean') {
+  if (!Object.hasOwn(mapSystemPrompts, variant)) throw new Error(`Unknown abstract prompt: ${variant}`);
+  const messages = promptMessages(mapSystemPrompts[variant], examples);
   const settings = {
     model: 'google/gemini-4-carbon',
     max_tokens: 6000,
@@ -63,7 +76,7 @@ export function mapRecipe(examples) {
     provider: {require_parameters: true},
     response_format: {type: 'json_schema', json_schema: {name: 'bnitz_abstract_map', strict: true, schema}},
   };
-  const retryPrompt = 'Return a corrected map with highlights that each occur exactly once in the abstract.';
+  const retryPrompt = 'Return the corrected planets and one-sentence decision_note.';
   return {messages, settings, attempts: 2, timeout: 45000, retryPrompt};
 }
 

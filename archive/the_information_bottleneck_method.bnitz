@@ -1,0 +1,65 @@
+{
+  "version": 3,
+  "title": "The Information Bottleneck Method",
+  "text": "We define the relevant information in a signal $x \\in X$ as being the information that this signal provides about another signal $y\\in Y$. Examples include the information that face images provide about the names of the people portrayed, or the information that speech sounds provide about the words spoken. Understanding the signal x requires more than just predicting y, it also requires specifying which features of $X$ play a role in the prediction. We formalize this problem as that of finding a short code for $X$ that preserves the maximum information about $Y$. That is, we squeeze the information that $X$ provides about $Y$ through a `bottleneck' formed by a limited set of codewords $\\tilde{X}$. This constrained optimization problem can be seen as a generalization of rate distortion theory in which the distortion measure $d(x,\\tilde{x})$ emerges from the joint statistics of $X$ and $Y$. This approach yields an exact set of self consistent equations for the coding rules $X \\to \\tilde{X}$ and $\\tilde{X} \\to Y$. Solutions to these equations can be found by a convergent re-estimation method that generalizes the Blahut-Arimoto algorithm. Our variational principle provides a surprisingly rich framework for discussing a variety of problems in signal processing and learning, as will be described in detail elsewhere.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 454,
+      "end": 706,
+      "highlights": [
+        {
+          "start": 454,
+          "end": 706
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "start": 0,
+      "end": 453,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 453
+        }
+      ],
+      "parent": "s1",
+      "relation": "problem"
+    },
+    {
+      "id": "s3",
+      "start": 902,
+      "end": 1026,
+      "highlights": [
+        {
+          "start": 902,
+          "end": 1026
+        },
+        {
+          "start": 1027,
+          "end": 1152
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s5",
+      "start": 707,
+      "end": 901,
+      "highlights": [
+        {
+          "start": 707,
+          "end": 901
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    }
+  ],
+  "author": "N. Tishby et al.",
+  "year": 2000,
+  "source": "https://arxiv.org/pdf/physics/0004057v1"
+}

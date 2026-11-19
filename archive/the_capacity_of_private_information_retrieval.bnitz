@@ -1,0 +1,52 @@
+{
+  "version": 3,
+  "title": "The Capacity of Private Information Retrieval",
+  "author": "Hua Sun and Syed A. Jafar",
+  "year": 2017,
+  "source": "https://arxiv.org/abs/1602.09134v2",
+  "text": "In the private information retrieval (PIR) problem a user wishes to retrieve, as efficiently as possible, one out of $K$ messages from $N$ non-communicating databases (each holds all $K$ messages) while revealing nothing about the identity of the desired message index to any individual database. The information theoretic capacity of PIR is the maximum number of bits of desired information that can be privately retrieved per bit of downloaded information. For $K$ messages and $N$ databases, we show that the PIR capacity is $(1+1/N+1/N^2+\\cdots+1/N^{K-1})^{-1}$. A remarkable feature of the capacity achieving scheme is that if we eliminate any subset of messages (by setting the message symbols to zero), the resulting scheme also achieves the PIR capacity for the remaining subset of messages.",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 459,
+      "end": 566,
+      "highlights": [
+        {
+          "start": 459,
+          "end": 566
+        },
+        {
+          "start": 297,
+          "end": 458
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 0,
+      "end": 296,
+      "parent": "s1",
+      "relation": "problem",
+      "highlights": [
+        {
+          "start": 0,
+          "end": 296
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "start": 567,
+      "end": 799,
+      "parent": "s1",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 567,
+          "end": 799
+        }
+      ]
+    }
+  ]
+}

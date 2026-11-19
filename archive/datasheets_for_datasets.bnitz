@@ -1,0 +1,52 @@
+{
+  "version": 3,
+  "title": "Datasheets for Datasets",
+  "text": "The machine learning community currently has no standardized process for documenting datasets, which can lead to severe consequences in high-stakes domains. To address this gap, we propose datasheets for datasets. In the electronics industry, every component, no matter how simple or complex, is accompanied with a datasheet that describes its operating characteristics, test results, recommended uses, and other information. By analogy, we propose that every dataset be accompanied with a datasheet that documents its motivation, composition, collection process, recommended uses, and so on. Datasheets for datasets will facilitate better communication between dataset creators and dataset consumers, and encourage the machine learning community to prioritize transparency and accountability.\n",
+  "nucleus": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "highlights": [
+        {
+          "start": 178,
+          "end": 212
+        },
+        {
+          "start": 454,
+          "end": 593
+        }
+      ],
+      "start": 178,
+      "end": 212
+    },
+    {
+      "id": "s2",
+      "parent": "s1",
+      "relation": "problem",
+      "highlights": [
+        {
+          "start": 0,
+          "end": 157
+        }
+      ],
+      "start": 0,
+      "end": 157
+    },
+    {
+      "id": "s3",
+      "parent": "s1",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 593,
+          "end": 793
+        }
+      ],
+      "start": 593,
+      "end": 793
+    }
+  ],
+  "author": "T. Gebru et al.",
+  "source": "https://arxiv.org/pdf/1803.09010",
+  "year": 2021
+}

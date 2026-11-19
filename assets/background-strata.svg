@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <title>Background — Strata</title>
+  <circle cx="50" cy="50" r="43.5" fill="#fff" stroke="#000" stroke-width="13"/>
+  <path d="M10.4 32H89.6 M6.5 50H93.5 M10.4 68H89.6"
+        fill="none" stroke="#000" stroke-width="8" stroke-linecap="round"/>
+</svg>
