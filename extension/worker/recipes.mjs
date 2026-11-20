@@ -1,9 +1,9 @@
+import {readFileSync} from 'node:fs';
 import BNITZModel from '../../lang/model.js';
 
-export const roleDefinitions = [
-  `- core: ${BNITZModel.coreDefinition}`,
-  ...Object.entries(BNITZModel.relations).map(([role, [, , , definition]]) => `- ${role}: ${definition}`),
-].join('\n');
+const rules = readFileSync(new URL('../../RULES.md', import.meta.url), 'utf8');
+export const roleDefinitions = Object.entries(BNITZModel.parseLegendDefinitions(rules))
+  .map(([role, definition]) => `- ${role}: ${definition}`).join('\n');
 
 const mapSystemPrompts = {
   original: `Map the abstract using the metadata as context.

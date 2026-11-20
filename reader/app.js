@@ -44,9 +44,21 @@ let pendingRange;
 let textSelection;
 let workspace;
 
-const showLegendRelation = BNITZView.legend(document.querySelector('#legend'), key => {
-  if (!relation.disabled && [...relation.options].some(option => option.value === key)) relation.value = key;
-});
+let showLegendRelation;
+
+async function loadLegend() {
+  const legend = document.querySelector('#legend');
+  try {
+    const response = await fetch('/RULES.md', {cache: 'no-cache'});
+    if (!response.ok) throw new Error('Could not load RULES.md.');
+    const definitions = BNITZModel.parseLegendDefinitions(await response.text());
+    showLegendRelation = BNITZView.legend(legend, definitions, key => {
+      if (!relation.disabled && [...relation.options].some(option => option.value === key)) relation.value = key;
+    });
+  } catch (error) {
+    legend.textContent = error.message;
+  }
+}
 
 function sourceLink(source) {
   if (typeof source !== 'string') return null;
@@ -150,7 +162,7 @@ function hoverText(mark) {
 function selectPlanet(planet) {
   hovered = null;
   selectedId = planet && planet.id !== selectedId ? planet.id : null;
-  if (planet) showLegendRelation(planet.relation ?? 'core');
+  if (planet) showLegendRelation?.(planet.relation ?? 'core');
   highlight();
   updateEditor();
   editorStatus.textContent = '';
@@ -283,7 +295,7 @@ playground.addEventListener('click', event => {
 resetDocument.addEventListener('click', () => {
   window.getSelection().removeAllRanges();
   textSelection = undefined;
-  showLegendRelation('core');
+  showLegendRelation?.('core');
   openWorkspace({version: 3, title: '', text: '', core: null, spans: []});
 });
 
@@ -373,7 +385,7 @@ clearHighlights.addEventListener('click', () => {
   paintArticle();
 });
 
-relation.addEventListener('change', () => showLegendRelation(relation.value));
+relation.addEventListener('change', () => showLegendRelation?.(relation.value));
 editor.addEventListener('submit', event => {
   event.preventDefault();
   if (savePlanet.disabled) return;
@@ -444,7 +456,7 @@ function show() {
 }
 
 async function load() {
-  const response = await fetch('/library.json');
+  const [response] = await Promise.all([fetch('/library.json'), loadLegend()]);
   if (!response.ok) throw new Error('Could not load the reading list.');
   const {fromFolder, files} = await response.json();
   const entries = [];

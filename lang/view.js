@@ -1,5 +1,5 @@
 const BNITZView = (() => {
-  const {coreDefinition, relations, label, relationDirection, layout} = BNITZModel;
+  const {relations, label, relationDirection, layout} = BNITZModel;
   const coreIcon = 'core';
   const iconUrl = icon => `../assets/${icon}.svg?v=0.0.6`;
 
@@ -91,7 +91,7 @@ const BNITZView = (() => {
     container.replaceChildren(fragment);
   }
 
-  function legend(container, onSelect) {
+  function legend(container, definitions, onSelect) {
     container.insertAdjacentHTML('beforeend', `
       <div id="relation-clock"></div>
       <p id="relation-definition" aria-live="polite"></p>
@@ -109,10 +109,10 @@ const BNITZView = (() => {
     }
 
     const entries = {
-      core: ['Core', null, coreIcon, coreDefinition],
+      core: ['Core', null, coreIcon],
       ...relations,
     };
-    for (const [key, [label, slot, icon, definition, guidance]] of Object.entries(entries)) {
+    for (const [key, [label, slot, icon]] of Object.entries(entries)) {
       const button = document.createElement('button');
       button.type = 'button';
       button.dataset.relation = key;
@@ -130,8 +130,7 @@ const BNITZView = (() => {
         onSelect?.(key);
         showRelation(key);
       });
-      const description = guidance ? `${definition} ${guidance}` : definition;
-      buttons.set(key, {button, description: `${label} — ${description}`});
+      buttons.set(key, {button, description: `${label} — ${definitions[key]}`});
       clock.append(button);
     }
     showRelation('core');

@@ -8,7 +8,7 @@
   ```sh
   tag=v0.2.0
   out=$(mktemp -d)
-  git archive "$tag" extension assets lang bnitz.css | tar -x -C "$out"
+  git archive "$tag" extension assets lang bnitz.css RULES.md | tar -x -C "$out"
   npm --prefix "$out/extension" test
   npm --prefix "$out/extension" run build
   (cd "$out/extension/dist" && zip -qr "$out/BNITZ-$tag.zip" .)

@@ -1,17 +1,29 @@
 const BNITZModel = (() => {
-  const coreDefinition = 'The paper’s main contribution. It can be a finding, theorem, argument, synthesis, artifact, guideline, or research plan.';
   const relations = {
-    problem: ['Problem', 6, 'problem', 'States the question, gap, or practical problem the parent addresses.'],
-    background: ['Background', 1, 'background', 'Gives prior work, definitions, or other context needed to understand the parent.'],
-    method: ['Method', 2, 'method', 'Describes how the parent’s result was obtained or how its proposed work would be carried out.'],
-    implication: ['Implication', 3, 'implication', 'States what follows from the parent, such as a prediction, an application, a next step, or a higher-level consequence.'],
-    evidence: ['Evidence', 4, 'evidence', 'Uses results, analyses, or comparisons to support, challenge, or assess the parent.'],
-    scope: [
-      'Scope', 5, 'scope',
-      'Specifies where, when, or under what conditions the parent applies, including limitations and assumptions.',
-      'Give a limitation or assumption its own Scope planet when it needs separate attention, and fold brief qualifiers into the parent.',
-    ],
+    problem: ['Problem', 6, 'problem'],
+    background: ['Background', 1, 'background'],
+    method: ['Method', 2, 'method'],
+    implication: ['Implication', 3, 'implication'],
+    evidence: ['Evidence', 4, 'evidence'],
+    scope: ['Scope', 5, 'scope'],
   };
+
+  function parseLegendDefinitions(markdown) {
+    const legend = markdown.split(/^##[ \t]+Legend[ \t]*\r?$/m)[1]?.split(/^#{1,2}[ \t]/m)[0] ?? '';
+    const definitions = {};
+    for (const line of legend.split('\n')) {
+      const cells = line.trim().match(/^\|[^|]*\|\s*([^|]+?)\s*\|\s*(.+?)\s*\|$/);
+      if (!cells) continue;
+      const role = cells[1].replaceAll('**', '').trim().toLowerCase();
+      if (role === 'core' || Object.hasOwn(relations, role)) {
+        definitions[role] = cells[2].trim().replaceAll('\\|', '|');
+      }
+    }
+    for (const role of ['core', ...Object.keys(relations)]) {
+      if (!definitions[role]) throw new Error(`Missing ${role} definition in RULES.md.`);
+    }
+    return definitions;
+  }
 
   function validRange(text, start, end) {
     const boundary = index => !/[\uDC00-\uDFFF]/.test(text.charAt(index));
@@ -186,7 +198,7 @@ const BNITZModel = (() => {
     return {rings, planets, radius: root.radius + gap};
   }
 
-  return {coreDefinition, relations, validRange, validate, validateAbstractMap, validateArxiv, label, highlights, editText, relationDirection, planetRadius, layout};
+  return {parseLegendDefinitions, relations, validRange, validate, validateAbstractMap, validateArxiv, label, highlights, editText, relationDirection, planetRadius, layout};
 })();
 
 if (typeof module !== 'undefined') module.exports = BNITZModel;

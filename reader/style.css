@@ -37,7 +37,6 @@ main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); pa
 .reader-legend { grid-area: legend; width: min(100%, 212px); }
 .reader-legend summary { width: fit-content; cursor: pointer; }
 .reader-legend-panel { margin-top: 6px; padding: 12px; border: 1px solid var(--line); }
-.reader-legend-panel a { display: inline-block; margin-top: 8px; text-decoration: underline; }
 .reader-grid { display: grid; grid-template-columns: minmax(0, 1fr) calc((min(100%, 720px) - var(--reader-gap)) / 2); grid-template-rows: min-content 1fr; grid-template-areas: "text map" "legend map"; column-gap: var(--reader-gap); row-gap: 10px; align-items: start; }
 .reader-text { grid-area: text; position: relative; min-width: 0; max-height: max(280px, calc(100svh - var(--content-top) - 100px)); overflow-x: hidden; overflow-y: auto; overflow-wrap: anywhere; overscroll-behavior: contain; padding: 3px var(--reader-inset) 20px 0; line-height: 1.7; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
 .reader-text:focus-visible { outline: 1px solid #ccc; outline-offset: 8px; }
