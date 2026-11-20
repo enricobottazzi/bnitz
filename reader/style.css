@@ -6,7 +6,7 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 5px; }
 .wordmark { display: block; width: fit-content; height: 45px; }
 .wordmark:hover, .wordmark:active { color: #111; background: transparent; }
 .reader-links { position: absolute; top: 5px; right: 0; display: flex; align-items: center; gap: 8px; }
-.reader-links a { display: flex; padding: 6px 0 6px 8px; }
+.reader-links a { display: flex; padding: 6px 0 6px 8px; color: #000; }
 .reader-links img { object-fit: contain; }
 .tagline, main { font: 400 xx-small/135% Verdana, Geneva, Helvetica, Arial, sans-serif; color: #333; }
 .tagline { margin-top: 2px; }
@@ -47,7 +47,7 @@ main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); pa
 .map-pane { grid-area: map; display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 0; height: clamp(240px, 30svh, 300px); background: var(--dots); }
 .map-pane svg { max-width: 460px; overflow: visible; }
 @media (hover: hover) {
-  a:hover { color: #777; }
+  main a:hover { color: #777; }
   .reading:hover { color: inherit; background: var(--lime); }
 }
 @media (max-width: 900px) {

@@ -164,9 +164,7 @@ const BNITZView = (() => {
         transform: `translate(${x} ${y})`, class: 'planet', tabindex: 0, role: 'button',
         'aria-label': `${name}: ${article.text.slice(span.start, span.end).trim()}`, 'aria-pressed': 'false', 'data-id': span.id,
       });
-      const tooltip = svg('title', {});
-      tooltip.textContent = name;
-      node.append(tooltip, svg('circle', {r: r * .98, class: 'planet-face'}));
+      node.append(svg('circle', {r: r * .98, class: 'planet-face'}));
       node.append(svg('image', {href: iconUrl(icon), x: -r, y: -r, width: r * 2, height: r * 2}));
       node.addEventListener('click', () => onSelect(span));
       node.addEventListener('keydown', event => {
