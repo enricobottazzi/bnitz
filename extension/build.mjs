@@ -2,7 +2,7 @@ import {cpSync, mkdirSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 
 const here = path => fileURLToPath(new URL(path, import.meta.url));
-const defaultOrigin = 'https://bnitz-routing.enricobottazzi.workers.dev';
+const defaultOrigin = 'https://bnitz-routing-0-2-3.enricobottazzi.workers.dev';
 const worker = new URL(process.env.BNITZ_WORKER_ORIGIN ?? defaultOrigin);
 const localWorker = worker.protocol === 'http:' && worker.hostname === '127.0.0.1';
 if ((!localWorker && worker.protocol !== 'https:') ||
