@@ -8,6 +8,7 @@ const abstract = document.querySelector('#abstract');
 const map = document.querySelector('#map');
 const status = document.querySelector('#status');
 const playground = textElement('a', 'playground');
+const aboutLink = document.querySelector('#about-link');
 const playgroundLink = document.querySelector('#playground-link');
 const playgroundTools = document.querySelector('#playground-tools');
 const importDocument = document.querySelector('#import-document');
@@ -34,6 +35,7 @@ const library = new Map();
 const links = new Map();
 const segments = [];
 let active;
+let about;
 let article;
 let selectedId;
 let hovered;
@@ -412,14 +414,17 @@ abstract.addEventListener('keyup', updateTextSelection);
 function show() {
   const previous = active;
   active = location.hash === '#playground' ? workspace : library.get(location.hash);
+  if (location.hash === aboutLink.hash) active = about;
   reading.hidden = !active;
   readings.hidden = Boolean(active);
   if (active === previous) return;
   selectedId = hovered = null;
   article = active?.article;
   resetDraft();
-  const editing = active === workspace;
+  const editing = Boolean(active && active === workspace);
   editor.hidden = playgroundTools.hidden = !editing;
+  if (active && active === about) aboutLink.setAttribute('aria-current', 'page');
+  else aboutLink.removeAttribute('aria-current');
   if (editing) playgroundLink.setAttribute('aria-current', 'page');
   else playgroundLink.removeAttribute('aria-current');
   document.title = 'BNITZ';
@@ -444,6 +449,13 @@ async function load() {
   const {fromFolder, files} = await response.json();
   const entries = [];
   const errors = [];
+  try {
+    const response = await fetch('/about.bnitz');
+    if (!response.ok) throw new Error('Could not load the About article.');
+    about = {article: BNITZModel.validate(await response.json()), row: aboutLink};
+  } catch (error) {
+    errors.push(error.message);
+  }
   for (const {name, text} of files) {
     try {
       const article = BNITZModel.validate(JSON.parse(text));
