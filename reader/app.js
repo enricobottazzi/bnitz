@@ -148,14 +148,14 @@ function hoverText(mark) {
 function selectPlanet(planet) {
   hovered = null;
   selectedId = planet && planet.id !== selectedId ? planet.id : null;
-  if (planet) showLegendRelation(planet.relation ?? 'nucleus');
+  if (planet) showLegendRelation(planet.relation ?? 'core');
   highlight();
   updateEditor();
   editorStatus.textContent = '';
 }
 
 function redrawMap() {
-  if (article.nucleus) BNITZView.map(map, article, selectPlanet);
+  if (article.core) BNITZView.map(map, article, selectPlanet);
   else map.replaceChildren();
   paintArticle();
   if (active === workspace) checkPassages();
@@ -168,9 +168,9 @@ function selectPrompt(select) {
 }
 
 function configurePlanetSettings(planet) {
-  const isNucleus = !article.nucleus || planet?.id === article.nucleus;
-  if (isNucleus) {
-    relation.replaceChildren(new Option('Nucleus', 'nucleus'));
+  const isCore = !article.core || planet?.id === article.core;
+  if (isCore) {
+    relation.replaceChildren(new Option('Core', 'core'));
     parent.replaceChildren(selectPrompt(parent));
     return;
   }
@@ -189,7 +189,7 @@ function configurePlanetSettings(planet) {
     return new Option(label, span.id);
   });
   parent.replaceChildren(selectPrompt(parent), ...options);
-  parent.value = planet?.parent ?? article.nucleus;
+  parent.value = planet?.parent ?? article.core;
 }
 
 function selectedRange() {
@@ -220,7 +220,7 @@ function updateHighlightButton() {
 function updateEditor() {
   const editing = Boolean(draft);
   const hasHighlights = Boolean(draft?.highlights.length);
-  const isNucleus = !article?.nucleus || draft?.planet?.id === article.nucleus;
+  const isCore = !article?.core || draft?.planet?.id === article.core;
   map.inert = editing;
   addPlanet.disabled = editing || !article?.text.trim();
   importDocument.disabled = exportDocument.disabled = documentDetails.inert = editing;
@@ -228,7 +228,7 @@ function updateEditor() {
   clearHighlights.disabled = !hasHighlights;
   cancelPlanet.disabled = !editing;
   hint.style.visibility = editing ? 'visible' : '';
-  relation.disabled = parent.disabled = isNucleus || !(draft?.planet || hasHighlights);
+  relation.disabled = parent.disabled = isCore || !(draft?.planet || hasHighlights);
   savePlanet.disabled = !(hasHighlights || (draft?.planet && !draft.original.length));
   updateHighlightButton();
 }
@@ -281,8 +281,8 @@ playground.addEventListener('click', event => {
 resetDocument.addEventListener('click', () => {
   window.getSelection().removeAllRanges();
   textSelection = undefined;
-  showLegendRelation('nucleus');
-  openWorkspace({version: 3, title: '', text: '', nucleus: null, spans: []});
+  showLegendRelation('core');
+  openWorkspace({version: 3, title: '', text: '', core: null, spans: []});
 });
 
 importDocument.addEventListener('click', () => documentFile.click());
@@ -348,11 +348,11 @@ cancelPlanet.addEventListener('click', () => {
 
 removePlanet.addEventListener('click', () => {
   const planet = article.spans.find(span => span.id === selectedId);
-  if (planet.id === article.nucleus && article.spans.length > 1) {
-    editorStatus.textContent = 'Remove the other planets before removing the nucleus.';
+  if (planet.id === article.core && article.spans.length > 1) {
+    editorStatus.textContent = 'Remove the other planets before removing the core.';
     return;
   }
-  if (planet.id === article.nucleus) article.nucleus = null;
+  if (planet.id === article.core) article.core = null;
   article.spans = article.spans.filter(span => span !== planet)
     .map(span => span.parent === planet.id ? {...span, parent: planet.parent} : span);
   selectedId = null;
@@ -383,8 +383,8 @@ editor.addEventListener('submit', event => {
     planet = {id: `s${nextId}`};
     article.spans.push(planet);
   }
-  if (!article.nucleus) article.nucleus = planet.id;
-  else if (planet.id !== article.nucleus) {
+  if (!article.core) article.core = planet.id;
+  else if (planet.id !== article.core) {
     planet.parent = parent.value;
     planet.relation = relation.value;
   }

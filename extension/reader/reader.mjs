@@ -1,13 +1,41 @@
 import {arxivPaperFromUrl, bodyText} from './arxiv.mjs';
 import config from './config.mjs';
-import {hasConsent} from './consent.mjs';
+import {consentKey, hasConsent} from './consent.mjs';
 
+const privacy = document.querySelector('#privacy');
+const agree = document.querySelector('#agree');
+const privacyError = document.querySelector('#privacy-error');
+const actions = document.querySelector('.panel-actions');
 const status = document.querySelector('#status');
 const progress = document.querySelector('#progress');
 const map = document.querySelector('#map');
 const exportButton = document.querySelector('#export-map');
+const loadingTrack = progress.querySelector('.loading-track');
+for (const [, slot, icon] of Object.values(BNITZModel.relations)) {
+  const [x, y] = BNITZModel.relationDirection(slot);
+  const satellite = new Image(18, 18);
+  satellite.src = `../assets/${icon}.svg`;
+  satellite.alt = '';
+  satellite.style.left = `${50 + x * 50}%`;
+  satellite.style.top = `${50 + y * 50}%`;
+  loadingTrack.append(satellite);
+}
+
 const {id: windowId} = await chrome.windows.getCurrent();
 let current;
+let agreed = false;
+
+agree.addEventListener('click', async () => {
+  agree.disabled = true;
+  privacyError.textContent = '';
+  try {
+    await chrome.storage.local.set({[consentKey]: true});
+  } catch {
+    privacyError.textContent = 'Could not save your choice. Please try again.';
+  } finally {
+    agree.disabled = false;
+  }
+});
 
 exportButton.addEventListener('click', () => {
   const article = current?.article;
@@ -79,8 +107,9 @@ async function mapPaper({title, abstract, authors, affiliations, date, body}, ar
 }
 
 async function start() {
-  if (!await hasConsent()) return;
+  if (!agreed) return;
   const [tab] = await chrome.tabs.query({active: true, windowId});
+  if (!agreed) return;
   const requested = arxivPaperFromUrl(tab?.url);
   const pdf = arxivPaperFromUrl(tab?.url, 'pdf');
   const tabKey = `${tab?.id}:${requested?.id ?? ''}:${pdf?.id ?? ''}`;
@@ -175,4 +204,28 @@ chrome.tabs.onUpdated.addListener((_id, change, tab) => {
   }
   if (change.status === 'complete') start();
 });
-start();
+
+function showConsentState(granted) {
+  agreed = granted;
+  privacy.hidden = granted;
+  actions.hidden = !granted;
+  if (granted) {
+    start();
+  } else {
+    current?.controller.abort();
+    current = null;
+    map.hidden = true;
+    progress.hidden = true;
+    status.textContent = '';
+  }
+}
+
+chrome.storage.local.onChanged.addListener(changes => {
+  if (changes[consentKey]) showConsentState(changes[consentKey].newValue === true);
+});
+try {
+  showConsentState(await hasConsent());
+} catch {
+  showConsentState(false);
+  privacyError.textContent = 'Could not read your saved choice. Please try again.';
+}

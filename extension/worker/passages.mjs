@@ -3,7 +3,7 @@ import {uniqueRange} from './map.mjs';
 
 export async function generateBodyHighlights(paper, map, recipe, complete) {
   const planets = map.spans.map(({id, parent, relation, highlights}) => ({
-    id, parent: parent ?? '', relation: relation ?? 'nucleus',
+    id, parent: parent ?? '', relation: relation ?? 'core',
     highlights: highlights.map(({start, end}) => paper.abstract.slice(start, end)),
   }));
   const messages = [...recipe.messages, {
@@ -37,9 +37,9 @@ export async function generateBodyHighlights(paper, map, recipe, complete) {
   return highlights;
 }
 
-export function paperMap({arxivId, nucleus, spans}, bodyHighlights = new Map()) {
+export function paperMap({arxivId, core, spans}, bodyHighlights = new Map()) {
   return {
-    version: '3arxiv', arxivId, nucleus,
+    version: '3arxiv', arxivId, core,
     spans: spans.map(span => ({
       ...span,
       highlights: [...span.highlights.map(range => ({section: 'abstract', ...range})), ...(bodyHighlights.get(span.id) ?? [])],

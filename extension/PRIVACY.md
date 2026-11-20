@@ -1,10 +1,10 @@
 # BNITZ Chrome extension privacy policy
 
-Updated November 17, 2026.
+Updated November 20, 2026.
 
 BNITZ maps and highlights papers on public arXiv HTML pages. BNITZ works without an account.
 
-BNITZ opens a setup tab after installation. If you already use BNITZ, the tab opens the first time you click its toolbar icon after updating to the version that introduces consent. BNITZ waits for you to click **Agree and continue** before extracting or sending paper content. It remembers your choice locally in your Chrome profile. Once you agree, BNITZ can request a map automatically for the arXiv HTML paper you’re viewing while the side panel is open.
+When you open the BNITZ side panel for the first time, it explains what paper content it sends and who receives it, unless you have already agreed in an earlier version. Click **Agree and start mapping** to allow BNITZ to extract and send paper content. BNITZ remembers your agreement in your Chrome profile. Once you agree, it automatically requests a map for each public arXiv HTML paper you view while the side panel is open.
 
 When the side panel requests a map, Chrome sends the title, authors, affiliations, revision date, versioned arXiv ID, abstract, and extracted body blocks from the public arXiv page to its Cloudflare Worker. The Worker uses the request IP address to rate-limit model calls. [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/)
 

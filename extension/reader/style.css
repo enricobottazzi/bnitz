@@ -1,5 +1,15 @@
 body { margin: 0; font-size: 12px; }
 
+#privacy {
+  display: grid;
+  gap: 16px;
+  max-width: 560px;
+  margin: 32px auto;
+  padding: 0 16px;
+  font: 400 xx-small/135% Verdana, Geneva, Helvetica, Arial, sans-serif;
+}
+#privacy a { text-decoration: underline; }
+
 .panel-actions {
   position: fixed;
   top: 12px;
@@ -52,28 +62,21 @@ body { margin: 0; font-size: 12px; }
   border: 1px solid #b4b4b4;
   border-radius: 50%;
 }
-.loading-nucleus {
-  width: 18px;
-  height: 18px;
-  border: 2px solid #111;
-  border-radius: 50%;
-  background: var(--lime);
-}
 .loading-track {
   position: absolute;
   inset: 0;
-  animation: orbit 2.2s linear infinite;
+}
+.loading-track, .loading-track img {
+  animation: orbit 4.4s linear infinite;
 }
 .loading-track img {
   position: absolute;
-  top: -10px;
-  left: calc(50% - 9px);
-  width: 18px;
-  height: 18px;
+  translate: -50% -50%;
+  animation-direction: reverse;
 }
 @keyframes orbit { to { transform: rotate(1turn); } }
 @media (prefers-reduced-motion: reduce) {
-  .loading-track { animation: none; }
+  .loading-track, .loading-track img { animation: none; }
 }
 
 #map { min-height: 100dvh; padding: 48px 16px 16px; }

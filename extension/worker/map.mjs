@@ -16,8 +16,8 @@ function toGraph({planets, decision_note}, {arxivId, abstract}) {
   if (typeof decision_note !== 'string' || !decision_note.trim()) {
     throw new Error('Include a one-sentence decision_note explaining a mapping choice.');
   }
-  const roots = planets.filter(planet => planet.relation === 'nucleus');
-  if (roots.length !== 1 || roots[0].parent !== '') throw new Error('The map needs exactly one nucleus.');
+  const roots = planets.filter(planet => planet.relation === 'core');
+  if (roots.length !== 1 || roots[0].parent !== '') throw new Error('The map needs exactly one core.');
   const [root] = roots;
   const spans = planets.map(planet => {
     if (!Array.isArray(planet.highlights) || !planet.highlights.length) {
@@ -32,7 +32,7 @@ function toGraph({planets, decision_note}, {arxivId, abstract}) {
     const parent = planet === root ? {} : {parent: planet.parent, relation: planet.relation};
     return {id: planet.id, ...anchor, ...parent, highlights};
   });
-  return BNITZModel.validateAbstractMap({arxivId, nucleus: root.id, spans}, {arxivId, abstract});
+  return BNITZModel.validateAbstractMap({arxivId, core: root.id, spans}, {arxivId, abstract});
 }
 
 export async function generateMap(article, recipe, complete) {

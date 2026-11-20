@@ -4,7 +4,7 @@ BNITZ is a visual language for mapping scientific papers. See the rules of the l
 
 ## `.bnitz` formats
 
-Both formats use zero-based UTF-16 offsets with an exclusive `end`. A planet’s own `start` and `end` anchor it in the abstract.
+Both formats use zero-based UTF-16 offsets with an exclusive `end`. A planet’s own `start` and `end` anchor it in the abstract. The `core` field stores the ID of the Core.
 
 ### v3 · General purpose
 
@@ -15,7 +15,7 @@ A v3 file stores the title, abstract as `text`, and planet map. Each `{start, en
   "version": 3,
   "title": "Example paper",
   "text": "The Transformer uses attention.",
-  "nucleus": "p1",
+  "core": "p1",
   "spans": [
     {
       "id": "p1",
@@ -35,7 +35,7 @@ The extension’s v3arxiv format stores a versioned `arxivId` and the planet map
 {
   "version": "3arxiv",
   "arxivId": "1706.03762v7",
-  "nucleus": "p1",
+  "core": "p1",
   "spans": [
     {
       "id": "p1",

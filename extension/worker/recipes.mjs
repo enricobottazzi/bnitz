@@ -1,28 +1,28 @@
 import BNITZModel from '../../lang/model.js';
 
 export const roleDefinitions = [
-  `- nucleus: ${BNITZModel.nucleusDefinition}`,
+  `- core: ${BNITZModel.coreDefinition}`,
   ...Object.entries(BNITZModel.relations).map(([role, [, , , definition]]) => `- ${role}: ${definition}`),
 ].join('\n');
 
 const mapSystemPrompts = {
   original: `Map the abstract using the metadata as context.
 
-Identify the nucleus first. Choose the contribution someone would cite. Then add only the distinct points needed to understand it. Prefer a shallow map. Nest planets when it clarifies a relationship.
+Identify the core first. Choose the contribution someone would cite. Then add only the distinct points needed to understand it. Prefer a shallow map. Nest planets when it clarifies a relationship.
 
 Keep brief qualifiers with their claim. Group highlights that make the same point.
 Give each planet one or more verbatim highlights that each occur once in the abstract. Put the clearest excerpt first and keep only the context needed.
 
 ${roleDefinitions}
 
-Use unique IDs. The nucleus has relation "nucleus" and parent "". The other planets use parent IDs that lead back to the nucleus.`,
-  lean: `Map the abstract as in the worked examples. Use the title to identify the contribution the authors emphasize, then select the abstract passage or passages that actually state it. These form the nucleus.
+Use unique IDs. The core has relation "core" and parent "". The other planets use parent IDs that lead back to the core.`,
+  lean: `Map the abstract as in the worked examples. Use the title to identify the contribution the authors emphasize, then select the abstract passage or passages that actually state it. These form the core.
 
 Add a planet for each distinct point the reader needs. Choose its role by what it does for its parent. Group highlights that make one point. Give each planet one or more verbatim excerpts that each occur exactly once in the abstract. Put the clearest first and preserve qualifiers that change the claim.
 
 ${roleDefinitions}
 
-Return JSON with "planets" and "decision_note". Use unique planet IDs and exactly one nucleus with parent "". Every other planet names its direct parent and connects back to the nucleus.
+Return JSON with "planets" and "decision_note". Use unique planet IDs and exactly one core with parent "". Every other planet names its direct parent and connects back to the core.
 
 Always write one sentence in "decision_note" explaining your hardest role, grouping, or attachment choice and the specific detail in the abstract that supports it.`,
 };
@@ -46,7 +46,7 @@ const schema = object({
   planets: {type: 'array', minItems: 1, items: object({
     id: string,
     parent: string,
-    relation: {type: 'string', enum: ['nucleus', ...Object.keys(BNITZModel.relations)]},
+    relation: {type: 'string', enum: ['core', ...Object.keys(BNITZModel.relations)]},
     highlights: {type: 'array', minItems: 1, items: string},
   })},
   decision_note: string,

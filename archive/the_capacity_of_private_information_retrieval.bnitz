@@ -5,7 +5,7 @@
   "year": 2017,
   "source": "https://arxiv.org/abs/1602.09134v2",
   "text": "In the private information retrieval (PIR) problem a user wishes to retrieve, as efficiently as possible, one out of $K$ messages from $N$ non-communicating databases (each holds all $K$ messages) while revealing nothing about the identity of the desired message index to any individual database. The information theoretic capacity of PIR is the maximum number of bits of desired information that can be privately retrieved per bit of downloaded information. For $K$ messages and $N$ databases, we show that the PIR capacity is $(1+1/N+1/N^2+\\cdots+1/N^{K-1})^{-1}$. A remarkable feature of the capacity achieving scheme is that if we eliminate any subset of messages (by setting the message symbols to zero), the resulting scheme also achieves the PIR capacity for the remaining subset of messages.",
-  "nucleus": "s1",
+  "core": "s1",
   "spans": [
     {
       "id": "s1",
