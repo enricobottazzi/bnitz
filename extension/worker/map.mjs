@@ -32,7 +32,7 @@ function toGraph({planets, decision_note}, {arxivId, abstract}) {
     const parent = planet === root ? {} : {parent: planet.parent, relation: planet.relation};
     return {id: planet.id, ...anchor, ...parent, highlights};
   });
-  return BNITZModel.validateAbstractMap({arxivId, core: root.id, spans}, {arxivId, abstract});
+  return BNITZModel.validateAbstractMap({arxivId, core: root.id, spans, decision_note}, {arxivId, abstract});
 }
 
 export async function generateMap(article, recipe, complete) {

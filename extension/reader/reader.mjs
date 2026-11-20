@@ -85,7 +85,7 @@ async function mapPaper({title, abstract, authors, affiliations, date, body}, ar
     const response = await fetch(config.origin + '/v1/paper-map', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({arxivId, title, abstract, authors, affiliations, date, body}),
+      body: JSON.stringify({arxivId, title, abstract, authors, affiliations, date, body, includeDecisionNote: true}),
       signal,
     });
     const result = await response.json().catch(() => null);
@@ -96,8 +96,12 @@ async function mapPaper({title, abstract, authors, affiliations, date, body}, ar
       const message = typeof result?.error === 'string' && result.error;
       throw new WorkerResponseError(response.status, message || 'BNITZ generation failed.');
     }
+    const article = BNITZModel.validateArxiv(result?.map ?? result, {arxivId, abstract, body: bodyText(body)});
+    if (typeof result?.decision_note === 'string' && result.decision_note.trim()) {
+      console.info(`${logPrefix(arxivId)} Decision note:`, result.decision_note);
+    }
     return {
-      article: BNITZModel.validateArxiv(result, {arxivId, abstract, body: bodyText(body)}),
+      article,
       requestSeconds: elapsedSeconds(started),
       cached: response.headers.get('BNITZ-Cache') === 'HIT',
     };
@@ -111,8 +115,7 @@ async function start() {
   const [tab] = await chrome.tabs.query({active: true, windowId});
   if (!agreed) return;
   const requested = arxivPaperFromUrl(tab?.url);
-  const pdf = arxivPaperFromUrl(tab?.url, 'pdf');
-  const tabKey = `${tab?.id}:${requested?.id ?? ''}:${pdf?.id ?? ''}`;
+  const tabKey = `${tab?.id}:${requested?.id ?? ''}`;
   if (tabKey === current?.tabKey) return;
   current?.controller.abort();
   const controller = new AbortController();
@@ -124,17 +127,8 @@ async function start() {
   progress.hidden = !requested;
   status.textContent = '';
 
-  if (pdf) {
-    const link = document.createElement('a');
-    link.href = pdf.source;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.textContent = 'Open the HTML version of this paper';
-    status.append(link);
-    return;
-  }
   if (!requested) {
-    status.textContent = 'Open an arXiv HTML paper.';
+    status.textContent = 'BNITZ works on arXiv HTML papers.';
     return;
   }
 

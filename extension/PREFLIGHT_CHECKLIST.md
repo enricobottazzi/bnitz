@@ -23,7 +23,7 @@ Unzip the package. In a Chrome test profile with one copy of BNITZ enabled, open
 
 - [ ] **Check first use.** Confirm the open tabs are the same before and after installation. On an arXiv HTML paper, click BNITZ and check that the disclosure appears in the side panel. Close and reopen the panel before agreeing. The disclosure should appear again, with no `paper-map` request in the panel’s Network tab. Click **Agree and start mapping** and confirm the current paper loads. Switch to a second arXiv HTML paper with the panel open and confirm it maps automatically.
 - [ ] **Check saved consent.** Reopen the panel, or update a profile that agreed in an earlier version. The panel should map the current arXiv HTML paper immediately.
-- [ ] **Open a PDF.** Click BNITZ on an [arXiv PDF](https://arxiv.org/pdf/2501.12948v2). **Open the HTML version of this paper** opens the same revision in a new tab. On HTML, the link gives way to the loading state or map. Click back to the PDF tab and check that the link returns.
+- [ ] **Open an abstract and a PDF.** Open the panel on an [arXiv abstract](https://arxiv.org/abs/2501.12948v2) and on the [PDF](https://arxiv.org/pdf/2501.12948v2). Check that each shows the plain arXiv HTML guidance and makes no map request.
 - [ ] **Switch tabs during loading.** Open a second HTML paper that needs a map. While it loads, switch to the first paper, then to an unrelated site, then back. The panel follows the active tab and never shows the other paper’s map or highlights. On the unrelated site, it shows the arXiv HTML guidance and disables export.
 - [ ] **Select and export.** On a ready map, select two planets, one with Tab and Enter. Highlights and tracker marks follow the last selection. Export the `.bnitz` file and check its filename and `arxivId` match the active revision.
 - [ ] **Check the cache.** Once a map is ready, reload the same paper revision. In the panel’s DevTools **Network** tab, confirm the new `paper-map` response includes `BNITZ-Cache: HIT` and the map loads again.
@@ -40,4 +40,4 @@ Unzip the package. In a Chrome test profile with one copy of BNITZ enabled, open
 
 ## After approval
 
-- [ ] Publish if you chose manual publishing. Once the update reaches a test profile with the store version installed, confirm the new version and run the PDF-to-HTML flow through highlighting and export. If consent or permissions changed, check what an existing user sees on their first click after updating.
+- [ ] Publish if you chose manual publishing. Once the update reaches a test profile with the store version installed, confirm the new version and test highlighting and export on an arXiv HTML paper. If consent or permissions changed, check what an existing user sees on their first click after updating.

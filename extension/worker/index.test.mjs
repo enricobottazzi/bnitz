@@ -100,6 +100,33 @@ test('an empty passage list is a valid result', async t => {
   assert.equal(entries.size, 1);
 });
 
+test('decision notes survive cache hits, and only requests for a note upgrade a map-only entry', async t => {
+  const nextNote = 'The “accuracy” result is the paper’s core.';
+  const {send, model, entries} = setup(t, [abstractMap, {...abstractMap, decision_note: nextNote}]);
+  const withNote = {...abstractOnly, includeDecisionNote: true};
+  const map = await (await send(abstractOnly)).json();
+  assert.equal(map.version, '3arxiv');
+  assert.equal(Object.hasOwn(map, 'decision_note'), false);
+  const hit = await send(withNote);
+  assert.equal(hit.headers.get('BNITZ-Cache'), 'HIT');
+  assert.deepEqual(await hit.json(), {map, decision_note: abstractMap.decision_note});
+
+  const entry = entries.values().next().value;
+  entry.value = map;
+  const plainHit = await send(abstractOnly);
+  assert.equal(plainHit.headers.get('BNITZ-Cache'), 'HIT');
+  assert.deepEqual(await plainHit.json(), map);
+  assert.equal(model.callCount(), 1);
+
+  const regenerated = await send(withNote);
+  assert.equal(regenerated.headers.get('BNITZ-Cache'), 'MISS');
+  assert.deepEqual(await regenerated.json(), {map, decision_note: nextNote});
+  const repeat = await send(withNote);
+  assert.equal(repeat.headers.get('BNITZ-Cache'), 'HIT');
+  assert.deepEqual(await repeat.json(), {map, decision_note: nextNote});
+  assert.equal(model.callCount(), 2);
+});
+
 test('Cache reuse requires the same revision, abstract, and body', async t => {
   const replies = Array(4).fill([abstractMap, bodyMap]).flat();
   const {send, model} = setup(t, replies);
