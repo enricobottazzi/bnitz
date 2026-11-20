@@ -3,7 +3,7 @@ import {bodyPassageRecipe, mapRecipe} from './recipes.mjs';
 
 const examples = name => JSON.parse(readFileSync(new URL(name, import.meta.url), 'utf8'));
 const recipes = {
-  abstract: mapRecipe(examples('./abstract-map-examples.json').slice(0, 6), 'lean'),
+  abstract: mapRecipe(examples('./abstract-map-examples.json'), 'lean'),
   body: bodyPassageRecipe(examples('./body-passage-examples.json')),
 };
 const output = new URL('../worker-dist/', import.meta.url);

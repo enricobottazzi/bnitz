@@ -5,6 +5,6 @@ __pycache__/
 /extension/artifacts/
 /extension/node_modules/
 /extension/worker-dist/
-/extension/.wrangler/
+.wrangler/
 /extension/.dev.vars*
 /extension/.env*

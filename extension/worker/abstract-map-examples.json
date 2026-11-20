@@ -1,286 +1,5 @@
 [
   {
-    "readerMap": "archive/the_platonic_representation_hypothesis.bnitz",
-    "input": {
-      "title": "The Platonic Representation Hypothesis",
-      "authors": [
-        "Minyoung Huh",
-        "Brian Cheung",
-        "Tongzhou Wang",
-        "Phillip Isola"
-      ],
-      "affiliations": [
-        "MIT"
-      ],
-      "date": "25 Jul 2024",
-      "abstract": "We argue that representations in AI models, particularly deep networks, are converging. First, we survey many examples of convergence in the literature: over time and across multiple domains, the ways by which different neural networks represent data are becoming more aligned. Next, we demonstrate convergence across data modalities: as vision models and language models get larger, they measure distance between datapoints in a more and more alike way. We hypothesize that this convergence is driving toward a shared statistical model of reality, akin to Plato's concept of an ideal reality. We term such a representation the platonic representation and discuss several possible selective pressures toward it. Finally, we discuss the implications of these trends, their limitations, and counterexamples to our analysis."
-    },
-    "output": {
-      "planets": [
-        {
-          "id": "s1",
-          "parent": "",
-          "relation": "nucleus",
-          "highlights": [
-            "representations in AI models, particularly deep networks, are converging",
-            "We hypothesize that this convergence is driving toward a shared statistical model of reality"
-          ]
-        },
-        {
-          "id": "s2",
-          "parent": "s1",
-          "relation": "evidence",
-          "highlights": [
-            "many examples of convergence in the literature: over time and across multiple domains, the ways by which different neural networks represent data are becoming more aligned. "
-          ]
-        },
-        {
-          "id": "s3",
-          "parent": "s1",
-          "relation": "evidence",
-          "highlights": [
-            "convergence across data modalities: as vision models and language models get larger, they measure distance between datapoints in a more and more alike way."
-          ]
-        }
-      ],
-      "decision_note": "The literature survey and the authors’ comparison independently support the central hypothesis (Nucleus), so each gets its own Evidence planet."
-    }
-  },
-  {
-    "readerMap": "examples/inference_time_intervention_eliciting_truthful_answers_from_a_language_model.bnitz",
-    "input": {
-      "title": "Inference-Time Intervention: Eliciting Truthful Answers from a Language Model",
-      "authors": [
-        "Kenneth Li",
-        "Oam Patel",
-        "Fernanda Viégas",
-        "Hanspeter Pfister",
-        "Martin Wattenberg"
-      ],
-      "affiliations": [],
-      "date": "2023",
-      "abstract": "We introduce Inference-Time Intervention (ITI), a technique designed to enhance the \"truthfulness\" of large language models (LLMs). ITI operates by shifting model activations during inference, following a set of directions across a limited number of attention heads. This intervention significantly improves the performance of LLaMA models on the TruthfulQA benchmark. On an instruction-finetuned LLaMA called Alpaca, ITI improves its truthfulness from 32.5% to 65.1%. We identify a tradeoff between truthfulness and helpfulness and demonstrate how to balance it by tuning the intervention strength. ITI is minimally invasive and computationally inexpensive. Moreover, the technique is data efficient: while approaches like RLHF require extensive annotations, ITI locates truthful directions using only few hundred examples. Our findings suggest that LLMs may have an internal representation of the likelihood of something being true, even as they produce falsehoods on the surface."
-    },
-    "output": {
-      "planets": [
-        {
-          "id": "s1",
-          "parent": "",
-          "relation": "nucleus",
-          "highlights": [
-            "We introduce Inference-Time Intervention (ITI), a technique designed to enhance the \"truthfulness\" of large language models (LLMs)."
-          ]
-        },
-        {
-          "id": "s2",
-          "parent": "s1",
-          "relation": "method",
-          "highlights": [
-            "ITI operates by shifting model activations during inference, following a set of directions across a limited number of attention heads. ",
-            "ITI is minimally invasive and computationally inexpensive. Moreover, the technique is data efficient: while approaches like RLHF require extensive annotations, ITI locates truthful directions using only few hundred examples."
-          ]
-        },
-        {
-          "id": "s3",
-          "parent": "s1",
-          "relation": "evidence",
-          "highlights": [
-            "This intervention significantly improves the performance of LLaMA models on the TruthfulQA benchmark.",
-            "On an instruction-finetuned LLaMA called Alpaca, ITI improves its truthfulness from 32.5% to 65.1%."
-          ]
-        },
-        {
-          "id": "s5",
-          "parent": "s1",
-          "relation": "scope",
-          "highlights": [
-            "We identify a tradeoff between truthfulness and helpfulness",
-            "and demonstrate how to balance it by tuning the intervention strength."
-          ]
-        },
-        {
-          "id": "s4",
-          "parent": "s1",
-          "relation": "implication",
-          "highlights": [
-            "Our findings suggest that LLMs may have an internal representation of the likelihood of something being true, even as they produce falsehoods on the surface."
-          ]
-        }
-      ],
-      "decision_note": "The intervention is the Nucleus, and the gain in Alpaca’s truthfulness from 32.5% to 65.1% measures how well it works, so that result is Evidence."
-    }
-  },
-  {
-    "readerMap": "examples/progress_measures_for_grokking_via_mechanistic_interpretability.bnitz",
-    "input": {
-      "title": "Progress Measures for Grokking via Mechanistic Interpretability",
-      "authors": [
-        "Neel Nanda",
-        "Lawrence Chan",
-        "Tom Lieberum",
-        "Jess Smith",
-        "Jacob Steinhardt"
-      ],
-      "affiliations": [],
-      "date": "19 Oct 2023",
-      "abstract": "Neural networks often exhibit emergent behavior, where qualitatively new capabilities arise from scaling up the amount of parameters, training data, or training steps. One approach to understanding emergence is to find continuous progress measures that underlie the seemingly discontinuous qualitative changes. We argue that progress measures can be found via mechanistic interpretability: reverse-engineering learned behaviors into their individual components. As a case study, we investigate the recently-discovered phenomenon of \"grokking'' exhibited by small transformers trained on modular addition tasks. We fully reverse engineer the algorithm learned by these networks, which uses discrete Fourier transforms and trigonometric identities to convert addition to rotation about a circle. We confirm the algorithm by analyzing the activations and weights and by performing ablations in Fourier space. Based on this understanding, we define progress measures that allow us to study the dynamics of training and split training into three continuous phases: memorization, circuit formation, and cleanup. Our results show that grokking, rather than being a sudden shift, arises from the gradual amplification of structured mechanisms encoded in the weights, followed by the later removal of memorizing components."
-    },
-    "output": {
-      "planets": [
-        {
-          "id": "s1",
-          "parent": "",
-          "relation": "nucleus",
-          "highlights": [
-            "we define progress measures that allow us to study the dynamics of training and split training into three continuous phases: memorization, circuit formation, and cleanup. ",
-            "We argue that progress measures can be found via mechanistic interpretability"
-          ]
-        },
-        {
-          "id": "s2",
-          "parent": "s1",
-          "relation": "background",
-          "highlights": [
-            "Neural networks often exhibit emergent behavior, where qualitatively new capabilities arise from scaling up the amount of parameters, training data, or training steps. ",
-            "One approach to understanding emergence is to find continuous progress measures that underlie the seemingly discontinuous qualitative changes."
-          ]
-        },
-        {
-          "id": "s3",
-          "parent": "s1",
-          "relation": "method",
-          "highlights": [
-            "reverse-engineering learned behaviors into their individual components.",
-            "we investigate the recently-discovered phenomenon of \"grokking'' exhibited by small transformers trained on modular addition tasks.",
-            "We fully reverse engineer the algorithm learned by these networks, which uses discrete Fourier transforms and trigonometric identities to convert addition to rotation about a circle."
-          ]
-        },
-        {
-          "id": "s4",
-          "parent": "s3",
-          "relation": "evidence",
-          "highlights": [
-            "We confirm the algorithm by analyzing the activations and weights and by performing ablations in Fourier space. "
-          ]
-        },
-        {
-          "id": "s5",
-          "parent": "s1",
-          "relation": "implication",
-          "highlights": [
-            "grokking, rather than being a sudden shift, arises from the gradual amplification of structured mechanisms encoded in the weights, followed by the later removal of memorizing components."
-          ]
-        }
-      ],
-      "decision_note": "The Fourier ablations are Evidence for the Method because they test whether the network actually uses the algorithm the authors reconstructed."
-    }
-  },
-  {
-    "readerMap": "examples/scaling_laws_for_neural_language_models.bnitz",
-    "input": {
-      "title": "Scaling Laws for Neural Language Models",
-      "authors": [
-        "Jared Kaplan",
-        "Sam McCandlish",
-        "Tom Henighan",
-        "Tom B. Brown",
-        "Benjamin Chess",
-        "Rewon Child",
-        "Scott Gray",
-        "Alec Radford",
-        "Jeffrey Wu",
-        "Dario Amodei"
-      ],
-      "affiliations": [],
-      "date": "23 Jan 2020",
-      "abstract": "We study empirical scaling laws for language model performance on the cross-entropy loss. The loss scales as a power-law with model size, dataset size, and the amount of compute used for training, with some trends spanning more than seven orders of magnitude. Other architectural details such as network width or depth have minimal effects within a wide range. Simple equations govern the dependence of overfitting on model/dataset size and the dependence of training speed on model size. These relationships allow us to determine the optimal allocation of a fixed compute budget. Larger models are significantly more sample-efficient, such that optimally compute-efficient training involves training very large models on a relatively modest amount of data and stopping significantly before convergence."
-    },
-    "output": {
-      "planets": [
-        {
-          "id": "s1",
-          "parent": "",
-          "relation": "nucleus",
-          "highlights": [
-            "We study empirical scaling laws for language model performance on the cross-entropy loss.",
-            "The loss scales as a power-law with model size, dataset size, and the amount of compute used for training, with some trends spanning more than seven orders of magnitude."
-          ]
-        },
-        {
-          "id": "s2",
-          "parent": "s1",
-          "relation": "implication",
-          "highlights": [
-            "These relationships allow us to determine the optimal allocation of a fixed compute budget. Larger models are significantly more sample-efficient, such that ",
-            "optimally compute-efficient training involves training very large models on a relatively modest amount of data and stopping significantly before convergence."
-          ]
-        }
-      ],
-      "decision_note": "The compute allocation recommendation follows from the measured scaling law, so it is an Implication."
-    }
-  },
-  {
-    "readerMap": "examples/attention_is_all_you_need.bnitz",
-    "input": {
-      "title": "Attention Is All You Need",
-      "authors": [
-        "Ashish Vaswani",
-        "Noam Shazeer",
-        "Niki Parmar",
-        "Jakob Uszkoreit",
-        "Llion Jones",
-        "Aidan N. Gomez",
-        "Łukasz Kaiser",
-        "Illia Polosukhin"
-      ],
-      "affiliations": [
-        "Google Brain",
-        "Google Research",
-        "University of Toronto"
-      ],
-      "date": "2017",
-      "abstract": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data."
-    },
-    "output": {
-      "planets": [
-        {
-          "id": "s1",
-          "parent": "",
-          "relation": "nucleus",
-          "highlights": [
-            "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely."
-          ]
-        },
-        {
-          "id": "s2",
-          "parent": "s1",
-          "relation": "background",
-          "highlights": [
-            "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism."
-          ]
-        },
-        {
-          "id": "s5",
-          "parent": "s1",
-          "relation": "evidence",
-          "highlights": [
-            "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
-            "Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. "
-          ]
-        },
-        {
-          "id": "s8",
-          "parent": "s1",
-          "relation": "evidence",
-          "highlights": [
-            "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data."
-          ]
-        }
-      ],
-      "decision_note": "Translation performance and generalization to parsing are two separate Evidence planets because they test distinct claims, and there is no Method planet because the abstract identifies attention as the basis of the Transformer without explaining how the architecture works."
-    }
-  },
-  {
     "readerMap": "examples/bitcoin_a_peer_to_peer_electronic_cash_system.bnitz",
     "input": {
       "title": "Bitcoin: A Peer-to-Peer Electronic Cash System",
@@ -391,64 +110,6 @@
     }
   },
   {
-    "readerMap": "examples/on_the_im_possibility_of_obfuscating_programs.bnitz",
-    "input": {
-      "title": "On the (Im)possibility of Obfuscating Programs",
-      "authors": [
-        "Boaz Barak",
-        "Oded Goldreich",
-        "Russell Impagliazzo",
-        "Steven Rudich",
-        "Amit Sahai",
-        "Salil Vadhan",
-        "Ke Yang"
-      ],
-      "affiliations": [],
-      "date": "2001",
-      "abstract": "Informally, an {\\em obfuscator} $O$ is an (efficient,\nprobabilistic) \"compiler\" that takes as input a program (or\ncircuit) $P$ and produces a new program $O(P)$ that has the\nsame functionality as $P$ yet is \"unintelligible\" in some sense.\nObfuscators, if they exist, would have a wide variety of\ncryptographic and complexity-theoretic applications, ranging from\nsoftware protection to homomorphic encryption to\ncomplexity-theoretic analogues of Rice's theorem. Most of these\napplications are based on an interpretation of the \"unintelligibility\" condition in obfuscation as meaning that\n$O(P)$ is a \"virtual black box,\" in the sense that anything\none can  efficiently compute given $O(P)$, one could also\nefficiently compute given oracle access to $P$.\n\nIn this work, we initiate a theoretical investigation of\nobfuscation. Our main result is that, even under very\nweak formalizations of the above intuition, obfuscation\nis impossible. We prove this by constructing a family of\nfunctions $F$ that are {\\em inherently\nunobfuscatable} in the following sense: there is a\nproperty $\\pi : F \\rightarrow \\{0,1\\}$ such that (a) given {\\em\nany program} that computes a function $f\\in F$, the\nvalue $\\pi(f)$ can be efficiently computed, yet (b) given\n{\\em oracle access} to a (randomly selected) function\n$f\\in F$, no efficient algorithm can compute $\\pi(f)$\nmuch better than random guessing.\n\nWe extend our impossibility result in a number of ways, including\neven obfuscators that (a) are not necessarily computable in\npolynomial time, (b) only {\\em approximately} preserve the\nfunctionality, and (c) only need to work for very restricted\nmodels of computation ($TC_0$).  We also rule out several\npotential applications of obfuscators, by constructing\n\"unobfuscatable\" signature schemes, encryption schemes, and\npseudorandom function families."
-    },
-    "output": {
-      "planets": [
-        {
-          "id": "s1",
-          "parent": "",
-          "relation": "nucleus",
-          "highlights": [
-            "$O(P)$ is a \"virtual black box,\" in the sense that anything\none can  efficiently compute given $O(P)$, one could also\nefficiently compute given oracle access to $P$.",
-            "Our main result is that, even under very\nweak formalizations of the above intuition, obfuscation\nis impossible."
-          ]
-        },
-        {
-          "id": "s2",
-          "parent": "s1",
-          "relation": "background",
-          "highlights": [
-            "Informally, an {\\em obfuscator} $O$ is an (efficient,\nprobabilistic) \"compiler\" that takes as input a program (or\ncircuit) $P$ and produces a new program $O(P)$ that has the\nsame functionality as $P$ yet is \"unintelligible\" in some sense.\n",
-            "Obfuscators, if they exist, would have a wide variety of\ncryptographic and complexity-theoretic applications, ranging from\nsoftware protection to homomorphic encryption to\ncomplexity-theoretic analogues of Rice's theorem. "
-          ]
-        },
-        {
-          "id": "s3",
-          "parent": "s1",
-          "relation": "method",
-          "highlights": [
-            "We prove this by constructing a family of\nfunctions $F$ that are {\\em inherently\nunobfuscatable} in the following sense:",
-            "there is a\nproperty $\\pi : F \\rightarrow \\{0,1\\}$ such that (a) given {\\em\nany program} that computes a function $f\\in F$, the\nvalue $\\pi(f)$ can be efficiently computed, yet (b) given\n{\\em oracle access} to a (randomly selected) function\n$f\\in F$, no efficient algorithm can compute $\\pi(f)$\nmuch better than random guessing."
-          ]
-        },
-        {
-          "id": "s4",
-          "parent": "s1",
-          "relation": "implication",
-          "highlights": [
-            "We also rule out several\npotential applications of obfuscators, by constructing\n\"unobfuscatable\" signature schemes, encryption schemes, and\npseudorandom function families."
-          ]
-        }
-      ],
-      "decision_note": "The counterexample supports the impossibility theorem, and we mark this passage as Method because the authors use it to explain how they prove the theorem."
-    }
-  },
-  {
     "readerMap": "examples/what_is_the_sapir_whorf_hypothesis.bnitz",
     "input": {
       "title": "What Is the Sapir-Whorf Hypothesis?",
@@ -484,124 +145,6 @@
     }
   },
   {
-    "readerMap": "examples/the_geometry_of_truth_emergent_linear_structure_in_llm_representations_of_true_false_datas.bnitz",
-    "input": {
-      "title": "The Geometry of Truth: Emergent Linear Structure in LLM Representations of True/False Datasets",
-      "authors": [
-        "Samuel Marks",
-        "Max Tegmark"
-      ],
-      "affiliations": [],
-      "date": "2024",
-      "abstract": "Large Language Models (LLMs) have impressive capabilities, but are prone to outputting falsehoods. Recent work has developed techniques for inferring whether a LLM is telling the truth by training probes on the LLM’s internal activations. However, this line of work is controversial, with some authors pointing out failures of these probes to generalize in basic ways, among other conceptual issues. In this work, we use high-quality datasets of simple true/false statements to study in detail the structure of LLM representations of truth, drawing on three lines of evidence: 1. Visualizations of LLM true/false statement representations, which reveal clear linear structure. 2. Transfer experiments in which probes trained on one dataset generalize to different datasets. 3. Causal evidence obtained by surgically intervening in a LLM’s forward pass, causing it to treat false statements as true and vice versa. Overall, we present evidence that at sufficient scale, LLMs linearly represent the truth or falsehood of factual statements. We also show that simple difference-in-mean probes generalize as well as other probing techniques while identifying directions which are more causally implicated in model outputs."
-    },
-    "output": {
-      "planets": [
-        {
-          "id": "s1",
-          "parent": "",
-          "relation": "nucleus",
-          "highlights": [
-            "at sufficient scale, LLMs linearly represent the truth or falsehood of factual statements."
-          ]
-        },
-        {
-          "id": "s2",
-          "parent": "s1",
-          "relation": "evidence",
-          "highlights": [
-            "1. Visualizations of LLM true/false statement representations, which reveal clear linear structure"
-          ]
-        },
-        {
-          "id": "s3",
-          "parent": "s1",
-          "relation": "evidence",
-          "highlights": [
-            "2. Transfer experiments in which probes trained on one dataset generalize to different datasets."
-          ]
-        },
-        {
-          "id": "s4",
-          "parent": "s1",
-          "relation": "evidence",
-          "highlights": [
-            "3. Causal evidence obtained by surgically intervening in a LLM’s forward pass, causing it to treat false statements as true and vice versa."
-          ]
-        },
-        {
-          "id": "s8",
-          "parent": "s1",
-          "relation": "problem",
-          "highlights": [
-            "Large Language Models (LLMs) have impressive capabilities, but are prone to outputting falsehoods. Recent work has developed techniques for inferring whether a LLM is telling the truth by training probes on the LLM’s internal activations.",
-            "However, this line of work is controversial, with some authors pointing out failures of these probes to generalize in basic ways, among other conceptual issues."
-          ]
-        },
-        {
-          "id": "s9",
-          "parent": "s1",
-          "relation": "method",
-          "highlights": [
-            "we use high-quality datasets of simple true/false statements to study in detail the structure of LLM representations of truth,"
-          ]
-        }
-      ],
-      "decision_note": "Visualization reveals the linear pattern, transfer tests whether it generalizes, and intervention tests whether it influences model outputs, so each is a separate Evidence planet supporting the Nucleus."
-    }
-  },
-  {
-    "readerMap": "archive/layers_at_similar_depths_generate_similar_activations_across_llm_architectures.bnitz",
-    "input": {
-      "title": "Layers at Similar Depths Generate Similar Activations Across LLM Architectures",
-      "authors": [
-        "Christopher Wolfram",
-        "Aaron Schein"
-      ],
-      "affiliations": [],
-      "date": "2025",
-      "abstract": "How do the latent spaces used by independently-trained LLMs relate to one another? We study the nearest neighbor relationships induced by activations at different layers of 24 open-weight LLMs, and find that they 1) tend to vary from layer to layer within a model, and 2) are approximately shared between corresponding layers of different models. Claim 2 shows that these nearest neighbor relationships are not arbitrary, as they are shared across models, but Claim 1 shows that they are not \"obvious\" either, as there is no single set of nearest neighbor relationships that is universally shared. Together, these suggest that LLMs generate a progression of activation geometries from layer to layer, but that this entire progression is largely shared between models, stretched and squeezed to fit into different architectures."
-    },
-    "output": {
-      "planets": [
-        {
-          "id": "s1",
-          "parent": "",
-          "relation": "nucleus",
-          "highlights": [
-            "LLMs generate a progression of activation geometries from layer to layer, but that this entire progression is largely shared between models, stretched and squeezed to fit into different architectures."
-          ]
-        },
-        {
-          "id": "s2",
-          "parent": "s1",
-          "relation": "problem",
-          "highlights": [
-            "How do the latent spaces used by independently-trained LLMs relate to one another?"
-          ]
-        },
-        {
-          "id": "s3",
-          "parent": "s1",
-          "relation": "method",
-          "highlights": [
-            "We study the nearest neighbor relationships induced by activations at different layers of 24 open-weight LLMs, "
-          ]
-        },
-        {
-          "id": "s4",
-          "parent": "s1",
-          "relation": "evidence",
-          "highlights": [
-            "they 1) tend to vary from layer to layer within a model, and 2) are approximately shared between corresponding layers of different models. ",
-            "Claim 2 shows that these nearest neighbor relationships are not arbitrary, as they are shared across models, but Claim 1 shows that they are not \"obvious\" either, as there is no single set of nearest neighbor relationships that is universally shared."
-          ]
-        }
-      ],
-      "decision_note": "The two observations form a single Evidence planet because together they show that nearest-neighbor relationships change from layer to layer within a model in a pattern largely shared across models."
-    }
-  },
-  {
     "readerMap": "examples/deepseek_r1_incentivizing_reasoning_capability_in_llms_via_reinforcement_learning.bnitz",
     "input": {
       "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
@@ -632,6 +175,81 @@
         }
       ],
       "decision_note": "R1-Zero’s reasoning result and R1’s revised training procedure form one Nucleus because R1-Zero’s readability and language-mixing issues explain why the authors moved from one model to the other."
+    }
+  },
+  {
+    "readerMap": "examples/ironies_of_automation.bnitz",
+    "input": {
+      "title": "Ironies of Automation",
+      "authors": [
+        "L. Bainbridge"
+      ],
+      "affiliations": [],
+      "date": "1983",
+      "abstract": "This paper discusses the ways in which automation of industrial processes may expand rather than eliminate problems with the human operator. Some comments will be made on methods of alleviating these problems within the \"classic' approach of leaving the operator with responsibility for abnormal conditions, and on the potential for continued use of the human operator for on-line decision-making within human-computer collaboration."
+    },
+    "output": {
+      "planets": [
+        {
+          "id": "s1",
+          "parent": "",
+          "relation": "nucleus",
+          "highlights": [
+            "automation of industrial processes may expand rather than eliminate problems with the human operator."
+          ]
+        },
+        {
+          "id": "s2",
+          "parent": "s1",
+          "relation": "implication",
+          "highlights": [
+            "methods of alleviating these problems within the \"classic' approach of leaving the operator with responsibility for abnormal conditions,"
+          ]
+        },
+        {
+          "id": "s3",
+          "parent": "s1",
+          "relation": "implication",
+          "highlights": [
+            "potential for continued use of the human operator for on-line decision-making within human-computer collaboration."
+          ]
+        }
+      ],
+      "decision_note": "Supporting operators during abnormal conditions and involving them in real-time decisions are separate implications because they describe two different roles for the operator."
+    }
+  },
+  {
+    "readerMap": "examples/three_approaches_to_the_quantitative_definition_of_information.bnitz",
+    "input": {
+      "title": "Three Approaches to the Quantitative Definition of Information",
+      "authors": [
+        "A. Kolmogorov"
+      ],
+      "affiliations": [],
+      "date": "1965",
+      "abstract": "There are two common approaches to the quantitative definition of \"information\": combinatorial and probabilistic. The author briefly describes the major features of these approaches and introduces a new algorithmic approach that uses the theory of recursive functions."
+    },
+    "output": {
+      "planets": [
+        {
+          "id": "s1",
+          "parent": "",
+          "relation": "nucleus",
+          "highlights": [
+            "introduces a new algorithmic approach that uses the theory of recursive functions."
+          ]
+        },
+        {
+          "id": "s2",
+          "parent": "s1",
+          "relation": "background",
+          "highlights": [
+            "There are two common approaches to the quantitative definition of \"information\": combinatorial and probabilistic.",
+            "The author briefly describes the major features of these approaches"
+          ]
+        }
+      ],
+      "decision_note": "The combinatorial and probabilistic definitions are Background because they establish the existing approaches against which the author introduces the algorithmic definition."
     }
   }
 ]

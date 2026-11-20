@@ -2,7 +2,7 @@
 
 Version tags record versions published to the Chrome Web Store. Keep each submitted ZIP here unchanged and include it in the matching version's tagged commit. Website updates use ordinary commits on `main`; GitHub releases are not used.
 
-`v0.2.1` is a Git-only tag for the Worker, evaluation and map updates. The Chrome manifest stays at `0.2.0`.
+`v0.2.1` is a Git-only tag for the Worker, evaluation and map updates. `v0.2.2` is a Git-only tag for the interdisciplinary Worker examples, simplified tests and removal of the evaluation suite. The Chrome manifest for both tags is `0.2.0`.
 
 | Chrome version | Submitted ZIP | Downloaded Store CRX |
 | --- | --- | --- |
