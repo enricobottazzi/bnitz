@@ -7,8 +7,7 @@
   <meta name="theme-color" content="#ffffff">
   <title>BNITZ</title>
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <link rel="stylesheet" href="/bnitz.css?v=0.0.9">
-  <link rel="stylesheet" href="/reader.css?v=0.0.23">
+  <link rel="stylesheet" href="/reader.css?v=0.0.40">
   <link rel="preload" as="image" href="/assets/core.svg?v=0.0.6">
   <link rel="preload" as="image" href="/assets/problem.svg?v=0.0.6">
   <link rel="preload" as="image" href="/assets/background.svg?v=0.0.6">
@@ -19,7 +18,8 @@
   <script defer src="/vendor/katex.min.js"></script>
   <script defer src="/lang/model.js?v=0.0.13"></script>
   <script defer src="/lang/view.js?v=0.0.14"></script>
-  <script defer src="/reader.js?v=0.0.22"></script>
+  <script defer src="/playground.js?v=1"></script>
+  <script defer src="/reader.js?v=0.0.35"></script>
 </head>
 <body>
   <header class="sidebar">
@@ -48,6 +48,10 @@
   </header>
   <main id="content" tabindex="-1">
     <p id="status" class="status" role="status" hidden></p>
+    <form id="arxiv-import" aria-label="Import from arXiv" novalidate hidden>
+      <input id="arxiv-url" aria-label="arXiv abstract URL" placeholder="Enter an arXiv abstract link (https://arxiv.org/abs/...)" inputmode="url" enterkeyhint="go" autocapitalize="none" spellcheck="false" required>
+      <p class="status" role="status"></p>
+    </form>
     <section id="readings" aria-label="Readings">
       <div id="papers" class="readings-list"></div>
     </section>
@@ -56,47 +60,29 @@
         <h1 id="title" tabindex="-1"></h1>
         <p id="metadata"></p>
       </header>
-      <div id="playground-tools" hidden>
-        <div class="actions">
-          <button type="button" id="import-document">Import .bnitz</button>
-          <input type="file" id="document-file" accept=".bnitz,application/json" hidden>
-          <button type="button" id="export-document">Export .bnitz</button>
-          <button type="button" id="reset-document">Start fresh</button>
-        </div>
-        <p id="document-status" class="status" role="status"></p>
-        <details id="document-details">
-          <summary>Text &amp; details</summary>
-          <form id="document-fields">
-            <label class="document-wide">Title<input id="document-title" name="title" placeholder="Title" required></label>
-            <label>Author<input id="document-author" name="author" placeholder="Author"></label>
-            <label>Year<input id="document-year" name="year" placeholder="Year" type="number" min="1" max="9999" step="1"></label>
-            <label class="document-wide">Source<input id="document-source" name="source" placeholder="https://…" type="url"></label>
-            <label class="document-wide">Text<textarea id="document-text" name="text" placeholder="Paste your text here" rows="8" required></textarea></label>
-          </form>
-        </details>
-      </div>
-      <form id="planet-editor" aria-label="Playground" hidden>
-        <div class="actions">
-          <button type="button" id="add-planet">Add planet</button>
-          <button type="button" id="remove-planet" disabled>Remove planet</button>
-          <button type="button" id="edit-planet" disabled>Edit planet</button>
-          <p id="editor-status" role="status"></p>
-        </div>
-        <div class="actions">
-          <button type="button" id="add-highlight" disabled>Highlight</button>
-          <button type="button" id="clear-highlights" disabled>Clear highlights</button>
-          <span id="highlight-hint">Select text.</span>
-        </div>
-        <div class="planet-settings">
-          <select id="relation" aria-label="Planet type" required disabled></select>
-          <select id="parent" aria-label="Attaches to" required disabled></select>
-          <button type="submit" id="save-planet" class="primary" disabled>Save</button>
-          <button type="button" id="cancel-planet" disabled>Cancel</button>
-        </div>
-      </form>
       <div class="reader-grid">
         <article id="abstract" class="reader-text" aria-label="Abstract" tabindex="0"></article>
-        <div id="map" class="map map-pane" aria-label="BNITZ language map"></div>
+        <div class="map-column">
+          <div id="map" class="map map-pane" aria-label="BNITZ language map">
+            <button type="button" id="new-core" aria-label="Add core" hidden><img src="/assets/core.svg" alt="" width="40" height="40"></button>
+          </div>
+          <div id="planet-editor" class="icon-actions" role="group" aria-label="Map editing" hidden>
+            <button type="button" id="add-planet" aria-label="Add planet" aria-haspopup="menu" popovertarget="planet-menu" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg>
+            </button>
+            <div id="planet-menu" popover role="menu" aria-label="Planet type"></div>
+            <button type="button" id="remove-planet" aria-label="Delete planet" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/></svg>
+            </button>
+            <button type="button" id="undo-planet" aria-label="Undo last map edit" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 3-6 6 6 6M3 9h11a6 6 0 0 1 0 12"/></svg>
+            </button>
+            <button type="button" id="export-document" aria-label="Export .bnitz">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 15v5h14v-5"/></svg>
+            </button>
+          </div>
+          <p id="document-status" class="status" role="status"></p>
+        </div>
         <details class="reader-legend">
           <summary>Legend</summary>
           <div id="legend" class="reader-legend-panel"></div>

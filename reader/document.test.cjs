@@ -3,12 +3,48 @@ const assert = require('node:assert/strict');
 const {readFileSync, readdirSync} = require('node:fs');
 const {join} = require('node:path');
 const model = require('../lang/model.js');
+const {toggleHighlight, filename} = require('./playground.js');
 
 function paper(text = 'Before planet after', start = 7, end = 13) {
   return {version: 3, title: 'Test', text, core: 's1', spans: [
     {id: 's1', start, end, highlights: [{start, end}]},
   ]};
 }
+
+test('Playground exports use lowercase underscore-separated titles capped at 90 characters', () => {
+  assert.equal(filename('The Geometry of Truth: Emergent Linear Structure in LLM Representations of True/False Datasets'),
+    'the_geometry_of_truth_emergent_linear_structure_in_llm_representations_of_true_false_datas.bnitz');
+  assert.equal(filename('“Caffè: 研究 / 2026!”'), 'caffè_研究_2026.bnitz');
+  assert.equal(filename('???'), 'abstract.bnitz');
+});
+
+test('reselecting part of a highlight splits it, and selecting across the gap joins it again', () => {
+  const {text, spans: [planet]} = paper();
+  const split = toggleHighlight(text, planet, {start: 9, end: 11});
+  assert.deepEqual(split.highlights, [{start: 7, end: 9}, {start: 11, end: 13}]);
+  assert.deepEqual([split.start, split.end], [7, 9]);
+  assert.deepEqual(toggleHighlight(text, split, {start: 8, end: 12}), planet);
+  assert.deepEqual(planet, paper().spans[0]);
+});
+
+test('removing the last highlight on a legacy planet retains its exportable anchor', () => {
+  const document = paper();
+  const [planet] = document.spans;
+  delete planet.highlights;
+  const cleared = toggleHighlight(document.text, planet, {start: 7, end: 13});
+  assert.deepEqual(cleared, {...planet, highlights: []});
+  assert.deepEqual(model.validate({...document, spans: [cleared]}).spans[0], cleared);
+  assert.deepEqual(toggleHighlight(document.text, cleared, {start: 14, end: 19}),
+    {id: 's1', start: 14, end: 19, highlights: [{start: 14, end: 19}]});
+});
+
+test('unsorted adjacent and overlapping imported highlights toggle as a continuous area', () => {
+  const {text, spans: [planet]} = paper();
+  planet.highlights = [{start: 9, end: 12}, {start: 7, end: 9}, {start: 11, end: 13}];
+  const trimmed = toggleHighlight(text, planet, {start: 7, end: 12});
+  assert.deepEqual(trimmed.highlights, [{start: 12, end: 13}]);
+  assert.deepEqual(toggleHighlight(text, trimmed, {start: 13, end: 14}), trimmed);
+});
 
 test('text edits shift a planet and its highlights without mutating the imported document', () => {
   const original = paper();

@@ -10,39 +10,27 @@ const status = document.querySelector('#status');
 const playground = textElement('a', 'playground');
 const aboutLink = document.querySelector('#about-link');
 const playgroundLink = document.querySelector('#playground-link');
-const playgroundTools = document.querySelector('#playground-tools');
-const importDocument = document.querySelector('#import-document');
 const exportDocument = document.querySelector('#export-document');
-const resetDocument = document.querySelector('#reset-document');
-const documentFile = document.querySelector('#document-file');
+const arxivImport = document.querySelector('#arxiv-import');
+const arxivUrl = document.querySelector('#arxiv-url');
+const arxivStatus = arxivImport.querySelector('[role="status"]');
 const documentStatus = document.querySelector('#document-status');
-const documentDetails = document.querySelector('#document-details');
-const documentFields = document.querySelector('#document-fields');
-const fields = documentFields.elements;
 const editor = document.querySelector('#planet-editor');
 const addPlanet = document.querySelector('#add-planet');
+const planetMenu = document.querySelector('#planet-menu');
 const removePlanet = document.querySelector('#remove-planet');
-const editPlanet = document.querySelector('#edit-planet');
-const highlightButton = document.querySelector('#add-highlight');
-const clearHighlights = document.querySelector('#clear-highlights');
-const hint = document.querySelector('#highlight-hint');
-const relation = document.querySelector('#relation');
-const parent = document.querySelector('#parent');
-const savePlanet = document.querySelector('#save-planet');
-const cancelPlanet = document.querySelector('#cancel-planet');
-const editorStatus = document.querySelector('#editor-status');
-const library = new Map();
+const undoPlanet = document.querySelector('#undo-planet');
+const newCore = document.querySelector('#new-core');
+const mapRoute = '#playground/map';
+const pages = new Map([[playgroundLink.hash, {row: playgroundLink}]]);
 const links = new Map();
 const segments = [];
 let active;
-let about;
 let article;
 let selectedId;
 let hovered;
-let draft;
-let pendingRange;
-let textSelection;
 let workspace;
+let importRequest;
 
 let showLegendRelation;
 
@@ -52,10 +40,9 @@ async function loadLegend() {
     const response = await fetch('/RULES.md', {cache: 'no-cache'});
     if (!response.ok) throw new Error('Could not load RULES.md.');
     const definitions = BNITZModel.parseLegendDefinitions(await response.text());
-    showLegendRelation = BNITZView.legend(legend, definitions, key => {
-      if (!relation.disabled && [...relation.options].some(option => option.value === key)) relation.value = key;
-    });
+    showLegendRelation = BNITZView.legend(legend, definitions);
   } catch (error) {
+    legend.classList.add('status');
     legend.textContent = error.message;
   }
 }
@@ -77,39 +64,21 @@ function sourceLink(source) {
 
 function renderHeading() {
   const editing = active === workspace;
-  title.textContent = article.title || 'Title';
-  title.classList.toggle('placeholder', !article.title);
+  title.textContent = article.title;
   document.title = `BNITZ - ${editing ? 'Playground' : article.title}`;
   abstract.setAttribute('aria-label', article.title ? `${article.title} article text` : 'Article text');
-  const placeholder = label => {
-    const span = textElement('span', label);
-    span.className = 'placeholder';
-    return span;
-  };
   const details = [
-    article.author || (editing && placeholder('Author')),
-    article.year ? textElement('time', article.year) : editing && placeholder('Year'),
-    sourceLink(article.source) || (editing && placeholder('Source')),
+    article.author,
+    article.year && textElement('time', article.year),
+    sourceLink(article.source),
     !editing && playground].filter(Boolean);
   metadata.replaceChildren(...details.flatMap((part, index) => index ? [' · ', part] : [part]));
 }
 
 function openWorkspace(document) {
-  workspace = {article: document};
-  if (location.hash === '#playground') show();
-  else location.hash = '#playground';
-}
-
-function openRandomExample() {
-  const examples = [...library.values()];
-  const example = examples[Math.floor(Math.random() * examples.length)];
-  if (example) openWorkspace(structuredClone(example.article));
-  else location.hash = '#playground';
-}
-
-function checkPassages() {
-  documentStatus.textContent = article.spans.some(span => !BNITZModel.validRange(article.text, span.start, span.end))
-    ? 'A passage was deleted. Select its planet and set a new highlight, or remove the planet.' : '';
+  workspace = {article: document, undo: []};
+  pages.set(mapRoute, workspace);
+  location.hash = mapRoute;
 }
 
 function paintArticle() {
@@ -117,9 +86,8 @@ function paintArticle() {
   links.clear();
   segments.length = 0;
   hovered = null;
-  const ranges = article.spans.filter(planet => planet !== draft?.planet).flatMap(planet =>
+  const ranges = article.spans.flatMap(planet =>
     BNITZModel.highlights(planet).map(range => ({...range, planetId: planet.id})));
-  if (draft) ranges.push(...draft.highlights.map(range => ({...range, draft: true})));
   const fragment = document.createDocumentFragment();
   let offset = 0;
   for (const part of article.text.split(/(\r?\n[ \t]*(?:\r?\n)+)/)) {
@@ -149,7 +117,7 @@ function highlight() {
   const ids = new Set(hovered ? links.get(hovered).map(range => range.planetId) : selectedId ? [selectedId] : []);
   BNITZView.select(map, ...ids);
   for (const [mark, ranges] of links) {
-    mark.classList.toggle('highlighted', ranges.some(range => range.draft || ids.has(range.planetId)));
+    mark.classList.toggle('highlighted', ranges.some(range => ids.has(range.planetId)));
   }
 }
 
@@ -165,51 +133,67 @@ function selectPlanet(planet) {
   if (planet) showLegendRelation?.(planet.relation ?? 'core');
   highlight();
   updateEditor();
-  editorStatus.textContent = '';
+}
+
+function selectedPlanet() {
+  return article.spans.find(planet => planet.id === selectedId);
 }
 
 function redrawMap() {
-  if (article.core) BNITZView.map(map, article, selectPlanet);
-  else map.replaceChildren();
-  paintArticle();
-  if (active === workspace) checkPassages();
-}
-
-function selectPrompt(select) {
-  const prompt = new Option(select.getAttribute('aria-label'), '', true, true);
-  prompt.disabled = true;
-  return prompt;
-}
-
-function configurePlanetSettings(planet) {
-  const isCore = !article.core || planet?.id === article.core;
-  if (isCore) {
-    relation.replaceChildren(new Option('Core', 'core'));
-    parent.replaceChildren(selectPrompt(parent));
-    return;
-  }
-  relation.replaceChildren(selectPrompt(relation), ...Object.entries(BNITZModel.relations)
-    .map(([key, [label]]) => new Option(label, key)));
-  relation.value = planet?.relation ?? '';
-  const byId = new Map(article.spans.map(span => [span.id, span]));
-  const options = article.spans.filter(candidate => {
-    for (let ancestor = candidate; ancestor; ancestor = byId.get(ancestor.parent)) {
-      if (ancestor === planet) return false;
+  planetMenu.hidePopover();
+  if (article.core) {
+    BNITZView.map(map, article, selectPlanet);
+    for (const planet of article.spans) {
+      if (planet.highlights?.length === 0) {
+        map.querySelector(`[data-id="${CSS.escape(planet.id)}"]`).setAttribute('aria-label', BNITZModel.label(planet));
+      }
     }
-    return true;
-  }).map(span => {
-    const excerpt = article.text.slice(span.start, span.end).trim().replace(/\s+/g, ' ');
-    const label = `${BNITZModel.label(span)} · ${excerpt.length > 42 ? excerpt.slice(0, 42) + '…' : excerpt}`;
-    return new Option(label, span.id);
-  });
-  parent.replaceChildren(selectPrompt(parent), ...options);
-  parent.value = planet?.parent ?? article.core;
+  } else {
+    newCore.hidden = !article.text.trim();
+    map.replaceChildren(newCore);
+  }
+  paintArticle();
 }
 
-function selectedRange() {
+function updateEditor() {
+  exportDocument.disabled = !article.core;
+  addPlanet.disabled = !selectedId;
+  const hasChildren = selectedId != null && article.spans.some(span => span.parent === selectedId);
+  removePlanet.disabled = !selectedId || hasChildren;
+  removePlanet.ariaDescription = hasChildren ? 'Delete the child planets first.' : null;
+  undoPlanet.disabled = !workspace?.undo.length;
+}
+
+function focusPlanet() {
+  map.querySelector('[aria-pressed="true"], #new-core')?.focus({preventScroll: true});
+}
+
+function editMap(spans, core, selection) {
+  workspace.undo.push({spans: article.spans, core: article.core, selection: selectedId});
+  article.spans = spans;
+  article.core = core;
+  selectedId = selection;
+  redrawMap();
+  const planet = selectedPlanet();
+  showLegendRelation?.(planet?.relation ?? 'core');
+}
+
+function addChild(relation) {
+  const parent = selectedPlanet();
+  let n = article.spans.length + 1;
+  while (article.spans.some(planet => planet.id === `s${n}`)) n++;
+  const planet = {id: `s${n}`, start: parent?.start ?? 0, end: parent?.end ?? article.text.length, highlights: []};
+  if (parent) Object.assign(planet, {parent: parent.id, relation});
+  editMap([...article.spans, planet], article.core ?? planet.id, planet.id);
+  focusPlanet();
+}
+
+function toggleTextHighlight() {
+  if (active !== workspace || !selectedId || planetMenu.matches(':popover-open')) return;
   const selection = window.getSelection();
-  if (!selection.rangeCount || selection.isCollapsed) return pendingRange;
+  if (!selection.rangeCount || selection.isCollapsed) return;
   const range = selection.getRangeAt(0);
+  if (!abstract.contains(range.commonAncestorContainer)) return;
   let first;
   let last;
   // Typeset math and smart quotes are atomic. Plain text keeps its source offsets.
@@ -222,231 +206,162 @@ function selectedRange() {
     first ??= from;
     last = to;
   }
-  pendingRange = first === undefined ? null : {start: first, end: last};
-  return pendingRange;
+  const planet = selectedPlanet();
+  const edited = BNITZPlayground.toggleHighlight(article.text, planet, {start: first, end: last});
+  if (edited === planet) return;
+  selection.removeAllRanges();
+  editMap(article.spans.map(span => span === planet ? edited : span), article.core, selectedId);
 }
 
-function updateHighlightButton() {
-  const {start, end} = (draft && selectedRange()) ?? {};
-  highlightButton.disabled = !draft || !BNITZModel.validRange(article.text, start, end);
-}
-
-function updateEditor() {
-  const editing = Boolean(draft);
-  const hasHighlights = Boolean(draft?.highlights.length);
-  const isCore = !article?.core || draft?.planet?.id === article.core;
-  map.inert = editing;
-  addPlanet.disabled = editing || !article?.text.trim();
-  importDocument.disabled = exportDocument.disabled = documentDetails.inert = editing;
-  removePlanet.disabled = editPlanet.disabled = editing || !selectedId;
-  clearHighlights.disabled = !hasHighlights;
-  cancelPlanet.disabled = !editing;
-  hint.style.visibility = editing ? 'visible' : '';
-  relation.disabled = parent.disabled = isCore || !(draft?.planet || hasHighlights);
-  savePlanet.disabled = !(hasHighlights || (draft?.planet && !draft.original.length));
-  updateHighlightButton();
-}
-
-function startDraft(planet) {
-  const original = planet ? BNITZModel.highlights(planet) : [];
-  draft = {planet, original, highlights: original};
-  if (!planet) selectedId = null;
-  pendingRange = null;
-  window.getSelection().removeAllRanges();
-  editorStatus.textContent = '';
-  configurePlanetSettings(planet);
-  paintArticle();
-  abstract.focus({preventScroll: true});
-}
-
-function resetDraft() {
-  draft = pendingRange = null;
-  relation.replaceChildren(selectPrompt(relation));
-  parent.replaceChildren(selectPrompt(parent));
-  editorStatus.textContent = '';
-}
-
-function setHighlight() {
-  const {start, end} = selectedRange() ?? {};
-  if (!BNITZModel.validRange(article.text, start, end)) return;
-  const ranges = [...draft.highlights, {start, end}].sort((a, b) => a.start - b.start);
-  draft.highlights = [];
-  for (const range of ranges) {
-    const previous = draft.highlights.at(-1);
-    if (previous && range.start < previous.end) previous.end = Math.max(previous.end, range.end);
-    else draft.highlights.push({...range});
-  }
-  window.getSelection().removeAllRanges();
-  pendingRange = null;
-  paintArticle();
-}
-
-playgroundLink.addEventListener('click', event => {
-  event.preventDefault();
-  openRandomExample();
-});
-
-playground.href = '#playground';
+playground.href = mapRoute;
 playground.addEventListener('click', event => {
   event.preventDefault();
   openWorkspace(structuredClone(article));
 });
 
-resetDocument.addEventListener('click', () => {
-  window.getSelection().removeAllRanges();
-  textSelection = undefined;
-  showLegendRelation?.('core');
-  openWorkspace({version: 3, title: '', text: '', core: null, spans: []});
-});
+function cancelImport() {
+  importRequest?.abort();
+  arxivStatus.classList.remove('loading');
+  arxivStatus.textContent = '';
+}
 
-importDocument.addEventListener('click', () => documentFile.click());
-documentFile.addEventListener('change', async () => {
-  const file = documentFile.files[0];
-  if (!file) return;
+arxivUrl.addEventListener('input', event => {
+  cancelImport();
+  if (event.inputType === 'insertFromPaste') arxivImport.requestSubmit();
+});
+arxivImport.addEventListener('submit', async event => {
+  event.preventDefault();
+  cancelImport();
+  const url = arxivUrl.value.trim();
+  if (!/^(?:https?:\/\/)?(?:www\.)?arxiv\.org\/abs\/\S+$/i.test(url)) {
+    arxivStatus.textContent = 'Enter an arXiv abstract link like https://arxiv.org/abs/1706.03762';
+    return;
+  }
+  const request = new AbortController();
+  importRequest = request;
+  arxivStatus.classList.add('loading');
+  arxivStatus.textContent = 'Loading…';
+  const minimumLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
   try {
-    const imported = BNITZModel.validate(JSON.parse((await file.text()).replace(/^\uFEFF/, '')));
-    openWorkspace(imported);
+    const query = new URLSearchParams({url});
+    const response = await fetch(`/arxiv?${query}`, {signal: request.signal});
+    const paper = await response.json();
+    if (!response.ok) throw new Error(paper.error || 'Could not load the paper.');
+    await minimumLoadingTime;
+    if (request.signal.aborted || location.hash !== playgroundLink.hash) return;
+    document.querySelector('.reader-legend').open = false;
+    const nucleus = {id: 's1', start: 0, end: paper.text.length, highlights: []};
+    openWorkspace({...paper, version: 3, core: nucleus.id, spans: [nucleus]});
   } catch (error) {
-    documentStatus.textContent = `Could not import: ${error.message}`;
-  } finally {
-    documentFile.value = '';
+    await minimumLoadingTime;
+    if (!request.signal.aborted) {
+      arxivStatus.classList.remove('loading');
+      arxivStatus.textContent = error.message;
+    }
   }
 });
 
 exportDocument.addEventListener('click', () => {
-  if (!documentFields.checkValidity()) {
-    documentDetails.open = true;
-    documentFields.reportValidity();
-    return;
-  }
   try {
-    BNITZView.download(BNITZModel.validate(article));
+    BNITZView.download(BNITZModel.validate(article), BNITZPlayground.filename(article.title));
     documentStatus.textContent = '';
   } catch (error) {
     documentStatus.textContent = `Could not export: ${error.message}`;
   }
 });
 
-documentFields.addEventListener('submit', event => event.preventDefault());
-documentFields.addEventListener('input', ({target: {name, value}}) => {
-  if (name === 'text') return;
-  if (name !== 'title' && !value) delete article[name];
-  else article[name] = name === 'year' ? Number(value) : value;
-  renderHeading();
-});
-fields.text.addEventListener('beforeinput', event => {
-  textSelection = event.inputType.startsWith('history') ? undefined
-    : {start: fields.text.selectionStart, end: fields.text.selectionEnd, inputType: event.inputType};
-});
-fields.text.addEventListener('input', () => {
-  // Textareas use LF line endings; adjust imported CRLF offsets before typing.
-  for (const match of [...article.text.matchAll(/\r\n?/g)].reverse()) {
-    const end = match.index + match[0].length;
-    article = BNITZModel.editText(article, article.text.slice(0, match.index) + '\n' + article.text.slice(end),
-      {start: match.index, end});
-  }
-  article = workspace.article = BNITZModel.editText(article, fields.text.value, textSelection);
-  textSelection = undefined;
-  pendingRange = null;
-  redrawMap();
-});
+newCore.addEventListener('click', () => addChild());
+for (const [key, [name, , icon]] of Object.entries(BNITZModel.relations)) {
+  const option = textElement('button', name);
+  option.type = 'button';
+  option.setAttribute('role', 'menuitem');
+  option.tabIndex = -1;
+  option.autofocus = !planetMenu.childElementCount;
+  const symbol = new Image(18, 18);
+  symbol.src = `/assets/${icon}.svg?v=0.0.6`;
+  symbol.alt = '';
+  option.prepend(symbol);
+  option.addEventListener('click', () => addChild(key));
+  planetMenu.append(option);
+}
 
-addPlanet.addEventListener('click', () => startDraft());
-editPlanet.addEventListener('click', () => startDraft(article.spans.find(planet => planet.id === selectedId)));
-cancelPlanet.addEventListener('click', () => {
-  const trigger = draft.planet ? editPlanet : addPlanet;
-  resetDraft();
-  paintArticle();
-  trigger.focus({preventScroll: true});
+addPlanet.addEventListener('keydown', event => {
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    addPlanet.click();
+  }
+});
+planetMenu.addEventListener('keydown', event => {
+  const item = event.target;
+  const first = planetMenu.firstElementChild;
+  const last = planetMenu.lastElementChild;
+  const next = {
+    ArrowDown: item.nextElementSibling ?? first,
+    ArrowUp: item.previousElementSibling ?? last,
+    Home: first,
+    End: last,
+  }[event.key];
+  if (next) {
+    event.preventDefault();
+    next.focus();
+  } else if (event.key === 'Tab') planetMenu.hidePopover();
 });
 
 removePlanet.addEventListener('click', () => {
-  const planet = article.spans.find(span => span.id === selectedId);
-  if (planet.id === article.core && article.spans.length > 1) {
-    editorStatus.textContent = 'Remove the other planets before removing the core.';
-    return;
-  }
-  if (planet.id === article.core) article.core = null;
-  article.spans = article.spans.filter(span => span !== planet)
-    .map(span => span.parent === planet.id ? {...span, parent: planet.parent} : span);
-  selectedId = null;
-  editorStatus.textContent = '';
+  const planet = selectedPlanet();
+  const remaining = article.spans.filter(span => span !== planet);
+  editMap(remaining, planet.id === article.core ? null : article.core, null);
+  undoPlanet.focus({preventScroll: true});
+});
+
+undoPlanet.addEventListener('click', () => {
+  const {spans, core, selection} = workspace.undo.pop();
+  article.spans = spans;
+  article.core = core;
+  selectedId = selection;
   redrawMap();
-  addPlanet.focus({preventScroll: true});
+  showLegendRelation?.(selectedPlanet()?.relation ?? 'core');
+  focusPlanet();
 });
 
-// Keep the article selection intact until the click applies it.
-highlightButton.addEventListener('pointerdown', event => event.preventDefault());
-highlightButton.addEventListener('click', setHighlight);
-clearHighlights.addEventListener('click', () => {
-  draft.highlights = [];
-  pendingRange = null;
-  window.getSelection().removeAllRanges();
-  paintArticle();
+abstract.addEventListener('pointerup', event => {
+  if (event.button === 0 && event.pointerType !== 'touch') toggleTextHighlight();
 });
-
-relation.addEventListener('change', () => showLegendRelation?.(relation.value));
-editor.addEventListener('submit', event => {
-  event.preventDefault();
-  if (savePlanet.disabled) return;
-  const trigger = draft.planet ? editPlanet : addPlanet;
-  let planet = draft.planet;
-  if (!planet) {
-    let nextId = article.spans.length + 1;
-    while (article.spans.some(span => span.id === `s${nextId}`)) nextId++;
-    planet = {id: `s${nextId}`};
-    article.spans.push(planet);
-  }
-  if (!article.core) article.core = planet.id;
-  else if (planet.id !== article.core) {
-    planet.parent = parent.value;
-    planet.relation = relation.value;
-  }
-  if (draft.highlights !== draft.original) {
-    planet.highlights = draft.highlights;
-    const [first] = planet.highlights;
-    if (first) {
-      planet.start = first.start;
-      planet.end = first.end;
-    }
-  }
-  resetDraft();
-  redrawMap();
-  trigger.focus({preventScroll: true});
+abstract.addEventListener('touchend', () => requestAnimationFrame(toggleTextHighlight), {passive: true});
+abstract.addEventListener('keyup', event => {
+  if (event.key === 'Shift') toggleTextHighlight();
 });
-
-document.addEventListener('selectionchange', updateHighlightButton);
-function updateTextSelection() {
-  if (window.getSelection().isCollapsed) pendingRange = null;
-  updateHighlightButton();
-}
-abstract.addEventListener('pointerup', updateTextSelection);
-abstract.addEventListener('keyup', updateTextSelection);
 
 function show() {
   const previous = active;
-  active = location.hash === '#playground' ? workspace : library.get(location.hash);
-  if (location.hash === aboutLink.hash) active = about;
-  reading.hidden = !active;
-  readings.hidden = Boolean(active);
+  if (location.hash === mapRoute && !workspace) history.replaceState(null, '', playgroundLink.hash);
+  active = pages.get(location.hash);
   if (active === previous) return;
-  selectedId = hovered = null;
+  const importing = location.hash === playgroundLink.hash;
+  cancelImport();
+  arxivImport.reset();
+  arxivImport.hidden = !importing;
   article = active?.article;
-  resetDraft();
+  reading.hidden = !article;
+  readings.hidden = Boolean(active);
+  planetMenu.hidePopover();
   const editing = Boolean(active && active === workspace);
-  editor.hidden = playgroundTools.hidden = !editing;
-  if (active && active === about) aboutLink.setAttribute('aria-current', 'page');
+  selectedId = editing ? article.core : null;
+  hovered = null;
+  editor.hidden = !editing;
+  documentStatus.textContent = '';
+  if (active && location.hash === aboutLink.hash) aboutLink.setAttribute('aria-current', 'page');
   else aboutLink.removeAttribute('aria-current');
-  if (editing) playgroundLink.setAttribute('aria-current', 'page');
+  if (importing || editing) playgroundLink.setAttribute('aria-current', 'page');
   else playgroundLink.removeAttribute('aria-current');
   document.title = 'BNITZ';
-  if (active) {
+  if (importing) {
+    document.title = 'BNITZ - Playground';
+    arxivUrl.focus({preventScroll: true});
+  } else if (article) {
     renderHeading();
-    if (editing) {
-      for (const input of fields) input.value = article[input.name] ?? '';
-      documentDetails.open = !article.text;
-    }
     redrawMap();
+    if (editing) showLegendRelation?.('core');
     abstract.scrollTop = 0;
     title.focus({preventScroll: true});
   } else {
@@ -464,7 +379,7 @@ async function load() {
   try {
     const response = await fetch('/about.bnitz');
     if (!response.ok) throw new Error('Could not load the About article.');
-    about = {article: BNITZModel.validate(await response.json()), row: aboutLink};
+    pages.set(aboutLink.hash, {article: BNITZModel.validate(await response.json()), row: aboutLink});
   } catch (error) {
     errors.push(error.message);
   }
@@ -485,7 +400,7 @@ async function load() {
     row.href = `#readings/${encodeURIComponent(entry.name)}`;
     row.append(textElement('span', entry.article.title), textElement('span', entry.author), textElement('time', entry.year ?? ''));
     entry.row = row;
-    library.set(row.hash, entry);
+    pages.set(row.hash, entry);
     papers.append(row);
   }
   status.textContent = errors.join(' · ');
@@ -493,12 +408,11 @@ async function load() {
   if (!fromFolder && entries.length && !location.href.includes('#')) {
     history.replaceState(null, '', entries[0].row.hash);
   }
-  if (location.hash === '#playground' && !workspace && entries.length) openRandomExample();
   show();
 }
 
 abstract.addEventListener('pointerover', event => {
-  if (!draft && event.pointerType !== 'touch') hoverText(event.target.closest('mark'));
+  if (event.pointerType !== 'touch' && !(active === workspace && selectedId)) hoverText(event.target.closest('mark'));
 });
 abstract.addEventListener('pointerleave', () => hoverText(null));
 // Keep pointer selection from scrolling a focusable map or legend item into view.
@@ -508,7 +422,7 @@ for (const container of [map, document.querySelector('#legend')]) {
   });
 }
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && !draft && (selectedId || hovered)) selectPlanet(null);
+  if (event.key === 'Escape' && !document.querySelector(':popover-open') && (selectedId || hovered)) selectPlanet(null);
 });
 window.addEventListener('hashchange', show);
 show();
