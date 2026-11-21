@@ -4,11 +4,12 @@ Version tags record versions published to the Chrome Web Store. Keep each submit
 
 `v0.2.1` is a Git-only tag for the Worker, evaluation and map updates. `v0.2.2` is a Git-only tag for the interdisciplinary Worker examples, simplified tests and removal of the evaluation suite. The Chrome manifest for both tags is `0.2.0`.
 
-| Chrome version | Submitted ZIP | Downloaded Store CRX |
+| Chrome version | Store ZIP | Downloaded Store CRX |
 | --- | --- | --- |
 | 0.1.4 beta | Original ZIP unavailable | [BNITZ-v0.1.4-beta.crx](BNITZ-v0.1.4-beta.crx) |
 | 0.2.0 | [BNITZ-v0.2.0.zip](BNITZ-v0.2.0.zip) | [BNITZ-v0.2.0.crx](BNITZ-v0.2.0.crx) |
 | 0.2.3 | [BNITZ-v0.2.3.zip](BNITZ-v0.2.3.zip) | — |
+| 0.2.4 | [BNITZ-v0.2.4.zip](BNITZ-v0.2.4.zip) | — |
 
 Historical exception: the existing `v0.2.0` source tag includes privacy setup added after its submitted ZIP was built. The archived 0.2.0 ZIP and CRX preserve the actual Store build and do not contain that setup. Existing tags are otherwise retained unchanged.
 
@@ -21,4 +22,5 @@ f7a2b10de85b76d38f2db89ac4cade28e63b3c18e57e86f47a0a4ac15347ba89  BNITZ-v0.2.0.z
 26b6b9787ba00d160d1cdfda6ae1d722159ae9fcd883a1fd9b5917b60e2de0ef  BNITZ-v0.2.0.crx
 6076a10bbd2bd6e5310af7a5de467bd5e62bfcd5b68804d26a9c6f3a2cbb4a08  BNITZ-v0.1.4-beta.crx
 bf10e133a762ad9850c3d6f163c8df1938d368e094b41dd15cde4dc249c86b91  BNITZ-v0.2.3.zip
+52f2b072d4dff2cb41d9d3629dd5e86223ec69b633edfa76f790f97b95745959  BNITZ-v0.2.4.zip
 ```
