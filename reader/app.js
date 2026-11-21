@@ -276,7 +276,6 @@ for (const [key, [name, , icon]] of Object.entries(BNITZModel.relations)) {
   option.type = 'button';
   option.setAttribute('role', 'menuitem');
   option.tabIndex = -1;
-  option.autofocus = !planetMenu.childElementCount;
   const symbol = new Image(18, 18);
   symbol.src = `/assets/${icon}.svg?v=0.0.6`;
   symbol.alt = '';
@@ -285,6 +284,9 @@ for (const [key, [name, , icon]] of Object.entries(BNITZModel.relations)) {
   planetMenu.append(option);
 }
 
+addPlanet.addEventListener('click', event => {
+  planetMenu.firstElementChild.autofocus = event.detail === 0;
+});
 addPlanet.addEventListener('keydown', event => {
   if (event.key === 'ArrowDown') {
     event.preventDefault();
