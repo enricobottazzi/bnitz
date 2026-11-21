@@ -110,22 +110,31 @@ async function mapPaper({title, abstract, authors, affiliations, date, body}, ar
   }
 }
 
+function clearPanel() {
+  current?.controller.abort();
+  current = null;
+  exportButton.disabled = true;
+  map.hidden = true;
+  map.replaceChildren();
+  progress.hidden = true;
+  status.textContent = '';
+}
+
 async function start() {
   if (!agreed) return;
   const [tab] = await chrome.tabs.query({active: true, windowId});
   if (!agreed) return;
-  const requested = arxivPaperFromUrl(tab?.url);
-  const tabKey = `${tab?.id}:${requested?.format ?? ''}/${requested?.id ?? ''}`;
+  if (tab?.status !== 'complete' || tab.pendingUrl) {
+    clearPanel();
+    return;
+  }
+  const requested = arxivPaperFromUrl(tab.url);
+  const tabKey = `${tab.id}:${requested?.format ?? ''}/${requested?.id ?? ''}`;
   if (tabKey === current?.tabKey) return;
-  current?.controller.abort();
+  clearPanel();
   const controller = new AbortController();
   const {signal} = controller;
   current = {tabKey, controller};
-  exportButton.disabled = true;
-  map.hidden = true;
-  map.replaceChildren();
-  progress.hidden = requested?.format !== 'html';
-  status.textContent = '';
 
   if (!requested) {
     status.textContent = 'BNITZ works on arXiv HTML papers.';
@@ -141,6 +150,7 @@ async function start() {
     return;
   }
 
+  progress.hidden = false;
   const started = performance.now();
   let prefix = logPrefix(requested.id);
   try {
@@ -198,13 +208,7 @@ chrome.tabs.onActivated.addListener(info => {
 });
 chrome.tabs.onUpdated.addListener((_id, change, tab) => {
   if (!tab.active || tab.windowId !== windowId) return;
-  if (change.status === 'loading') {
-    current?.controller.abort();
-    current = null;
-    exportButton.disabled = true;
-    map.hidden = true;
-    status.textContent = '';
-  }
+  if (change.status === 'loading') clearPanel();
   if (change.status === 'complete') start();
 });
 
@@ -215,11 +219,7 @@ function showConsentState(granted) {
   if (granted) {
     start();
   } else {
-    current?.controller.abort();
-    current = null;
-    map.hidden = true;
-    progress.hidden = true;
-    status.textContent = '';
+    clearPanel();
   }
 }
 
