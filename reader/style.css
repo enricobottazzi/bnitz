@@ -24,6 +24,10 @@ main { --content-top: 190px; margin: 0 72px; padding-top: var(--content-top); pa
 #playground-tools { margin: -12px 0 26px; }
 #document-details { margin-top: 12px; }
 #document-details summary { width: fit-content; cursor: pointer; }
+/* A collapsed <details> can still expose the textarea's old bounds to Grammarly. */
+#document-details:not([open])::details-content { display: none; }
+/* Grammarly renders its badge and underlines outside the panel. */
+:root:has(#playground-tools:not([hidden]) #document-details:not([open])) grammarly-extension { display: none !important; }
 #document-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
 .document-wide { grid-column: 1 / -1; }
 #document-fields input, #document-fields textarea { width: 100%; min-width: 0; padding: 7px 8px; border: 1px solid var(--line); border-radius: 0; background: #fff; font: inherit; color: inherit; }
