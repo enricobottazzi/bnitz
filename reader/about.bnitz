@@ -3,21 +3,21 @@
   "title": "BNITZ: a visual notation for scientific arguments",
   "author": "E. Bottazzi",
   "year": 2026,
-  "text": "Scientific papers share recurring structures across fields as different as linguistics and cryptography. When reading a paper, we often ask the same questions. What problem does it address? What does it contribute? What evidence supports that contribution?\n\nA. N. Whitehead argued that a good notation sets the brain free to concentrate on more advanced problems. Could a shared visual notation do the same for readers trying to follow a scientific argument?\n\nBNITZ is a visual notation for navigating scientific literature. Inspired by nucleus–satellite relations in Rhetorical Structure Theory, it represents a paper as a planetary map. The Core sits at the centre and represents the paper’s main contribution. Each satellite takes one of six roles (Problem, Background, Method, Implication, Evidence or Scope) according to how it relates to the planet it orbits. These relations can nest. For example, a Method planet can orbit the Core and have a Background planet of its own that shows which earlier work the method builds on.\n\nThe BNITZ Chrome extension uses an LLM to draw maps from arXiv papers. It first maps the abstract, then finds passages in the body of the paper that correspond to each planet. Selecting a planet highlights those passages in the paper.\n\nThe long-term goal is to establish BNITZ as the notation for reading and writing scientific arguments.",
+  "text": "Scientific papers share recurring structures across disciplines. Whether we’re reading a paper in astrophysics, linguistics, biology or cryptography, we often ask the same questions. What problem does it address? What does it contribute? What evidence supports that contribution?\n\nA. N. Whitehead argued that a good notation sets the brain free to concentrate on more advanced problems. Could a shared visual notation do the same for readers trying to follow a scientific argument?\n\nBNITZ is a visual notation for navigating scientific literature. Inspired by nucleus–satellite relations in Rhetorical Structure Theory, it represents a paper as a planetary map. The Core sits at the centre and represents the paper’s main contribution. Each satellite takes one of six roles (Problem, Background, Method, Implication, Evidence or Scope) according to how it relates to the planet it orbits. These relations can nest. For example, a Method planet can orbit the Core and have a Background planet of its own that shows which earlier work the method builds on.\n\nThe BNITZ Chrome extension uses an LLM to draw maps from arXiv papers. It first maps the abstract, then finds passages in the body of the paper that correspond to each planet. Selecting a planet highlights those passages in the paper.\n\nThe long-term goal is to establish BNITZ as the notation for reading and writing scientific arguments.",
   "core": "s1",
   "spans": [
     {
       "id": "s1",
-      "start": 460,
-      "end": 525,
+      "start": 483,
+      "end": 548,
       "highlights": [
         {
-          "start": 460,
-          "end": 525
+          "start": 483,
+          "end": 548
         },
         {
-          "start": 525,
-          "end": 638
+          "start": 548,
+          "end": 661
         }
       ]
     },
@@ -26,11 +26,11 @@
       "parent": "s1",
       "relation": "background",
       "start": 0,
-      "end": 256,
+      "end": 279,
       "highlights": [
         {
           "start": 0,
-          "end": 256
+          "end": 279
         }
       ]
     },
@@ -38,12 +38,12 @@
       "id": "s3",
       "parent": "s1",
       "relation": "problem",
-      "start": 258,
-      "end": 458,
+      "start": 281,
+      "end": 481,
       "highlights": [
         {
-          "start": 258,
-          "end": 458
+          "start": 281,
+          "end": 481
         }
       ]
     },
@@ -51,12 +51,12 @@
       "id": "s4",
       "parent": "s1",
       "relation": "method",
-      "start": 639,
-      "end": 866,
+      "start": 662,
+      "end": 889,
       "highlights": [
         {
-          "start": 639,
-          "end": 866
+          "start": 662,
+          "end": 889
         }
       ]
     },
@@ -64,12 +64,12 @@
       "id": "s6",
       "parent": "s1",
       "relation": "implication",
-      "start": 1033,
-      "end": 1102,
+      "start": 1056,
+      "end": 1125,
       "highlights": [
         {
-          "start": 1033,
-          "end": 1102
+          "start": 1056,
+          "end": 1125
         }
       ]
     },
@@ -77,12 +77,12 @@
       "id": "s8",
       "parent": "s1",
       "relation": "implication",
-      "start": 1269,
-      "end": 1371,
+      "start": 1292,
+      "end": 1394,
       "highlights": [
         {
-          "start": 1269,
-          "end": 1371
+          "start": 1292,
+          "end": 1394
         }
       ]
     }
