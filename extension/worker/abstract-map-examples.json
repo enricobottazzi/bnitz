@@ -15,7 +15,7 @@
         {
           "id": "s1",
           "parent": "",
-          "relation": "nucleus",
+          "relation": "core",
           "highlights": [
             "We propose a solution to the double-spending problem using a peer-to-peer network."
           ]
@@ -66,7 +66,7 @@
         {
           "id": "s1",
           "parent": "",
-          "relation": "nucleus",
+          "relation": "core",
           "highlights": [
             "We find that these systems can be highly clustered, like regular lattices, yet have small characteristic path lengths, like random graphs.",
             "We call them ‘small-world’ networks, by analogy with the small-world phenomenon (popularly known as six degrees of separation)."
@@ -126,7 +126,7 @@
         {
           "id": "s1",
           "parent": "",
-          "relation": "nucleus",
+          "relation": "core",
           "highlights": [
             " a clear Whorfian effect is detected in the domain of color.",
             "A specific mechanism is proposed to account for this effect"
@@ -141,7 +141,7 @@
           ]
         }
       ],
-      "decision_note": "The observed color effect and the proposed mechanism that explains it form the Nucleus, and the blocking experiment provides Evidence because the effect disappears as predicted."
+      "decision_note": "The observed color effect and the proposed mechanism that explains it form the Core, and the blocking experiment provides Evidence because the effect disappears as predicted."
     }
   },
   {
@@ -160,7 +160,7 @@
         {
           "id": "s1",
           "parent": "",
-          "relation": "nucleus",
+          "relation": "core",
           "highlights": [
             "We introduce our first-generation reasoning models, DeepSeek-R1-Zero and DeepSeek-R1. DeepSeek-R1-Zero, a model trained via large-scale reinforcement learning (RL) without supervised fine-tuning (SFT) as a preliminary step, demonstrates remarkable reasoning capabilities. Through RL, DeepSeek-R1-Zero naturally emerges with numerous powerful and intriguing reasoning behaviors. However, it encounters challenges such as poor readability, and language mixing. To address these issues and further enhance reasoning performance, we introduce DeepSeek-R1, which incorporates multi-stage training and cold-start data before RL."
           ]
@@ -174,7 +174,7 @@
           ]
         }
       ],
-      "decision_note": "R1-Zero’s reasoning result and R1’s revised training procedure form one Nucleus because R1-Zero’s readability and language-mixing issues explain why the authors moved from one model to the other."
+      "decision_note": "R1-Zero’s reasoning result and R1’s revised training procedure form one Core because R1-Zero’s readability and language-mixing issues explain why the authors moved from one model to the other."
     }
   },
   {
@@ -193,7 +193,7 @@
         {
           "id": "s1",
           "parent": "",
-          "relation": "nucleus",
+          "relation": "core",
           "highlights": [
             "automation of industrial processes may expand rather than eliminate problems with the human operator."
           ]
@@ -234,7 +234,7 @@
         {
           "id": "s1",
           "parent": "",
-          "relation": "nucleus",
+          "relation": "core",
           "highlights": [
             "introduces a new algorithmic approach that uses the theory of recursive functions."
           ]

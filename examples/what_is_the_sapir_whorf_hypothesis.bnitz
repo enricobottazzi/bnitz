@@ -2,7 +2,7 @@
   "version": 3,
   "title": "What Is the Sapir-Whorf Hypothesis?",
   "text": "The history of empirical research on the Sapir-Whorf hypothesis is reviewed. A more sensitive test of the hypothesis is devised and a clear Whorfian effect is detected in the domain of color. A specific mechanism is proposed to account for this effect and a second experiment, designed to block the hypothesized mechanism, is performed. The effect disappears as predicted. The Sapir-Whorf hypothesis is reevaluated in the light of these results.",
-  "nucleus": "s1",
+  "core": "s1",
   "spans": [
     {
       "id": "s1",

@@ -11,24 +11,31 @@
   <script type="module" src="reader.mjs"></script>
 </head>
 <body>
-  <nav class="panel-actions" aria-label="Paper actions">
-    <button id="export-map" type="button" title="Export paper map"
-            aria-label="Export paper map" disabled>
+  <section id="privacy" aria-labelledby="privacy-title" hidden>
+    <h1 id="privacy-title" class="wordmark">BNITZ</h1>
+    <p>While the side panel is open, BNITZ sends the abstract, body text, and metadata of each public arXiv HTML paper you view to a Cloudflare Worker for maps and highlights.</p>
+    <p>The Worker sends paper content to OpenRouter and its model provider. It uses your IP address to limit requests.</p>
+    <div class="actions">
+      <button id="agree" type="button" class="primary">Agree and start mapping</button>
+      <a href="https://github.com/enricobottazzi/bnitz/blob/main/extension/PRIVACY.md"
+         target="_blank" rel="noopener noreferrer">Privacy policy</a>
+    </div>
+    <p id="privacy-error" class="status" role="alert"></p>
+  </section>
+  <nav class="panel-actions" aria-label="Paper actions" hidden>
+    <button id="export-map" type="button" aria-label="Export paper map" disabled>
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 3v12m-4-4 4 4 4-4M5 15v5h14v-5"/>
       </svg>
     </button>
-    <a id="rules-link" href="https://github.com/enricobottazzi/bnitz/blob/main/RULES.md"
-       target="_blank" rel="noopener noreferrer" title="Help" aria-label="Help, BNITZ rules on GitHub">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M7.5 7.5a4.5 4.5 0 1 1 8.1 2.7c-1.6 1.8-3.6 2-3.6 4.3m0 4.5h.01"/>
-      </svg>
+    <a href="https://bnitz.org/" target="_blank" rel="noopener noreferrer" aria-label="Open BNITZ homepage">
+      <img src="../assets/favicon.svg" alt="" width="16" height="16">
     </a>
   </nav>
   <div id="progress" hidden>
     <div id="loading-orbit" role="progressbar" aria-label="Generating paper map" aria-describedby="loading-message">
-      <span class="loading-nucleus"></span>
-      <span class="loading-track"><img src="../assets/problem.svg" alt=""></span>
+      <img src="../assets/core.svg" alt="" width="27" height="27">
+      <span class="loading-track" aria-hidden="true"></span>
     </div>
     <p id="loading-message">Generating the map can take about 60 seconds. Don't switch tab.</p>
   </div>

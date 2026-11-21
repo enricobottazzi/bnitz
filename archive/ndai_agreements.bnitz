@@ -1,7 +1,7 @@
 {
   "version": "3arxiv",
   "arxivId": "2502.07924v1",
-  "nucleus": "p1",
+  "core": "p1",
   "spans": [
     {
       "id": "p1",

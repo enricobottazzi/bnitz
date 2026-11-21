@@ -85,7 +85,7 @@ export default {
       }
     };
     try {
-      const {arxivId, title, abstract, authors, affiliations, date, body} = await readJson(request, 1024 * 1024) ?? {};
+      const {arxivId, title, abstract, authors, affiliations, date, body, includeDecisionNote} = await readJson(request, 1024 * 1024) ?? {};
       const paper = arxivPaper(arxivId);
       if (!paper?.version || arxivId.length > 128 || !isText(title) || !isText(abstract) ||
           !isTextList(authors) || !isTextList(affiliations) || (date !== null && !isText(date)) || !isBody(body)) {
@@ -93,13 +93,18 @@ export default {
       }
       const input = {arxivId, title, abstract, authors, affiliations, date, body: body.map(({id, text}) => ({id, text}))};
       const text = {arxivId, abstract, body: bodyText(body)};
+      const respond = (map, decision_note) =>
+        Response.json(includeDecisionNote === true ? {map, decision_note} : map, {headers});
       const cache = await openPaperCache(env.GENERATION_CACHE, text);
       const cached = await cache?.get();
       if (cached) {
         try {
-          const result = BNITZModel.validateArxiv(cached, text);
-          headers.set('BNITZ-Cache', 'HIT');
-          return Response.json(result, {headers});
+          const {decision_note, ...map} = cached;
+          const result = BNITZModel.validateArxiv(map, text);
+          if (includeDecisionNote !== true || isText(decision_note)) {
+            headers.set('BNITZ-Cache', 'HIT');
+            return respond(result, decision_note);
+          }
         } catch {
           // Regenerate stale or invalid cache entries.
         }
@@ -108,9 +113,9 @@ export default {
       const map = await timed(2, () => generateMap(input, recipes.abstract, run));
       const highlights = body.length ? await timed(3, () => generateBodyHighlights(input, map, recipes.body, run)) : undefined;
       const result = BNITZModel.validateArxiv(paperMap(map, highlights), text);
-      await cache?.put(result);
+      await cache?.put({...result, decision_note: map.decision_note});
       headers.set('BNITZ-Cache', cache ? 'MISS' : 'BYPASS');
-      return Response.json(result, {headers});
+      return respond(result, map.decision_note);
     } catch (error) {
       if (error instanceof RequestError) {
         for (const [name, value] of Object.entries(error.headers ?? {})) headers.set(name, value);

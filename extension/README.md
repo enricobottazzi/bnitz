@@ -2,6 +2,8 @@
 
 Open the paper’s arXiv HTML page and click BNITZ in the Chrome toolbar. Select a planet to highlight its passages in the abstract and body. The right-edge tracker shows where to scroll for each highlight. **Export paper map** downloads the v3arxiv `.bnitz` file.
 
+To see the model’s one-sentence explanation of a mapping choice, inspect the side panel and look for **Decision note** in the DevTools Console.
+
 ```mermaid
 flowchart LR
     A["paper.html"] -->|Step 1| B["paper.json"]

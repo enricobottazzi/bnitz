@@ -1,17 +1,29 @@
 const BNITZModel = (() => {
-  const nucleusDefinition = 'The paper’s main contribution. It can be a finding, theorem, argument, synthesis, artifact, guideline, or research plan.';
   const relations = {
-    problem: ['Problem', 6, 'problem', 'States the question, gap, or practical problem the parent addresses.'],
-    background: ['Background', 1, 'background', 'Gives prior work, definitions, or other context needed to understand the parent.'],
-    method: ['Method', 2, 'method', 'Describes how the parent’s result was obtained or how its proposed work would be carried out.'],
-    implication: ['Implication', 3, 'implication', 'States what follows from the parent, such as a prediction, an application, a next step, or a higher-level consequence.'],
-    evidence: ['Evidence', 4, 'evidence', 'Uses results, analyses, or comparisons to support, challenge, or assess the parent.'],
-    scope: [
-      'Scope', 5, 'scope',
-      'Specifies where, when, or under what conditions the parent applies, including limitations and assumptions.',
-      'Give a limitation or assumption its own Scope planet when it needs separate attention, and fold brief qualifiers into the parent.',
-    ],
+    problem: ['Problem', 6, 'problem'],
+    background: ['Background', 1, 'background'],
+    method: ['Method', 2, 'method'],
+    implication: ['Implication', 3, 'implication'],
+    evidence: ['Evidence', 4, 'evidence'],
+    scope: ['Scope', 5, 'scope'],
   };
+
+  function parseLegendDefinitions(markdown) {
+    const legend = markdown.split(/^##[ \t]+Legend[ \t]*\r?$/m)[1]?.split(/^#{1,2}[ \t]/m)[0] ?? '';
+    const definitions = {};
+    for (const line of legend.split('\n')) {
+      const cells = line.trim().match(/^\|[^|]*\|\s*([^|]+?)\s*\|\s*(.+?)\s*\|$/);
+      if (!cells) continue;
+      const role = cells[1].replaceAll('**', '').trim().toLowerCase();
+      if (role === 'core' || Object.hasOwn(relations, role)) {
+        definitions[role] = cells[2].trim().replaceAll('\\|', '|');
+      }
+    }
+    for (const role of ['core', ...Object.keys(relations)]) {
+      if (!definitions[role]) throw new Error(`Missing ${role} definition in RULES.md.`);
+    }
+    return definitions;
+  }
 
   function validRange(text, start, end) {
     const boundary = index => !/[\uDC00-\uDFFF]/.test(text.charAt(index));
@@ -38,7 +50,7 @@ const BNITZModel = (() => {
   function validateArxiv(document, {arxivId, abstract, body}) {
     if (document?.version !== '3arxiv') throw new Error('Expected a v3arxiv .bnitz file.');
     if (!arxivId || document.arxivId !== arxivId) throw new Error('The map does not match the arXiv revision.');
-    if (Object.keys(document).some(key => !['version', 'arxivId', 'nucleus', 'spans'].includes(key))) {
+    if (Object.keys(document).some(key => !['version', 'arxivId', 'core', 'spans'].includes(key))) {
       throw new Error('The arXiv map has unexpected fields.');
     }
     return validateMap(document, abstract, ({highlights}) => Array.isArray(highlights) &&
@@ -49,7 +61,7 @@ const BNITZModel = (() => {
   }
 
   function validateMap(document, abstract, validHighlights) {
-    const {nucleus, spans} = document;
+    const {core, spans} = document;
     if (!Array.isArray(spans)) throw new Error('The map needs planets.');
     const byId = new Map();
     for (const span of spans) {
@@ -60,8 +72,8 @@ const BNITZModel = (() => {
       if (!validHighlights(span)) throw new Error('A planet has an invalid highlight.');
       byId.set(span.id, span);
     }
-    const root = byId.get(nucleus);
-    if (!root || root.parent != null || root.relation != null) throw new Error('The file needs one nucleus.');
+    const root = byId.get(core);
+    if (!root || root.parent != null || root.relation != null) throw new Error('The file needs one core.');
     for (const span of spans) {
       if (span === root) continue;
       if (typeof span.relation !== 'string' || !Object.hasOwn(relations, span.relation) || !byId.has(span.parent)) {
@@ -73,12 +85,12 @@ const BNITZModel = (() => {
         visited.add(parent.id);
         parent = byId.get(parent.parent);
       }
-      if (parent !== root) throw new Error('Every planet must lead back to the nucleus without a cycle.');
+      if (parent !== root) throw new Error('Every planet must lead back to the core without a cycle.');
     }
     return document;
   }
 
-  const label = span => relations[span.relation]?.[0] ?? 'Nucleus';
+  const label = span => relations[span.relation]?.[0] ?? 'Core';
   const highlights = span => span.highlights ?? [{start: span.start, end: span.end}];
 
   // Track a textarea edit in UTF-16 offsets, keeping insertions at a passage's
@@ -128,9 +140,9 @@ const BNITZModel = (() => {
   const planetRadius = 24;
   const gap = 12;
 
-  function layout({nucleus, spans}) {
+  function layout({core, spans}) {
     const children = new Map(spans.map(span => [span.id, []]));
-    for (const span of spans) if (span.id !== nucleus) children.get(span.parent).push(span);
+    for (const span of spans) if (span.id !== core) children.get(span.parent).push(span);
 
     function group(branches) {
       if (branches.length === 1) return branches[0];
@@ -147,7 +159,7 @@ const BNITZModel = (() => {
 
     function branch(span) {
       const slots = new Map();
-      const isRoot = span.id === nucleus;
+      const isRoot = span.id === core;
       const size = isRoot ? 36 : planetRadius;
       const scale = isRoot ? 1 : .46;
       const ordered = [...children.get(span.id)].sort((a, b) => a.start - b.start || a.end - b.end);
@@ -172,7 +184,7 @@ const BNITZModel = (() => {
     }
 
     const rings = [], planets = [];
-    const root = branch(spans.find(span => span.id === nucleus));
+    const root = branch(spans.find(span => span.id === core));
     function place(branch, x, y, scale) {
       if (branch.ring) rings.push({x, y, radius: branch.ring * scale, group: !branch.span});
       if (branch.span) planets.push({span: branch.span, x, y, radius: branch.size * scale});
@@ -186,7 +198,7 @@ const BNITZModel = (() => {
     return {rings, planets, radius: root.radius + gap};
   }
 
-  return {nucleusDefinition, relations, validRange, validate, validateAbstractMap, validateArxiv, label, highlights, editText, relationDirection, planetRadius, layout};
+  return {parseLegendDefinitions, relations, validRange, validate, validateAbstractMap, validateArxiv, label, highlights, editText, relationDirection, planetRadius, layout};
 })();
 
 if (typeof module !== 'undefined') module.exports = BNITZModel;

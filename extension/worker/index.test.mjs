@@ -15,8 +15,8 @@ const paper = {
 };
 const abstractOnly = {...paper, body: []};
 const abstractMap = {
-  planets: [{id: 'root', parent: '', relation: 'nucleus', highlights: [paper.abstract]}],
-  decision_note: 'The gain in accuracy is the nucleus because it is the only finding reported.',
+  planets: [{id: 'root', parent: '', relation: 'core', highlights: [paper.abstract]}],
+  decision_note: 'The gain in accuracy is the core because it is the only finding reported.',
 };
 const bodyMap = {
   passages: [{planetId: 'root', block: 'b1', highlight: paper.body[0].text}],
@@ -58,6 +58,7 @@ test('Worker sends six lean abstract examples including the reviewed DeepSeek-R1
 
   const request = JSON.parse(model.calls[0].arguments[1].body);
   assert.equal(request.model, 'google/gemini-4-carbon');
+  assert.equal(request.response_format.json_schema.schema.properties.planets.items.properties.relation.enum[0], 'core');
   assert.deepEqual(request.messages.slice(0, -1), recipe.messages);
   assert.equal(JSON.parse(request.messages.at(-1).content).abstract, paper.abstract);
 });
@@ -99,6 +100,33 @@ test('an empty passage list is a valid result', async t => {
   assert.equal(entries.size, 1);
 });
 
+test('decision notes survive cache hits, and only requests for a note upgrade a map-only entry', async t => {
+  const nextNote = 'The “accuracy” result is the paper’s core.';
+  const {send, model, entries} = setup(t, [abstractMap, {...abstractMap, decision_note: nextNote}]);
+  const withNote = {...abstractOnly, includeDecisionNote: true};
+  const map = await (await send(abstractOnly)).json();
+  assert.equal(map.version, '3arxiv');
+  assert.equal(Object.hasOwn(map, 'decision_note'), false);
+  const hit = await send(withNote);
+  assert.equal(hit.headers.get('BNITZ-Cache'), 'HIT');
+  assert.deepEqual(await hit.json(), {map, decision_note: abstractMap.decision_note});
+
+  const entry = entries.values().next().value;
+  entry.value = map;
+  const plainHit = await send(abstractOnly);
+  assert.equal(plainHit.headers.get('BNITZ-Cache'), 'HIT');
+  assert.deepEqual(await plainHit.json(), map);
+  assert.equal(model.callCount(), 1);
+
+  const regenerated = await send(withNote);
+  assert.equal(regenerated.headers.get('BNITZ-Cache'), 'MISS');
+  assert.deepEqual(await regenerated.json(), {map, decision_note: nextNote});
+  const repeat = await send(withNote);
+  assert.equal(repeat.headers.get('BNITZ-Cache'), 'HIT');
+  assert.deepEqual(await repeat.json(), {map, decision_note: nextNote});
+  assert.equal(model.callCount(), 2);
+});
+
 test('Cache reuse requires the same revision, abstract, and body', async t => {
   const replies = Array(4).fill([abstractMap, bodyMap]).flat();
   const {send, model} = setup(t, replies);
@@ -108,7 +136,10 @@ test('Cache reuse requires the same revision, abstract, and body', async t => {
   assert.equal(first.headers.get('BNITZ-Cache'), 'MISS');
   assert.equal(model.callCount(), 2);
   const firstMap = await first.json();
+  assert.equal(firstMap.core, 'root');
   assert.deepEqual(firstMap.spans[0].highlights.map(range => range.section), ['abstract', 'body']);
+  const bodyRequest = JSON.parse(model.calls[1].arguments[1].body);
+  assert.equal(JSON.parse(bodyRequest.messages.at(-1).content).planets[0].relation, 'core');
 
   const repeat = await send();
   assert.equal(repeat.headers.get('BNITZ-Cache'), 'HIT');

@@ -1,6 +1,7 @@
 const BNITZView = (() => {
-  const {nucleusDefinition, relations, label, relationDirection, planetRadius, layout} = BNITZModel;
-  const iconUrl = icon => `../assets/${icon}.svg?v=0.0.5`;
+  const {relations, label, relationDirection, layout} = BNITZModel;
+  const coreIcon = 'core';
+  const iconUrl = icon => `../assets/${icon}.svg?v=0.0.6`;
 
   function textElement(tag, text) {
     const element = document.createElement(tag);
@@ -90,7 +91,7 @@ const BNITZView = (() => {
     container.replaceChildren(fragment);
   }
 
-  function legend(container, onSelect) {
+  function legend(container, definitions, onSelect) {
     container.insertAdjacentHTML('beforeend', `
       <div id="relation-clock"></div>
       <p id="relation-definition" aria-live="polite"></p>
@@ -108,36 +109,31 @@ const BNITZView = (() => {
     }
 
     const entries = {
-      nucleus: ['Nucleus', null, null, nucleusDefinition],
+      core: ['Core', null, coreIcon],
       ...relations,
     };
-    for (const [key, [label, slot, icon, definition, guidance]] of Object.entries(entries)) {
+    for (const [key, [label, slot, icon]] of Object.entries(entries)) {
       const button = document.createElement('button');
       button.type = 'button';
+      button.dataset.relation = key;
       button.setAttribute('aria-pressed', 'false');
       button.setAttribute('aria-controls', definition.id);
       const [x, y] = slot == null ? [0, 0] : relationDirection(slot);
       button.style.setProperty('--clock-x', `${50 + x * 35.5}%`);
       button.style.setProperty('--clock-y', `${50 + y * 35.5}%`);
-      const symbol = document.createElement(icon ? 'img' : 'span');
+      const symbol = document.createElement('img');
       symbol.className = 'legend-symbol';
-      if (icon) {
-        symbol.src = iconUrl(icon);
-        symbol.alt = '';
-      } else {
-        symbol.classList.add('legend-nucleus');
-        symbol.setAttribute('aria-hidden', 'true');
-      }
+      symbol.src = iconUrl(icon);
+      symbol.alt = '';
       button.append(symbol, textElement('span', label));
       button.addEventListener('click', () => {
         onSelect?.(key);
         showRelation(key);
       });
-      const description = guidance ? `${definition} ${guidance}` : definition;
-      buttons.set(key, {button, description: `${label} — ${description}`});
+      buttons.set(key, {button, description: `${label} — ${definitions[key]}`});
       clock.append(button);
     }
-    showRelation('nucleus');
+    showRelation('core');
     return showRelation;
   }
 
@@ -162,20 +158,13 @@ const BNITZView = (() => {
     }
     for (const {span, x, y, radius: r} of planets) {
       const name = label(span);
-      const icon = relations[span.relation]?.[2];
+      const icon = relations[span.relation]?.[2] ?? coreIcon;
       const node = svg('g', {
         transform: `translate(${x} ${y})`, class: 'planet', tabindex: 0, role: 'button',
         'aria-label': `${name}: ${article.text.slice(span.start, span.end).trim()}`, 'aria-pressed': 'false', 'data-id': span.id,
       });
-      const tooltip = svg('title', {});
-      tooltip.textContent = name;
-      node.append(tooltip, svg('circle', {r: r * .98, class: 'planet-face'}));
-      if (icon) {
-        node.append(svg('image', {href: iconUrl(icon), x: -r, y: -r, width: r * 2, height: r * 2}));
-      } else {
-        const strokeWidth = planetRadius * .26;
-        node.append(svg('circle', {r: r - strokeWidth / 2, 'stroke-width': strokeWidth, class: 'nucleus'}));
-      }
+      node.append(svg('circle', {r: r * .98, class: 'planet-face'}));
+      node.append(svg('image', {href: iconUrl(icon), x: -r, y: -r, width: r * 2, height: r * 2}));
       node.addEventListener('click', () => onSelect(span));
       node.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {

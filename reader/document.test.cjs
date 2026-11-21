@@ -5,7 +5,7 @@ const {join} = require('node:path');
 const model = require('../lang/model.js');
 
 function paper(text = 'Before planet after', start = 7, end = 13) {
-  return {version: 3, title: 'Test', text, nucleus: 's1', spans: [
+  return {version: 3, title: 'Test', text, core: 's1', spans: [
     {id: 's1', start, end, highlights: [{start, end}]},
   ]};
 }

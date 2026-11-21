@@ -7,7 +7,7 @@ The Platonic Representation Hypothesis
 The literature survey and the authors’ comparison independently support the central hypothesis, so each gets its own Evidence planet.
 
 Inference-Time Intervention
-The intervention is the Nucleus, and the gain in Alpaca’s truthfulness from 32.5% to 65.1% measures how well it works, so that result is Evidence.
+The intervention is the Core, and the gain in Alpaca’s truthfulness from 32.5% to 65.1% measures how well it works, so that result is Evidence.
 
 Progress Measures for Grokking
 The Fourier ablations are Evidence for the Method because they test whether the network actually uses the algorithm the authors reconstructed.
@@ -31,16 +31,16 @@ On the (Im)possibility of Obfuscating Programs
 The counterexample supports the impossibility theorem, and we mark this passage as Method because the authors use it to explain how they prove the theorem.
 
 What Is the Sapir-Whorf Hypothesis?
-The observed color effect and the proposed mechanism that explains it form the Nucleus, and the blocking experiment provides Evidence because the effect disappears as predicted.
+The observed color effect and the proposed mechanism that explains it form the Core, and the blocking experiment provides Evidence because the effect disappears as predicted.
 
 The Geometry of Truth
-Visualization reveals the linear pattern, transfer tests whether it generalizes, and intervention tests whether it influences model outputs, so each is a separate Evidence planet supporting the Nucleus.
+Visualization reveals the linear pattern, transfer tests whether it generalizes, and intervention tests whether it influences model outputs, so each is a separate Evidence planet supporting the Core.
 
 Layers at Similar Depths Generate Similar Activations Across LLM Architectures
 The two observations form a single Evidence planet because together they show that nearest-neighbor relationships change from layer to layer within a model in a pattern largely shared across models.
 
 DeepSeek-R1
-R1-Zero’s reasoning result and R1’s revised training procedure form one Nucleus because R1-Zero’s readability and language-mixing issues explain why the authors moved from one model to the other.
+R1-Zero’s reasoning result and R1’s revised training procedure form one Core because R1-Zero’s readability and language-mixing issues explain why the authors moved from one model to the other.
 
 Development abstracts
 =====================
@@ -49,13 +49,13 @@ Toy Models of Superposition
 The phase change and polytope geometry are Evidence about how superposition behaves in the toy model, while the tentative link to adversarial examples is an Implication because it extends the explanation to another phenomenon.
 
 Emergent Linear Representations
-The discovery of a linear representation of the Othello board is the Nucleus, probing for the current player’s pieces versus the opponent’s is the Method, and controlling the model with vector arithmetic is an Implication because it is an application enabled by the central discovery of the paper.
+The discovery of a linear representation of the Othello board is the Core, probing for the current player’s pieces versus the opponent’s is the Method, and controlling the model with vector arithmetic is an Implication because it is an application enabled by the central discovery of the paper.
 
 Finding Structure in Time
 Context sensitivity and generalization are Evidence because the simulations exhibit both, and the proposed application to lexical categories and the type/token distinction is an Implication attached to that Evidence because it depends on those two properties.
 
 Datasheets for Datasets
-The proposed datasheet and the information it should contain form one Nucleus because together they define the contribution, while better communication, transparency, and accountability are an Implication because they are expected benefits of adopting it.
+The proposed datasheet and the information it should contain form one Core because together they define the contribution, while better communication, transparency, and accountability are an Implication because they are expected benefits of adopting it.
 
 Statistical Mechanics of Complex Networks
 The final sentence is Scope because it names the empirical data, network models, and robustness questions the review covers, whereas Method would describe how the authors selected or analyzed that material.
@@ -67,10 +67,10 @@ Final test abstracts
 ====================
 
 Refusal in Language Models Is Mediated by a Single Direction
-The Nucleus is the finding of one refusal-mediating direction per model, and the two interventions form a single Evidence planet because their opposite effects jointly support a causal role for that direction.
+The Core is the finding of one refusal-mediating direction per model, and the two interventions form a single Evidence planet because their opposite effects jointly support a causal role for that direction.
 
 Observation of Gravitational Waves from a Binary Black Hole Merger
-The final two sentences form one Nucleus because they state the discovery and what it establishes, while three Evidence planets support distinct parts of that claim: detection significance establishes the signal’s reliability, waveform agreement identifies a binary black hole merger, and the inferred masses support its stellar-mass classification.
+The final two sentences form one Core because they state the discovery and what it establishes, while three Evidence planets support distinct parts of that claim: detection significance establishes the signal’s reliability, waveform agreement identifies a binary black hole merger, and the inferred masses support its stellar-mass classification.
 
 Interaction Ruling Animal Collective Behaviour
 The field estimate of six or seven interacting neighbors is Evidence for the topological rule, while the simulation result is Evidence attached to the Implication because it tests whether that rule helps preserve flock cohesion.
@@ -82,4 +82,4 @@ NDAI Agreements
 The invention’s value and the agents’ reliability are separate Scope planets because one limits how much can be safely disclosed, while the other determines what safeguards are needed to preserve the gains.
 
 The Capacity of Private Information Retrieval
-The opening statement is Problem because it specifies what the user must retrieve and keep private, the capacity formula is the Nucleus because it gives the optimal download rate under those constraints, and the subset property is an Implication because the same scheme remains optimal when messages are removed.
+The opening statement is Problem because it specifies what the user must retrieve and keep private, the capacity formula is the Core because it gives the optimal download rate under those constraints, and the subset property is an Implication because the same scheme remains optimal when messages are removed.

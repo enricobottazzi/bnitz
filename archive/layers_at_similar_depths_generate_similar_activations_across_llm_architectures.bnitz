@@ -2,7 +2,7 @@
   "version": 3,
   "title": "Layers at Similar Depths Generate Similar Activations Across LLM Architectures",
   "text": "How do the latent spaces used by independently-trained LLMs relate to one another? We study the nearest neighbor relationships induced by activations at different layers of 24 open-weight LLMs, and find that they 1) tend to vary from layer to layer within a model, and 2) are approximately shared between corresponding layers of different models. Claim 2 shows that these nearest neighbor relationships are not arbitrary, as they are shared across models, but Claim 1 shows that they are not \"obvious\" either, as there is no single set of nearest neighbor relationships that is universally shared. Together, these suggest that LLMs generate a progression of activation geometries from layer to layer, but that this entire progression is largely shared between models, stretched and squeezed to fit into different architectures.",
-  "nucleus": "s1",
+  "core": "s1",
   "spans": [
     {
       "id": "s1",
