@@ -1,6 +1,6 @@
 # BNITZ
 
-BNITZ is the notation for scientific arguments. Check out [bnitz.org](https://bnitz.org/).
+BNITZ is a visual notation for scientific arguments. Check out [bnitz.org](https://bnitz.org/).
 
 ## Repository structure
 
