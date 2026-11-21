@@ -52,6 +52,6 @@ Unzip the package. In a Chrome test profile with one copy of BNITZ enabled, open
 
 ## After approval
 
-- [ ] Publish if you chose manual publishing. Once the update reaches a test profile with the store version installed, confirm the new version and test highlighting and export on an arXiv HTML paper. If consent or permissions changed, check what an existing user sees on their first click after updating.
+- [x] Publish if you chose manual publishing. Once the update reaches a test profile with the store version installed, confirm the new version and test highlighting and export on an arXiv HTML paper. If consent or permissions changed, check what an existing user sees on their first click after updating.
 - [ ] After the release is published and merged into `main`, tag the release commit on `main` with the manifest version (for example, `v0.2.3`).
 - [ ] If this release moved to a new Worker, review requests to the previous Worker and any available extension-version usage data. Consider retiring it once older clients no longer depend on it.
