@@ -115,7 +115,7 @@ async function start() {
   const [tab] = await chrome.tabs.query({active: true, windowId});
   if (!agreed) return;
   const requested = arxivPaperFromUrl(tab?.url);
-  const tabKey = `${tab?.id}:${requested?.id ?? ''}`;
+  const tabKey = `${tab?.id}:${requested?.format ?? ''}/${requested?.id ?? ''}`;
   if (tabKey === current?.tabKey) return;
   current?.controller.abort();
   const controller = new AbortController();
@@ -124,11 +124,20 @@ async function start() {
   exportButton.disabled = true;
   map.hidden = true;
   map.replaceChildren();
-  progress.hidden = !requested;
+  progress.hidden = requested?.format !== 'html';
   status.textContent = '';
 
   if (!requested) {
     status.textContent = 'BNITZ works on arXiv HTML papers.';
+    return;
+  }
+  if (requested.format !== 'html') {
+    const link = document.createElement('a');
+    link.href = `https://arxiv.org/html/${requested.id}`;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'Open HTML version';
+    status.append(link);
     return;
   }
 
@@ -140,7 +149,7 @@ async function start() {
     signal.throwIfAborted();
     if (!extracted?.abstract) throw new Error(extracted?.error ?? 'Reload this arXiv HTML page to connect BNITZ.');
     const paper = arxivPaperFromUrl(extracted.source);
-    if (!paper?.version || paper.paperId !== requested.paperId || (requested.version && requested.id !== paper.id)) {
+    if (paper?.format !== 'html' || !paper.version || paper.paperId !== requested.paperId || (requested.version && requested.id !== paper.id)) {
       throw new Error('Could not verify the arXiv HTML revision.');
     }
     prefix = logPrefix(paper.id);
