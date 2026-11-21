@@ -193,7 +193,7 @@ function toggleTextHighlight() {
   const selection = window.getSelection();
   if (!selection.rangeCount || selection.isCollapsed) return;
   const range = selection.getRangeAt(0);
-  if (!abstract.contains(range.commonAncestorContainer)) return;
+  if (!abstract.contains(selection.anchorNode)) return;
   let first;
   let last;
   // Typeset math and smart quotes are atomic. Plain text keeps its source offsets.
@@ -326,6 +326,12 @@ undoPlanet.addEventListener('click', () => {
   focusPlanet();
 });
 
+abstract.addEventListener('pointerdown', event => {
+  // Keep the release when a highlight drag ends beyond the last line.
+  if (active === workspace && selectedId && event.button === 0 && event.pointerType !== 'touch') {
+    abstract.setPointerCapture(event.pointerId);
+  }
+});
 abstract.addEventListener('pointerup', event => {
   if (event.button === 0 && event.pointerType !== 'touch') toggleTextHighlight();
 });
