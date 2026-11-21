@@ -1,0 +1,61 @@
+{
+  "title": "Maximum Flow and Minimum-Cost Flow in Almost-Linear Time",
+  "text": "We give an algorithm that computes exact maximum flows and minimum-cost flows on directed graphs with $m$ edges and polynomially bounded integral demands, costs, and capacities in $m^{1+o(1)}$ time. Our algorithm builds the flow through a sequence of $m^{1+o(1)}$ approximate undirected minimum-ratio cycles, each of which is computed and processed in amortized $m^{o(1)}$ time using a new dynamic graph data structure. Our framework extends to algorithms running in $m^{1+o(1)}$ time for computing flows that minimize general edge-separable convex functions to high accuracy. This gives almost-linear time algorithms for several problems including entropy-regularized optimal transport, matrix scaling, $p$-norm flows, and $p$-norm isotonic regression on arbitrary directed acyclic graphs.",
+  "author": "L. Chen et al.",
+  "year": 2022,
+  "source": "https://arxiv.org/abs/2203.00671",
+  "version": 3,
+  "core": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 0,
+      "end": 198,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 198
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 199,
+      "end": 419,
+      "highlights": [
+        {
+          "start": 199,
+          "end": 419
+        }
+      ],
+      "parent": "s1",
+      "relation": "method"
+    },
+    {
+      "id": "s3",
+      "start": 420,
+      "end": 576,
+      "highlights": [
+        {
+          "start": 420,
+          "end": 576
+        }
+      ],
+      "parent": "s1",
+      "relation": "implication"
+    },
+    {
+      "id": "s4",
+      "start": 577,
+      "end": 790,
+      "highlights": [
+        {
+          "start": 577,
+          "end": 790
+        }
+      ],
+      "parent": "s3",
+      "relation": "implication"
+    }
+  ]
+}
