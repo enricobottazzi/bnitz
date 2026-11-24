@@ -43,7 +43,7 @@ export async function generateMap(article, recipe, complete) {
     try {
       return toGraph(JSON.parse(content), article);
     } catch (error) {
-      if (attempt + 1 === attempts) throw new Error('Gemini did not return a valid map grounded in the abstract.');
+      if (attempt + 1 === attempts) throw new Error('The model did not return a valid map grounded in the abstract.');
       messages.push({role: 'assistant', content: content || '{}'}, {
         role: 'user', content: `${retryPrompt} ${error.message}`,
       });

@@ -19,7 +19,7 @@ flowchart LR
 
 ## Worker
 
-The [Cloudflare Worker](worker/index.mjs) exposes a single HTTP endpoint, `POST /v1/paper-map`. Chrome sends one request to it for both abstract mapping and body highlighting. The Worker keeps the OpenRouter key server-side, rate-limits model calls, and caches the completed `.bnitz` file for up to 30 days per arXiv revision. A cache hit requires the same extracted text and skips both model calls. See the [privacy policy](PRIVACY.md).
+The [Cloudflare Worker](worker/index.mjs) exposes a single HTTP endpoint, `POST /v1/paper-map`. Chrome sends one request to it for both abstract mapping and body highlighting. GPT-6 Luna maps the abstract with the evaluated Prompt B; Google Gemini selects body highlights. The Worker keeps the OpenRouter key server-side, rate-limits model calls, and caches the completed `.bnitz` file for up to 30 days per arXiv revision. A cache hit requires the same extracted text and generation recipes and skips both model calls. Changes to models, prompts, examples, or settings automatically invalidate cached maps. See the [privacy policy](PRIVACY.md).
 
 ## Build
 

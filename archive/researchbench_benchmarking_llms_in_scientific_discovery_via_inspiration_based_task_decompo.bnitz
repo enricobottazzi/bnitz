@@ -1,0 +1,87 @@
+{
+  "version": 3,
+  "title": "ResearchBench: Benchmarking LLMs in Scientific Discovery via Inspiration-Based Task Decomposition",
+  "text": "Large language models (LLMs) have shown potential in assisting scientific research, yet their ability to discover high-quality research hypotheses remains unexamined due to the lack of a dedicated benchmark. To address this gap, we introduce the first large-scale benchmark for evaluating LLMs on a sufficient set of scientific discovery sub-tasks-inspiration retrieval, hypothesis composition, and hypothesis ranking-where sufficient means that perfectly solving these sub-tasks perfectly solves the overall discovery task. We develop an automated LLM-based framework that extracts critical components-research questions, background surveys, inspirations, and hypotheses-from papers across 12 disciplines, with expert validation confirming its accuracy. To prevent data contamination, we focus exclusively on publications from 2024 onward, ensuring minimal overlap with LLM pretraining data; our automated framework further enables automatic extraction of even more recent papers as LLM pretraining cutoffs advance, supporting scalable and contamination-free automatic renewal of this discovery benchmark. Our evaluation shows that, across disciplines, LLMs excel at inspiration retrieval-an out-of-distribution task-suggesting their ability to surface novel knowledge associations.",
+  "author": "Y. Liu et al.",
+  "year": 2025,
+  "source": "https://arxiv.org/abs/2503.21248v3",
+  "core": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 229,
+      "end": 524,
+      "highlights": [
+        {
+          "start": 229,
+          "end": 524
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 0,
+      "end": 207,
+      "parent": "s1",
+      "relation": "problem",
+      "highlights": [
+        {
+          "start": 0,
+          "end": 207
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "start": 525,
+      "end": 754,
+      "parent": "s1",
+      "relation": "method",
+      "highlights": [
+        {
+          "start": 525,
+          "end": 754
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "start": 755,
+      "end": 892,
+      "parent": "s3",
+      "relation": "scope",
+      "highlights": [
+        {
+          "start": 755,
+          "end": 892
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "start": 893,
+      "end": 1106,
+      "parent": "s3",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 893,
+          "end": 1106
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "start": 1107,
+      "end": 1283,
+      "parent": "s1",
+      "relation": "evidence",
+      "highlights": [
+        {
+          "start": 1107,
+          "end": 1283
+        }
+      ]
+    }
+  ]
+}

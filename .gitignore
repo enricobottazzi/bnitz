@@ -8,3 +8,4 @@ __pycache__/
 .wrangler/
 /extension/.dev.vars*
 /extension/.env*
+/eval/runs/

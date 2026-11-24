@@ -1,0 +1,61 @@
+{
+  "version": 3,
+  "title": "A state-space framework for causal detection of hippocampal ripple-replay events",
+  "text": "Hippocampal ripple-replay events are typically identified using a two-step process that at each time point uses past and future data to determine whether an event is occurring. This prevents researchers from identifying these events in real time for closed-loop experiments. It also prevents the identification of periods of nonlocal representation that are not accompanied by large changes in the spectral content of the local field potentials (LFPs). In this work, we present a new state-space model framework that is able to detect concurrent changes in the rhythmic structure of LFPs with nonlocal activity in place cells to identify ripple-replay events in a causal manner. The model combines latent factors related to neural oscillations, represented space, and switches between coding properties to explain simultaneously the spiking activity from multiple units and the rhythmic content of LFPs recorded from multiple sources. The model is temporally causal, meaning that estimates of the switching state can be made at each instant using only past information from the spike and LFP signals, or can be combined with future data to refine those estimates. We applied this model framework to simulated and real hippocampal data to demonstrate its performance in identifying ripple-replay events.",
+  "author": "S. Zeng and U. Eden",
+  "year": 2025,
+  "source": "https://arxiv.org/abs/2502.05394v2",
+  "core": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 453,
+      "end": 678,
+      "highlights": [
+        {
+          "start": 453,
+          "end": 678
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 0,
+      "end": 452,
+      "parent": "s1",
+      "relation": "problem",
+      "highlights": [
+        {
+          "start": 0,
+          "end": 452
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "start": 679,
+      "end": 1163,
+      "parent": "s1",
+      "relation": "method",
+      "highlights": [
+        {
+          "start": 679,
+          "end": 1163
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "start": 1164,
+      "end": 1302,
+      "parent": "s1",
+      "relation": "evidence",
+      "highlights": [
+        {
+          "start": 1164,
+          "end": 1302
+        }
+      ]
+    }
+  ]
+}

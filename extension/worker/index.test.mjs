@@ -3,6 +3,8 @@ import {readFileSync} from 'node:fs';
 import {test} from 'node:test';
 import worker from './index.mjs';
 import {mapRecipe} from './recipes.mjs';
+import {openPaperCache} from './cache.mjs';
+import {recipes} from '../worker-dist/recipe.mjs';
 
 const paper = {
   arxivId: '2601.00001v1',
@@ -48,7 +50,7 @@ function setup(t, replies, {withinQuota = true} = {}) {
   return {send, model: model.mock, entries};
 }
 
-test('Worker sends six lean abstract examples including the reviewed DeepSeek-R1 map', async t => {
+test('Worker sends six abstract examples to GPT-6 Luna with the selected prompt', async t => {
   const examples = JSON.parse(readFileSync(new URL('./abstract-map-examples.json', import.meta.url), 'utf8'));
   assert.equal(examples.length, 6);
   assert.ok(examples.some(example => example.input.title.startsWith('DeepSeek-R1:')));
@@ -57,7 +59,7 @@ test('Worker sends six lean abstract examples including the reviewed DeepSeek-R1
   assert.equal((await send(abstractOnly)).status, 200);
 
   const request = JSON.parse(model.calls[0].arguments[1].body);
-  assert.equal(request.model, 'google/gemini-4-carbon');
+  assert.equal(request.model, 'openai/gpt-6-luna');
   assert.equal(request.response_format.json_schema.schema.properties.planets.items.properties.relation.enum[0], 'core');
   assert.deepEqual(request.messages.slice(0, -1), recipe.messages);
   assert.equal(JSON.parse(request.messages.at(-1).content).abstract, paper.abstract);
@@ -139,6 +141,7 @@ test('Cache reuse requires the same revision, abstract, and body', async t => {
   assert.equal(firstMap.core, 'root');
   assert.deepEqual(firstMap.spans[0].highlights.map(range => range.section), ['abstract', 'body']);
   const bodyRequest = JSON.parse(model.calls[1].arguments[1].body);
+  assert.equal(bodyRequest.model, 'google/gemini-4-carbon');
   assert.equal(JSON.parse(bodyRequest.messages.at(-1).content).planets[0].relation, 'core');
 
   const repeat = await send();
@@ -157,5 +160,29 @@ test('Cache reuse requires the same revision, abstract, and body', async t => {
     assert.equal(response.headers.get('BNITZ-Cache'), 'MISS');
     assert.equal((await response.json()).arxivId, input.arxivId);
     assert.equal(model.callCount(), previousCalls + 2);
+  }
+});
+
+test('Cache reuse requires unchanged models, prompts, examples, and generation settings', async t => {
+  const {entries} = setup(t, []);
+  const namespace = {
+    getWithMetadata: async key => entries.get(key) ?? {},
+    put: async (key, value, {metadata}) => entries.set(key, {value: JSON.parse(value), metadata}),
+  };
+  const text = {arxivId: paper.arxivId, abstract: paper.abstract, body: paper.body[0].text};
+  const cache = await openPaperCache(namespace, text, recipes);
+  await cache.put({core: 'root'});
+  assert.deepEqual(await (await openPaperCache(namespace, text, structuredClone(recipes))).get(), {core: 'root'});
+
+  for (const change of [
+    value => { value.abstract.settings.model = 'another-model'; },
+    value => { value.abstract.messages[0].content += ' Updated prompt.'; },
+    value => { value.abstract.messages[1].content += ' Updated example.'; },
+    value => { value.abstract.settings.max_tokens += 1; },
+    value => { value.body.settings.model = 'another-body-model'; },
+  ]) {
+    const changed = structuredClone(recipes);
+    change(changed);
+    assert.equal(await (await openPaperCache(namespace, text, changed)).get(), null);
   }
 });

@@ -1,0 +1,74 @@
+{
+  "version": 3,
+  "title": "Identification of gapless phases by a twisting operator",
+  "text": "We propose a general necessary condition for a spin chain with SO(3) spin-rotation symmetry to be gapped. Specifically, we prove that the ground state(s) of an SO(3)-symmetric gapped spin chain must be spin singlet(s), and the expectation value of a twisting operator asymptotically approaches unity in the thermodynamic limit, where finite-size corrections are inversely proportional to the system size. This theorem provides (i) supporting evidence for various conjectured gapped phases, and (ii) a sufficient criterion for identifying gapless spin chains. We verify our theorem by numerical simulations for a variety of spin models and show that it offers a novel efficient way to identify gapless phases in spin chains with spin-rotation symmetry.",
+  "author": "H. Su et al.",
+  "year": 2025,
+  "source": "https://arxiv.org/abs/2506.02496v3",
+  "core": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 0,
+      "end": 404,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 404
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 431,
+      "end": 488,
+      "parent": "s1",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 431,
+          "end": 488
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "start": 499,
+      "end": 558,
+      "parent": "s1",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 499,
+          "end": 558
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "start": 639,
+      "end": 751,
+      "parent": "s1",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 639,
+          "end": 751
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "start": 559,
+      "end": 634,
+      "parent": "s1",
+      "relation": "evidence",
+      "highlights": [
+        {
+          "start": 559,
+          "end": 634
+        }
+      ]
+    }
+  ]
+}

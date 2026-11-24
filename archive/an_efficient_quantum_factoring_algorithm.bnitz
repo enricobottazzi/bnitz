@@ -1,0 +1,48 @@
+{
+  "version": 3,
+  "title": "An Efficient Quantum Factoring Algorithm",
+  "text": "We show that $n$-bit integers can be factorized by independently running a quantum circuit with $\\tilde{O}(n^{3/2})$ gates for $\\sqrt{n}+4$ times, and then using polynomial-time classical post-processing. The correctness of the algorithm relies on a number-theoretic heuristic assumption reminiscent of those used in subexponential classical factorization algorithms. It is currently not clear if the algorithm can lead to improved physical implementations in practice.",
+  "author": "O. Regev",
+  "year": 2023,
+  "source": "https://arxiv.org/abs/2308.06572v3",
+  "core": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 0,
+      "end": 204,
+      "highlights": [
+        {
+          "start": 0,
+          "end": 204
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 205,
+      "end": 367,
+      "parent": "s1",
+      "relation": "scope",
+      "highlights": [
+        {
+          "start": 205,
+          "end": 367
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "start": 368,
+      "end": 469,
+      "parent": "s1",
+      "relation": "scope",
+      "highlights": [
+        {
+          "start": 368,
+          "end": 469
+        }
+      ]
+    }
+  ]
+}

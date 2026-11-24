@@ -4,6 +4,8 @@ Version tags record versions published to the Chrome Web Store. Keep each submit
 
 `v0.2.1` is a Git-only tag for the Worker, evaluation and map updates. `v0.2.2` is a Git-only tag for the interdisciplinary Worker examples, simplified tests and removal of the evaluation suite. The Chrome manifest for both tags is `0.2.0`.
 
+`v0.2.5` is a Git-only tag for GPT-6 Luna abstract mapping with the evaluated Prompt B, automatic cache invalidation when generation recipes change, the local evaluation interface, and reviewed maps. The Chrome manifest remains `0.2.4`.
+
 | Chrome version | Store ZIP | Downloaded Store CRX |
 | --- | --- | --- |
 | 0.1.4 beta | Original ZIP unavailable | [BNITZ-v0.1.4-beta.crx](BNITZ-v0.1.4-beta.crx) |

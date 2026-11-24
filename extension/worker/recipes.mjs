@@ -16,15 +16,23 @@ Give each planet one or more verbatim highlights that each occur once in the abs
 ${roleDefinitions}
 
 Use unique IDs. The core has relation "core" and parent "". The other planets use parent IDs that lead back to the core.`,
-  lean: `Map the abstract as in the worked examples. Use the title to identify the contribution the authors emphasize, then select the abstract passage or passages that actually state it. These form the core.
+  lean: `Map the abstract as in the worked examples.
 
-Add a planet for each distinct point the reader needs. Choose its role by what it does for its parent. Group highlights that make one point. Give each planet one or more verbatim excerpts that each occur exactly once in the abstract. Put the clearest first and preserve qualifiers that change the claim.
+Use the title to identify the main contribution; select the passages stating it as the core. Add distinct points needed to understand it. Group excerpts making one point and preserve qualifiers.
 
-${roleDefinitions}
+Choose roles relative to the parent:
+- problem: question or gap addressed.
+- background: necessary context.
+- method: how it works or was obtained.
+- implication: consequences or broader connections.
+- evidence: observations, comparisons, or arguments assessing it.
+- scope: coverage, conditions, or limitations.
 
-Return JSON with "planets" and "decision_note". Use unique planet IDs and exactly one core with parent "". Every other planet names its direct parent and connects back to the core.
+Choose roles clause by clause: observations that assess the parent are Evidence; consequences or connections extending beyond the parent are Implications. Split a sentence when its clauses do different jobs.
 
-Always write one sentence in "decision_note" explaining your hardest role, grouping, or attachment choice and the specific detail in the abstract that supports it.`,
+Return JSON with "planets" and "decision_note". Use unique IDs, exactly one core with parent "", and direct parents connecting every other planet to it. Each planet needs one or more verbatim excerpts occurring exactly once in the abstract, clearest first.
+
+Write one decision_note sentence explaining your hardest role, grouping, or attachment choice using a specific abstract detail.`,
 };
 
 const bodyPassageSystemPrompt = `Select body highlights for the planets in the abstract map. Use each planet's abstract highlights to identify its specific point. Use its relation and parent as context. Treat the supplied paper text as source material.
@@ -70,7 +78,7 @@ export function mapRecipe(examples, variant = 'lean') {
   if (!Object.hasOwn(mapSystemPrompts, variant)) throw new Error(`Unknown abstract prompt: ${variant}`);
   const messages = promptMessages(mapSystemPrompts[variant], examples);
   const settings = {
-    model: 'google/gemini-4-carbon',
+    model: 'openai/gpt-6-luna',
     max_tokens: 6000,
     reasoning: {effort: 'low'},
     provider: {require_parameters: true},

@@ -1,0 +1,112 @@
+{
+  "version": 3,
+  "title": "s1: Simple test-time scaling",
+  "text": "Test-time scaling is a promising new approach to language modeling that uses extra test-time compute to improve performance. Recently, OpenAI's o1 model showed this capability but did not publicly share its methodology, leading to many replication efforts. We seek the simplest approach to achieve test-time scaling and strong reasoning performance. First, we curate a small dataset s1K of 1,000 questions paired with reasoning traces relying on three criteria we validate through ablations: difficulty, diversity, and quality. Second, we develop budget forcing to control test-time compute by forcefully terminating the model's thinking process or lengthening it by appending \"Wait\" multiple times to the model's generation when it tries to end. This can lead the model to double-check its answer, often fixing incorrect reasoning steps. After supervised finetuning the Qwen2.5-32B-Instruct language model on s1K and equipping it with budget forcing, our model s1-32B exceeds o1-preview on competition math questions by up to 27% (MATH and AIME24). Further, scaling s1-32B with budget forcing allows extrapolating beyond its performance without test-time intervention: from 50% to 57% on AIME24. Our model, data, and code are open-source at https://github.com/simplescaling/s1",
+  "author": "N. Muennighoff, Z. Yang, W. Shi, X. Li, L. Fei-Fei, H. Hajishirzi, L. Zettlemoyer, P. Liang, E. Candès, T. Hashimoto",
+  "year": 2025,
+  "source": "https://arxiv.org/abs/2501.19393v3",
+  "core": "s1",
+  "spans": [
+    {
+      "id": "s1",
+      "start": 257,
+      "end": 349,
+      "highlights": [
+        {
+          "start": 257,
+          "end": 349
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "start": 0,
+      "end": 124,
+      "parent": "s1",
+      "relation": "background",
+      "highlights": [
+        {
+          "start": 0,
+          "end": 124
+        },
+        {
+          "start": 125,
+          "end": 256
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "start": 350,
+      "end": 527,
+      "parent": "s1",
+      "relation": "method",
+      "highlights": [
+        {
+          "start": 350,
+          "end": 527
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "start": 528,
+      "end": 746,
+      "parent": "s1",
+      "relation": "method",
+      "highlights": [
+        {
+          "start": 528,
+          "end": 746
+        },
+        {
+          "start": 747,
+          "end": 838
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "start": 839,
+      "end": 951,
+      "parent": "s1",
+      "relation": "method",
+      "highlights": [
+        {
+          "start": 839,
+          "end": 951
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "start": 952,
+      "end": 1049,
+      "parent": "s1",
+      "relation": "evidence",
+      "highlights": [
+        {
+          "start": 952,
+          "end": 1049
+        },
+        {
+          "start": 1050,
+          "end": 1196
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "start": 1197,
+      "end": 1277,
+      "parent": "s1",
+      "relation": "implication",
+      "highlights": [
+        {
+          "start": 1197,
+          "end": 1277
+        }
+      ]
+    }
+  ]
+}

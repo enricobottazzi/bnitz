@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BNITZ · Abstract-map eval</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/eval/style.css">
+  <script defer src="/vendor/katex.min.js"></script>
+  <script defer src="/lang/model.js"></script>
+  <script defer src="/lang/view.js"></script>
+  <script defer src="/eval/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="/eval/" aria-label="BNITZ eval home">BNITZ<span> / eval</span></a>
+    <div class="actions">
+      <input id="api-key" type="password" aria-label="OpenRouter API key" placeholder="OpenRouter key" autocomplete="off" spellcheck="false" autocapitalize="none">
+      <span id="save-status" class="muted" role="status"></span>
+      <button id="export" hidden>Export record</button>
+      <button id="new-run" hidden>Runs</button>
+    </div>
+  </header>
+  <p id="error" role="alert" hidden></p>
+  <main>
+    <section id="setup" class="setup" aria-labelledby="setup-title">
+      <h1 id="setup-title">Eval runs</h1>
+      <div class="import-actions">
+        <button id="import-config" class="primary" type="button">Import config</button>
+        <input id="config-file" type="file" accept=".json,application/json" hidden>
+      </div>
+      <p id="setup-status" class="muted" role="status"></p>
+      <section id="previous-runs" hidden>
+        <h2>Resume a run</h2>
+        <div id="run-list"></div>
+      </section>
+    </section>
+    <section id="evaluation" class="evaluation" hidden>
+      <aside class="batch-sidebar">
+        <p id="batch-date" class="muted"></p>
+        <nav id="paper-nav" aria-label="Abstracts"></nav>
+        <div class="batch-progress">
+          <span id="progress-text"></span>
+          <progress id="progress" value="0" max="1" aria-label="Maps scored"></progress>
+          <p id="blind-status" class="muted" hidden></p>
+        </div>
+      </aside>
+      <div class="workspace">
+        <header class="paper-heading">
+          <p id="paper-number" class="eyebrow"></p>
+          <h1 id="paper-title"></h1>
+          <div class="actions paper-links">
+            <a id="paper-link" target="_blank" rel="noopener noreferrer">Open on arXiv</a>
+            <a href="https://bnitz.org/#playground" target="_blank" rel="noopener noreferrer">Draw in BNITZ</a>
+            <button id="import-bnitz" type="button">Import bnitz</button>
+            <input id="bnitz-file" type="file" accept=".bnitz,application/json" hidden>
+          </div>
+          <details class="abstract-details">
+            <summary>Read abstract</summary>
+            <p id="abstract"></p>
+          </details>
+          <details id="human-map" class="abstract-details" hidden>
+            <summary>Your map</summary>
+            <div id="human-map-drawing" class="map"></div>
+            <div class="passage">
+              <p id="human-map-label" class="passage-label"></p>
+              <div id="human-map-text" class="passage-text"></div>
+            </div>
+          </details>
+        </header>
+        <div id="generation" class="notice" hidden>
+          <p id="generation-text" class="muted" role="status"></p>
+          <button id="generate" class="primary">Generate maps</button>
+        </div>
+        <div id="reveal-panel" class="reveal-panel" hidden>
+          <p class="muted">Draw your map in BNITZ, then reveal.</p>
+          <button id="reveal" class="primary">Reveal</button>
+        </div>
+        <div id="comparisons"></div>
+        <footer class="paper-footer">
+          <button id="previous">Previous</button>
+          <span id="paper-progress" class="muted"></span>
+          <button id="next">Next</button>
+        </footer>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -95,7 +95,7 @@ export default {
       const text = {arxivId, abstract, body: bodyText(body)};
       const respond = (map, decision_note) =>
         Response.json(includeDecisionNote === true ? {map, decision_note} : map, {headers});
-      const cache = await openPaperCache(env.GENERATION_CACHE, text);
+      const cache = await openPaperCache(env.GENERATION_CACHE, text, recipes);
       const cached = await cache?.get();
       if (cached) {
         try {
