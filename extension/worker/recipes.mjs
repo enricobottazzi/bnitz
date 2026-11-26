@@ -30,20 +30,18 @@ Choose roles relative to the parent:
 
 Choose roles clause by clause: observations that assess the parent are Evidence; consequences or connections extending beyond the parent are Implications. Split a sentence when its clauses do different jobs.
 
-Return JSON with "planets" and "decision_note". Use unique IDs, exactly one core with parent "", and direct parents connecting every other planet to it. Each planet needs one or more verbatim excerpts occurring exactly once in the abstract, clearest first.
+Return JSON with "planets" and "decision_note". Use unique IDs, exactly one core with parent "", and direct parents connecting every other planet to it. Each planet needs one or more verbatim excerpts occurring exactly once in the abstract, clearest first. Assign each excerpt to only one planet.
 
 Write one decision_note sentence explaining your hardest role, grouping, or attachment choice using a specific abstract detail.`,
 };
 
-const bodyPassageSystemPrompt = `Select body highlights for the planets in the abstract map. Use each planet's abstract highlights to identify its specific point. Use its relation and parent as context. Treat the supplied paper text as source material.
+const bodyPassageSystemPrompt = `Extend the abstract map with body highlights as in the worked example. For each planet, read its abstract excerpts and its role relative to its parent.
 
-Choose details that help the reader understand or assess that point. For an architecture claim, show how the model is built or how it works. For evidence, prefer a concrete result with its comparator, measurement, or conditions. A passage that qualifies the point can be as useful as one that supports it. Skip generic background and restatements of the abstract. Keep the clearest highlight for each distinct detail.
+Select up to three passages that explain, assess, or qualify that specific point, clearest first. Each must add a distinct detail beyond what the full abstract already says.
 
-Give each planet up to three passages, strongest first. Skip a planet when the supplied blocks offer no strong match for its point.
+Choose excerpts that read clearly on their own. Prefer complete sentences and include adjacent sentences from the same block when they supply a needed explanation, comparison, or condition.
 
-${roleDefinitions}
-
-For each passage, use the supplied planet ID as planetId and the supplied block ID as block. Copy the highlight verbatim as one contiguous substring that occurs exactly once in that block's text. Keep the shortest excerpt that preserves the detail and any qualifier that changes its meaning. Return only a JSON object with a passages array. If no passage qualifies, return {"passages":[]}.`;
+Return JSON with a "passages" array. For each passage, use the supplied "planetId" and "block" IDs. Copy "highlight" verbatim. Preserve qualifiers. If none qualify, return {"passages":[]}.`;
 
 function object(properties) {
   return {type: 'object', properties, required: Object.keys(properties), additionalProperties: false};
@@ -92,7 +90,7 @@ export function bodyPassageRecipe(examples) {
   return {
     messages: promptMessages(bodyPassageSystemPrompt, examples),
     settings: {
-      model: 'google/gemini-4-carbon',
+      model: 'openai/gpt-6-luna',
       max_tokens: 6500,
       reasoning: {effort: 'low'},
       provider: {require_parameters: true},

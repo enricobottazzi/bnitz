@@ -141,7 +141,7 @@ test('Cache reuse requires the same revision, abstract, and body', async t => {
   assert.equal(firstMap.core, 'root');
   assert.deepEqual(firstMap.spans[0].highlights.map(range => range.section), ['abstract', 'body']);
   const bodyRequest = JSON.parse(model.calls[1].arguments[1].body);
-  assert.equal(bodyRequest.model, 'google/gemini-4-carbon');
+  assert.equal(bodyRequest.model, 'openai/gpt-6-luna');
   assert.equal(JSON.parse(bodyRequest.messages.at(-1).content).planets[0].relation, 'core');
 
   const repeat = await send();
@@ -160,6 +160,8 @@ test('Cache reuse requires the same revision, abstract, and body', async t => {
     assert.equal(response.headers.get('BNITZ-Cache'), 'MISS');
     assert.equal((await response.json()).arxivId, input.arxivId);
     assert.equal(model.callCount(), previousCalls + 2);
+    const bodyRequest = JSON.parse(model.calls.at(-1).arguments[1].body);
+    assert.equal(JSON.parse(bodyRequest.messages.at(-1).content).abstract, input.abstract);
   }
 });
 
