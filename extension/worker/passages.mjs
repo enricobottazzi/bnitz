@@ -7,7 +7,7 @@ export async function generateBodyHighlights(paper, map, recipe, complete) {
     highlights: highlights.map(({start, end}) => paper.abstract.slice(start, end)),
   }));
   const messages = [...recipe.messages, {
-    role: 'user', content: JSON.stringify({title: paper.title, planets, blocks: paper.body}),
+    role: 'user', content: JSON.stringify({title: paper.title, abstract: paper.abstract, planets, blocks: paper.body}),
   }];
   const {passages} = JSON.parse(await complete({...recipe.settings, messages}, recipe.timeout));
   if (!Array.isArray(passages)) throw new Error('The model did not return body highlights.');
